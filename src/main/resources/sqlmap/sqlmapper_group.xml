@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.training.ncr.mapper.user.GroupMapper">
+
+    <select id="callTeamCode" resultType="TeamCodeVO">
+        select
+        *
+        from "TC_TEAMCODE"
+    </select>
+
+    <update id="callUserUpdate">
+        UPDATE "TN_USER"
+        SET "TR_USER_GRP" = #{tr_user_grp},
+            "TEAM_CD" = #{team_cd},
+            "TR_USER_STATE" = 1
+        WHERE "TR_USER_ID" = #{tr_user_id}
+    </update>
+
+    <select id="callTraining" resultType="MgmtVO">
+        select
+        *
+        from "TN_TRAIN_MGMT"
+        where "TR_NUM" = #{tr_num}
+    </select>
+</mapper>

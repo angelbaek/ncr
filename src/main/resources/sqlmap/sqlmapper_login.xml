@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.training.ncr.mapper.LoginMapper">
+    <select id="login" resultType="UserVO">
+        select
+        *
+        from "TN_USER"
+        where "TR_USER_ID"= #{id}
+    </select>
+    <select id="loginAdmin" resultType="UserVO">
+        select
+        *
+        from "TN_ADMIN"
+        where "ADMIN_ID" = #{id}
+    </select>
+</mapper>

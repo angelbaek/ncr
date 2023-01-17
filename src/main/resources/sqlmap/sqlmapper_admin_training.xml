@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.training.ncr.mapper.admin.TrainingMapper">
+
+    <!--훈련 관리 상태 불러오기-->
+    <select id="callMgmt" resultType="MgmtVO">
+        select
+        *
+        from "TN_TRAIN_MGMT"
+    </select>
+
+    <!--훈련 차시 활성화 sql-->
+    <update id="updateMgr">
+        UPDATE "TN_TRAIN_MGMT"
+        SET
+        "TR_EXAM_GRP_ACT" = 1,
+        "TR_SETUP_STATE" = 1
+        WHERE "TR_NUM" = #{tr_num} AND "TR_EXAM_GRP" = #{tr_exam_grp}
+    </update>
+
+    <!--훈련 시작 sql-->
+    <update id="trainingStart">
+        UPDATE "TN_TRAIN_MGMT"
+        SET
+        "TR_MGMT_STATE" = 1
+        WHERE "TR_EXAM_GRP_ACT" = 1 AND "TR_SETUP_STATE" != 0
+    </update>
+
+    <!--훈련 중지 sql-->
+    <update id="trainingPause">
+        UPDATE "TN_TRAIN_MGMT"
+        SET
+        "TR_MGMT_STATE" = 2
+        WHERE "TR_EXAM_GRP_ACT" = 1 AND "TR_SETUP_STATE" != 0 AND "TR_MGMT_STATE" = 1
+    </update>
+
+    <!--그룹 view -->
+    <select id="groupVew" resultType="UserVO">
+        SELECT
+        *
+        FROM "TN_USER"
+    </select>
+
+    <select id="teamcodeView" resultType="TeamCodeVO">
+        SELECT
+        *
+        FROM "TC_TEAMCODE"
+    </select>
+</mapper>

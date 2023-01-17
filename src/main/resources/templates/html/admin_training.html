@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <!-- test css -->
+  <link rel="stylesheet" href="/static/css/common.css" />
+  <link rel="stylesheet" href="/static/css/admin_training.css" />
+  <!-- common css -->
+  <link rel="stylesheet" href="/css/common.css" />
+  <link rel="stylesheet" href="/css/admin_training.css" />
+  <body>
+    <div class="left_nav">
+      <div class="nav_title">국가기간망<br />침투대응훈련</div>
+      <div class="nav_contents">
+        <div>훈련 관리</div>
+        <div>문제 관리</div>
+        <div>문제 풀이</div>
+        <div>결과 보기</div>
+      </div>
+    </div>
+    <div class="top_user_info">
+      <div class="top_user_info_div">
+        <img src="/public/images/avatar-1.png" alt="user" />
+        <div class="userName">User Name</div>
+      </div>
+    </div>
+    <!-- 버튼 -->
+    <div class="contents">
+      <div class="contents_title">훈련 관리</div>
+      <div class="contents_setup_menubar">
+        <button id="training_start" onclick="trainingStart()">훈련 시작</button>
+        <button id="training_pause" onclick="trainingPause()">훈련 정지</button>
+        <button onclick="groupView()">그룹 조회</button>
+        <button onclick="teamcodeView()">팀 코드 조회</button>
+      </div>
+      <!-- 훈련 설정 -->
+      <div class="contents_setup">
+        <div class="contents_setup_title">훈련 설정</div>
+        <div class="one">
+          <div class="contents_setup_one">
+            <input class="check_one" type="radio" name="double" />
+            <div>1차시</div>
+            <select name="location1" id="selectOne">
+              <option value="">직접 선택</option>
+            </select>
+            <button onclick="grpActive()">확인</button>
+            <button>수정</button>
+          </div>
+          <div class="contents_setup_one">
+            <input class="check_two" type="radio" name="double" />
+            <div>2차시</div>
+            <select name="location2" id="selectTwo">
+              <option value="">직접 선택</option>
+            </select>
+            <button onclick="grpActive()">확인</button>
+            <button>수정</button>
+          </div>
+        </div>
+      </div>
+      <!-- 그룹 조회 -->
+      <div class="group_view_title">그룹 조회</div>
+      <div class="group_view">
+        <table class="group_view_head">
+          <tr>
+            <th>이름</th>
+            <th>기관</th>
+            <th>팀코드</th>
+            <th>팀(조)</th>
+          </tr>
+          <tbody class="group_view_body"></tbody>
+        </table>
+      </div>
+    </div>
+    <!-- 팀코드 조회 -->
+    <div class="teamcode_view">
+      <table class="teamcode_view_head">
+        <tr>
+          <th>훈련자 지정 그룹</th>
+          <th>팀 코드</th>
+          <th>가상머신 아이디</th>
+        </tr>
+        <tbody class="teamcode_view_body"></tbody>
+      </table>
+      <button onclick="teamcode_view_btn()">확인</button>
+    </div>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.6.3.js"
+    integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    $(".group_view").css("display", "none");
+    $(".group_view_title").css("display", "none");
+    $(".teamcode_view").css("display", "none");
+  </script>
+  <script src="/static/js/admin_training.js"></script>
+  <script src="/js/admin_training.js"></script>
+</html>

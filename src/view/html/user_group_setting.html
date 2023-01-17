@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <!-- common css -->
+  <link rel="stylesheet" href="/css/common.css" />
+  <link rel="stylesheet" href="/css/user_group_setting.css" />
+  <body>
+    <div class="left_nav">
+      <div class="nav_title">국가기간망<br />침투대응훈련</div>
+      <div class="nav_contents">
+        <div>그룹 설정</div>
+        <div>문제 풀이</div>
+        <div>훈련 통계</div>
+      </div>
+    </div>
+    <div class="top_user_info">
+      <div class="top_user_info_div">
+        <img src="/images/avatar-1.png" alt="user" />
+        <div class="userName">User Name</div>
+      </div>
+    </div>
+    <div class="contents">
+      <div class="contents_title">그룹 설정</div>
+      <div class="contents_contents">
+        <div class="contents_name">팀(조)</div>
+        <select name="location" id="team">
+          <option value="none">직접 선택하세요</option>
+        </select>
+        <div class="contents_name">팀 코드</div>
+        <div class="common_box" id="team_code">팀(조)를 선택후 저장하세요</div>
+        <div class="contents_name">차수</div>
+        <select name="location_num" id="">
+          <option value="1">1차</option>
+          <option value="2">2차</option>
+        </select>
+        <div class="contents_name">기관명</div>
+        <div class="common_box" id="agency_name">auto get</div>
+        <div class="contents_name">이름</div>
+        <div class="common_box" id="user_name">auto get</div>
+      </div>
+    </div>
+    <div class="abs">
+      <button class="saveButton" onclick="userGroupSave()">설정 저장</button>
+      <button onclick="training()">훈련 시작</button>
+    </div>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.6.3.js"
+    integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"
+  ></script>
+  <script src="/js/user_group_setting.js"></script>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.training.ncr.mapper.JoinMapper">
+    <select id="userCheck" resultType="UserVO">
+        select
+        *
+        from "TN_USER"
+        where "TR_USER_ID" = #{tr_user_id}
+    </select>
+
+    <insert id="join">
+        insert into "TN_USER"(
+        "TR_USER_ID",
+        "TR_USER_PASSWD",
+        "TR_USER_NAME",
+        "TR_USER_ORG"
+        )
+        values(
+        #{tr_user_id},
+        #{tr_user_passwd},
+        #{tr_user_name},
+        #{tr_user_org}
+        )
+    </insert>
+</mapper>
