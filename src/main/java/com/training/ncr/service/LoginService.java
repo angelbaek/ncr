@@ -64,6 +64,5 @@ public class LoginService {
             System.out.println("유저 정보: "+loginMapper.login(sessionId));
             return loginMapper.login(sessionId);
         }
-
     }
 }
