@@ -18,12 +18,21 @@
         WHERE "TR_NUM" = #{tr_num} AND "TR_EXAM_GRP" = #{tr_exam_grp}
     </update>
 
+    <!--훈련 차시 수정 sql-->
+    <update id="updateMgrEdit">
+        UPDATE "TN_TRAIN_MGMT"
+        SET
+        "TR_EXAM_GRP_ACT" = 0,
+        "TR_SETUP_STATE" = 2
+        WHERE "TR_NUM" = #{tr_num} AND "TR_EXAM_GRP" = #{tr_exam_grp}
+    </update>
+
     <!--훈련 시작 sql-->
     <update id="trainingStart">
         UPDATE "TN_TRAIN_MGMT"
         SET
         "TR_MGMT_STATE" = 1
-        WHERE "TR_EXAM_GRP_ACT" = 1 AND "TR_SETUP_STATE" != 0
+        WHERE "TR_NUM" = #{tr_num} AND "TR_EXAM_GRP" = #{tr_exam_grp}
     </update>
 
     <!--훈련 중지 sql-->
@@ -41,6 +50,7 @@
         FROM "TN_USER"
     </select>
 
+    <!--팀코드 view-->
     <select id="teamcodeView" resultType="TeamCodeVO">
         SELECT
         *

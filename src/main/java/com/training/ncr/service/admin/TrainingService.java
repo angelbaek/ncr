@@ -20,14 +20,20 @@ public class TrainingService {
         return trainingMapper.callMgmt();
     }
 
-    // 훈련 설정 업데이트
+    // 훈련설정 차시별 확인
     public int updateMgr(MgmtVO mgmtVO){
         return trainingMapper.updateMgr(mgmtVO);
     }
 
+    // 훈련설정 차시별 수정
+    public int updateMgrEdit(MgmtVO mgmtVO){
+        return trainingMapper.updateMgrEdit(mgmtVO);
+    }
+
     //훈련 시작
-    public int trainingStart(){
-        return trainingMapper.trainingStart();
+    public int trainingStart(MgmtVO mgmtVO){
+        System.out.println(mgmtVO.getTr_num()+"차시 문제그룹:"+mgmtVO.getTr_exam_grp()+" 훈련시작!!");
+        return trainingMapper.trainingStart(mgmtVO);
     }
 
     //훈련 정지

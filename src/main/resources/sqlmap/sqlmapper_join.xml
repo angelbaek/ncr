@@ -8,6 +8,7 @@
         where "TR_USER_ID" = #{tr_user_id}
     </select>
 
+    <!--일반 유저 가입-->
     <insert id="join">
         insert into "TN_USER"(
         "TR_USER_ID",
@@ -22,4 +23,12 @@
         #{tr_user_org}
         )
     </insert>
+
+    <!--관리자와 동일 아이디인지 확인하기 위한 sql-->
+    <select id="checkAdmin" resultType="AdminVO">
+        SELECT
+        *
+        FROM "TN_ADMIN"
+        WHERE "ADMIN_ID" = #{tr_user_id}
+    </select>
 </mapper>

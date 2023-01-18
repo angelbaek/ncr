@@ -2,7 +2,7 @@ function user_login() {
   var id = $(".user_login_id").val();
   var pw = $(".user_login_pw").val();
   $.ajax({
-    url: "http://192.168.32.44:8080/login/" + id,
+    url: "http://localhost:8080/login/" + id,
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -35,7 +35,6 @@ function user_login() {
             return;
           } else {
             alert(id + "님 환영합니다");
-            // location.href = "user_group_setting.html";
             location.href = "user_group_setting.html";
             return;
           }

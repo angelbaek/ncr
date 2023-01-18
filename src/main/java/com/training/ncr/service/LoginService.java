@@ -24,6 +24,7 @@ public class LoginService {
     //  메인페이지 로그인 구현
     public List<UserVO> loginService(String id,HttpServletRequest request){
         List<UserVO> test =loginMapper.loginAdmin(id);
+        System.out.println("어드민 계정에 있나? 사이즈: "+test.size());
         // 훈련자 계정이 없을 경우 관리자 계정인지 확인 로직
         if(test.size()!=0){
             System.out.println("어드민 계정으로 로그인 요청합니다.");

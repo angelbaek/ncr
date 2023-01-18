@@ -21,15 +21,22 @@ public class TrainingController {
         return trainingService.callMgmtVOList();
     }
 
+    // 훈련 차시별 확인
     @PatchMapping("/admin/gprAct")
     public int updateMgr(@RequestBody MgmtVO mgmtVO){
         return trainingService.updateMgr(mgmtVO);
     }
 
+    // 훈련 차시별 수정
+    @PatchMapping("/admin/gpract_edit")
+    public int updateMgrEdit(@RequestBody MgmtVO mgmtVO){
+        return trainingService.updateMgrEdit(mgmtVO);
+    }
+
     // 훈련 시작
     @PatchMapping("/admin/trainingStart")
-    public int trainingStart(){
-        return trainingService.trainingStart();
+    public int trainingStart(@RequestBody MgmtVO mgmtVO){
+        return trainingService.trainingStart(mgmtVO);
     }
 
     // 훈련 정지

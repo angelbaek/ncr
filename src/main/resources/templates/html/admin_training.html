@@ -47,8 +47,8 @@
             <select name="location1" id="selectOne">
               <option value="">직접 선택</option>
             </select>
-            <button onclick="grpActive()">확인</button>
-            <button>수정</button>
+            <button class="btn_ok1" onclick="grpActive(1)">확인</button>
+            <button class="btn_edit1" onclick="edit(1)">수정</button>
           </div>
           <div class="contents_setup_one">
             <input class="check_two" type="radio" name="double" />
@@ -56,8 +56,8 @@
             <select name="location2" id="selectTwo">
               <option value="">직접 선택</option>
             </select>
-            <button onclick="grpActive()">확인</button>
-            <button>수정</button>
+            <button class="btn_ok2" onclick="grpActive(2)">확인</button>
+            <button class="btn_edit2" onclick="edit(2)">수정</button>
           </div>
         </div>
       </div>
@@ -97,6 +97,12 @@
     $(".group_view").css("display", "none");
     $(".group_view_title").css("display", "none");
     $(".teamcode_view").css("display", "none");
+
+    // $(".btn_edit1").attr("disabled", true);
+    // $(".btn_edit1").css("backgroundColor", "gray");
+    // $(".btn_edit2").attr("disabled", true);
+    // $(".btn_edit2").css("backgroundColor", "gray");
+    // $(".btn_ok1").attr("disabled", true);
   </script>
   <script src="/static/js/admin_training.js"></script>
   <script src="/js/admin_training.js"></script>

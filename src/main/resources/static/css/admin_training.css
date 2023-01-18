@@ -119,9 +119,11 @@ img {
 }
 
 .contents_setup_menubar button {
-  margin-bottom: 30px;
+  margin-left: 50px;
   margin-right: 50px;
-  left: 27%;
+  margin-bottom: 20px;
+  /* margin: auto; */
+  left: 20%;
   transform: translate(-50%, 0%);
   position: relative;
 }

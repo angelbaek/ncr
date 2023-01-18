@@ -16,9 +16,12 @@ public class JoinService {
         String tr_user_id = userVO.getTr_user_id();
         System.out.println(tr_user_id);
         if(joinMapper.userCheck(tr_user_id)!=null){
-            System.out.println("계정생성 시도 :"+tr_user_id+"값이 이미 있음");
+            System.out.println("계정생성 시도 :"+tr_user_id+"값이 일반계정과 중복됨");
             return 0;
-        }else {
+        } else if (joinMapper.checkAdmin(tr_user_id)!=null) {
+            System.out.println("계정생성 시도 :"+tr_user_id+"값이 관리자계정과 중복됨");
+            return 0;
+        } else {
             System.out.println("계정생성 시도 :"+tr_user_id+"값이 없음 계정 생성함");
             return joinMapper.join(userVO);
         }
