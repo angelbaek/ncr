@@ -280,3 +280,9 @@ input {
   background-color: rgba(0, 0, 0, 0.04);
   color: #666;
 }
+
+.input_number1,
+.input_number2 {
+  height: 30px;
+  max-width: 160px;
+}

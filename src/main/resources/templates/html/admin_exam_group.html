@@ -43,7 +43,7 @@
             <tbody class="teamcode_view_body"></tbody>
           </table>
           <div class="btn_box">
-            <button>추가</button>
+            <button onclick="grpAdd()">추가</button>
             <button>삭제</button>
           </div>
         </div>
@@ -52,29 +52,45 @@
       <div class="exam_add">
         <div class="add_common">
           <div class="add_common_text">문제 그룹명</div>
-          <input type="text" />
+          <input class="grp_name" type="text" placeholder="예제) 아이티존" />
         </div>
         <div class="add_common">
           <div class="add_common_text">문제 개수</div>
-          <input type="text" />
+          <input
+            class="grp_count"
+            type="number"
+            placeholder="예제) 40개 = 40"
+          />
         </div>
         <div class="add_common">
-          <div class="add_common_text">풀이 시간</div>
-          <input type="text" />
+          <div class="add_common_text">풀이 시간(분 단위)</div>
+          <input
+            class="grp_time"
+            type="number"
+            placeholder="예제) 2시간 = 120"
+          />
         </div>
         <div class="add_common_check_div">
-          <input type="checkbox" />
+          <input class="check_one" type="checkbox" />
           <div>힌트 사용 허용 : 감점</div>
-          <input type="number" />
+          <input
+            class="input_number1"
+            type="number"
+            placeholder="예제) 10점 감점 = 10"
+          />
         </div>
         <div class="add_common_check_div">
-          <input type="checkbox" />
+          <input class="check_two" type="checkbox" />
           <div>두번 풀이 허용 : 감점</div>
-          <input type="number" />
+          <input
+            class="input_number2"
+            type="number"
+            placeholder="예제) 10점 감점 = 10"
+          />
         </div>
         <div class="btn_common">
-          <button>초기화</button>
-          <button>저장</button>
+          <button onclick="reset()">초기화</button>
+          <button onclick="save()">저장</button>
         </div>
       </div>
     </div>
@@ -85,15 +101,7 @@
     crossorigin="anonymous"
   ></script>
   <script>
-    $(".group_view").css("display", "none");
-    $(".group_view_title").css("display", "none");
-    $(".teamcode_view").css("display", "none");
-
-    // $(".btn_edit1").attr("disabled", true);
-    // $(".btn_edit1").css("backgroundColor", "gray");
-    // $(".btn_edit2").attr("disabled", true);
-    // $(".btn_edit2").css("backgroundColor", "gray");
-    // $(".btn_ok1").attr("disabled", true);
+    $(".exam_add").css("display", "none");
   </script>
   <script src="/static/js/admin_exam_group.js"></script>
   <script src="/js/admin_exam_group.js"></script>
