@@ -112,124 +112,48 @@ img {
   transform: translate(0%, -50%);
   margin-right: 50px;
 }
-.contents_setup {
-  padding: 50px;
-}
-
-.contents_setup_one {
+.contents_title_top {
   width: 100%;
   text-align: center;
-  vertical-align: middle;
 }
-.contents_setup_one * {
-  vertical-align: middle;
-}
-.contents_setup_one input {
-  vertical-align: middle;
-  width: 16px;
-  display: inline-block;
-}
-select {
-  margin-top: 20px;
-  vertical-align: middle;
-  margin-left: 20px;
-  margin-right: 50px;
-  width: 200px;
-  font-size: 16px;
-}
-.one {
-  border-radius: 5px;
-  border: 1px solid gray;
-  padding-top: 30px;
-  padding-bottom: 30px;
-}
-
-.one div {
-  display: inline-block;
-  align-items: center;
-  text-align: center;
-}
-
-.contents_setup button {
-  display: inline-block;
-  height: auto;
-  width: auto;
+.contents_title_grp_name {
+  color: #6c757d;
   font-size: 14px;
-  position: relative;
-  left: 0;
-  margin-left: 30px;
-  top: 14px;
-  /* margin-left: -200px; */
-}
-.contents_setup_title {
-  margin-bottom: 10px;
-  font-weight: bold;
-  text-align: center;
-}
-.group_view {
-  padding-bottom: 20px;
-  margin: 50px;
-  margin-top: 10px;
-  border-radius: 5px;
-  width: auto;
-  height: auto;
-  border: 1px solid gray;
-}
-.group_view_head {
-  width: 90%;
-  padding: 0px;
-}
-
-table th {
-  padding: 20px;
-  width: 600px;
-}
-table td {
-  padding: 10px;
-}
-
-tr:last-child td {
-  padding-bottom: 20px;
-}
-
-.contents_setup_menubar {
-  position: absolute;
-  color: #6c757d;
-  padding: 20px;
-}
-
-.exam_group {
-  border-radius: 10px;
-  padding: 20px;
   margin-right: 30px;
-  /* position: absolute; */
-  color: #6c757d;
-  text-align: center;
+}
+.contents_title_top div,
+.contents_title_top input {
+  display: inline-block;
+  width: auto;
+}
+.contents_title_top button {
+  width: auto;
+  padding: 0px 10px;
+}
+
+.contents_title_top select {
+  padding: 10px 15px;
+  width: 500px;
+  margin-right: 30px;
+}
+
+tr td {
+  padding: 30px;
+}
+.exam_answer {
+  padding: 20px;
+  border-radius: 10px;
+  margin-right: 30px;
+  /* border: 1px solid gray; */
   box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
-}
-.btn_box {
-  text-align: center;
-  display: inline-block;
-}
-
-.btn_box button {
-  display: inline-block;
-  padding: auto;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-top: 20px;
-}
-
-td input {
-  width: 15px;
-}
-.exam_title {
-  color: black;
+  margin-top: 50px;
+  font-size: 14px;
   font-weight: bold;
-  margin-bottom: 20px;
+  display: block;
+  text-align: center;
 }
 
-.exam_add {
+.exam_table {
   padding: 20px;
   border-radius: 10px;
   margin-right: 30px;
@@ -239,50 +163,46 @@ td input {
   font-size: 14px;
   font-weight: bold;
 }
-.btn_common {
-  width: 100%;
+.exam_answer input {
+  width: auto;
+}
+.exam_answer_common_text {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.exam_answer_common_text div {
+  margin-bottom: 10px;
   text-align: center;
 }
-.btn_common button {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 50px;
-  margin-right: 50px;
-  display: inline-block;
+.test * {
+  vertical-align: baseline;
 }
-
-.add_common {
-  margin-bottom: 20px;
+.answer_input_text {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  color: #34395e;
+  font-weight: bold;
 }
-.add_common_text {
-  margin-bottom: 5px;
-}
-
-input {
-  padding: 10px;
-}
-
-.add_common_check_div {
-  display: block;
-  text-align: left;
-  margin-bottom: 20px;
-}
-.add_common_check_div input {
-  width: auto;
-  vertical-align: middle;
-}
-
-.add_common_check_div * {
-  display: inline-block;
-}
-
-.teamcode_view_head tr th {
-  background-color: rgba(0, 0, 0, 0.04);
-  color: #666;
-}
-
-.input_number1,
-.input_number2 {
+.exam_answer_common_text input {
   height: 30px;
-  max-width: 160px;
+  padding: 10px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 10px;
+  width: auto;
+  max-width: 500px;
+  min-width: 10px;
+}
+.exam_answer_common_text_check {
+  margin-left: -30px;
+  display: inline-block;
+}
+
+.common_check {
+  vertical-align: -10px;
+}
+.exam_answer_title {
+  margin-bottom: 10px;
+  color: #34395e;
+  font-weight: bold;
 }

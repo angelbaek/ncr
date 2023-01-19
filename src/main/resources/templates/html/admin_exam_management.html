@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <!-- test css -->
+  <link rel="stylesheet" href="/static/css/common.css" />
+  <link rel="stylesheet" href="/static/css/admin_exam_management.css" />
+  <!-- common css -->
+  <link rel="stylesheet" href="/css/common.css" />
+  <link rel="stylesheet" href="/css/admin_exam_management.css" />
+  <body>
+    <div class="left_nav">
+      <div class="nav_title">국가기간망<br />침투대응훈련</div>
+      <div class="nav_contents">
+        <div><a href="/html/admin_training.html">훈련 관리</a></div>
+        <div><a href="/html/admin_exam_group.html">문제 관리</a></div>
+        <div>문제 풀이</div>
+        <div>결과 보기</div>
+      </div>
+    </div>
+    <div class="top_user_info">
+      <div class="top_user_info_div">
+        <img src="/public/images/avatar-1.png" alt="user" />
+        <div class="userName">User Name</div>
+      </div>
+    </div>
+    <!-- 문제 그룹 -->
+    <div class="contents">
+      <div class="contents_title">문항 관리</div>      
+      <div class="contents_title_top">
+        <div class="contents_title_grp_name">문제 그룹명</div>
+        <select name="" id="">
+          <option value="">직접선택</option>
+        </select>
+        <button class="exam_upload">문제 업로드</button>
+      </div>
+        <div class="exam_table">
+          <table>
+            <tbody>
+              <tr>
+                <td>1번 문제</td>
+                <td>1번 문제</td>
+                <td>1번 문제</td>
+                <td>1번 문제</td>
+                <td>1번 문제</td>
+                <td>1번 문제</td>
+              </tr>
+              <tr>
+                <td>12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="exam_answer">
+          <div>
+            <div class="exam_answer_title">문제</div>
+            <input type="text">
+            <div class="answer_input_text">답안 입력</div>
+            <div class="test">
+              
+              <div class="exam_answer_common_text">
+                <input type="checkbox" class="common_check">
+                <div class="exam_answer_common_text_check">객관식</div>
+              </div>
+              <div class="exam_answer_common_text">
+                <div>1번</div>
+                <input type="text">
+              </div>
+              <div class="exam_answer_common_text">
+                <div>2번</div>
+                <input type="text">
+              </div>
+              <div class="exam_answer_common_text">
+                <div>3번</div>
+                <input type="text">
+              </div>
+              <div class="exam_answer_common_text">
+                <div>4번</div>
+                <input type="text">
+              </div>
+              <div class="exam_answer_common_text">
+                <div>5번</div>
+                <input type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.6.3.js"
+    integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    $(".exam_add").css("display", "none");
+  </script>
+  <script src="/static/js/admin_exam_management.js"></script>
+  <script src="/js/admin_exam_management.js"></script>
+</html>
