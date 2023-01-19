@@ -288,7 +288,7 @@ function grpActive(trainingNumbers) {
           // 수정 버튼 활성화
           $(".btn_edit1").attr("disabled", false);
           $(".btn_edit1").css("backgroundColor", "#6777ef");
-          // location.reload();
+          location.reload();
         }
       },
     });
@@ -490,6 +490,8 @@ function edit(editNum) {
 
 // 훈련 차시 설정에 따른 view 동작 함수
 function getTrainMgmt() {
+  trainingPauseBtnOff();
+  trainingStartBtnOff();
   $.ajax({
     url: "http://localhost:8080/admin/get_train_mgmt",
     type: "GET",
@@ -504,6 +506,7 @@ function getTrainMgmt() {
           );
           $("#selectOne").attr("disabled", true);
           ok1BtnOff();
+          trainingStartBtnOn();
           // 2차시 설정된 그룹 뿌려주기
         } else if (response[i].tr_num == 2) {
           $("select[name=location2] option:selected").text(
@@ -511,6 +514,7 @@ function getTrainMgmt() {
           );
           $("#selectTwo").attr("disabled", true);
           ok2BtnOff();
+          trainingStartBtnOn();
         }
         // 훈련이 시작되었을 경우
         if (response[i].tr_mgmt_state == 1) {
@@ -522,6 +526,7 @@ function getTrainMgmt() {
             $(".check_one").prop("checked", true);
             $(".check_two").prop("disabled", true);
             edit1BtnOff();
+            // 시작된 훈련이 2차일 경우
           } else if (response[i].tr_num == 2) {
             $(".check_two").prop("checked", true);
             $(".check_one").prop("disabled", true);

@@ -7,8 +7,10 @@
     <title>Document</title>
   </head>
   <!-- common css -->
+  <link rel="stylesheet" href="/static/css/common.css" />
   <link rel="stylesheet" href="/css/common.css" />
   <!-- join css -->
+  <link rel="stylesheet" href="/static/css/join.css" />
   <link rel="stylesheet" href="/css/join.css" />
   <body>
     <div class="contents">
@@ -17,19 +19,19 @@
         <div class="title_name">훈련자 계정생성</div>
         <div class="contents_div_div">
           <div class="common_text">아이디</div>
-          <input class="user_id" type="text" />
+          <input class="user_id" type="text" maxlength="20" />
           <div class="common_pw" id="margin_give">
             <div class="common_text">비밀번호</div>
-            <input class="user_pw" type="password" />
+            <input class="user_pw" type="password" maxlength="20" />
           </div>
           <div class="common_pw">
             <div class="common_text">비밀번호 재확인</div>
-            <input class="user_pw2" type="password" />
+            <input class="user_pw2" type="password" maxlength="20" />
           </div>
           <div class="common_text">이름</div>
-          <input class="user_name" type="text" />
+          <input class="user_name" type="text" maxlength="20" />
           <div class="common_text">기관명</div>
-          <input class="user_id_agency" type="text" />
+          <input class="user_id_agency" type="text" maxlength="50" />
           <button onclick="join()">계정생성</button>
         </div>
       </div>
@@ -40,5 +42,6 @@
     integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"
   ></script>
+  <script src="/static/js/join.js"></script>
   <script src="/js/join.js"></script>
 </html>

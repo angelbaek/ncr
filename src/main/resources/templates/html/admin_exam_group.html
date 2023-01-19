@@ -52,7 +52,12 @@
       <div class="exam_add">
         <div class="add_common">
           <div class="add_common_text">문제 그룹명</div>
-          <input class="grp_name" type="text" placeholder="예제) 아이티존" />
+          <input
+            class="grp_name"
+            type="text"
+            placeholder="예제) 아이티존"
+            maxlength="20"
+          />
         </div>
         <div class="add_common">
           <div class="add_common_text">문제 개수</div>
@@ -60,6 +65,8 @@
             class="grp_count"
             type="number"
             placeholder="예제) 40개 = 40"
+            maxlength="3"
+            oninput="maxLengthCheck(this)"
           />
         </div>
         <div class="add_common">
@@ -68,6 +75,8 @@
             class="grp_time"
             type="number"
             placeholder="예제) 2시간 = 120"
+            maxlength="3"
+            oninput="maxLengthCheck(this)"
           />
         </div>
         <div class="add_common_check_div">
@@ -77,6 +86,8 @@
             class="input_number1"
             type="number"
             placeholder="예제) 10점 감점 = 10"
+            maxlength="3"
+            oninput="maxLengthCheck(this)"
           />
         </div>
         <div class="add_common_check_div">
@@ -86,6 +97,8 @@
             class="input_number2"
             type="number"
             placeholder="예제) 10점 감점 = 10"
+            maxlength="3"
+            oninput="maxLengthCheck(this)"
           />
         </div>
         <div class="btn_common">
@@ -102,6 +115,11 @@
   ></script>
   <script>
     $(".exam_add").css("display", "none");
+    function maxLengthCheck(object) {
+      if (object.value.length > object.maxLength) {
+        object.value = object.value.slice(0, object.maxLength);
+      }
+    }
   </script>
   <script src="/static/js/admin_exam_group.js"></script>
   <script src="/js/admin_exam_group.js"></script>
