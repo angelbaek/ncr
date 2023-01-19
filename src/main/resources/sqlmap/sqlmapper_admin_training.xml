@@ -3,29 +3,31 @@
 <mapper namespace="com.training.ncr.mapper.admin.TrainingMapper">
 
     <!--훈련 관리 상태 불러오기-->
-    <select id="callMgmt" resultType="MgmtVO">
+    <select id="getExamGrp" resultType="ExamGrpVO">
         select
         *
-        from "TN_TRAIN_MGMT"
+        from "TN_TRAIN_EXAMGRP"
     </select>
 
     <!--훈련 차시 활성화 sql-->
-    <update id="updateMgr">
-        UPDATE "TN_TRAIN_MGMT"
-        SET
-        "TR_EXAM_GRP_ACT" = 1,
-        "TR_SETUP_STATE" = 1
-        WHERE "TR_NUM" = #{tr_num} AND "TR_EXAM_GRP" = #{tr_exam_grp}
-    </update>
+    <insert id="insertMgr">
+        insert into "TN_TRAIN_MGMT"(
+        "TR_NUM",
+        "TR_EXAM_GRP",
+        "TR_MGMT_STATE"
+        )
+        values(
+        #{tr_num},
+        #{tr_exam_grp},
+        0
+        )
+    </insert>
 
     <!--훈련 차시 수정 sql-->
-    <update id="updateMgrEdit">
-        UPDATE "TN_TRAIN_MGMT"
-        SET
-        "TR_EXAM_GRP_ACT" = 0,
-        "TR_SETUP_STATE" = 2
+    <delete id="deleteMgrEdit">
+        DELETE FROM "TN_TRAIN_MGMT"
         WHERE "TR_NUM" = #{tr_num} AND "TR_EXAM_GRP" = #{tr_exam_grp}
-    </update>
+    </delete>
 
     <!--훈련 시작 sql-->
     <update id="trainingStart">
@@ -40,7 +42,7 @@
         UPDATE "TN_TRAIN_MGMT"
         SET
         "TR_MGMT_STATE" = 2
-        WHERE "TR_EXAM_GRP_ACT" = 1 AND "TR_SETUP_STATE" != 0 AND "TR_MGMT_STATE" = 1
+        WHERE "TR_MGMT_STATE" = 1
     </update>
 
     <!--그룹 view -->
@@ -55,5 +57,11 @@
         SELECT
         *
         FROM "TC_TEAMCODE"
+    </select>
+
+    <select id="getTranMgmt" resultType="MgmtVO">
+        SELECT
+        *
+        FROM "TN_TRAIN_MGMT"
     </select>
 </mapper>

@@ -2,6 +2,8 @@
 getSessionUserInfo();
 //현재 훈련정보 가져오기
 getTraining();
+//훈련 차시설정 가져오기
+getTrainMgmt();
 /**
  * 제이쿼리 css 기능함수들
  */
@@ -143,143 +145,22 @@ function getSessionUserInfo() {
 // 훈련관리 정보 가져오기
 function getTraining() {
   console.log("세션 읽어오기 실행중...");
+  var html = "";
   $.ajax({
     url: "http://localhost:8080/admin/mgmt",
     type: "GET",
     dataType: "json",
     success: function (response) {
       console.log(response);
-      console.log(response.length);
-      // 훈련설정 mgr 셋업을 위한 변수
-      var html1 = "";
-      var html2 = "";
-      // 훈련설정 mgr 셋업
       for (var i = 0; i < response.length; i++) {
-        if (response[i].tr_num == 1) {
-          html1 +=
-            "<option value='" +
-            response[i].tr_exam_grp +
-            "'>" +
-            response[i].tr_exam_grp +
-            "</option>";
-        } else if (response[i].tr_num == 2) {
-          html2 +=
-            "<option value='" +
-            response[i].tr_exam_grp +
-            "'>" +
-            response[i].tr_exam_grp +
-            "</option>";
+        console.log("실행중...");
+        html += '<option value="">' + response[i].tr_exam_grpname + "</option>";
+        // 마지막 탐색 후 select에 option 추가
+        if (i == response.length - 1) {
+          console.log(html);
+          $("#selectOne").append(html);
+          $("#selectTwo").append(html);
         }
-      }
-      console.log(html1);
-      $("#selectOne").append(html1);
-      $("#selectTwo").append(html2);
-
-      //활성화 되어있는 그룹 view에 뿌려주기
-      for (var i = 0; i < response.length; i++) {
-        //1차시 활성일때
-        if (response[i].tr_exam_grp_act == 1) {
-          if (response[i].tr_num == 1) {
-            console.log("1차시 설정 되어 있음");
-            $("#selectOne").val(response[i].tr_exam_grp).prop("selected", true);
-            $("#selectOne").attr("disabled", true);
-            trainingPauseBtnOn();
-          } else if (response[i].tr_num == 2) {
-            console.log("2차시 설정 되어 있음");
-            //2차시 활성일떄
-            $("#selectTwo").val(response[i].tr_exam_grp).prop("selected", true);
-            $("#selectTwo").attr("disabled", true);
-            trainingPauseBtnOn();
-          }
-        }
-      }
-
-      // 훈련 시작, 훈련 정지 버튼 비활성화를 위한 count
-      var count = 0;
-      for (var i = 0; i < response.length; i++) {
-        // 훈련이 진행중인지, 멈춰 있는지 체크
-        if (response[i].tr_mgmt_state == 2) {
-          // 훈련정지 일 때
-          edit1BtnOn();
-          edit2BtnOn();
-          $(".check_one").attr("disabled", false);
-          $(".check_two").attr("disabled", false);
-          console.log("훈련이 멈춰있음");
-          var num = response[i].tr_num;
-          var grp = response[i].tr_exam_grp;
-          // // 1차시 훈련이 정지일떄
-          // if (response[i].tr_num == 1) {
-          //   $(".check_two").attr("disabled", true);
-          // } else if (response[i].tr_num == 2) {
-          //   // 2차시 훈련이 정지일떄
-          //   $(".check_one").attr("disabled", true);
-          // }
-          console.log(num + "차시 " + grp + " 문제 그룹 훈련 중지 상태");
-          if (num == 1) {
-            $(".check_one").prop("checked", true);
-          } else {
-            $(".check_two").prop("checked", true);
-          }
-        } else if (response[i].tr_mgmt_state == 1) {
-          console.log("훈련이 진행중...");
-          if (response[i].tr_num == 1) {
-            $(".check_two").attr("disabled", true);
-            edit1BtnOff();
-          } else if (response[i].tr_num == 2) {
-            $(".check_one").attr("disabled", true);
-            edit2BtnOff();
-          }
-          // 몇 차시가 진행중인지 담을 변수
-          var num = response[i].tr_num;
-          if (num == 1) {
-            $(".check_one").prop("checked", true);
-            // 1차 설정 확인 버튼 비활성화
-            ok1BtnOff();
-            edit2BtnOn();
-          } else if (num == 2) {
-            $(".check_two").prop("checked", true);
-            // 2차 설정 확인 버튼 비활성화
-            ok2BtnOff();
-            edit1BtnOn();
-          }
-          // 훈련 시작 버튼 비활성화
-          trainingStartBtnOff();
-          // 훈련 정지 버튼 활성화
-          trainingPauseBtnOn();
-          return;
-        }
-
-        // 훈련 설정이 되있을때
-        if (response[i].tr_exam_grp_act == 1) {
-          // 훈련 시작 버튼 활성화
-          trainingStartBtnOn();
-          // 훈련 정지 버튼 비활성화
-          trainingPauseBtnOff();
-
-          //문제그룹 설정 되있을때 view 보여주기
-          //1차시 훈련 설정 되있을때
-          if (response[i].tr_num == 1) {
-            console.log("1차시 활성");
-            // $(".check_one").prop("checked", true);
-            $("#selectOne").val(response[i].tr_exam_grp).prop("selected", true);
-            $("#selectOne").attr("disabled", true);
-            // 1차 설정 확인 버튼 비활성화
-            ok1BtnOff();
-          } else if (response[i].tr_num == 2) {
-            console.log("2차시 활성");
-            //2차시 훈련 설정 되있을떄
-            // $(".check_two").prop("checked", true);
-            $("#selectTwo").val(response[i].tr_exam_grp).prop("selected", true);
-            $("#selectTwo").attr("disabled", true);
-            // 2차 설정 확인 버튼 비활성화
-            ok2BtnOff();
-          }
-          count++;
-        }
-      }
-      if (count == 0) {
-        trainingStartBtnOff();
-        trainingPauseBtnOff();
       }
     },
   });
@@ -291,11 +172,11 @@ function trainingStart() {
   var one = $(".check_one").is(":checked");
   var two = $(".check_two").is(":checked");
   // 차시 별 문제그룹 담을 변수
-  var groupOne = $("#selectOne option:selected").val();
-  var groupTwo = $("#selectTwo option:selected").val();
+  var groupOne = $("select[name=location1] option:selected").text();
+  var groupTwo = $("select[name=location2] option:selected").text();
   // 차시별 문제그룹 설정이 되있는지 boolean 변수
-  var groupOneBoolean = $("#selectOne").prop("selected");
-  var groupTwoBoolean = $("#selectTwo").prop("selected");
+  var groupOneBoolean = $("#selectOne").prop("disabled");
+  var groupTwoBoolean = $("#selectTwo").prop("disabled");
   console.log("1차 활성화?: " + groupOneBoolean);
   console.log("2차 활성화?: " + groupTwoBoolean);
   if (
@@ -312,6 +193,7 @@ function trainingStart() {
     alert("훈련 시작할 차시를 설정하세요");
     return;
   }
+  console.log(groupOne);
   // 1차시 훈련 시작
   if (one == true) {
     var jsonData = {
@@ -392,7 +274,7 @@ function grpActive(trainingNumbers) {
     console.log(jsonData);
     $.ajax({
       url: "http://localhost:8080/admin/gprAct",
-      type: "PATCH",
+      type: "POST",
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify(jsonData),
@@ -427,7 +309,7 @@ function grpActive(trainingNumbers) {
     console.log(jsonData);
     $.ajax({
       url: "http://localhost:8080/admin/gprAct",
-      type: "PATCH",
+      type: "POST",
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify(jsonData),
@@ -563,6 +445,7 @@ function edit(editNum) {
   var two = $("select[name=location2] option:selected").text();
   if (editNum == 1) {
     // 기존 설정값 비활성화 시키기(grp_act)
+    $(".btn_edit1").attr("disabled", true);
     var jsonData = {
       tr_num: 1,
       tr_exam_grp: one,
@@ -570,7 +453,7 @@ function edit(editNum) {
     console.log(jsonData);
     $.ajax({
       url: "http://localhost:8080/admin/gpract_edit",
-      type: "PATCH",
+      type: "DELETE",
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify(jsonData),
@@ -590,7 +473,7 @@ function edit(editNum) {
     console.log(jsonData);
     $.ajax({
       url: "http://localhost:8080/admin/gpract_edit",
-      type: "PATCH",
+      type: "DELETE",
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify(jsonData),
@@ -603,4 +486,53 @@ function edit(editNum) {
       },
     });
   }
+}
+
+// 훈련 차시 설정에 따른 view 동작 함수
+function getTrainMgmt() {
+  $.ajax({
+    url: "http://localhost:8080/admin/get_train_mgmt",
+    type: "GET",
+    dataType: "json",
+    success: function (response) {
+      console.log(response);
+      for (var i = 0; i < response.length; i++) {
+        // 1차시 설정된 그룹 뿌려주기
+        if (response[i].tr_num == 1) {
+          $("select[name=location1] option:selected").text(
+            response[i].tr_exam_grp
+          );
+          $("#selectOne").attr("disabled", true);
+          ok1BtnOff();
+          // 2차시 설정된 그룹 뿌려주기
+        } else if (response[i].tr_num == 2) {
+          $("select[name=location2] option:selected").text(
+            response[i].tr_exam_grp
+          );
+          $("#selectTwo").attr("disabled", true);
+          ok2BtnOff();
+        }
+        // 훈련이 시작되었을 경우
+        if (response[i].tr_mgmt_state == 1) {
+          // 훈련 시작 버튼 비활성화
+          trainingStartBtnOff();
+          trainingPauseBtnOn();
+          // 시작된 훈련이 1차일 경우
+          if (response[i].tr_num == 1) {
+            $(".check_one").prop("checked", true);
+            $(".check_two").prop("disabled", true);
+            edit1BtnOff();
+          } else if (response[i].tr_num == 2) {
+            $(".check_two").prop("checked", true);
+            $(".check_one").prop("disabled", true);
+            edit2BtnOff();
+          }
+          //훈련이 정지되었을 경우
+        } else if (response[i].tr_mgmt_state == 2) {
+          trainingPauseBtnOff();
+          trainingStartBtnOn();
+        }
+      }
+    },
+  });
 }

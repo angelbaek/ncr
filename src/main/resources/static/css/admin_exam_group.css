@@ -205,7 +205,7 @@ tr:last-child td {
   /* position: absolute; */
   color: #6c757d;
   text-align: center;
-  box-shadow: 0 1px 4px 1px rgb(0 0 0 / 30%);
+  box-shadow: 0 1px 5px 1px rgb(0 0 0 / 50%);
 }
 .btn_box {
   text-align: center;
@@ -234,7 +234,7 @@ td input {
   border-radius: 10px;
   margin-right: 30px;
   /* border: 1px solid gray; */
-  box-shadow: 0 1px 4px 1px rgb(0 0 0 / 30%);
+  box-shadow: 0 1px 5px 1px rgb(0 0 0 / 50%);
   margin-top: 50px;
   font-size: 14px;
   font-weight: bold;

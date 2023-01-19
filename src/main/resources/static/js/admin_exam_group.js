@@ -16,10 +16,16 @@ function examGroupCall() {
       for (var i = 0; i < response.length; i++) {
         html +=
           "<tr class='tr_even'><td>" +
-          '<input type="radio" name="double" />' +
-          "</td><td>" +
+          '<input value="check(' +
+          i +
+          ')" type="radio" name="double" />' +
+          "</td><td class=grp(" +
+          i +
+          ")>" +
           response[i].tr_exam_grpname +
-          "</td><td>" +
+          "</td><td class=" +
+          i +
+          ">" +
           response[i].tr_exam_count +
           "</td></tr>";
       }
@@ -67,7 +73,7 @@ function save() {
   } else {
     hint = 0;
   }
-  // 힌트 사용 허가 변수(참,거짓)
+  // 두번 풀이 허가 변수(참,거짓)
   var two = $(".check_two").prop("checked");
   if (two == true) {
     two = 1;
@@ -105,4 +111,51 @@ function save() {
     alert("두번 풀이 허용을 체크하세요");
     return;
   }
+  // 조건식 통과 후 서버 요청
+  var jsonData = {
+    tr_exam_grpname: name,
+    tr_exam_count: count,
+    tr_hint_use: hint,
+    tr_hint_deduct: num1,
+    tr_allow_secans: two,
+    tr_secans_deduct: num2,
+    tr_exam_time: time,
+  };
+  console.log(jsonData);
+  $.ajax({
+    url: "http://localhost:8080/admin/add_exam_grp",
+    type: "POST",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      if (response == 1) {
+        alert("문제 그룹이 추가되었습니다.");
+        location.reload();
+      } else if (response == 0) {
+        alert("문제 그룹명이 중복됩니다.");
+      }
+    },
+  });
+}
+
+// 삭제 함수
+function grpDelete() {
+  var grp = $("tr td:last-child");
+  var length = grp.length - 1;
+  console.log(length);
+  var targetNum;
+
+  var check = $("input:radio[name=double]:checked").val();
+  console.log(check);
+
+  // $.ajax({
+  //   url: "http://localhost:8080/admin/add_exam_grp/" + grp,
+  //   type: "GET",
+  //   dataType: "json",
+  //   success: function (response) {
+  //     console.log(response);
+  //   },
+  // });
 }

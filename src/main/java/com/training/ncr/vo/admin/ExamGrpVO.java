@@ -20,5 +20,7 @@ public class ExamGrpVO {
     int tr_allow_secans;
     // 2차풀이 감점
     int tr_secans_deduct;
+    // 풀이시간
+    int tr_exam_time;
 
 }

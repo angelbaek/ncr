@@ -3,6 +3,7 @@ package com.training.ncr.controller.admin;
 import com.training.ncr.service.admin.TrainingService;
 import com.training.ncr.vo.TeamCodeVO;
 import com.training.ncr.vo.UserVO;
+import com.training.ncr.vo.admin.ExamGrpVO;
 import com.training.ncr.vo.admin.MgmtVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,20 +18,20 @@ public class TrainingController {
     TrainingService trainingService;
 
     @GetMapping("/admin/mgmt")
-    public List<MgmtVO> callMgmt(){
-        return trainingService.callMgmtVOList();
+    public List<ExamGrpVO> getExamGrp(){
+        return trainingService.getExamGrp();
     }
 
     // 훈련 차시별 확인
-    @PatchMapping("/admin/gprAct")
-    public int updateMgr(@RequestBody MgmtVO mgmtVO){
-        return trainingService.updateMgr(mgmtVO);
+    @PostMapping("/admin/gprAct")
+    public int insertMgr(@RequestBody MgmtVO mgmtVO){
+        return trainingService.insertMgr(mgmtVO);
     }
 
     // 훈련 차시별 수정
-    @PatchMapping("/admin/gpract_edit")
-    public int updateMgrEdit(@RequestBody MgmtVO mgmtVO){
-        return trainingService.updateMgrEdit(mgmtVO);
+    @DeleteMapping("/admin/gpract_edit")
+    public int deleteMgrEdit(@RequestBody MgmtVO mgmtVO){
+        return trainingService.deleteMgrEdit(mgmtVO);
     }
 
     // 훈련 시작
@@ -55,5 +56,11 @@ public class TrainingController {
     @GetMapping("/admin/teamcodeView")
     public List<TeamCodeVO> teamcodeView(){
         return trainingService.teamcodeView();
+    }
+
+    // mgmt table get
+    @GetMapping("/admin/get_train_mgmt")
+    public List<MgmtVO> getTranMgmt(){
+        return trainingService.getTranMgmt();
     }
 }

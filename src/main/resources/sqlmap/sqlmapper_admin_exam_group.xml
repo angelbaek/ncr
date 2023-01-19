@@ -1,11 +1,62 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.training.ncr.mapper.admin.ExamGroupMapper">
-<!--문제 그룹 불러오기-->
-<select id="getExamGrp" resultType="ExamGrpVO">
-    SELECT
-    *
-    FROM "TN_TRAIN_EXAMGRP"
-</select>
+    <!--문제 그룹 불러오기-->
+    <select id="getExamGrp" resultType="ExamGrpVO">
+        SELECT
+        *
+        FROM "TN_TRAIN_EXAMGRP"
+    </select>
+    
+    <!--문제 그룹 중복체크-->
+    <select id="overlapCheck" resultType="ExamGrpVO">
+        SELECT
+        *
+        FROM "TN_TRAIN_EXAMGRP"
+        WHERE "TR_EXAM_GRPNAME" = #{name}
+    </select>
 
+    <!--관리자 훈련 정보 INSERT-->
+    <insert id="insertTrainMgmt">
+        insert into "TN_TRAIN_MGMT"(
+        "TR_NUM",
+        "TR_EXAM_GRP",
+        "TR_TIME"
+        )
+        values(
+        0,
+        #{name},
+        #{time}
+        )
+    </insert>
+
+    <!--문제 그룹 정보 INSERT-->
+    <insert id="insertExamGrp">
+        insert into "TN_TRAIN_EXAMGRP"(
+        "TR_EXAM_GRPNAME",
+        "TR_EXAM_COUNT",
+        "TR_HINT_USE",
+        "TR_HINT_DEDUCT",
+        "TR_ALLOW_SECANS",
+        "TR_SECANS_DEDUCT",
+        "TR_EXAM_TIME"
+        )
+        values(
+        #{tr_exam_grpname},
+        #{tr_exam_count},
+        #{tr_hint_use},
+        #{tr_hint_deduct},
+        #{tr_allow_secans},
+        #{tr_secans_deduct},
+        #{tr_exam_time}
+        )
+    </insert>
+
+    <!--문제 그룹 삭제를 위한 조회-->
+    <select id="selectMgmtState">
+        SELECT
+        "TR_MGMT_STATE"
+        FROM "TN_TRAIN_MGMT"
+        WHERE "TR_EXAM_GRP" = #{grp}
+    </select>
 </mapper>

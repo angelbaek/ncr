@@ -35,4 +35,9 @@ public class ViewController {
     public String login(){
         return "/html/login.html";
     }
+
+    @GetMapping(value = {"html/admin_exam_group.html","/admin_exam_group.html"})
+    public String adminExamGroup(){
+        return "/html/admin_exam_group.html";
+    }
 }

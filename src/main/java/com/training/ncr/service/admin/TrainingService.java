@@ -3,6 +3,7 @@ package com.training.ncr.service.admin;
 import com.training.ncr.mapper.admin.TrainingMapper;
 import com.training.ncr.vo.TeamCodeVO;
 import com.training.ncr.vo.UserVO;
+import com.training.ncr.vo.admin.ExamGrpVO;
 import com.training.ncr.vo.admin.MgmtVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,18 +17,18 @@ public class TrainingService {
     TrainingMapper trainingMapper;
 
     // 훈련 설정 불러오기
-    public List<MgmtVO> callMgmtVOList(){
-        return trainingMapper.callMgmt();
+    public List<ExamGrpVO> getExamGrp(){
+        return trainingMapper.getExamGrp();
     }
 
     // 훈련설정 차시별 확인
-    public int updateMgr(MgmtVO mgmtVO){
-        return trainingMapper.updateMgr(mgmtVO);
+    public int insertMgr(MgmtVO mgmtVO){
+        return trainingMapper.insertMgr(mgmtVO);
     }
 
     // 훈련설정 차시별 수정
-    public int updateMgrEdit(MgmtVO mgmtVO){
-        return trainingMapper.updateMgrEdit(mgmtVO);
+    public int deleteMgrEdit(MgmtVO mgmtVO){
+        return trainingMapper.deleteMgrEdit(mgmtVO);
     }
 
     //훈련 시작
@@ -49,5 +50,10 @@ public class TrainingService {
     //팀코드 view
     public List<TeamCodeVO> teamcodeView(){
         return trainingMapper.teamcodeView();
+    }
+
+    //mgmt 불러오기
+    public List<MgmtVO> getTranMgmt() {
+    return trainingMapper.getTranMgmt();
     }
 }
