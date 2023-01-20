@@ -171,6 +171,7 @@ tr td {
   margin-bottom: 10px;
 }
 .exam_answer_common_text div {
+  color: #666;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -178,8 +179,8 @@ tr td {
   vertical-align: baseline;
 }
 .answer_input_text {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 50px;
+  margin-bottom: 50px;
   color: #34395e;
   font-weight: bold;
 }
@@ -202,7 +203,7 @@ tr td {
   vertical-align: -10px;
 }
 .exam_answer_title {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   color: #34395e;
   font-weight: bold;
 }
@@ -213,11 +214,78 @@ tr td {
   padding-left: 50px;
   padding-right: 50px;
 }
+.exam_answer_div_div {
+  padding: 60px;
+}
 .exam_answer_div_div input {
   width: 100%;
   padding: 10px 15px;
 }
 .exam_answer_common_text .dandap {
-  width: 700px;
-  height: 50px;
+  display: inline-block;
+  width: 100%;
+  height: 30px;
+  padding: 10px;
+}
+.dandap_import_text {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  color: #34395e;
+  font-weight: bold;
+}
+.bottom_div {
+  text-align: center;
+}
+.common_level_div {
+  color: #666;
+  margin: 20px;
+  width: auto;
+  display: inline-block;
+  text-align: center;
+}
+.common_level_div input {
+  margin-left: 5px;
+  margin-right: 5px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.common_level_div p {
+  display: inline-block;
+}
+
+.common_level_div button {
+  margin-left: 50px;
+  margin-right: 50px;
+  width: auto;
+}
+.setup_div button {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  margin-right: 100px;
+  margin-left: 100px;
+}
+.test .exam_answer_common_text {
+  text-align: left;
+  left: 0;
+}
+
+#left_call_div {
+  float: left;
+  margin-left: 30px;
+}
+
+.left_input_call {
+  text-align: left;
+}
+
+.left_input_call input {
+  padding: 10px;
+  height: 30px;
+  margin-left: 35px;
+  margin-bottom: 20px;
+}
+.tr_add tr {
+  /* border-collapse: collapse; */
+  display: inline-block;
 }

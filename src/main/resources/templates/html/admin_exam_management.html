@@ -33,14 +33,14 @@
       <div class="contents_title">문항 관리</div>      
       <div class="contents_title_top">
         <div class="contents_title_grp_name">문제 그룹명</div>
-        <select name="" id="">
+        <select name="grp_name" id="" class="select_view_body" onchange="selectGrpChange()">
           <option value="">직접선택</option>
         </select>
         <button class="exam_upload">문제 업로드</button>
       </div>
         <div class="exam_table">
           <table>
-            <tbody>
+            <tbody class="tr_add">
               <tr>
                 <td>1번 문제</td>
                 <td>1번 문제</td>
@@ -69,35 +69,57 @@
               </div>
               <div class="exam_answer_common_text">
                 <div>1번</div>
-                <input type="text">
+                <input type="text" maxlength="255">
               </div>
               <div class="exam_answer_common_text">
                 <div>2번</div>
-                <input type="text">
+                <input type="text" maxlength="255">
               </div>
               <div class="exam_answer_common_text">
                 <div>3번</div>
-                <input type="text">
+                <input type="text" maxlength="255">
               </div>
               <div class="exam_answer_common_text">
                 <div>4번</div>
-                <input type="text">
+                <input type="text" maxlength="255">
               </div>
               <div class="exam_answer_common_text">
                 <div>5번</div>
-                <input type="text">
+                <input type="text" maxlength="255">
               </div>
             </div>
-            <div>정답 입력</div>
+            <div class="dandap_import_text">정답 입력</div>
             <div class="test">              
-              <div class="exam_answer_common_text">
+              <div class="exam_answer_common_text" id="left_call_div">
                 <input type="checkbox" class="common_check">
                 <div class="exam_answer_common_text_check">단답형</div>
               </div>              
-              <div class="exam_answer_common_text">                
-                <input class="dandap" type="text">
-              </div>             
+              <div class="left_input_call">                
+                <input type="text" maxlength="255">
+              </div>                           
+            </div>            
+            <div class="bottom">
+              <div class="bottom_div">
+                <div class="common_level_div">
+                  <div class="">난이도 설정</div>
+                  <div class="">
+                    <input type="radio" name="trio"><p>상</p>
+                    <input type="radio" name="trio"><p>중</p>
+                    <input type="radio" name="trio"><p>하</p>
+                  </div>
+                </div>                
+                <div class="common_level_div">
+                  <input class="asddasqwe" type="checkbox"><p>복수 정답 허용</p>
+                </div>
+                <div class="common_level_div">
+                  <button>힌트 설정</button>
+                  <button>MITRE ATT&CK 정보 입력</button>
+                </div>                
               </div>
+            </div>
+            <div class="setup_div">
+              <button>초기화</button>
+              <button>저장</button>
             </div>
           </div>
         </div>
