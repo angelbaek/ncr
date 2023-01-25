@@ -15,4 +15,12 @@
         FROM "TN_TRAIN_EXAMGRP"
         WHERE "TR_EXAM_GRPID" = #{grpId}
     </select>
+
+    <!--선택한 문제 내용 가져오기-->
+    <select id="getExam" resultType="ExamVO">
+        SELECT
+        *
+        FROM "TN_TRAIN_EXAM"
+        WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid} AND "TR_EXAM_NUM" = #{tr_exam_num}
+    </select>
 </mapper>

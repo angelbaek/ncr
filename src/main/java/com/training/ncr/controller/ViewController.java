@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ViewController {
 
-    @GetMapping("/")
+    @GetMapping(value = {"/","/login.html","/html/login.html"})
     public String main(){
-        return "/html/login";
+        return "/html/login.html";
     }
 
     @GetMapping(value = {"/user_group_setting.html","/html/user_group_setting.html"})
@@ -39,5 +39,10 @@ public class ViewController {
     @GetMapping(value = {"html/admin_exam_group.html","/admin_exam_group.html"})
     public String adminExamGroup(){
         return "/html/admin_exam_group.html";
+    }
+
+    @GetMapping(value = {"html/admin_exam_management.html","/admin_exam_management.html"})
+    public String adminExam(){
+        return "/html/admin_exam_management.html";
     }
 }

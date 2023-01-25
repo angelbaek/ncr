@@ -5,6 +5,10 @@
   list-style: none;
   text-decoration-line: none;
 }
+a {
+  color: #34395e;
+  text-decoration: none;
+}
 
 button {
   border: none;
@@ -57,8 +61,126 @@ table {
 
 table,
 td,
-th {
+th,
+tr {
   border-collapse: collapse;
   width: auto;
   text-align: center;
+}
+
+.left_nav {
+  box-shadow: 0px 4px 8px rgb(0 0 0 / 30%);
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #fff;
+  z-index: 3;
+  left: 0;
+  /* border-right: 1px solid black; */
+}
+
+/* .left_nav:hover {
+  cursor: pointer;
+} */
+
+.nav_contents {
+  display: block;
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #34395e;
+  text-align: center;
+}
+
+.nav_title {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.nav_contents button {
+  display: inline-block;
+}
+
+.common_left_menubar:hover {
+  cursor: pointer;
+  border-radius: 10px;
+  color: blue;
+  text-decoration: underline;
+}
+.common_left_menubar:hover li > a {
+  text-decoration: none;
+}
+
+.dropdown {
+  text-align: center;
+  display: none;
+}
+/* #left_menubar:hover .dropdown {
+  cursor: pointer;
+  display: block;
+} */
+.dropdown a {
+  font-weight: bold;
+  /* text-decoration: line-through; */
+}
+
+.common_left_menubar {
+  font-size: 16px;
+  color: #34395e;
+  margin: 50px;
+}
+#left_menubar a {
+  font-size: 14px;
+}
+.common_left_menubar li {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+a:hover {
+  color: blue;
+  /* text-decoration: underline; */
+}
+
+.tr_add {
+  display: grid;
+  grid-template-columns: repeat(20, 70px);
+  /* grid-template-rows: 50px 50px; */
+  align-items: center;
+  place-items: center;
+}
+
+.exam_common_css {
+  /* background-color: lightblue;
+  border: 1px solid darkblue; */
+  color: blue;
+  text-align: center;
+  margin: auto;
+}
+
+tr {
+  margin: 20px;
+}
+
+.logout_btn {
+  position: absolute;
+  background-color: #6777ef;
+  border-radius: 5px;
+  font-weight: bold;
+  border: 1px solid #ced4da;
+  padding: 10px 15px;
+  box-shadow: 0px 4px 8px rgb(0 0 0 / 30%);
+  right: 0;
+  transition: 0.3s;
+}
+#logout:hover {
+  cursor: pointer;
+}
+.logout_btn:hover {
+  background-color: #394eea;
+  cursor: pointer;
 }

@@ -2,6 +2,7 @@ package com.training.ncr.controller.admin;
 
 import com.training.ncr.service.admin.ExamManagementService;
 import com.training.ncr.vo.admin.ExamGrpVO;
+import com.training.ncr.vo.admin.ExamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,4 +26,10 @@ public class ExamManagementController {
     public List<ExamGrpVO> getExamGrpCount(@PathVariable int grpId){
         return examManagementService.getExamGrpCount(grpId);
     }
+
+    // 선택한 문제 내용 가져오기
+    @PostMapping("/admin/exam_call")
+    public List<ExamVO> getExam(@RequestBody ExamVO examVO){
+        return examManagementService.getExam(examVO);
+    };
 }

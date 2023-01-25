@@ -12,19 +12,26 @@
   <!-- group css -->
   <link rel="stylesheet" href="/css/user_group_setting.css" />
   <link rel="stylesheet" href="/static/css/user_group_setting.css" />
+  <!-- font awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+  />
   <body>
     <div class="left_nav">
       <div class="nav_title">국가기간망<br />침투대응훈련</div>
       <div class="nav_contents">
-        <div>그룹 설정</div>
-        <div>문제 풀이</div>
-        <div>훈련 통계</div>
+        <div class="common_left_menubar" id="now_place">그룹 설정</div>
+        <div class="common_left_menubar">문제 풀이</div>
+        <div class="common_left_menubar">훈련 통계</div>
       </div>
     </div>
     <div class="top_user_info">
       <div class="top_user_info_div">
         <img src="/public/images/avatar-1.png" alt="user" />
         <div class="userName">User Name</div>
+        <i class="fas fa-caret-down" id="logout" onclick="showLogOutBtn()"></i>
+        <div class="logout_btn" onclick="logOut()">로그아웃</div>
       </div>
     </div>
     <div class="contents">
@@ -49,7 +56,7 @@
     </div>
     <div class="abs">
       <button class="saveButton" onclick="userGroupSave()">설정 저장</button>
-      <button onclick="training()">훈련 시작</button>
+      <button class="tn_start_btn" onclick="training()">훈련 시작</button>
     </div>
   </body>
   <script
@@ -59,4 +66,6 @@
   ></script>
   <script src="/static/js/user_group_setting.js"></script>
   <script src="/js/user_group_setting.js"></script>
+  <script src="/static/js/common.js"></script>
+  <script src="/js/common.js"></script>
 </html>

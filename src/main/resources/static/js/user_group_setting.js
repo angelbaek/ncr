@@ -1,6 +1,24 @@
 getSessionUserInfo();
 getTeamGroup();
 
+// 훈련 시작 버튼 활성화(클릭됨) 함수 css
+function trainingStartBtnOn() {
+  $(".tn_start_btn").attr("disabled", false);
+  $(".tn_start_btn").css("backgroundColor", "#6777ef");
+  $(".tn_start_btn").hover(
+    function () {
+      $(this).css("backgroundColor", "#394eea");
+    },
+    function () {
+      $(this).css("backgroundColor", "#6777ef");
+    }
+  );
+}
+// 훈련 시작 버튼 비활성화(클릭안됨) 함수 css
+function trainingStartBtnOff() {
+  $(".tn_start_btn").attr("disabled", true);
+  $(".tn_start_btn").css("backgroundColor", "gray");
+}
 let tr_user_id;
 // 훈련자 정보 가져오기
 function getSessionUserInfo() {
@@ -21,6 +39,12 @@ function getSessionUserInfo() {
       tr_user_id = response[0].tr_user_id;
       $(".userName").empty();
       $(".userName").append(tr_user_name);
+      if (response[0].tr_user_grp == 0) {
+        trainingStartBtnOff();
+      } else if (response[0].tr_user_grp != 0) {
+        trainingStartBtnOn();
+        $("#team_code").text(response[0].team_cd);
+      }
     },
   });
 }
@@ -57,7 +81,10 @@ let team_cd;
 function userGroupSave() {
   console.log(tr_user_grp);
   console.log(team_cd);
-
+  if (tr_user_grp == undefined) {
+    alert("팀을 선택하세요.");
+    return;
+  }
   var jsonData = {
     tr_user_grp: tr_user_grp,
     team_cd: team_cd,
@@ -103,13 +130,14 @@ function training() {
     dataType: "json",
     success: function (response) {
       console.log(response);
-      if (response[0].tr_exam_grp_act != 1) {
+      if (response.length == 0) {
         alert("문제가 활성화 되지 않았습니다");
         return;
-      } else if (response[0].tr_mgmt_state != 1) {
+      }
+      if (response[0].tr_mgmt_state != 1) {
         alert("문제가 활성화 되지 않았습니다");
         return;
-      } else {
+      } else if (response[0].tr_mgmt_state == 1) {
         alert("훈련을 시작합니다");
       }
     },

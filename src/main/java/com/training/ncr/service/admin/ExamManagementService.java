@@ -3,6 +3,7 @@ package com.training.ncr.service.admin;
 import com.training.ncr.mapper.admin.ExamGroupMapper;
 import com.training.ncr.mapper.admin.ExamManagementMapper;
 import com.training.ncr.vo.admin.ExamGrpVO;
+import com.training.ncr.vo.admin.ExamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,10 @@ public class ExamManagementService {
     // 선택된 문제그룹 문항 수 가져오기
     public List<ExamGrpVO> getExamGrpCount(int grpId){
         return examManagementMapper.getExamGrpCount(grpId);
+    }
+
+    // 선택한 문제 내용 가져오기
+    public List<ExamVO> getExam(ExamVO examVO){
+        return examManagementMapper.getExam(examVO);
     }
 }

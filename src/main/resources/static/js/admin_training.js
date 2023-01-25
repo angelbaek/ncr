@@ -135,8 +135,11 @@ function getSessionUserInfo() {
     url: "http://localhost:8080/user",
     type: "GET",
     dataType: "json",
+    error: function (error) {
+      alert("세션이 만료");
+      location.replace("/login.html");
+    },
     success: function (response) {
-      console.log(response);
       $(".userName").empty();
       $(".userName").append(response[0].admin_name);
     },
@@ -526,10 +529,12 @@ function getTrainMgmt() {
             $(".check_one").prop("checked", true);
             $(".check_two").prop("disabled", true);
             edit1BtnOff();
+            edit2BtnOff();
             // 시작된 훈련이 2차일 경우
           } else if (response[i].tr_num == 2) {
             $(".check_two").prop("checked", true);
             $(".check_one").prop("disabled", true);
+            edit1BtnOff();
             edit2BtnOff();
           }
           //훈련이 정지되었을 경우

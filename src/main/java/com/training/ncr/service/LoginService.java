@@ -50,9 +50,14 @@ public class LoginService {
 //        session = request.getSession(false);
         System.out.println("세션 불러오기: "+session);
 //        loginMapper.login(session.getId());
-        if(session.getAttribute(UserSessionVO.LOGIN_MEMBER)==null){
+        try {
+            session.getAttribute(UserSessionVO.LOGIN_MEMBER);
+        }catch (NullPointerException e){
             return null;
         }
+//        if(session.getAttribute(UserSessionVO.LOGIN_MEMBER)==null){
+//            return null;
+//        }
         String sessionId = (String) session.getAttribute(UserSessionVO.LOGIN_MEMBER);
 
         List<UserVO> test = loginMapper.login(sessionId);

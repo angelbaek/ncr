@@ -60,7 +60,7 @@ function join() {
         $(".user_id").focus();
       } else {
         alert("회원 등록 되었습니다.");
-        location.replace("login.html");
+        location.replace("/login.html");
       }
     },
   });

@@ -12,20 +12,39 @@
   <!-- common css -->
   <link rel="stylesheet" href="/css/common.css" />
   <link rel="stylesheet" href="/css/admin_exam_group.css" />
+  <!-- font awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+  />
   <body>
     <div class="left_nav">
       <div class="nav_title">국가기간망<br />침투대응훈련</div>
       <div class="nav_contents">
-        <div><a href="/html/admin_training.html">훈련 관리</a></div>
-        <div><a href="/html/admin_exam_group.html">문제 관리</a></div>
-        <div>문제 풀이</div>
-        <div>결과 보기</div>
+        <div class="common_left_menubar">
+          <a href="/html/admin_training.html">훈련 관리</a>
+        </div>
+        <div
+          class="common_left_menubar"
+          id="left_menubar"
+          onclick="dropdownMenu()"
+        >
+          문제 메뉴
+          <ul class="dropdown">
+            <li><a href="/html/admin_exam_group.html">문제 관리</a></li>
+            <li><a href="/html/admin_exam_management.html">문항 관리</a></li>
+          </ul>
+        </div>
+        <div class="common_left_menubar">문제 풀이</div>
+        <div class="common_left_menubar">결과 보기</div>
       </div>
     </div>
     <div class="top_user_info">
       <div class="top_user_info_div">
-        <img src="/public/images/avatar-1.png" alt="user" />
+        <img src="/public/images/avatar-4.png" alt="user" />
         <div class="userName">User Name</div>
+        <i class="fas fa-caret-down" id="logout" onclick="showLogOutBtn()"></i>
+        <div class="logout_btn" onclick="logOut()">로그아웃</div>
       </div>
     </div>
     <!-- 문제 그룹 -->
@@ -120,7 +139,19 @@
         object.value = object.value.slice(0, object.maxLength);
       }
     }
+    $(".dropdown").css("display", "block");
+    function dropdownMenu() {
+      var show = $(".dropdown").css("display");
+      console.log(show);
+      if (show == "none") {
+        $(".dropdown").css("display", "block");
+      } else if (show == "block") {
+        $(".dropdown").css("display", "none");
+      }
+    }
   </script>
   <script src="/static/js/admin_exam_group.js"></script>
   <script src="/js/admin_exam_group.js"></script>
+  <script src="/static/js/common.js"></script>
+  <script src="/js/common.js"></script>
 </html>
