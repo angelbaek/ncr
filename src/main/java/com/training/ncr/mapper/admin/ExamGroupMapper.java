@@ -21,4 +21,9 @@ public interface ExamGroupMapper {
 
     // 삭제를 위한 조회
     int selectMgmtState(String grp);
+
+    public List<ExamGrpVO> getExamGrpSelect(int num);
+
+    //삭제
+    int getExamGrpDelete(String name);
 }

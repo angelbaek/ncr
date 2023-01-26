@@ -66,6 +66,7 @@
           <option value="">직접선택</option>
         </select>
         <button class="exam_upload" onclick="resetExam()">문제 업로드</button>
+        <input type="file" name="file" id="file" />
       </div>
       <div class="exam_table">
         <table>
@@ -93,7 +94,9 @@
                   id="exam-type1"
                   name="double"
                 />
-                <div class="exam_answer_common_text_check">객관식</div>
+                <div class="exam_answer_common_text_check" id="only_css_check">
+                  객관식
+                </div>
               </div>
               <div class="exam_answer_common_text" id="left_call_div">
                 <input
@@ -166,13 +169,27 @@
         </div>
       </div>
     </div>
+    <!-- 힌트 div -->
+    <div class="popup_hint">
+      <div class="popup_hint_txt">힌트 내용</div>
+      <input class="hint_input" type="text" />
+      <div class="popup_hint_txt">힌트 파일 첨부</div>
+      <input type="file" />
+      <div>
+        <button>확인</button>
+        <button>취소</button>
+      </div>
+    </div>
   </body>
   <script
     src="https://code.jquery.com/jquery-3.6.3.js"
     integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"
   ></script>
+  <script src="jquery-csv.js"></script>
   <script>
+    //힌트팝업
+    $(".popup_hint").css("display", "none");
     $(".exam_add").css("display", "none");
     $(".dropdown").css("display", "block");
     //객관식 활성화 함수
@@ -215,7 +232,7 @@
         $(".dropdown").css("display", "none");
       }
     }
-
+    // 라디오 버튼 감지
     $("input[name='double']").change(function () {
       var test = $("input[name='double']:checked").val();
       if (test == 1) {
@@ -224,6 +241,25 @@
         choiceOff();
       }
     });
+  </script>
+  <script>
+    document.getElementById("file").onchange = function () {
+      var file = this.files[0];
+
+      var reader = new FileReader();
+      reader.onload = function (progressEvent) {
+        // Entire file
+        // console.log(this.result);
+
+        // By lines
+        var lines = this.result.split("\n");
+        for (var line = 1; line < lines.length; line++) {
+          console.log(lines.length);
+          console.log("한줄 읽기:" + lines[line]);
+        }
+      };
+      console.log(reader.readAsText(file));
+    };
   </script>
   <script src="/static/js/common.js"></script>
   <script src="/js/common.js"></script>

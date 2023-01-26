@@ -204,7 +204,7 @@ tr td {
 }
 .dandap_import_text {
   text-align: left;
-  padding-left: 160px;
+  padding-left: 60px;
   margin-top: 50px;
   margin-bottom: 20px;
   color: #34395e;
@@ -254,7 +254,7 @@ tr td {
 }
 
 .left_input_call {
-  margin-left: 110px;
+  margin-left: 13px;
   width: 400px;
   text-align: left;
 }
@@ -264,7 +264,7 @@ tr td {
   height: 30px;
   margin-left: 43px;
   margin-bottom: 20px;
-  width: 425px;
+  width: 505px;
 }
 .tr_add tr {
   font-size: 18px;
@@ -318,4 +318,42 @@ tr td {
 
 .dropdown:hover li {
   text-decoration: underline;
+}
+
+.popup_hint {
+  border-radius: 10px;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  width: 500px;
+  height: 500px;
+  background-color: black;
+  color: white;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
+  vertical-align: middle;
+}
+.popup_hint * {
+  display: block;
+  width: auto;
+  height: auto;
+  margin: auto;
+  margin-top: 50px;
+}
+.popup_hint input {
+  height: 30px;
+  padding: 10px 15px;
+}
+
+.popup_hint button {
+  display: inline-block;
+  padding: 5px 15px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+#only_css_check {
+  padding-bottom: 25px;
 }

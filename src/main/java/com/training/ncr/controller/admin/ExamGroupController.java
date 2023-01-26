@@ -28,4 +28,16 @@ public class ExamGroupController {
     public int selectMgmtState(@PathVariable String mgr){
         return examGroupService.selectMgmtState(mgr);
     }
+
+    // 선택한 그룹 보여주기
+    @GetMapping("/admin/exam_group_select/{num}")
+    public List<ExamGrpVO> getExamGrpSelect(@PathVariable int num){
+        return examGroupService.getExamGrpSelect(num);
+    }
+
+    //삭제
+    @DeleteMapping("/admin/exam_group_delete/{name}")
+    public int getExamGrpDelete(@PathVariable String name){
+        return examGroupService.getExamGrpDelete(name);
+    }
 }

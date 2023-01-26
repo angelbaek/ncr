@@ -33,4 +33,13 @@ public class ExamGroupService {
     public int selectMgmtState(String mgr){
         return examGroupMapper.selectMgmtState(mgr);
     }
+
+    public List<ExamGrpVO> getExamGrpSelect(int num) {
+        return examGroupMapper.getExamGrpSelect(num);
+    }
+
+    //삭제
+    public int getExamGrpDelete(String name){
+        return examGroupMapper.getExamGrpDelete(name);
+    }
 }

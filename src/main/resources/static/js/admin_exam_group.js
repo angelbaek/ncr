@@ -20,10 +20,12 @@ function examGroupCall() {
           "<tr class='tr_even'><td>" +
           '<input value="check(' +
           i +
-          ')" type="radio" name="double" />' +
-          "</td><td class=grp(" +
+          ')" type="radio" name="double" onclick="radioBtnOn(' +
+          response[i].tr_exam_grpid +
+          ')"/>' +
+          "</td><td class=grp_" +
           i +
-          ")>" +
+          ">" +
           response[i].tr_exam_grpname +
           "</td><td class=" +
           i +
@@ -38,6 +40,8 @@ function examGroupCall() {
 
 // 문제 그룹 추가 함수
 function grpAdd() {
+  $("input[name=double]").prop("checked", false);
+  reset();
   $(".exam_add").css("display", "block");
 }
 
@@ -144,20 +148,58 @@ function save() {
 
 // 삭제 함수
 function grpDelete() {
-  var grp = $("tr td:last-child");
-  var length = grp.length - 1;
-  console.log(length);
-  var targetNum;
-
   var check = $("input:radio[name=double]:checked").val();
   console.log(check);
+  var regex = /[^0-9]/g; // 숫자가 아닌 문자열을 선택하는 정규식
+  var result = check.replace(regex, ""); // 원래 문자열에서 숫자가 아닌 모든 문자열을 빈 문자로 변경
+  console.log(result); // 결과 출력
+  var grpname = "grp_" + result;
+  // console.log(grpname);
+  var name = $("." + grpname).text();
+  // console.log(test);
+  if (confirm("정말로 삭제하시겠습니까?")) {
+    $.ajax({
+      url: "http://localhost:8080/admin/exam_group_delete/" + name,
+      type: "DELETE",
+      dataType: "json",
+      success: function (response) {
+        if (response > 0) {
+          alert("삭제 되었습니다");
+          location.reload();
+        }
+      },
+    });
+  }
+}
 
-  // $.ajax({
-  //   url: "http://localhost:8080/admin/add_exam_grp/" + grp,
-  //   type: "GET",
-  //   dataType: "json",
-  //   success: function (response) {
-  //     console.log(response);
-  //   },
-  // });
+// 선택한 그룹 뿌려주기
+function radioBtnOn(num) {
+  $(".exam_add").css("display", "block");
+  $.ajax({
+    url: "http://localhost:8080/admin/exam_group_select/" + num,
+    type: "GET",
+    dataType: "json",
+    success: function (response) {
+      reset();
+      console.log(response);
+      //문제 그룹명
+      $(".grp_name").val(response[0].tr_exam_grpname);
+      //문제 개수
+      $(".grp_count").val(response[0].tr_exam_count);
+      //풀이 시간
+      $(".grp_time").val(response[0].tr_exam_time);
+      //힌트 허용
+      if (response[0].tr_hint_use == 1) {
+        $(".check_one").prop("checked", true);
+        //힌트 감점
+        $(".input_number1").val(response[0].tr_hint_deduct);
+      }
+      if (response[0].tr_allow_secans == 1) {
+        //두번 허용
+        $(".check_two").prop("checked", true);
+        //두번 감점
+        $(".input_number2").val(response[0].tr_secans_deduct);
+      }
+    },
+  });
 }

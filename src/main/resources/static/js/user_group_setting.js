@@ -102,7 +102,7 @@ function userGroupSave() {
       console.log(response);
       if (response > 0) {
         alert("훈련준비 상태가 변경되었습니다");
-        // location.reload();
+        location.reload();
       }
     },
   });

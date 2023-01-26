@@ -59,4 +59,17 @@
         FROM "TN_TRAIN_MGMT"
         WHERE "TR_EXAM_GRP" = #{grp}
     </select>
+
+    <select id="getExamGrpSelect" resultType="ExamGrpVO">
+        SELECT
+        *
+        FROM "TN_TRAIN_EXAMGRP"
+        WHERE "TR_EXAM_GRPID" = #{num}
+    </select>
+
+    <delete id="getExamGrpDelete">
+        DELETE
+        FROM "TN_TRAIN_EXAMGRP"
+        WHERE "TR_EXAM_GRPNAME" = #{name}
+    </delete>
 </mapper>
