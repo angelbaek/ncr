@@ -4,6 +4,7 @@
   box-sizing: border-box;
   list-style: none;
   text-decoration-line: none;
+  transition: 0.3s;
 }
 a {
   color: #34395e;
@@ -108,10 +109,7 @@ tr {
   cursor: pointer;
   border-radius: 10px;
   color: blue;
-  text-decoration: underline;
-}
-.common_left_menubar:hover li > a {
-  text-decoration: none;
+  font-weight: bold;
 }
 
 .dropdown {
@@ -183,4 +181,8 @@ tr {
 .logout_btn:hover {
   background-color: #394eea;
   cursor: pointer;
+}
+
+#only_css:hover {
+  text-decoration: underline;
 }

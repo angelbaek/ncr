@@ -14,3 +14,21 @@ function showLogOutBtn() {
     $(".logout_btn").css("display", "none");
   }
 }
+
+// 사용자 정보 가져오기
+function getSessionUserInfo() {
+  console.log("세션 읽어오기 실행중...");
+  $.ajax({
+    url: "http://localhost:8080/user",
+    type: "GET",
+    dataType: "json",
+    error: function (error) {
+      // alert("세션이 만료");
+      // location.replace("/login.html");
+    },
+    success: function (response) {
+      $(".userName").empty();
+      $(".userName").append(response[0].admin_name);
+    },
+  });
+}

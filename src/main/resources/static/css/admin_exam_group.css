@@ -13,7 +13,8 @@
 
 .contents {
   padding: 20px;
-  margin-top: 70px;
+  padding-top: 90px;
+  /* margin-top: 70px; */
   position: absolute;
   /* margin-top: 300px; */
   /* margin-left: 250px; */
@@ -21,6 +22,7 @@
   /* margin-right: 250px; */
 
   width: 100%;
+  height: auto;
 
   /* max-width: 1650px; */
   /* background-color: aqua; */
@@ -175,6 +177,7 @@ tr:last-child td {
 .exam_group {
   border-radius: 10px;
   padding: 20px;
+  margin-left: 30px;
   margin-right: 30px;
   /* position: absolute; */
   color: #6c757d;
@@ -206,7 +209,9 @@ td input {
 .exam_add {
   padding: 20px;
   border-radius: 10px;
+  margin-left: 30px;
   margin-right: 30px;
+  margin-bottom: 10px;
   /* border: 1px solid gray; */
   box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
   margin-top: 50px;
@@ -263,5 +268,18 @@ input {
 
 #left_menubar {
   color: #394eea;
+  /* text-decoration: underline; */
+}
+
+.exam_group_css {
+  color: #394eea;
+  text-decoration: underline;
+}
+
+.dropdown:hover a {
+  text-decoration: underline;
+}
+
+#only_css:hover {
   text-decoration: underline;
 }

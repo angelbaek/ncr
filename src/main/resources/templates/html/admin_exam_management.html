@@ -22,16 +22,26 @@
       <div class="nav_title">국가기간망<br />침투대응훈련</div>
       <div class="nav_contents">
         <div class="common_left_menubar">
-          <a href="/html/admin_training.html">훈련 관리</a>
+          <a href="/html/admin_training.html" id="only_css">훈련 관리</a>
         </div>
-        <div class="common_left_menubar" id="left_menubar" onclick="dropdownMenu()">문제 메뉴
+        <div
+          class="common_left_menubar"
+          id="left_menubar"
+          onclick="dropdownMenu()"
+        >
+          문제 관리
+          <i class="fas fa-caret-down" id="dropbox_ic"></i>
           <ul class="dropdown">
-            <li><a href="/html/admin_exam_group.html">문제 관리</a></li>
-            <li><a href="/html/admin_exam_management.html">문항 관리</a></li>
-          </ul>          
+            <li><a href="/html/admin_exam_group.html">문제 그룹</a></li>
+            <li>
+              <a class="exam_manage_css" href="/html/admin_exam_management.html"
+                >문항 관리</a
+              >
+            </li>
+          </ul>
         </div>
-        <div class="common_left_menubar">문제 풀이</div>
-        <div class="common_left_menubar">결과 보기</div>
+        <div class="common_left_menubar" id="only_css">문제 풀이</div>
+        <div class="common_left_menubar" id="only_css">결과 보기</div>
       </div>
     </div>
     <div class="top_user_info">
@@ -44,95 +54,114 @@
     </div>
     <!-- 문제 그룹 -->
     <div class="contents">
-      <div class="contents_title">문항 관리</div>      
+      <div class="contents_title">문항 관리</div>
       <div class="contents_title_top">
         <div class="contents_title_grp_name">문제 그룹명</div>
-        <select name="grp_name" id="" class="select_view_body" onchange="selectGrpChange()">
+        <select
+          name="grp_name"
+          id=""
+          class="select_view_body"
+          onchange="selectGrpChange()"
+        >
           <option value="">직접선택</option>
         </select>
         <button class="exam_upload" onclick="resetExam()">문제 업로드</button>
       </div>
-        <div class="exam_table">
-          <table>
-            <tbody class="tr_add">
-              <tr>
-                
-              </tr>              
-            </tbody>
-          </table>
-        </div>
-        <div class="exam_answer">
-          <div class="exam_answer_div">
-            <div class="exam_answer_div_div">
-              <div class="exam_answer_title">문제</div>
-              <input class="exam_answer_title_const" type="text" >
-            </div>            
-            <div class="answer_input_text">문제유형 &#160&#160&#160&#160&#160&#160 문제보기</div>
-            <div class="test">     
-              <div class="slice_box1">
-                <div class="exam_answer_common_text">
-                  <input type="radio" class="common_check" value="1" id="exam-type1" name="double">
-                  <div class="exam_answer_common_text_check">객관식</div>
-                </div>
-                <div class="exam_answer_common_text" id="left_call_div">
-                  <input type="radio" class="common_check" value="2" id="exam-type2" name="double">
-                  <div class="exam_answer_common_text_check">단답형</div>
-                </div>
-              </div>         
-              <div class="slice_box2">
-                <div class="exam_answer_common_text">
-                  <div>1번</div>
-                  <input type="text" maxlength="255" class="tr_exam_choice_1">
-                </div>
-                <div class="exam_answer_common_text">
-                  <div>2번</div>
-                  <input type="text" maxlength="255" class="tr_exam_choice_2">
-                </div>
-                <div class="exam_answer_common_text">
-                  <div>3번</div>
-                  <input type="text" maxlength="255" class="tr_exam_choice_3">
-                </div>
-                <div class="exam_answer_common_text">
-                  <div>4번</div>
-                  <input type="text" maxlength="255" class="tr_exam_choice_4">
-                </div>        
-                <br>      
-                <div class="exam_answer_common_text">
-                  <div>5번</div>
-                  <input type="text" maxlength="255" class="tr_exam_choice_5">
-                </div>
+      <div class="exam_table">
+        <table>
+          <tbody class="tr_add">
+            <tr></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="exam_answer">
+        <div class="exam_answer_div">
+          <div class="exam_answer_div_div">
+            <div class="exam_answer_title">문제</div>
+            <input class="exam_answer_title_const" type="text" />
+          </div>
+          <div class="answer_input_text">
+            문제유형 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;문제보기
+          </div>
+          <div class="test">
+            <div class="slice_box1">
+              <div class="exam_answer_common_text">
+                <input
+                  type="radio"
+                  class="common_check"
+                  value="1"
+                  id="exam-type1"
+                  name="double"
+                />
+                <div class="exam_answer_common_text_check">객관식</div>
+              </div>
+              <div class="exam_answer_common_text" id="left_call_div">
+                <input
+                  type="radio"
+                  class="common_check"
+                  value="2"
+                  id="exam-type2"
+                  name="double"
+                />
+                <div class="exam_answer_common_text_check">단답형</div>
               </div>
             </div>
-            <div class="dandap_import_text">정답 입력</div>
-            <div class="test">              
-                            
-              <div class="left_input_call">                
-                <input type="text" maxlength="255" class="tr_exam_ans">
-              </div>                           
-            </div>            
-            <div class="bottom">
-              <div class="bottom_div">
-                <div class="common_level_div">
-                  <div class="">난이도 설정</div>
-                  <div class="">
-                    <input type="radio" name="trio" id="tr_exam_level1"><p>상</p>
-                    <input type="radio" name="trio" id="tr_exam_level2"><p>중</p>
-                    <input type="radio" name="trio" id="tr_exam_level3"><p>하</p>
-                  </div>
-                </div>                
-                <div class="common_level_div">
-                  <input class="tr_exam_mult_ans" type="checkbox"><p>복수 정답 허용</p>
-                </div>
-                <div class="common_level_div">
-                  <button>힌트 설정</button>
-                  <button>MITRE ATT&CK 정보 입력</button>
-                </div>                
+            <div class="slice_box2">
+              <div class="exam_answer_common_text">
+                <div>1번</div>
+                <input type="text" maxlength="255" class="tr_exam_choice_1" />
+              </div>
+              <div class="exam_answer_common_text">
+                <div>2번</div>
+                <input type="text" maxlength="255" class="tr_exam_choice_2" />
+              </div>
+              <div class="exam_answer_common_text">
+                <div>3번</div>
+                <input type="text" maxlength="255" class="tr_exam_choice_3" />
+              </div>
+              <div class="exam_answer_common_text">
+                <div>4번</div>
+                <input type="text" maxlength="255" class="tr_exam_choice_4" />
+              </div>
+              <br />
+              <div class="exam_answer_common_text">
+                <div>5번</div>
+                <input type="text" maxlength="255" class="tr_exam_choice_5" />
               </div>
             </div>
-            <div class="setup_div">
-              <button onclick="resetExam()">초기화</button>
-              <button>저장</button>
+          </div>
+          <div class="dandap_import_text">정답 입력</div>
+          <div class="test">
+            <div class="left_input_call">
+              <input type="text" maxlength="255" class="tr_exam_ans" />
             </div>
+          </div>
+          <div class="bottom">
+            <div class="bottom_div">
+              <div class="common_level_div">
+                <div class="">난이도 설정</div>
+                <div class="">
+                  <input type="radio" name="trio" id="tr_exam_level1" />
+                  <p>상</p>
+                  <input type="radio" name="trio" id="tr_exam_level2" />
+                  <p>중</p>
+                  <input type="radio" name="trio" id="tr_exam_level3" />
+                  <p>하</p>
+                </div>
+              </div>
+              <div class="common_level_div">
+                <input class="tr_exam_mult_ans" type="checkbox" />
+                <p>복수 정답 허용</p>
+              </div>
+              <div class="common_level_div">
+                <button>힌트 설정</button>
+                <button>MITRE ATT&CK 정보 입력</button>
+              </div>
+            </div>
+          </div>
+          <div class="setup_div">
+            <button onclick="resetExam()">초기화</button>
+            <button>저장</button>
           </div>
         </div>
       </div>
@@ -144,38 +173,60 @@
     crossorigin="anonymous"
   ></script>
   <script>
-    $(".exam_add").css("display", "none");    
-    $('.dropdown').css('display', 'block');
-    function dropdownMenu(){
-      var show = $('.dropdown').css('display');
+    $(".exam_add").css("display", "none");
+    $(".dropdown").css("display", "block");
+    //객관식 활성화 함수
+    function choiceOn() {
+      $(".tr_exam_choice_1").prop("disabled", false);
+      $(".tr_exam_choice_2").prop("disabled", false);
+      $(".tr_exam_choice_3").prop("disabled", false);
+      $(".tr_exam_choice_4").prop("disabled", false);
+      $(".tr_exam_choice_5").prop("disabled", false);
+      $(".tr_exam_choice_1").css("backgroundColor", "white");
+      $(".tr_exam_choice_2").css("backgroundColor", "white");
+      $(".tr_exam_choice_3").css("backgroundColor", "white");
+      $(".tr_exam_choice_4").css("backgroundColor", "white");
+      $(".tr_exam_choice_5").css("backgroundColor", "white");
+    }
+    //객관식 비활성화 함수
+    function choiceOff() {
+      $(".tr_exam_choice_1").prop("disabled", true);
+      $(".tr_exam_choice_2").prop("disabled", true);
+      $(".tr_exam_choice_3").prop("disabled", true);
+      $(".tr_exam_choice_4").prop("disabled", true);
+      $(".tr_exam_choice_5").prop("disabled", true);
+      $(".tr_exam_choice_1").css("backgroundColor", "#cccccc");
+      $(".tr_exam_choice_2").css("backgroundColor", "#cccccc");
+      $(".tr_exam_choice_3").css("backgroundColor", "#cccccc");
+      $(".tr_exam_choice_4").css("backgroundColor", "#cccccc");
+      $(".tr_exam_choice_5").css("backgroundColor", "#cccccc");
+    }
+    choiceOff();
+
+    $("#dropbox_ic").css("transform", "rotate(180deg)");
+    function dropdownMenu() {
+      var show = $(".dropdown").css("display");
       console.log(show);
-      if(show=='none'){
-        $('.dropdown').css('display', 'block');
-      }else if(show=='block'){
-        $('.dropdown').css('display', 'none');
-      }      
+      if (show == "none") {
+        $("#dropbox_ic").css("transform", "rotate(180deg)");
+        $(".dropdown").css("display", "block");
+      } else if (show == "block") {
+        $("#dropbox_ic").css("transform", "rotate(0deg)");
+        $(".dropdown").css("display", "none");
+      }
     }
 
-    $("input[name='double']").change(function(){
+    $("input[name='double']").change(function () {
       var test = $("input[name='double']:checked").val();
-      alert(test);			
-      if(test==1){
-        $('.tr_exam_choice_1').prop('disabled', false);
-        $('.tr_exam_choice_2').prop('disabled', false);
-        $('.tr_exam_choice_3').prop('disabled', false);
-        $('.tr_exam_choice_4').prop('disabled', false);
-        $('.tr_exam_choice_5').prop('disabled', false);
-      }else if(test==2){
-        $('.tr_exam_choice_1').prop('disabled', true);
-        $('.tr_exam_choice_2').prop('disabled', true);
-        $('.tr_exam_choice_3').prop('disabled', true);
-        $('.tr_exam_choice_4').prop('disabled', true);
-        $('.tr_exam_choice_5').prop('disabled', true);
+      if (test == 1) {
+        choiceOn();
+      } else if (test == 2) {
+        choiceOff();
       }
     });
   </script>
-  <script src="/static/js/admin_exam_management.js"></script>
-  <script src="/js/admin_exam_management.js"></script>
   <script src="/static/js/common.js"></script>
   <script src="/js/common.js"></script>
+  <script src="/static/js/admin_exam_management.js"></script>
+  <script src="/js/admin_exam_management.js"></script>
 </html>

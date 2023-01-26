@@ -128,23 +128,7 @@ function edit2BtnOn() {
 /**
  * server와 통신하여 api 가져오는 함수들(dataType:json)
  */
-// 사용자 정보 가져오기
-function getSessionUserInfo() {
-  console.log("세션 읽어오기 실행중...");
-  $.ajax({
-    url: "http://localhost:8080/user",
-    type: "GET",
-    dataType: "json",
-    error: function (error) {
-      alert("세션이 만료");
-      location.replace("/login.html");
-    },
-    success: function (response) {
-      $(".userName").empty();
-      $(".userName").append(response[0].admin_name);
-    },
-  });
-}
+
 // 훈련관리 정보 가져오기
 function getTraining() {
   console.log("세션 읽어오기 실행중...");

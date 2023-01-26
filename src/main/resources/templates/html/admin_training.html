@@ -22,21 +22,30 @@
       <div class="nav_title">국가기간망<br />침투대응훈련</div>
       <div class="nav_contents">
         <div class="common_left_menubar" id="training_management">
-          <a href="/html/admin_training.html">훈련 관리</a>
+          <a href="/html/admin_training.html" id="only_css">훈련 관리</a>
         </div>
         <div
           class="common_left_menubar"
           id="left_menubar"
           onclick="dropdownMenu()"
         >
-          문제 메뉴
+          문제 관리
+          <i class="fas fa-caret-down" id="dropbox_ic"></i>
           <ul class="dropdown">
-            <li><a href="/html/admin_exam_group.html">문제 관리</a></li>
-            <li><a href="/html/admin_exam_management.html">문항 관리</a></li>
+            <li>
+              <a class="exam_manage_css" href="/html/admin_exam_group.html"
+                >문제 그룹</a
+              >
+            </li>
+            <li>
+              <a class="exam_manage_css" href="/html/admin_exam_management.html"
+                >문항 관리</a
+              >
+            </li>
           </ul>
         </div>
-        <div class="common_left_menubar">문제 풀이</div>
-        <div class="common_left_menubar">결과 보기</div>
+        <div class="common_left_menubar" id="only_css">문제 풀이</div>
+        <div class="common_left_menubar" id="only_css">결과 보기</div>
       </div>
     </div>
     <div class="top_user_info">
@@ -58,8 +67,8 @@
       </div>
       <!-- 훈련 설정 -->
       <div class="contents_setup">
-        <div class="contents_setup_title">훈련 설정</div>
         <div class="one">
+          <div class="contents_setup_title">훈련 설정</div>
           <div class="contents_setup_one">
             <input class="check_one" type="radio" name="double" />
             <div>1차시</div>
@@ -81,8 +90,8 @@
         </div>
       </div>
       <!-- 그룹 조회 -->
-      <div class="group_view_title">그룹 조회</div>
       <div class="group_view">
+        <div class="group_view_title">그룹 조회</div>
         <table class="group_view_head">
           <tr>
             <th>이름</th>
@@ -121,8 +130,10 @@
       var show = $(".dropdown").css("display");
       console.log(show);
       if (show == "none") {
+        $("#dropbox_ic").css("transform", "rotate(180deg)");
         $(".dropdown").css("display", "block");
       } else if (show == "block") {
+        $("#dropbox_ic").css("transform", "rotate(0deg)");
         $(".dropdown").css("display", "none");
       }
     }
@@ -132,8 +143,8 @@
     // $(".btn_edit2").css("backgroundColor", "gray");
     // $(".btn_ok1").attr("disabled", true);
   </script>
-  <script src="/static/js/admin_training.js"></script>
-  <script src="/js/admin_training.js"></script>
   <script src="/static/js/common.js"></script>
   <script src="/js/common.js"></script>
+  <script src="/static/js/admin_training.js"></script>
+  <script src="/js/admin_training.js"></script>
 </html>

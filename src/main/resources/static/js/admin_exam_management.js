@@ -4,23 +4,6 @@
 examGroupCall();
 
 getSessionUserInfo();
-// 사용자 정보 가져오기
-function getSessionUserInfo() {
-  console.log("세션 읽어오기 실행중...");
-  $.ajax({
-    url: "http://localhost:8080/user",
-    type: "GET",
-    dataType: "json",
-    error: function (error) {
-      alert("세션이 만료");
-      location.replace("/login.html");
-    },
-    success: function (response) {
-      $(".userName").empty();
-      $(".userName").append(response[0].admin_name);
-    },
-  });
-}
 
 // 문제 초기화 함수
 function resetExam() {
@@ -79,7 +62,9 @@ function selectGrpChange() {
       // 추가 edit
       for (var i = 0; i < response[0].tr_exam_count; i++) {
         html +=
-          "<tr><td class='exam_common_css' onclick='exam(" +
+          "<tr><td class='exam_common_css' id='exam_id_" +
+          (i + 1) +
+          "' onclick='exam(" +
           (i + 1) +
           ")'>" +
           (i + 1) +
@@ -94,11 +79,21 @@ function selectGrpChange() {
 
 // 개별 문제 불러오기
 var exam_num;
+var target_num = 0;
 function exam(exam_num) {
+  $("#exam_id_" + target_num).css("backgroundColor", "white");
+  $("#exam_id_" + target_num).css("color", "blue");
+  $("#exam_id_" + target_num).css(
+    "box-shadow",
+    "0 0px 0px 0px rgb(0 0 0 / 50%)"
+  );
   // 문제 그룹 id 변수
+  target_num = exam_num;
   var exam_grpid = $("select[name=grp_name] option:selected").val();
   console.log(exam_grpid);
-  // 객체 지정
+  $("#exam_id_" + exam_num).css("backgroundColor", "#6777ef");
+  $("#exam_id_" + exam_num).css("color", "white");
+  $("#exam_id_" + exam_num).css("box-shadow", "0 1px 4px 1px rgb(0 0 0 / 50%)");
   var jsonData = {
     tr_exam_grpid: exam_grpid,
     tr_exam_num: exam_num,
@@ -157,7 +152,7 @@ function exam(exam_num) {
       // 문제 유형에 따른 대입(객관식)
       if (tr_exam_type == 1) {
         $("#exam-type1").prop("checked", true);
-
+        choiceOn();
         // 1번
         $(".tr_exam_choice_1").val(tr_exam_choice_1);
 
@@ -175,6 +170,7 @@ function exam(exam_num) {
       } else if (tr_exam_type == 2) {
         //주관식
         $("#exam-type2").prop("checked", true);
+        choiceOff();
       }
     },
   });

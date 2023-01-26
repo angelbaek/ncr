@@ -15,15 +15,10 @@
   padding: 20px;
   margin-top: 70px;
   position: absolute;
-  /* margin-top: 300px; */
-  /* margin-left: 250px; */
+
   padding-left: 280px;
-  /* margin-right: 250px; */
 
   width: 100%;
-
-  /* max-width: 1650px; */
-  /* background-color: aqua; */
 }
 .common_box {
   color: #495057;
@@ -209,7 +204,7 @@ tr td {
 }
 .dandap_import_text {
   text-align: left;
-  padding-left: 150px;
+  padding-left: 160px;
   margin-top: 50px;
   margin-bottom: 20px;
   color: #34395e;
@@ -267,7 +262,7 @@ tr td {
 .left_input_call input {
   padding: 10px;
   height: 30px;
-  margin-left: 35px;
+  margin-left: 43px;
   margin-bottom: 20px;
   width: 425px;
 }
@@ -280,6 +275,11 @@ tr td {
 #left_menubar {
   color: #394eea;
   /* text-decoration: underline; */
+}
+.exam_common_css {
+  border-radius: 3px;
+  width: 50px;
+  /* box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%); */
 }
 
 .exam_common_css:hover {
@@ -309,4 +309,13 @@ tr td {
 
 .slice_box2 .exam_answer_common_text {
   margin-right: 20px;
+}
+
+.exam_manage_css {
+  color: #394eea;
+  text-decoration: underline;
+}
+
+.dropdown:hover li {
+  text-decoration: underline;
 }

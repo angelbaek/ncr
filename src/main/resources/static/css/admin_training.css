@@ -127,8 +127,9 @@ select {
   font-size: 16px;
 }
 .one {
+  text-align: center;
   border-radius: 5px;
-  border: 1px solid gray;
+  box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
   padding-top: 30px;
   padding-bottom: 30px;
 }
@@ -151,18 +152,19 @@ select {
   /* margin-left: -200px; */
 }
 .contents_setup_title {
+  display: inline-block;
   margin-bottom: 10px;
   font-weight: bold;
   text-align: center;
 }
 .group_view {
-  padding-bottom: 20px;
+  padding: 30px;
   margin: 50px;
   margin-top: 10px;
   border-radius: 5px;
   width: auto;
   height: auto;
-  border: 1px solid gray;
+  box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
 }
 .group_view_head {
   width: 90%;
@@ -193,6 +195,7 @@ tr:last-child td {
 }
 
 .group_view_title {
+  margin-bottom: 10px;
   text-align: center;
   font-size: 16px;
   color: #000;
@@ -200,6 +203,7 @@ tr:last-child td {
 }
 
 .teamcode_view {
+  padding: 30px;
   border-radius: 10px;
   top: 50%;
   left: 50%;
@@ -209,9 +213,8 @@ tr:last-child td {
   position: fixed;
   z-index: 5;
   background-color: #fff;
-  border: gray 1px solid;
   color: #000;
-  box-shadow: 0 2px 6px #acb5f6;
+  box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
   padding: 20px;
 }
 
@@ -232,5 +235,9 @@ tr:last-child td {
 
 #training_management a {
   color: #394eea;
+  text-decoration: underline;
+}
+
+.exam_manage_css:hover {
   text-decoration: underline;
 }
