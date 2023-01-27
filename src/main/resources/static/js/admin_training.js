@@ -382,6 +382,8 @@ function groupView() {
 //팀코드 view
 function teamcodeView() {
   $(".teamcode_view").css("display", "block");
+  $(".back").toggle();
+  scrollPause();
   $.ajax({
     url: "http://localhost:8080/admin/teamcodeView",
     type: "GET",
@@ -421,6 +423,8 @@ function teamcodeView() {
 // 팀코드 뷰 닫기
 function teamcode_view_btn() {
   $(".teamcode_view").css("display", "none");
+  $(".back").toggle();
+  scrollPause();
 }
 
 // 수정 버튼

@@ -65,8 +65,9 @@
         >
           <option value="">직접선택</option>
         </select>
-        <button class="exam_upload" onclick="resetExam()">문제 업로드</button>
-        <input type="file" name="file" id="file" />
+        <button class="exam_upload" onclick="popup_exam_popupStatus()">
+          문제 업로드
+        </button>
       </div>
       <div class="exam_table">
         <table>
@@ -144,11 +145,26 @@
               <div class="common_level_div">
                 <div class="">난이도 설정</div>
                 <div class="">
-                  <input type="radio" name="trio" id="tr_exam_level1" />
+                  <input
+                    type="radio"
+                    name="trio"
+                    id="tr_exam_level1"
+                    value="1"
+                  />
                   <p>상</p>
-                  <input type="radio" name="trio" id="tr_exam_level2" />
+                  <input
+                    type="radio"
+                    name="trio"
+                    id="tr_exam_level2"
+                    value="2"
+                  />
                   <p>중</p>
-                  <input type="radio" name="trio" id="tr_exam_level3" />
+                  <input
+                    type="radio"
+                    name="trio"
+                    id="tr_exam_level3"
+                    value="3"
+                  />
                   <p>하</p>
                 </div>
               </div>
@@ -157,14 +173,16 @@
                 <p>복수 정답 허용</p>
               </div>
               <div class="common_level_div">
-                <button>힌트 설정</button>
-                <button>MITRE ATT&CK 정보 입력</button>
+                <button onclick="popup_hint_popupStatus()">힌트 설정</button>
+                <button onclick="popup_mit_popupStatus()">
+                  MITRE ATT&CK 정보 입력
+                </button>
               </div>
             </div>
           </div>
           <div class="setup_div">
             <button onclick="resetExam()">초기화</button>
-            <button>저장</button>
+            <button onclick="examFinalSave()">저장</button>
           </div>
         </div>
       </div>
@@ -174,12 +192,39 @@
       <div class="popup_hint_txt">힌트 내용</div>
       <input class="hint_input" type="text" />
       <div class="popup_hint_txt">힌트 파일 첨부</div>
-      <input type="file" />
+      <input type="file" id="hint_file" />
       <div>
-        <button>확인</button>
-        <button>취소</button>
+        <button onclick="updateHint()">확인</button>
+        <button onclick="popup_hint_popupStatus()">취소</button>
       </div>
     </div>
+    <!-- 문제 업로드 div -->
+    <div class="popup_exam">
+      <div class="popup_exam_txt">문제 파일 첨부</div>
+      <input type="file" name="file" id="exam_file" />
+      <div>
+        <button>확인</button>
+        <button onclick="popup_exam_popupStatus()">취소</button>
+      </div>
+    </div>
+    <!-- MITRE ATT&CK div -->
+    <div class="popup_mit">
+      <div class="popup_mit_txt">MITRE ATT&CK 정보</div>
+      <div>
+        <select class="tactics_select" name="" id="">
+          <option value="">tatic</option>
+        </select>
+        <select name="" id="">
+          <option value="">tach</option>
+        </select>
+      </div>
+      <div>
+        <button onclick="tacticsSave()">확인</button>
+        <button onclick="popup_mit_popupStatus_cancel()">취소</button>
+      </div>
+    </div>
+    <!-- 백그라운드 -->
+    <div class="back"></div>
   </body>
   <script
     src="https://code.jquery.com/jquery-3.6.3.js"
@@ -188,9 +233,13 @@
   ></script>
   <script src="jquery-csv.js"></script>
   <script>
-    //힌트팝업
+    // 팝업창 안보이게
     $(".popup_hint").css("display", "none");
-    $(".exam_add").css("display", "none");
+    $(".popup_exam").css("display", "none");
+    $(".popup_mit").css("display", "none");
+    $(".back").css("display", "none");
+    // $(".exam_add").css("display", "none");
+    // 좌측 nav menu
     $(".dropdown").css("display", "block");
     //객관식 활성화 함수
     function choiceOn() {
@@ -243,7 +292,7 @@
     });
   </script>
   <script>
-    document.getElementById("file").onchange = function () {
+    document.getElementById("exam_file").onchange = function () {
       var file = this.files[0];
 
       var reader = new FileReader();

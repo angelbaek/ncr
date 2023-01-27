@@ -32,3 +32,18 @@ function getSessionUserInfo() {
     },
   });
 }
+
+// 스크롤 막기
+function scrollPause() {
+  //스크롤 막기
+  $(".back").on("scroll touchmove mousewheel", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  });
+}
+
+// 스크롤 다시 실행
+function scrollPlay() {
+  $(".back").off("scroll touchmove mousewheel");
+}

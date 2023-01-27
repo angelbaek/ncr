@@ -23,4 +23,95 @@
         FROM "TN_TRAIN_EXAM"
         WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid} AND "TR_EXAM_NUM" = #{tr_exam_num}
     </select>
+
+    <!--선택한 문항이 설정되지 않았을때-->
+    <insert id="insertNoneExam">
+        INSERT INTO "TN_TRAIN_EXAM"(
+        "TR_EXAM_GRPID",
+        "TR_EXAM_NUM"
+        )VALUES(
+        #{tr_exam_grpid},
+        #{tr_exam_num}
+        )
+    </insert>
+
+    <!--선택한 문항 문제id 가져오기-->
+    <select id="examIdGet" resultType="ExamVO">
+        SELECT
+        *
+        FROM "TN_TRAIN_EXAM"
+        WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid} AND "TR_EXAM_NUM" = #{tr_exam_num}
+    </select>
+
+    <!--힌트 db 추가-->
+    <insert id="hintInsert">
+        INSERT INTO "TN_TRAIN_EXAMHINT"(
+        "TR_EXAM_GRPID",
+        "TR_EXAM_ID"
+        )VALUES(
+        #{tr_exam_grpid},
+        #{tr_exam_id}
+        )
+    </insert>
+
+    <!--문제 그룹 힌트 UPDATE-->
+    <update id="hintUpdateExam">
+        UPDATE "TN_TRAIN_EXAM"
+        SET
+            "TR_EXAM_HINT_FLG" = 1
+        WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--힌트 업데이트-->
+    <update id="hintUpdate">
+        UPDATE "TN_TRAIN_EXAMHINT"
+        SET
+            "TR_EXAM_HINT" = #{tr_exam_hint}
+        WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--문제 id 가져오기-->
+    <select id="getExamId" resultType="String">
+        SELECT
+            "TR_EXAM_ID"
+        FROM "TN_TRAIN_EXAM"
+        WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid} AND "TR_EXAM_NUM" = #{tr_exam_num}
+    </select>
+
+    <!--전술 단계 가져오기-->
+    <select id="getTactics" resultType="TacticsVO">
+        SELECT
+            *
+        FROM "TC_MITERATTCK_TACTICS"
+    </select>
+
+    <!--전술단계 저장하기-->
+    <update id="updateTactics">
+        UPDATE "TN_TRAIN_EXAM"
+        SET
+        "MA_TACTICS_ID" = #{ma_tactics_id}
+        WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+        AND "TR_EXAM_NUM" = #{tr_exam_num}
+    </update>
+
+    <!--최종 저장-->
+    <update id="updateExamFinal">
+        UPDATE "TN_TRAIN_EXAM"
+        SET
+        "TR_EXAM_CONT" = #{tr_exam_cont},
+        "TR_EXAM_CHOICE_1" = #{tr_exam_choice_1},
+        "TR_EXAM_CHOICE_2" = #{tr_exam_choice_2},
+        "TR_EXAM_CHOICE_3" = #{tr_exam_choice_3},
+        "TR_EXAM_CHOICE_4" = #{tr_exam_choice_4},
+        "TR_EXAM_CHOICE_5" = #{tr_exam_choice_5},
+        "TR_EXAM_ANS" = #{tr_exam_ans},
+        "TR_EXAM_LEVEL" = #{tr_exam_level},
+        "TR_EXAM_MULT_ANS" = #{tr_exam_mult_ans}
+        WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+        AND "TR_EXAM_NUM" = #{tr_exam_num}
+    </update>
 </mapper>

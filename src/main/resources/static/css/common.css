@@ -186,3 +186,21 @@ tr {
 #only_css:hover {
   text-decoration: underline;
 }
+
+input:focus {
+  outline: 1px solid #6777ef;
+  font-weight: bold;
+}
+
+select:focus {
+  outline: 1px solid #6777ef;
+  font-weight: bold;
+}
+
+.back {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.2);
+}

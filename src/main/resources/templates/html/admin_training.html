@@ -115,6 +115,8 @@
       </table>
       <button onclick="teamcode_view_btn()">확인</button>
     </div>
+    <!-- 백그라운드 -->
+    <div class="back"></div>
   </body>
   <script
     src="https://code.jquery.com/jquery-3.6.3.js"
@@ -122,6 +124,7 @@
     crossorigin="anonymous"
   ></script>
   <script>
+    $(".back").css("display", "none");
     $(".group_view").css("display", "none");
     $(".group_view_title").css("display", "none");
     $(".teamcode_view").css("display", "none");

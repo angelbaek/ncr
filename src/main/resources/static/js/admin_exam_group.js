@@ -168,6 +168,12 @@ function grpDelete() {
           location.reload();
         }
       },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR); //응답 메시지
+        console.log(textStatus); //"error"로 고정인듯함
+        console.log(errorThrown);
+        alert("해당 문제그룹에 설정된 문항이 유효합니다");
+      },
     });
   }
 }
