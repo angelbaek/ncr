@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <!-- test css -->
+  <link rel="stylesheet" href="/static/css/common.css" />
+  <link rel="stylesheet" href="/static/css/admin_exam_explanation.css" />
+  <!-- common css -->
+  <link rel="stylesheet" href="/css/common.css" />
+  <link rel="stylesheet" href="/css/admin_exam_explanation.css" />
+  <!-- font awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+  />
+  <body>
+    <div class="left_nav">
+      <div class="nav_title">국가기간망<br />침투대응훈련</div>
+      <div class="nav_contents">
+        <div class="common_left_menubar">
+          <a href="/html/admin_training.html" id="only_css">훈련 관리</a>
+        </div>
+        <div
+          class="common_left_menubar"
+          id="left_menubar"
+          onclick="dropdownMenu()"
+        >
+          문제 관리
+          <i class="fas fa-caret-down" id="dropbox_ic"></i>
+          <ul class="dropdown">
+            <li><a href="/html/admin_exam_group.html">문제 그룹</a></li>
+            <li>
+              <a class="exam_manage_css" href="/html/admin_exam_management.html"
+                >문항 관리</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="common_left_menubar" id="only_css">문제 풀이</div>
+        <div class="common_left_menubar" id="only_css">결과 보기</div>
+      </div>
+    </div>
+    <div class="top_user_info">
+      <div class="top_user_info_div">
+        <img src="/public/images/avatar-4.png" alt="user" />
+        <div class="userName">User Name</div>
+        <i class="fas fa-caret-down" id="logout" onclick="showLogOutBtn()"></i>
+        <div class="logout_btn" onclick="logOut()">로그아웃</div>
+      </div>
+    </div>
+    <!-- 문제 풀이 -->
+    <div class="contents">
+      <div class="contents_title">문제 풀이</div>
+      <div class="now_exam_status">
+        <div class="exam_status_time">풀이 경과 시간:</div>
+        <div class="exam_status_score">풀이 개수: 정답점수: 오답점수: 힌트감점:</div>
+        <button class="exam_status_vm">VM</button>
+      </div>
+      <div class="exam_explanation">
+        <div class="individual_exam">
+          <div class="individual_exam_common">
+            <div>1.문제내용</div>
+            <div>객관식,주관식</div>
+            <div>
+              <button>정답확인</button>
+              <button>힌트</button><div>힌트 클릭 시 몇점 감점됩니다.</div>
+            </div>
+          </div>
+          <div class="individual_exam_common">
+            <div>첫번째:</div>
+            <div>두번째:</div>
+            <div>정답 or 감점</div>
+          </div>
+        </div>
+      </div>
+      <div class="miter_image">MITER ATT & CK</div>
+      </div>
+    </div>
+    <!-- 백그라운드 -->
+    <div class="back"></div>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.6.3.js"
+    integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"
+  ></script>
+  <script src="/static/js/common.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/static/js/admin_exam_explanation.js"></script>
+  <script src="/js/admin_exam_explanation.js"></script>
+  <script>
+    $(".back").css("display", "none");
+  </script>
+</html>

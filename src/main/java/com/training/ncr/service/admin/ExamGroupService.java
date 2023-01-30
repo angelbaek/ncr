@@ -2,6 +2,8 @@ package com.training.ncr.service.admin;
 
 import com.training.ncr.mapper.admin.ExamGroupMapper;
 import com.training.ncr.vo.admin.ExamGrpVO;
+import com.training.ncr.vo.admin.ExamHintVO;
+import com.training.ncr.vo.admin.ExamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +43,30 @@ public class ExamGroupService {
     //삭제
     public int getExamGrpDelete(String name){
         return examGroupMapper.getExamGrpDelete(name);
+    }
+
+    // 선택한 그룹명으로 grpid 찾기
+    public List<ExamGrpVO> findByGrpid(String name){
+        return examGroupMapper.findByGrpid(name);
+    }
+
+    // TRAIN_EXAM 테이블 INSERT
+    public List<ExamVO> insertTrainExam(ExamGrpVO examGrpVO){
+        int grpid = examGrpVO.getTr_exam_grpid();
+        System.out.println("grpid는:"+grpid);
+        int grpCount = examGrpVO.getTr_exam_count();
+        System.out.println("grpCount는:"+grpCount);
+        for(int i=1; i<=grpCount; i++){
+            examGrpVO.setTr_exam_count(i);
+            examGroupMapper.insertTrainExam(examGrpVO);
+            System.out.println(i+"번째 insert구문 목표:"+grpCount);
+            System.out.println("현재 exam count는:"+examGrpVO.getTr_exam_count());
+        }
+        return examGroupMapper.findExamidByGrpid(grpid);
+    }
+
+    // GrpId, ExamId로 ExamHint insert
+    public int insertExamhintByGrpIdAndExamId(ExamHintVO examHintVO){
+        return examGroupMapper.insertExamhintByGrpIdAndExamId(examHintVO);
     }
 }

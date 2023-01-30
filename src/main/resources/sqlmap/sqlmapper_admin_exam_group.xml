@@ -67,9 +67,49 @@
         WHERE "TR_EXAM_GRPID" = #{num}
     </select>
 
+    <!--선택한 문제 그룹 삭제-->
     <delete id="getExamGrpDelete">
         DELETE
         FROM "TN_TRAIN_EXAMGRP"
         WHERE "TR_EXAM_GRPNAME" = #{name}
     </delete>
+
+    <!--그룹명으로 grpid 찾기-->
+    <select id="findByGrpid" resultType="ExamGrpVO">
+        SELECT
+        "TR_EXAM_GRPID",
+        "TR_EXAM_COUNT"
+        FROM "TN_TRAIN_EXAMGRP"
+        WHERE "TR_EXAM_GRPNAME" = #{name}
+    </select>
+
+    <!--TRAIN_EXAM 테이블 INSERT-->
+    <insert id="insertTrainExam">
+        INSERT INTO "TN_TRAIN_EXAM"(
+        "TR_EXAM_GRPID",
+        "TR_EXAM_NUM"
+        )VALUES(
+        #{tr_exam_grpid},
+        #{tr_exam_count}
+        )
+    </insert>
+
+    <!-- GRPID로 EXAMID 조회하기-->
+    <select id="findExamidByGrpid" resultType="ExamVO">
+        SELECT
+        "TR_EXAM_ID"
+        FROM "TN_TRAIN_EXAM"
+        WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <!--GrpId, ExamId로 ExamHint insert-->
+    <insert id="insertExamhintByGrpIdAndExamId">
+        INSERT INTO "TN_TRAIN_EXAMHINT"(
+        "TR_EXAM_GRPID",
+        "TR_EXAM_ID"
+        )VALUES(
+        #{tr_exam_grpid},
+        #{tr_exam_id}
+        )
+    </insert>
 </mapper>

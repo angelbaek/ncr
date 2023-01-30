@@ -1,10 +1,7 @@
 package com.training.ncr.controller.admin;
 
 import com.training.ncr.service.admin.ExamManagementService;
-import com.training.ncr.vo.admin.ExamGrpVO;
-import com.training.ncr.vo.admin.ExamHintVO;
-import com.training.ncr.vo.admin.ExamVO;
-import com.training.ncr.vo.admin.TacticsVO;
+import com.training.ncr.vo.admin.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -81,5 +78,17 @@ public class ExamManagementController {
     @PatchMapping("/admin/exam_final_save")
     public int updateExamFinal(@RequestBody ExamVO examVO){
         return examManagementService.updateExamFinal(examVO);
+    }
+
+    // 문제 그룹id로 matrix 가져오기
+    @GetMapping("/admin/get_matrix/{grpId}")
+    public List<MatrixVO> getMiterMatrixByGrpid(@PathVariable int grpId){
+        return examManagementService.getMiterMatrixByGrpid(grpId);
+    }
+
+    // csv 읽어서 문제 업로드
+    @PatchMapping("/admin/exam_update_csv")
+    public int examUpdateByCsv(@RequestBody ExamVO examVO){
+        return examManagementService.examUpdateByCsv(examVO);
     }
 }

@@ -91,7 +91,8 @@
     <update id="updateTactics">
         UPDATE "TN_TRAIN_EXAM"
         SET
-        "MA_TACTICS_ID" = #{ma_tactics_id}
+        "MA_TACTICS_ID" = #{ma_tactics_id},
+        "MA_MATRIX_ID" = #{ma_matrix_id}
         WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid}
         AND "TR_EXAM_ID" = #{tr_exam_id}
         AND "TR_EXAM_NUM" = #{tr_exam_num}
@@ -113,5 +114,34 @@
         WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid}
         AND "TR_EXAM_ID" = #{tr_exam_id}
         AND "TR_EXAM_NUM" = #{tr_exam_num}
+    </update>
+
+    <!--문제 그룹id로 matrix 가져오기-->
+    <select id="getMiterMatrixByGrpid" resultType="MatrixVO">
+        SELECT
+        *
+        FROM "TC_MITERATTCK_MATRIX"
+        WHERE "TR_EXAM_GRPID" = #{grpId}
+    </select>
+
+    <!--csv 읽어서 문제 업로드-->
+    <update id="examUpdateByCsv">
+        UPDATE "TN_TRAIN_EXAM"
+        SET
+        "TR_EXAM_TYPE" = #{tr_exam_type},
+        "TR_EXAM_CONT" = #{tr_exam_cont},
+        "TR_EXAM_CHOICE_1" = #{tr_exam_choice_1},
+        "TR_EXAM_CHOICE_2" = #{tr_exam_choice_2},
+        "TR_EXAM_CHOICE_3" = #{tr_exam_choice_3},
+        "TR_EXAM_CHOICE_4" = #{tr_exam_choice_4},
+        "TR_EXAM_CHOICE_5" = #{tr_exam_choice_5},
+        "TR_EXAM_ANS" = #{tr_exam_ans},
+        "TR_EXAM_POINT" = #{tr_exam_point},
+        "TR_EXAM_LEVEL" = #{tr_exam_level},
+        "TR_EXAM_MULT_ANS" = #{tr_exam_mult_ans},
+        "TR_EXAM_HINT_FLG" = #{tr_exam_hint_flg},
+        "MA_TACTICS_ID" = #{ma_tactics_id},
+        "MA_MATRIX_ID" = #{ma_matrix_id}
+        WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid} AND "TR_EXAM_NUM" = #{tr_exam_num}
     </update>
 </mapper>

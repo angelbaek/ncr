@@ -1,9 +1,6 @@
 package com.training.ncr.mapper.admin;
 
-import com.training.ncr.vo.admin.ExamGrpVO;
-import com.training.ncr.vo.admin.ExamHintVO;
-import com.training.ncr.vo.admin.ExamVO;
-import com.training.ncr.vo.admin.TacticsVO;
+import com.training.ncr.vo.admin.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -46,4 +43,10 @@ public interface ExamManagementMapper {
 
     // 문제 최종저장
     int updateExamFinal(ExamVO examVO);
+
+    // 문제 그룹id로 matrix 가져오기
+    List<MatrixVO> getMiterMatrixByGrpid(int grpId);
+
+    // csv 읽어서 문제 업로드
+    int examUpdateByCsv(ExamVO examVO);
 }

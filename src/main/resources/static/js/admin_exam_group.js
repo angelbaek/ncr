@@ -62,7 +62,8 @@ function reset() {
   // 두번풀이 사용 감점 변수
   $(".input_number2").val("");
 }
-
+// 문제 그룹명 변수
+var grpName;
 // 저장 함수
 function save() {
   console.log("save함수 실행된다~~");
@@ -129,6 +130,7 @@ function save() {
   };
   console.log(jsonData);
   $.ajax({
+    async: false,
     url: "http://localhost:8080/admin/add_exam_grp",
     type: "POST",
     contentType: "application/json",
@@ -138,12 +140,83 @@ function save() {
       console.log(response);
       if (response == 1) {
         alert("문제 그룹이 추가되었습니다.");
-        location.reload();
+        grpName = name;
+        // 문제그룹명으로 찾은 grpId, 문항수 변수대입
+        var grpIdAndCount = findByGrpid();
+        var grpId = grpIdAndCount["grpid"];
+        var grpCount = grpIdAndCount["count"];
+        console.log("찾은것:" + grpIdAndCount["grpid"]);
+        console.log("찾은것:" + grpIdAndCount["count"]);
+        insertTrainExam(grpId, grpCount);
+        // location.reload();
       } else if (response == 0) {
         alert("문제 그룹명이 중복됩니다.");
       }
     },
   });
+}
+// EXAM 테이블에 insert하기
+function insertTrainExam(grpId, grpCount) {
+  // var grpid = grpId["grpid"];
+  // var count = grpId["count"];
+  var jsonData = {
+    tr_exam_grpid: grpId,
+    tr_exam_count: grpCount,
+  };
+  console.log(jsonData);
+  $.ajax({
+    async: false,
+    url: "http://localhost:8080/admin/add_train_exam",
+    type: "POST",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      for (var i = 0; i < response.length; i++) {
+        var examId = response[i].tr_exam_id;
+        insertExamhintByGrpIdAndExamId(grpId, examId);
+      }
+    },
+  });
+}
+
+// GrpId, ExamId로 ExamHint insert
+function insertExamhintByGrpIdAndExamId(grpId, examId) {
+  var jsonData = {
+    tr_exam_grpid: grpId,
+    tr_exam_id: examId,
+  };
+  console.log(jsonData);
+  $.ajax({
+    async: false,
+    url: "http://localhost:8080/admin/add_train_examhint",
+    type: "POST",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+    },
+  });
+}
+
+// 그룹명으로 grpid, count 찾기
+function findByGrpid() {
+  var resultData;
+  const map = {};
+  $.ajax({
+    async: false,
+    url: "http://localhost:8080/admin/exam_group_find_grpid/" + grpName,
+    type: "GET",
+    dataType: "json",
+    success: function (response) {
+      console.log(response);
+      map["grpid"] = response[0].tr_exam_grpid;
+      map["count"] = response[0].tr_exam_count;
+    },
+  });
+  return map;
 }
 
 // 삭제 함수

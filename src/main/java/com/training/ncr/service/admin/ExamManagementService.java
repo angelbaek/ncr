@@ -2,10 +2,7 @@ package com.training.ncr.service.admin;
 
 import com.training.ncr.mapper.admin.ExamGroupMapper;
 import com.training.ncr.mapper.admin.ExamManagementMapper;
-import com.training.ncr.vo.admin.ExamGrpVO;
-import com.training.ncr.vo.admin.ExamHintVO;
-import com.training.ncr.vo.admin.ExamVO;
-import com.training.ncr.vo.admin.TacticsVO;
+import com.training.ncr.vo.admin.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,4 +69,14 @@ public class ExamManagementService {
     public int updateExamFinal(ExamVO examVO){
         return examManagementMapper.updateExamFinal(examVO);
     }
+
+    // 문제 그룹id로 matrix 가져오기
+    public List<MatrixVO> getMiterMatrixByGrpid(int grpId){
+        return examManagementMapper.getMiterMatrixByGrpid(grpId);
+    }
+
+    // csv 읽어서 문제 업로드
+    public int examUpdateByCsv(ExamVO examVO){
+        return examManagementMapper.examUpdateByCsv(examVO);
+    };
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.training.ncr.mapper.admin.ExamExplanationMapper">
+
+    <!--훈련 시작한 문제 그룹명 가져오기-->
+    <select id="searchMgmtState" resultType="MgmtVO">
+        SELECT
+        *
+        FROM "TN_TRAIN_MGMT"
+        WHERE "TR_MGMT_STATE" = 1
+    </select>
+
+    <!--훈련 시작한 문항과 문제그룹정보 가져오기-->
+<!--    <select id="getStartExamAndGrp">-->
+<!--        SELECT *-->
+<!--        FROM  "TN_TRAIN_EXAMGRP" AS grp-->
+<!--        INNER JOIN "TN_TRAIN_EXAM" AS exam-->
+<!--        ON grp."TR_EXAM_GRPID" = exam."TR_EXAM_GRPID"-->
+<!--        WHERE grp."TR_EXAM_GRPNAME"  = #{}-->
+<!--        ORDER BY exam."TR_EXAM_NUM"-->
+<!--    </select>-->
+</mapper>

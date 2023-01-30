@@ -1,0 +1,323 @@
+.top_user_info {
+  text-align: right;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  color: #fff;
+  width: 100%;
+  background-color: #6777ef;
+  height: 70px;
+  position: absolute;
+  z-index: 2;
+}
+
+.contents {
+  padding: 20px;
+  margin-top: 70px;
+  position: absolute;
+
+  padding-left: 280px;
+
+  width: 100%;
+}
+.common_box {
+  color: #495057;
+  font-size: 14px;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  height: 42px;
+  width: 100%;
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+}
+.contents_contents {
+  width: 100%;
+  /* margin-right: 100px; */
+  padding: 10px;
+  padding-left: 50px;
+  padding-right: 70px;
+}
+.contents_title {
+  margin-bottom: 50px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #34395e;
+}
+.contents_name {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #34395e;
+  font-size: 12px;
+}
+
+.saveButton {
+  z-index: 10;
+  margin-left: -22%;
+}
+button {
+  height: 40px;
+  width: 200px;
+  position: relative;
+  font-size: 16px;
+  padding: 5px 10px;
+  top: 80%;
+}
+
+img {
+  display: inline-block;
+  border-radius: 50px;
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+}
+
+.userName {
+  display: inline-block;
+  vertical-align: middle;
+}
+.top_user_info_div {
+  position: relative;
+  top: 50%;
+  transform: translate(0%, -50%);
+  margin-right: 50px;
+}
+.contents_title_top {
+  width: 100%;
+  text-align: center;
+}
+.contents_title_grp_name {
+  color: #6c757d;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 30px;
+}
+.contents_title_top div,
+.contents_title_top input {
+  display: inline-block;
+  width: auto;
+}
+.contents_title_top button {
+  width: auto;
+  padding: 0px 10px;
+}
+
+.contents_title_top select {
+  padding: 10px 15px;
+  width: 500px;
+  margin-right: 30px;
+}
+
+tr td {
+  padding: 5px;
+}
+.exam_answer {
+  padding: 20px;
+  border-radius: 10px;
+  margin-right: 30px;
+  /* border: 1px solid gray; */
+  box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
+  margin-top: 50px;
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+}
+
+.exam_table {
+  padding: 20px;
+  border-radius: 10px;
+  margin-right: 30px;
+  /* border: 1px solid gray; */
+  box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
+  margin-top: 50px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.exam_answer input {
+  width: auto;
+}
+.exam_answer_common_text {
+  display: inline-block;
+  width: auto;
+  margin-bottom: 10px;
+}
+.exam_answer_common_text div {
+  color: #666;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.test {
+  text-align: left;
+}
+.test * {
+  vertical-align: baseline;
+}
+.answer_input_text {
+  padding-left: 60px;
+  text-align: left;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  color: #34395e;
+  font-weight: bold;
+}
+.exam_answer_common_text input {
+  height: 30px;
+  padding: 10px;
+  /* margin-left: 30px; */
+  margin-right: 30px;
+  margin-bottom: 10px;
+  width: auto;
+}
+.exam_answer_common_text_check {
+  margin-left: -30px;
+  display: inline-block;
+}
+
+.common_check {
+  vertical-align: -10px;
+}
+.exam_answer_title {
+  text-align: left;
+  margin-bottom: 20px;
+  color: #34395e;
+  font-weight: bold;
+}
+.exam_answer_name {
+  height: 30px;
+}
+.exam_answer_div {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+.exam_answer_div_div {
+  padding: 60px;
+}
+.exam_answer_div_div input {
+  width: 100%;
+  padding: 10px 15px;
+}
+.exam_answer_common_text .dandap {
+  display: inline-block;
+  width: 100%;
+  height: 30px;
+  padding: 10px;
+}
+.dandap_import_text {
+  text-align: left;
+  padding-left: 60px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  color: #34395e;
+  font-weight: bold;
+}
+.bottom_div {
+  text-align: center;
+}
+.common_level_div {
+  color: #666;
+  margin: 20px;
+  width: auto;
+  display: inline-block;
+  text-align: center;
+}
+.common_level_div input {
+  margin-left: 5px;
+  margin-right: 5px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.common_level_div p {
+  display: inline-block;
+}
+
+.common_level_div button {
+  margin-left: 50px;
+  margin-right: 50px;
+  width: auto;
+}
+.setup_div button {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  margin-right: 100px;
+  margin-left: 100px;
+}
+.test .exam_answer_common_text {
+  text-align: left;
+  left: 0;
+}
+
+#left_call_div {
+  /* float: left; */
+  display: block;
+  /* margin-left: 30px; */
+}
+
+.left_input_call {
+  margin-left: 13px;
+  width: 400px;
+  text-align: left;
+}
+
+.left_input_call input {
+  padding: 10px;
+  height: 30px;
+  margin-left: 43px;
+  margin-bottom: 20px;
+  width: 505px;
+}
+.tr_add tr {
+  font-size: 18px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+#left_menubar {
+  color: #394eea;
+  /* text-decoration: underline; */
+}
+/* 문제 풀이 css 헤더*/
+.now_exam_status {
+  padding: auto;
+}
+.now_exam_status * {
+  width: auto;
+  margin: auto;
+  vertical-align: middle;
+  display: inline-block;
+}
+.exam_status_score {
+  margin-left: 50%;
+  margin-right: 50px;
+}
+.exam_status_time {
+  margin-left: 10px;
+}
+.exam_status_vm {
+  float: right;
+}
+
+/* 개별 문항 css*/
+.exam_explanation {
+  margin-left: 50px;
+}
+.exam_explanation button {
+  width: auto;
+}
+.individual_exam {
+  width: 70%;
+}
+.individual_exam_common {
+  width: auto;
+  height: auto;
+  display: inline-block;
+  transform: translate(0%, 50%);
+}
+
+/* MITER */
+.miter_image {
+  position: fixed;
+  width: 10%;
+  right: 0;
+  margin-right: 50px;
+}

@@ -1,6 +1,8 @@
 package com.training.ncr.mapper.admin;
 
 import com.training.ncr.vo.admin.ExamGrpVO;
+import com.training.ncr.vo.admin.ExamHintVO;
+import com.training.ncr.vo.admin.ExamVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -24,6 +26,18 @@ public interface ExamGroupMapper {
 
     public List<ExamGrpVO> getExamGrpSelect(int num);
 
-    //삭제
+    // 삭제
     int getExamGrpDelete(String name);
+
+    // 그룹명으로 grpid 조회
+    List<ExamGrpVO> findByGrpid(String name);
+
+    // TRAIN_EXAM 테이블 INSERT
+    int insertTrainExam(ExamGrpVO examGrpVO);
+
+    // GRPID로 EXAMID 조회하기
+    List<ExamVO> findExamidByGrpid(int tr_exam_grpid);
+
+    // GrpId, ExamId로 ExamHint insert
+    int insertExamhintByGrpIdAndExamId(ExamHintVO examHintVO);
 }
