@@ -1,44 +1,31 @@
 function user_login() {
   var id = $(".user_login_id").val();
   var pw = $(".user_login_pw").val();
+  var jsonData = {
+    id: id,
+    pw: pw,
+  };
   $.ajax({
-    url: "http://localhost:8080/login/" + id,
-    type: "GET",
+    url: "http://192.168.32.44:8080/login",
+    type: "POST",
+    contentType: "application/json",
     dataType: "json",
+    data: JSON.stringify(jsonData),
     success: function (response) {
       console.log(response);
-      if (response.length == 0) {
-        alert("등록되지 않은 계정입니다");
-        $(".user_login_id").val("");
-        $(".user_login_pw").val("");
-        $(".user_login_id").focus();
-        return;
+      if (response == 1) {
+        // 관리자
+        alert("관리자 로그인을 합니다.");
+        location.href = "/admin_training";
+      } else if (response == 2) {
+        // 사용자
+        alert("사용자 로그인을 합니다.");
+        location.href = "/user_group_setting";
       } else {
-        var checkAdmin = response[0].admin_passwd;
-        console.log(checkAdmin);
-        if (checkAdmin != null) {
-          if (response[0].admin_passwd != pw) {
-            $(".user_login_pw").val("");
-            $(".user_login_pw").focus();
-            alert("비밀번호를 확인하세요");
-            return;
-          } else {
-            alert("관리자님 환영합니다");
-            location.replace("admin_training.html");
-            return;
-          }
-        } else {
-          if (response[0].tr_user_passwd != pw) {
-            $(".user_login_pw").val("");
-            $(".user_login_pw").focus();
-            alert("비밀번호를 확인하세요");
-            return;
-          } else {
-            alert(id + "님 환영합니다");
-            location.href = "user_group_setting.html";
-            return;
-          }
-        }
+        alert("계정을 확인해주세요.");
+        $(".user_login_id").empty();
+        $(".user_login_pw").empty();
+        $(".user_login_id").focus();
       }
     },
   });

@@ -1,6 +1,7 @@
 package com.training.ncr.service.admin;
 
 import com.training.ncr.mapper.admin.ExamExplanationMapper;
+import com.training.ncr.vo.NowExamVO;
 import com.training.ncr.vo.admin.MgmtVO;
 import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,10 @@ public class ExamExplanationService {
     };
 
     // 훈련 시작한 문항과 문제그룹정보 가져오기
-    public List<Object> getStartExamAndGrp(String grpName){
+    public List<NowExamVO> getStartExamAndGrp(String grpName){
+        System.out.println(examExplanationMapper.getStartExamAndGrp(grpName));
         return examExplanationMapper.getStartExamAndGrp(grpName);
     }
+
+
 }

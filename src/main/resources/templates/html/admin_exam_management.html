@@ -40,7 +40,9 @@
             </li>
           </ul>
         </div>
-        <div class="common_left_menubar" id="only_css">문제 풀이</div>
+        <div class="common_left_menubar" id="only_css">
+          <a href="/html/admin_exam_explanation.html">문제 풀이</a>
+        </div>
         <div class="common_left_menubar" id="only_css">결과 보기</div>
       </div>
     </div>
@@ -318,78 +320,157 @@
           // By lines
           var lines = this.result.split("\n");
           for (var line = 1; line < lines.length; line++) {
-            console.log(lines.length);
-            var str = lines[line].split(",");
-            console.log(str);
-            // 문제 번호
-            var exam_num = str[0];
-            // 문제 유형
-            var exam_type = str[1];
-            // 문제 내용
-            var exam_cont = str[2];
-            var blob = new Blob(["\ufeff" + exam_cont], {
-              type: "text/csv;charset=utf-8;",
-            });
-            // 객관식_번호
-            var exam_cho1 = str[3];
-            var exam_cho2 = str[4];
-            var exam_cho3 = str[5];
-            var exam_cho4 = str[6];
-            var exam_cho5 = str[7];
-            // 정답
-            var exam_ans = str[8];
-            // 배점
-            var exam_score = str[9];
-            // 난이도
-            var exam_level = str[10];
-            // 복수정답 여부
-            var exam_mult = str[11];
-            // 힌트 여부
-            var exam_hint = str[12];
-            // 전술 ID
-            var exam_tac = str[13];
-            // 매트릭스 ID
-            var exam_matrix = str[14];
+            // console.log("포함?" + lines[line].includes('"'));
+            if (lines[line].indexOf('"') != -1) {
+              console.log("포함됨");
+              var start = lines[line].indexOf('"');
+              // 첫번째 " 자름
+              var substr = lines[line].substr(start + 1, lines[line].length);
+              var end = substr.indexOf('"');
+              // 두번째 " 자름
+              var twoSubstr = substr.substr(0, end); // 정답
+              var sl = twoSubstr.split(",");
+              var leng = sl.length - 1;
+              console.log("몇번 자름?:" + leng);
+              console.log(twoSubstr);
+              // 여기까지가 구하는 식
+              var str = lines[line].split(",");
+              console.log(str);
+              // 문제 번호
+              var exam_num = str[0];
+              // 문제 유형
+              var exam_type = str[1];
+              // 문제 내용
+              var exam_cont = str[2];
+              // 객관식_번호
+              var exam_cho1 = str[3];
+              var exam_cho2 = str[4];
+              var exam_cho3 = str[5];
+              var exam_cho4 = str[6];
+              var exam_cho5 = str[7];
+              // 정답
+              var exam_ans = "";
+              for (var i = 0; i <= leng; i++) {
+                if (i == leng) {
+                  exam_ans += str[8 + i];
+                } else {
+                  exam_ans += str[8 + i] + ",";
+                }
+              }
+              console.log("정답:" + exam_ans);
+              // var exam_ans = str[8];9 10
+              // 배점
+              var exam_score = str[9 + leng];
+              // 난이도
+              var exam_level = str[10 + leng];
+              // 복수정답 여부
+              var exam_mult = str[11 + leng];
+              // 힌트 여부
+              var exam_hint = str[12 + leng];
+              // 전술 ID
+              var exam_tac = str[13 + leng];
+              // 매트릭스 ID
+              var exam_matrix = str[14 + leng];
 
-            console.log("한줄 읽기:" + lines[line]);
-            // ajax TN_TRAIN_EXAM update
-            var jsonData = {
-              tr_exam_grpid: grpid,
-              tr_exam_type: exam_type,
-              tr_exam_num: exam_num,
-              tr_exam_cont: exam_cont,
-              tr_exam_choice_1: exam_cho1,
-              tr_exam_choice_2: exam_cho2,
-              tr_exam_choice_3: exam_cho3,
-              tr_exam_choice_4: exam_cho4,
-              tr_exam_choice_5: exam_cho5,
-              tr_exam_ans: exam_ans,
-              tr_exam_point: exam_score,
-              tr_exam_level: exam_level,
-              tr_exam_mult_ans: exam_mult,
-              tr_exam_hint_flg: exam_hint,
-              ma_tactics_id: exam_tac,
-              ma_matrix_id: exam_matrix,
-            };
-            console.log(jsonData);
-            $.ajax({
-              url: "http://localhost:8080/admin/exam_update_csv",
-              type: "PATCH",
-              dataType: "json",
-              contentType: "application/json",
-              data: JSON.stringify(jsonData),
-              success: function (response) {},
-            });
+              console.log("한줄 읽기:" + lines[line]);
+              // ajax TN_TRAIN_EXAM update
+              var jsonData = {
+                tr_exam_grpid: grpid,
+                tr_exam_type: exam_type,
+                tr_exam_num: exam_num,
+                tr_exam_cont: exam_cont,
+                tr_exam_choice_1: exam_cho1,
+                tr_exam_choice_2: exam_cho2,
+                tr_exam_choice_3: exam_cho3,
+                tr_exam_choice_4: exam_cho4,
+                tr_exam_choice_5: exam_cho5,
+                tr_exam_ans: exam_ans,
+                tr_exam_point: exam_score,
+                tr_exam_level: exam_level,
+                tr_exam_mult_ans: exam_mult,
+                tr_exam_hint_flg: exam_hint,
+                ma_tactics_id: exam_tac,
+                ma_matrix_id: exam_matrix,
+              };
+              console.log(jsonData);
+              $.ajax({
+                url: "http://192.168.32.44:8080/admin/exam_update_csv",
+                type: "PATCH",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(jsonData),
+                success: function (response) {},
+              });
+            } else {
+              console.log("미포함");
+              var str = lines[line].split(",");
+              console.log(str);
+              // 문제 번호
+              var exam_num = str[0];
+              // 문제 유형
+              var exam_type = str[1];
+              // 문제 내용
+              var exam_cont = str[2];
+              // 객관식_번호
+              var exam_cho1 = str[3];
+              var exam_cho2 = str[4];
+              var exam_cho3 = str[5];
+              var exam_cho4 = str[6];
+              var exam_cho5 = str[7];
+              // 정답
+              var exam_ans = str[8];
+              // 배점
+              var exam_score = str[9];
+              // 난이도
+              var exam_level = str[10];
+              // 복수정답 여부
+              var exam_mult = str[11];
+              // 힌트 여부
+              var exam_hint = str[12];
+              // 전술 ID
+              var exam_tac = str[13];
+              // 매트릭스 ID
+              var exam_matrix = str[14];
+
+              console.log("한줄 읽기:" + lines[line]);
+              // ajax TN_TRAIN_EXAM update
+              var jsonData = {
+                tr_exam_grpid: grpid,
+                tr_exam_type: exam_type,
+                tr_exam_num: exam_num,
+                tr_exam_cont: exam_cont,
+                tr_exam_choice_1: exam_cho1,
+                tr_exam_choice_2: exam_cho2,
+                tr_exam_choice_3: exam_cho3,
+                tr_exam_choice_4: exam_cho4,
+                tr_exam_choice_5: exam_cho5,
+                tr_exam_ans: exam_ans,
+                tr_exam_point: exam_score,
+                tr_exam_level: exam_level,
+                tr_exam_mult_ans: exam_mult,
+                tr_exam_hint_flg: exam_hint,
+                ma_tactics_id: exam_tac,
+                ma_matrix_id: exam_matrix,
+              };
+              console.log(jsonData);
+              $.ajax({
+                url: "http://192.168.32.44:8080/admin/exam_update_csv",
+                type: "PATCH",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(jsonData),
+                success: function (response) {},
+              });
+            }
           }
         };
-        console.log("이게뭐지??:" + reader.readAsText(file));
+        reader.readAsText(file, "euc-kr");
         alert("문제를 하였습니다");
       }
       // location.reload();
     }
   </script>
-  <!-- <script>
-    var csv = require("jquery-csv");
-    $.csv.toArray(csv);
-  </script> -->
+  <script>
+    sessionManagementForAdmin();
+  </script>
 </html>

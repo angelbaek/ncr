@@ -10,7 +10,7 @@ getSessionUserInfo();
 function examGroupCall() {
   var html = "";
   $.ajax({
-    url: "http://localhost:8080/admin/exam_group",
+    url: "http://192.168.32.44:8080/admin/exam_group",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -131,7 +131,7 @@ function save() {
   console.log(jsonData);
   $.ajax({
     async: false,
-    url: "http://localhost:8080/admin/add_exam_grp",
+    url: "http://192.168.32.44:8080/admin/add_exam_grp",
     type: "POST",
     contentType: "application/json",
     dataType: "json",
@@ -166,7 +166,7 @@ function insertTrainExam(grpId, grpCount) {
   console.log(jsonData);
   $.ajax({
     async: false,
-    url: "http://localhost:8080/admin/add_train_exam",
+    url: "http://192.168.32.44:8080/admin/add_train_exam",
     type: "POST",
     contentType: "application/json",
     dataType: "json",
@@ -190,7 +190,7 @@ function insertExamhintByGrpIdAndExamId(grpId, examId) {
   console.log(jsonData);
   $.ajax({
     async: false,
-    url: "http://localhost:8080/admin/add_train_examhint",
+    url: "http://192.168.32.44:8080/admin/add_train_examhint",
     type: "POST",
     contentType: "application/json",
     dataType: "json",
@@ -207,7 +207,7 @@ function findByGrpid() {
   const map = {};
   $.ajax({
     async: false,
-    url: "http://localhost:8080/admin/exam_group_find_grpid/" + grpName,
+    url: "http://192.168.32.44:8080/admin/exam_group_find_grpid/" + grpName,
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -232,7 +232,7 @@ function grpDelete() {
   // console.log(test);
   if (confirm("정말로 삭제하시겠습니까?")) {
     $.ajax({
-      url: "http://localhost:8080/admin/exam_group_delete/" + name,
+      url: "http://192.168.32.44:8080/admin/exam_group_delete/" + name,
       type: "DELETE",
       dataType: "json",
       success: function (response) {
@@ -255,7 +255,7 @@ function grpDelete() {
 function radioBtnOn(num) {
   $(".exam_add").css("display", "block");
   $.ajax({
-    url: "http://localhost:8080/admin/exam_group_select/" + num,
+    url: "http://192.168.32.44:8080/admin/exam_group_select/" + num,
     type: "GET",
     dataType: "json",
     success: function (response) {

@@ -19,8 +19,4 @@ public class UserVO {
     int role;
     int tr_user_state;
     String tr_user_name;
-//    admin 정보
-    String admin_id;
-    String admin_passwd;
-    String admin_name;
 }

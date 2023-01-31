@@ -299,7 +299,8 @@ tr td {
 
 /* 개별 문항 css*/
 .exam_explanation {
-  margin-left: 50px;
+  margin-top: 50px;
+  margin-left: 20px;
 }
 .exam_explanation button {
   width: auto;
@@ -310,7 +311,7 @@ tr td {
 .individual_exam_common {
   width: auto;
   height: auto;
-  display: inline-block;
+  display: block;
   transform: translate(0%, 50%);
 }
 
@@ -320,4 +321,36 @@ tr td {
   width: 10%;
   right: 0;
   margin-right: 50px;
+}
+
+/* 문제 풀이 css */
+.common_exam_contents {
+  margin-bottom: 50px;
+  margin-left: 5px;
+  display: inline-block;
+  width: 30%;
+}
+.common_exam_contents input {
+  top: 0;
+  width: auto;
+  height: 100%;
+}
+.ans_hint_div {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 400px;
+}
+.ans_hint_div button {
+  margin-right: 10px;
+}
+#ans_result_div {
+  position: relative;
+  margin-top: -120px;
+  margin-left: 150px;
+  transform: translate(0%, -50%);
+}
+.common_exam_title {
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 10px;
 }

@@ -1,5 +1,6 @@
 package com.training.ncr.mapper.admin;
 
+import com.training.ncr.vo.NowExamVO;
 import com.training.ncr.vo.admin.MgmtVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,5 +14,5 @@ public interface ExamExplanationMapper {
     List<MgmtVO> searchMgmtState();
 
     // 훈련 시작한 문항과 문제그룹정보 가져오기
-    List<Object> getStartExamAndGrp(String grpName);
+    List<NowExamVO> getStartExamAndGrp(String grpName);
 }

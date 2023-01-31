@@ -2,6 +2,7 @@ package com.training.ncr.controller.admin;
 
 import com.training.ncr.mapper.admin.ExamExplanationMapper;
 import com.training.ncr.service.admin.ExamExplanationService;
+import com.training.ncr.vo.NowExamVO;
 import com.training.ncr.vo.admin.MgmtVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,8 @@ public class ExamExplanationController {
     };
 
     // 훈련 시작한 문항과 문제그룹정보 가져오기
-    @GetMapping("")
-    public List<Object> getStartExamAndGrp(@PathVariable String grpName){
+    @GetMapping("/exam_explanation_sel/{grpName}")
+    public List<NowExamVO> getStartExamAndGrp(@PathVariable String grpName){
         return examExplanationService.getStartExamAndGrp(grpName);
     }
 }

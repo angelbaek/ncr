@@ -12,8 +12,8 @@ import java.util.List;
 public interface LoginMapper {
 
     // 로그인(훈련자)
-    List<UserVO> login(String id);
+    List<UserVO> login(String id,String pw);
 
     // 로그인(어드민)
-    List<UserVO> loginAdmin(String id);
+    List<AdminVO> loginAdmin(String id,String pw);
 }

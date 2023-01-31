@@ -24,7 +24,7 @@ let tr_user_id;
 function getSessionUserInfo() {
   console.log("세션 읽어오기 실행중...");
   $.ajax({
-    url: "http://localhost:8080/user",
+    url: "http://192.168.32.44:8080/user",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -53,7 +53,7 @@ function getSessionUserInfo() {
 function getTeamGroup() {
   console.log("세션 읽어오기 실행중...");
   $.ajax({
-    url: "http://localhost:8080/userGRP",
+    url: "http://192.168.32.44:8080/userGRP",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -93,7 +93,7 @@ function userGroupSave() {
   };
   console.log(jsonData);
   $.ajax({
-    url: "http://localhost:8080/user/update",
+    url: "http://192.168.32.44:8080/user/update",
     type: "PATCH",
     contentType: "application/json",
     dataType: "json",
@@ -125,7 +125,7 @@ function training() {
   console.log("훈련 함수 실행중...");
   console.log(tr_user_grp);
   $.ajax({
-    url: "http://localhost:8080/user/training/" + num,
+    url: "http://192.168.32.44:8080/user/training/" + num,
     type: "GET",
     dataType: "json",
     success: function (response) {

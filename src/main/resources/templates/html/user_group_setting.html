@@ -38,7 +38,7 @@
       <div class="contents_title">그룹 설정</div>
       <div class="contents_contents">
         <div class="contents_name">팀(조)</div>
-        <select name="location" id="team">
+        <select class="team_selectedbox" name="location" id="team">
           <option value="none">직접 선택하세요</option>
         </select>
         <div class="contents_name">팀 코드</div>
@@ -68,4 +68,17 @@
   <script src="/js/common.js"></script>
   <script src="/static/js/user_group_setting.js"></script>
   <script src="/js/user_group_setting.js"></script>
+  <script>
+    var userInfo = {};
+    userInfo = sessionManagementForUser();
+    console.log("사용자 가져옴: " + userInfo);
+    const grp = userInfo.tr_user_grp;
+    const cd = userInfo.team_cd;
+    const org = userInfo.tr_user_org;
+    const name = userInfo.tr_user_name;
+    $("#team_code").text(cd);
+    $("#agency_name").text(org);
+    $("#user_name").text(name);
+    $(".team_selectedbox").val("TEAM005").prop("selected", true);
+  </script>
 </html>

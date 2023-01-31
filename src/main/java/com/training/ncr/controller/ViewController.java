@@ -10,39 +10,39 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ViewController {
 
-    @GetMapping(value = {"/","/login.html","/html/login.html"})
+    @GetMapping(value = {"/","/login.html","/html/login.html","/login"})
     public String main(){
-        return "/html/login.html";
+        return "/html/login";
     }
 
-    @GetMapping(value = {"/user_group_setting.html","/html/user_group_setting.html"})
+    @GetMapping(value = {"/user_group_setting.html","/html/user_group_setting.html","/user_group_setting"})
     public String userGroup1(){
-        return "/html/user_group_setting.html";
+        return "/html/user_group_setting";
     }
 
 
-    @GetMapping(value = {"/admin_training.html","/html/admin_training.html"})
+    @GetMapping(value = {"/admin_training.html","/html/admin_training.html","/admin_training"})
     public String admin(){
-        return "/html/admin_training.html";
+        return "/html/admin_training";
     }
 
-    @GetMapping("/html/join.html")
+    @GetMapping(value = {"/html/join.html","/join"})
     public String join(){
-        return "/html/join.html";
+        return "/html/join";
     }
 
-    @GetMapping("/html/login.html")
+    @GetMapping(value = {"/html/login.html","/login"})
     public String login(){
-        return "/html/login.html";
+        return "/html/login";
     }
 
-    @GetMapping(value = {"html/admin_exam_group.html","/admin_exam_group.html"})
+    @GetMapping(value = {"html/admin_exam_group.html","/admin_exam_group.html","/admin_exam_group"})
     public String adminExamGroup(){
-        return "/html/admin_exam_group.html";
+        return "/html/admin_exam_group";
     }
 
-    @GetMapping(value = {"html/admin_exam_management.html","/admin_exam_management.html"})
+    @GetMapping(value = {"html/admin_exam_management.html","/admin_exam_management.html","/admin_exam_management"})
     public String adminExam(){
-        return "/html/admin_exam_management.html";
+        return "/html/admin_exam_management";
     }
 }

@@ -31,7 +31,7 @@ function resetExam() {
 function examGroupCall() {
   var html = "";
   $.ajax({
-    url: "http://localhost:8080/admin/exam_mng_grp",
+    url: "http://192.168.32.44:8080/admin/exam_mng_grp",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -58,7 +58,7 @@ function selectGrpChange() {
   }
   var html = "";
   $.ajax({
-    url: "http://localhost:8080/admin/exam_mng_grp/" + grpId,
+    url: "http://192.168.32.44:8080/admin/exam_mng_grp/" + grpId,
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -107,7 +107,7 @@ function exam(exam_num) {
     tr_exam_num: exam_num,
   };
   $.ajax({
-    url: "http://localhost:8080/admin/exam_call",
+    url: "http://192.168.32.44:8080/admin/exam_call",
     type: "POST",
     contentType: "application/json",
     dataType: "json",
@@ -197,7 +197,7 @@ function exam(exam_num) {
 //     tr_exam_num: num,
 //   };
 //   $.ajax({
-//     url: "http://localhost:8080/admin/exam_id_get",
+//     url: "http://192.168.32.44:8080/admin/exam_id_get",
 //     type: "POST",
 //     dataType: "json",
 //     contentType: "application/json",
@@ -221,7 +221,7 @@ function exam(exam_num) {
 //     tr_exam_id: examId,
 //   };
 //   $.ajax({
-//     url: "http://localhost:8080/admin/hint_insert",
+//     url: "http://192.168.32.44:8080/admin/hint_insert",
 //     type: "POST",
 //     dataType: "json",
 //     contentType: "application/json",
@@ -273,7 +273,7 @@ function popup_mit_popupStatus() {
   scrollPause();
   var html;
   $.ajax({
-    url: "http://localhost:8080/admin/get_tactics",
+    url: "http://192.168.32.44:8080/admin/get_tactics",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -298,7 +298,7 @@ function getMiterMatrixByGrpid() {
   var grpId = $(".select_view_body option:selected").val();
   var html;
   $.ajax({
-    url: "http://localhost:8080/admin/get_matrix/" + grpId,
+    url: "http://192.168.32.44:8080/admin/get_matrix/" + grpId,
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -337,7 +337,7 @@ function updateHint() {
     tr_exam_num: num,
   };
   $.ajax({
-    url: "http://localhost:8080/admin/exam_id_get",
+    url: "http://192.168.32.44:8080/admin/exam_id_get",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -363,7 +363,7 @@ function updateHintGo(examId) {
     tr_exam_hint: hint,
   };
   $.ajax({
-    url: "http://localhost:8080/admin/hintUpdate",
+    url: "http://192.168.32.44:8080/admin/hintUpdate",
     type: "PATCH",
     dataType: "json",
     contentType: "application/json",
@@ -395,7 +395,7 @@ function onlyGetExamId() {
   };
   $.ajax({
     async: false,
-    url: "http://localhost:8080/admin/only_get_examid",
+    url: "http://192.168.32.44:8080/admin/only_get_examid",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -411,7 +411,7 @@ function onlyGetExamId() {
 // 전술단계 가져오기
 function getTactics() {
   $.ajax({
-    url: "http://localhost:8080/admin/get_tactics",
+    url: "http://192.168.32.44:8080/admin/get_tactics",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -441,7 +441,7 @@ function tacticsSave() {
   };
   console.log(jsonData);
   $.ajax({
-    url: "http://localhost:8080/admin/update_tactic",
+    url: "http://192.168.32.44:8080/admin/update_tactic",
     type: "PATCH",
     dataType: "json",
     contentType: "application/json",
@@ -554,7 +554,7 @@ function examFinalSave() {
   };
   console.log(jsonData);
   $.ajax({
-    url: "http://localhost:8080/admin/exam_final_save",
+    url: "http://192.168.32.44:8080/admin/exam_final_save",
     type: "PATCH",
     dataType: "json",
     contentType: "application/json",
