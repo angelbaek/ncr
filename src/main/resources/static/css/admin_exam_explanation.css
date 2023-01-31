@@ -347,7 +347,7 @@ tr td {
   position: relative;
   margin-top: -120px;
   margin-left: 150px;
-  transform: translate(0%, -50%);
+  /* transform: translate(0%, -50%); */
 }
 .common_exam_title {
   font-weight: bold;

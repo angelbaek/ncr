@@ -86,6 +86,7 @@ function getStartExamAndGrp(grpName) {
               // 힌트 미사용
             } else if (response[i].tr_exam_hint_flg == 0) {
               html +=
+                "<div class='ans_hint_div'><button>정답확인</button></div>" +
                 "</div><div class='common_exam_contents' id='ans_result_div'><div>첫번째:" +
                 "</div><div>두번째:" +
                 "</div><div>정답:" +
@@ -96,16 +97,17 @@ function getStartExamAndGrp(grpName) {
             // 복수정답 복수
           } else if (response[i].tr_exam_mult_ans == 1) {
             html +=
-              '<input type="checkbox">' +
+              '<div><input type="checkbox">' +
               response[i].tr_exam_choice_1 +
-              '<input type="checkbox">' +
+              '</div><div><input type="checkbox">' +
               response[i].tr_exam_choice_2 +
-              '<input type="checkbox">' +
+              '</div><div><input type="checkbox">' +
               response[i].tr_exam_choice_3 +
-              '<input type="checkbox">' +
+              '</div><div><input type="checkbox">' +
               response[i].tr_exam_choice_4 +
-              '<input type="checkbox">' +
-              response[i].tr_exam_choice_5;
+              '</div><div><input type="checkbox">' +
+              response[i].tr_exam_choice_5 +
+              "</div>";
             // 힌트 사용
             if (response[i].tr_exam_hint_flg == 1) {
               html +=
@@ -120,6 +122,7 @@ function getStartExamAndGrp(grpName) {
               // 힌트 미사용
             } else if (response[i].tr_exam_hint_flg == 0) {
               html +=
+                "<div class='ans_hint_div'><button>정답확인</button></div>" +
                 "</div><div class='common_exam_contents' id='ans_result_div'><div>첫번째:" +
                 "</div><div>두번째:" +
                 "</div><div>정답:" +
@@ -138,19 +141,3 @@ function getStartExamAndGrp(grpName) {
   });
   return name;
 }
-// {
-/* <div class="individual_exam_common">
-            <div>1.문제내용</div>
-            <div>객관식,주관식</div>
-            <div>
-              <button>정답확인</button>
-              <button>힌트</button><div>힌트 클릭 시 몇점 감점됩니다.</div>
-            </div>
-          </div>
-          <div class="individual_exam_common">
-            <div>첫번째:</div>
-            <div>두번째:</div>
-            <div>정답 or 감점</div>
-          </div>
-        </div> */
-// }
