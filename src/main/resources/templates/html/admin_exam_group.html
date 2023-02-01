@@ -148,17 +148,6 @@
     }
     $(".dropdown").css("display", "block");
     $("#dropbox_ic").css("transform", "rotate(180deg)");
-    function dropdownMenu() {
-      var show = $(".dropdown").css("display");
-      console.log(show);
-      if (show == "none") {
-        $("#dropbox_ic").css("transform", "rotate(180deg)");
-        $(".dropdown").css("display", "block");
-      } else if (show == "block") {
-        $("#dropbox_ic").css("transform", "rotate(0deg)");
-        $(".dropdown").css("display", "none");
-      }
-    }
   </script>
   <script src="/static/js/common.js"></script>
   <script src="/js/common.js"></script>

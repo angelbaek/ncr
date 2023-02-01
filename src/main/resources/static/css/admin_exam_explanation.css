@@ -278,6 +278,8 @@ tr td {
 }
 /* 문제 풀이 css 헤더*/
 .now_exam_status {
+  margin: auto;
+  vertical-align: middle;
   padding: auto;
 }
 .now_exam_status * {
@@ -287,13 +289,18 @@ tr td {
   display: inline-block;
 }
 .exam_status_score {
-  margin-left: 50%;
+  width: auto;
+  height: auto;
+  margin-left: 40%;
   margin-right: 50px;
 }
 .exam_status_time {
   margin-left: 10px;
 }
 .exam_status_vm {
+  display: inline-block;
+  margin-right: 100px;
+  transform: translate(0px, -10px);
   float: right;
 }
 
@@ -396,4 +403,51 @@ tr td {
 .common_exam_contents .common_short_form {
   height: 35px;
   width: 500px;
+}
+
+.now_exam_status .exam_status_time {
+  font-weight: bold;
+}
+.now_exam_status #demo {
+}
+
+.dropdown li:hover {
+  text-decoration: underline;
+}
+
+#left_menubar {
+  color: #34395e;
+}
+#left_menubar:hover {
+  color: blue;
+}
+
+#left_nav_exam_explanation a {
+  color: blue;
+  text-decoration: underline;
+}
+
+#left_nav_exam_result:hover {
+  text-decoration: underline;
+}
+
+#ans_result_div div {
+  display: none;
+}
+
+.common_exam_contents div div {
+  display: inline-block;
+}
+.total_count {
+  color: #34395e;
+  font-weight: bold;
+}
+.total_score {
+  color: blue;
+}
+.total_fail_score {
+  color: rgb(207, 0, 0);
+}
+.total_hint_deduct {
+  color: rgb(207, 0, 0);
 }

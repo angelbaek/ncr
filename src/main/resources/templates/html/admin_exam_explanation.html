@@ -40,10 +40,12 @@
             </li>
           </ul>
         </div>
-        <div class="common_left_menubar" id="only_css">
+        <div class="common_left_menubar" id="left_nav_exam_explanation">
           <a href="/html/admin_exam_explanation.html">문제 풀이</a>
         </div>
-        <div class="common_left_menubar" id="only_css">결과 보기</div>
+        <div class="common_left_menubar" id="left_nav_exam_result">
+          결과 보기
+        </div>
       </div>
     </div>
     <div class="top_user_info">
@@ -58,12 +60,13 @@
     <div class="contents">
       <div class="contents_title">문제 풀이</div>
       <div class="now_exam_status">
-        <div class="exam_status_time">풀이 경과 시간:</div>
+        <div class="exam_status_time">제한 시간:</div>
+        <div id="demo"></div>
         <div class="exam_status_score">
-          <div>풀이 개수:</div>
-          <div>정답점수:</div>
-          <div>오답점수:</div>
-          <div class="total_hint_deduct">힌트감점:</div>
+          <div class="total_count">풀이 개수: -</div>
+          <div class="total_score">정답점수: -</div>
+          <div class="total_fail_score">오답점수: -</div>
+          <div class="total_hint_deduct">힌트감점: -</div>
         </div>
         <button class="exam_status_vm">VM</button>
       </div>
@@ -83,9 +86,66 @@
   <script src="/static/js/admin_exam_explanation.js"></script>
   <script src="/js/admin_exam_explanation.js"></script>
   <script>
-    $("#left_menubar").css("color", "gray");
-    $("#left_menubar").css("color", "gray");
+    // $("#left_menubar").css("color", "gray");
+
     $(".back").css("display", "none");
     // sessionManagementForAdmin();
+
+    // 경과시간
+    var time = timeReturn(); //기준시간 작성
+    // 테스트를 위한 임시 시간
+    var min = ""; //분
+    var sec = ""; //초
+
+    //setInterval(함수, 시간) : 주기적인 실행
+    var x = setInterval(function () {
+      //parseInt() : 정수를 반환
+      h = parseInt(time / 3600); // 시
+      m = parseInt((time - h * 3600) / 60);
+      sec = time % 60; //나머지를 계산
+
+      document.getElementById("demo").innerHTML =
+        " &nbsp" + h + "시 " + m + "분 " + sec + "초 ";
+      time--;
+
+      //타임아웃 시
+      if (time < 0) {
+        clearInterval(x); //setInterval() 실행을 끝냄
+        document.getElementById("demo").innerHTML = "시간초과";
+        alert("풀이 시간 종료!!");
+        $(".ans_hint_div button").prop("disabled", true);
+        $(".ans_hint_div button").css("backgroundColor", "gray");
+      }
+    }, 1000);
+
+    // 스크롤에 따른 이벤트
+    $(window).scroll(function () {
+      var height = $(window).scrollTop();
+      console.log(height);
+
+      if (height > 100) {
+        $(".now_exam_status").css("position", "fixed");
+        $(".now_exam_status").css("width", "89%");
+        $(".now_exam_status").css("left", "251px");
+        $(".now_exam_status").css("backgroundColor", "white");
+        $(".now_exam_status").css("paddingTop", "30px");
+        $(".now_exam_status").css("paddingBottom", "10px");
+        $(".now_exam_status").css("top", "0");
+        $(".now_exam_status").css("z-index", "5");
+        $(".now_exam_status").css(
+          "box-shadow",
+          "0px 0.5px 3px 0px rgb(0 0 0 / 30%)"
+        );
+      } else {
+        $(".now_exam_status").css("position", "relative");
+        $(".now_exam_status").css("width", "auto");
+        $(".now_exam_status").css("left", "auto");
+        $(".now_exam_status").css("backgroundColor", "none");
+        $(".now_exam_status").css("paddingTop", "0px");
+        $(".now_exam_status").css("top", "auto");
+        $(".now_exam_status").css("z-index", "1");
+        $(".now_exam_status").css("box-shadow", "none");
+      }
+    });
   </script>
 </html>

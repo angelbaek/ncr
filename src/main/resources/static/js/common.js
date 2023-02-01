@@ -1,4 +1,17 @@
 $(".logout_btn").css("display", "none");
+
+// 드랍다운 메뉴
+function dropdownMenu() {
+  var show = $(".dropdown").css("display");
+  console.log(show);
+  if (show == "none") {
+    $("#dropbox_ic").css("transform", "rotate(180deg)");
+    $(".dropdown").css("display", "block");
+  } else if (show == "block") {
+    $("#dropbox_ic").css("transform", "rotate(0deg)");
+    $(".dropdown").css("display", "none");
+  }
+}
 // 로그아웃 함수
 function logOut() {
   $.ajax({
