@@ -3,6 +3,7 @@ package com.training.ncr.controller.admin;
 import com.training.ncr.mapper.admin.ExamExplanationMapper;
 import com.training.ncr.service.admin.ExamExplanationService;
 import com.training.ncr.vo.NowExamVO;
+import com.training.ncr.vo.admin.ExamHintVO;
 import com.training.ncr.vo.admin.MgmtVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,4 +29,10 @@ public class ExamExplanationController {
     public List<NowExamVO> getStartExamAndGrp(@PathVariable String grpName){
         return examExplanationService.getStartExamAndGrp(grpName);
     }
+
+    // 해당 힌트 가져오기
+    @PostMapping("/exam_hint_get")
+    public List<ExamHintVO> getHintFunc(@RequestBody ExamHintVO examHintVO){
+        return examExplanationService.getHintFunc(examHintVO);
+    };
 }

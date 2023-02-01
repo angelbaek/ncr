@@ -40,7 +40,9 @@
             </li>
           </ul>
         </div>
-        <div class="common_left_menubar" id="only_css"><a href="/html/admin_exam_explanation.html">문제 풀이</a></div>
+        <div class="common_left_menubar" id="only_css">
+          <a href="/html/admin_exam_explanation.html">문제 풀이</a>
+        </div>
         <div class="common_left_menubar" id="only_css">결과 보기</div>
       </div>
     </div>
@@ -57,15 +59,16 @@
       <div class="contents_title">문제 풀이</div>
       <div class="now_exam_status">
         <div class="exam_status_time">풀이 경과 시간:</div>
-        <div class="exam_status_score">풀이 개수: 정답점수: 오답점수: 힌트감점:</div>
+        <div class="exam_status_score">
+          <div>풀이 개수:</div>
+          <div>정답점수:</div>
+          <div>오답점수:</div>
+          <div class="total_hint_deduct">힌트감점:</div>
+        </div>
         <button class="exam_status_vm">VM</button>
       </div>
-      <div class="exam_explanation">
-       
-      </div>
+      <div class="exam_explanation"></div>
       <div class="miter_image">MITER ATT & CK</div>
-      </div>
-      
     </div>
     <!-- 백그라운드 -->
     <div class="back"></div>
@@ -80,8 +83,8 @@
   <script src="/static/js/admin_exam_explanation.js"></script>
   <script src="/js/admin_exam_explanation.js"></script>
   <script>
-    $('#left_menubar').css('color','gray');
-    $('#left_menubar').css('color','gray');
+    $("#left_menubar").css("color", "gray");
+    $("#left_menubar").css("color", "gray");
     $(".back").css("display", "none");
     // sessionManagementForAdmin();
   </script>

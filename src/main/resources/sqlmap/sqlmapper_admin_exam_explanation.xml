@@ -10,7 +10,7 @@
         WHERE "TR_MGMT_STATE" = 1
     </select>
 
-<!--    훈련 시작한 문항과 문제그룹정보 가져오기-->
+    <!--훈련 시작한 문항과 문제그룹정보 가져오기-->
     <select id="getStartExamAndGrp" resultType="NowExamVO">
         SELECT
             *
@@ -19,5 +19,13 @@
         ON grp."TR_EXAM_GRPID" = exam."TR_EXAM_GRPID"
         WHERE grp."TR_EXAM_GRPNAME"  = #{grpName}
         ORDER BY exam."TR_EXAM_NUM"
+    </select>
+
+    <!--해당하는 힌트 가져오기-->
+    <select id="getHintFunc" resultType="ExamHintVO">
+        SELECT
+        *
+        FROM "TN_TRAIN_EXAMHINT"
+        WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid} AND "TR_EXAM_ID" = #{tr_exam_id}
     </select>
 </mapper>

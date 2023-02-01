@@ -2,6 +2,7 @@ package com.training.ncr.service.admin;
 
 import com.training.ncr.mapper.admin.ExamExplanationMapper;
 import com.training.ncr.vo.NowExamVO;
+import com.training.ncr.vo.admin.ExamHintVO;
 import com.training.ncr.vo.admin.MgmtVO;
 import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,8 @@ public class ExamExplanationService {
         return examExplanationMapper.getStartExamAndGrp(grpName);
     }
 
-
+    // 해당 힌트 가져오기
+    public List<ExamHintVO> getHintFunc(ExamHintVO examHintVO){
+        return examExplanationMapper.getHintFunc(examHintVO);
+    };
 }
