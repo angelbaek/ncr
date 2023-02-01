@@ -48,9 +48,13 @@ function getStartExamAndGrp(grpName) {
         html +=
           "<div class='common_exam_title'>" +
           response[i].tr_exam_num +
-          "번 " +
+          ". " +
           response[i].tr_exam_cont +
-          "</div>";
+          " <p>(난이도:" +
+          levelTxt +
+          " 배점:" +
+          response[i].tr_exam_point +
+          ")</p></div>";
 
         //주관식, 객관식 나누기
 
@@ -75,9 +79,9 @@ function getStartExamAndGrp(grpName) {
             // 힌트 사용
             if (response[i].tr_exam_hint_flg == 1) {
               html +=
-                "<div class='ans_hint_div'><button>정답확인</button><button>힌트</button>힌트 사용 시 " +
+                "<div class='ans_hint_div'><button class='common_ans_btn'>정답확인</button><button>힌트</button><p>힌트 사용 시 " +
                 response[i].tr_hint_deduct +
-                "점 감점됩니다</div>" +
+                "점 감점됩니다</p></div>" +
                 "</div><div class='common_exam_contents' id='ans_result_div'><div>첫번째:" +
                 "</div><div>두번째:" +
                 "</div><div>정답:" +
@@ -86,7 +90,7 @@ function getStartExamAndGrp(grpName) {
               // 힌트 미사용
             } else if (response[i].tr_exam_hint_flg == 0) {
               html +=
-                "<div class='ans_hint_div'><button>정답확인</button></div>" +
+                "<div class='ans_hint_div'><button class='common_ans_btn'>정답확인</button></div>" +
                 "</div><div class='common_exam_contents' id='ans_result_div'><div>첫번째:" +
                 "</div><div>두번째:" +
                 "</div><div>정답:" +
@@ -97,23 +101,23 @@ function getStartExamAndGrp(grpName) {
             // 복수정답 복수
           } else if (response[i].tr_exam_mult_ans == 1) {
             html +=
-              '<div><input type="checkbox">' +
+              '<div><input type="checkbox" class="mult_ans_input">' +
               response[i].tr_exam_choice_1 +
-              '</div><div><input type="checkbox">' +
+              '</div><div><input type="checkbox" class="mult_ans_input">' +
               response[i].tr_exam_choice_2 +
-              '</div><div><input type="checkbox">' +
+              '</div><div><input type="checkbox" class="mult_ans_input">' +
               response[i].tr_exam_choice_3 +
-              '</div><div><input type="checkbox">' +
+              '</div><div><input type="checkbox" class="mult_ans_input">' +
               response[i].tr_exam_choice_4 +
-              '</div><div><input type="checkbox">' +
+              '</div><div><input type="checkbox" class="mult_ans_input">' +
               response[i].tr_exam_choice_5 +
               "</div>";
             // 힌트 사용
             if (response[i].tr_exam_hint_flg == 1) {
               html +=
-                "<div class='ans_hint_div'><button>정답확인</button><button>힌트</button>힌트 사용 시 " +
+                "<div class='ans_hint_div'><button class='common_ans_btn'>정답확인</button><button>힌트</button><p>힌트 사용 시 " +
                 response[i].tr_hint_deduct +
-                "점 감점됩니다</div>" +
+                "점 감점됩니다</p></div>" +
                 "</div><div class='common_exam_contents' id='ans_result_div'><div>첫번째:" +
                 "</div><div>두번째:" +
                 "</div><div>정답:" +
@@ -122,7 +126,7 @@ function getStartExamAndGrp(grpName) {
               // 힌트 미사용
             } else if (response[i].tr_exam_hint_flg == 0) {
               html +=
-                "<div class='ans_hint_div'><button>정답확인</button></div>" +
+                "<div class='ans_hint_div'><button class='common_ans_btn'>정답확인</button></div>" +
                 "</div><div class='common_exam_contents' id='ans_result_div'><div>첫번째:" +
                 "</div><div>두번째:" +
                 "</div><div>정답:" +
@@ -133,6 +137,29 @@ function getStartExamAndGrp(grpName) {
 
           //주관식
         } else if (response[i].tr_exam_type == 2) {
+          html +=
+            "<div class='common_exam_contents'><input type='text' class='common_short_form'>";
+          // 힌트 사용
+          if (response[i].tr_exam_hint_flg == 1) {
+            html +=
+              "<div class='ans_hint_div'><button class='common_ans_btn'>정답확인</button><button>힌트</button><p>힌트 사용 시 " +
+              response[i].tr_hint_deduct +
+              "점 감점됩니다</p></div>" +
+              "</div><div class='common_exam_contents' id='ans_result_div'><div>첫번째:" +
+              "</div><div>두번째:" +
+              "</div><div>정답:" +
+              "</div><div>감점여부:" +
+              "</div></div>";
+            // 힌트 미사용
+          } else if (response[i].tr_exam_hint_flg == 0) {
+            html +=
+              "<div class='ans_hint_div'><button class='common_ans_btn'>정답확인</button></div>" +
+              "</div><div class='common_exam_contents' id='ans_result_div'><div>첫번째:" +
+              "</div><div>두번째:" +
+              "</div><div>정답:" +
+              "</div><div>감점여부:" +
+              "</div></div>";
+          }
         }
       }
       $(".exam_explanation").empty();

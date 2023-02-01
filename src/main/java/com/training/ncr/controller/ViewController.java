@@ -45,4 +45,9 @@ public class ViewController {
     public String adminExam(){
         return "/html/admin_exam_management";
     }
+
+    @GetMapping(value = {"html/admin_exam_explanation.html"})
+    public String adminExamTraining(){
+        return "html/admin_exam_explanation.html";
+    }
 }
