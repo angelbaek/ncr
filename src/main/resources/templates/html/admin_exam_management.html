@@ -276,17 +276,7 @@
     choiceOff();
 
     $("#dropbox_ic").css("transform", "rotate(180deg)");
-    function dropdownMenu() {
-      var show = $(".dropdown").css("display");
-      console.log(show);
-      if (show == "none") {
-        $("#dropbox_ic").css("transform", "rotate(180deg)");
-        $(".dropdown").css("display", "block");
-      } else if (show == "block") {
-        $("#dropbox_ic").css("transform", "rotate(0deg)");
-        $(".dropdown").css("display", "none");
-      }
-    }
+
     // 라디오 버튼 감지
     $("input[name='double']").change(function () {
       var test = $("input[name='double']:checked").val();
