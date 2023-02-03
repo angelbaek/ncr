@@ -21,16 +21,19 @@ public class LoginController {
     // 로그인(세션 생성)
     @PostMapping("/login")
     public int callLogin(@RequestBody LoginVO loginVO,HttpServletRequest request){
+        // 훈련자 아이디
         String id = loginVO.getId();
         String pw = loginVO.getPw();
+        System.out.println("아디:"+id+"비번:"+pw);
         // 계정 체크
-        if (loginService.loginAdmin(id,pw).size() != 0){ // 관리자 계정이다
+        if (loginService.loginAdmin(loginVO).size() != 0){ // 관리자 계정이다
             HttpSession session = request.getSession();
-            session.setAttribute("ADMIN",loginService.loginAdmin(id,pw));
+            session.setAttribute("ADMIN",loginService.loginAdmin(loginVO));
             return 1;
-        } else if (loginService.login(id,pw).size() != 0) { // 일반 사용자다
+        } else if (loginService.login(loginVO).size() != 0) { // 일반 사용자다
             HttpSession session = request.getSession();
-            session.setAttribute("USER",loginService.login(id,pw));
+            session.setAttribute("USER",loginService.login(loginVO));
+            session.setAttribute("USERID", id);
             return 2;
         }
         // 없는 계정

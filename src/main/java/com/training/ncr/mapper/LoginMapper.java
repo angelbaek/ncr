@@ -1,6 +1,7 @@
 package com.training.ncr.mapper;
 
 import com.training.ncr.vo.AdminVO;
+import com.training.ncr.vo.LoginVO;
 import com.training.ncr.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,8 +13,8 @@ import java.util.List;
 public interface LoginMapper {
 
     // 로그인(훈련자)
-    List<UserVO> login(String id,String pw);
+    List<UserVO> login(LoginVO loginVO);
 
     // 로그인(어드민)
-    List<AdminVO> loginAdmin(String id,String pw);
+    List<AdminVO> loginAdmin(LoginVO loginVO);
 }

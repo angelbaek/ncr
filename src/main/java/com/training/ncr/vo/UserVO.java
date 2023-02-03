@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserVO {
-// user 정보
+    // user 정보
     public static String session;
     String tr_user_id;
     String tr_user_passwd;

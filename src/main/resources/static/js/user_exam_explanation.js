@@ -3,17 +3,24 @@
  */
 // 훈련 시작한 문제 그룹명, 차시 가져오기
 var grpnameAndGrpnum = searchMgmtState();
-var grpname = grpnameAndGrpnum["name"];
-var grpnum = grpnameAndGrpnum["num"];
+var grpname = "";
+grpname = grpnameAndGrpnum["name"];
+var grpnum = 0;
+grpnum = grpnameAndGrpnum["num"];
 var examGrpid = 0;
 // 세션 가져오기
 var userInfo = sessionManagementForUser();
 // 유저 팀코드
-var userTeamCode = userInfo["team_cd"];
+var userTeamCode = 0;
+userTeamCode = userInfo["team_cd"];
 // 유저 grp (훈련자 지정 그룹)
-var userGrp = userInfo["tr_user_grp"];
+var userGrp = 0;
+userGrp = userInfo["tr_user_grp"];
 getStartExamAndGrp(grpname);
+// 훈련자 첫 진입 post
 insertUserTrainExamStat();
+// 훈련자 첫 팀플 post
+insertExamstatTeam();
 // 시간 변수
 // var time = 0;
 // 시간 함수
@@ -51,6 +58,7 @@ function getStartExamAndGrp(grpname) {
   var name;
   var html = "";
   $.ajax({
+    async: false,
     url: "http://192.168.32.44:8080/admin/exam_explanation_sel/" + grpname,
     type: "GET",
     dataType: "json",
@@ -397,9 +405,11 @@ function getStartExamAndGrp(grpname) {
 
 // 훈련자 첫 진입 훈련자별 풀이 현황 insert
 function insertUserTrainExamStat() {
+  // 훈련자 아이디,훈련자 지정 그룹, 훈련 차시, 문제 그룹 ID
   var jsonData = {
-    num: grpnum,
-    examGrpId: examGrpid,
+    tr_user_grp: userGrp,
+    tr_num: grpnum,
+    tr_exam_grpid: examGrpid,
   };
   $.ajax({
     url: "http://192.168.32.44:8080/user/insert_train_exam_stat",
@@ -409,6 +419,62 @@ function insertUserTrainExamStat() {
     data: JSON.stringify(jsonData),
     success: function (response) {
       console.log(response);
+      if (response == 0) {
+        console.log("훈련자별 풀이 현황 db 이미 존재");
+      } else if (response == 1) {
+        console.log("훈련자별 풀이 현황 db insert!");
+      }
+    },
+  });
+}
+
+// 훈련자 첫 팀별 풀이현황 정보 insert
+function insertExamstatTeam() {
+  // 훈련자 아이디,훈련자 지정 그룹, 훈련 차시, 문제 그룹 ID
+  var jsonData = {
+    tr_user_grp: userGrp,
+    tr_num: grpnum,
+    tr_exam_grpid: examGrpid,
+  };
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/insert_train_exam_team_stat",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      if (response == 0) {
+        console.log("훈련팀별 풀이 현황 db 이미 존재");
+      } else if (response == 1) {
+        console.log("훈련팀별 풀이 현황 db insert!");
+      }
+    },
+  });
+}
+
+// 훈련자 힌트 입력 event
+function getHintFunc(grpId, examId, hintDeduct) {
+  var jsonData = {
+    // 획득점수에 힌트점수 반영하게
+    result_score: hintDeduct,
+    tr_exam_id: examId,
+    tr_num: grpnum,
+    tr_exam_grpid: examGrpid,
+  };
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/using_hint",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      if (response == 0) {
+        console.log("");
+      } else if (response == 1) {
+        console.log("");
+      }
     },
   });
 }

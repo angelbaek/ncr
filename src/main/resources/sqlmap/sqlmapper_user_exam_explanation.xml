@@ -1,11 +1,180 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.training.ncr.mapper.user.UserExplanationMapper">
-    <!--유저 세션id로 userGRP, TEAM_CD 구하기-->
-    <select id="getUserGrpAndTeamCD" resultType="UserVO">
+    <!--첫 사용자 훈련 진입 시 db insert-->
+   <insert id="insertUserTrainExamStat">
+       INSERT INTO
+            "TN_TRAIN_EXAMSTAT"
+       (
+           "TR_USER_ID",
+           "TR_USER_GRP",
+           "TR_NUM",
+           "TR_EXAM_GRPID",
+           "START_TIME"
+       )
+       VALUES
+       (
+           #{tr_user_id},
+           #{tr_user_grp},
+           #{tr_num},
+           #{tr_exam_grpid},
+           NOW()
+       )
+   </insert>
+    <!--훈련자 풀이현황에 내가 있는지 확인하기-->
+    <select id="selectByUserID" resultType="ExamStatVO">
+        SELECT
+            "STAT_ID"
+        FROM
+            "TN_TRAIN_EXAMSTAT"
+        WHERE
+            "TR_USER_ID" = #{tr_user_id}
+    </select>
+
+    <!--나의 id로 팀코드 구하기-->
+    <select id="getTeamcodeByUserid" resultType="String">
+        SELECT
+            "TEAM_CD"
+        FROM
+            "TN_USER"
+        WHERE
+            "TR_USER_ID" = #{id}
+    </select>
+
+    <!--첫 훈련팀별 풀이현황 db insert-->
+    <insert id="insertExamstatTeam">
+        INSERT INTO
+            "TN_TRAIN_EXAMSTAT_TEAM"
+        (
+            "TR_USER_GRP",
+            "TEAM_CD",
+            "TR_NUM",
+            "TR_EXAM_GRPID",
+            "START_TIME"
+        )
+        VALUES
+        (
+            #{tr_user_grp},
+            #{team_cd},
+            #{tr_num},
+            #{tr_exam_grpid},
+            NOW()
+        )
+    </insert>
+
+    <!--훈련팀별 풀이현황에 내가 있는지 확인하기-->
+    <select id="selectByTeamcd" resultType="ExamStatTeamVO">
+        SELECT
+            "STAT_ID"
+        FROM
+            "TN_TRAIN_EXAMSTAT_TEAM"
+        WHERE
+            "TEAM_CD" = #{team_cd}
+    </select>
+
+    <!--훈련자별 풀이 상세 정보 hint update-->
+    <update id="hintUpdate">
+        UPDATE
+            "TN_TRAIN_EXAMRESULT"
+        SET
+            "RESULT_SCORE" = "RESULT_SCORE"+#{result_score},
+            "HINT_USE" = 1
+        WHERE
+            "TR_USER_ID" = #{tr_user_id}
+            AND "TR_NUM" = #{tr_num}
+            AND "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--훈련자별 풀이 상세 정보 hint db insert-->
+    <insert id="hintInsert">
+        INSERT INTO "TN_TRAIN_EXAMRESULT"
+        (
+            "TR_USER_ID",
+            "TR_NUM",
+            "TR_EXAM_GRPID",
+            "TR_EXAM_ID",
+            "RESULT_SCORE",
+            "HINT_USE"
+        )
+        VALUES
+        (
+            #{tr_user_id},
+            #{tr_num},
+            #{tr_exam_grpid},
+            #{tr_exam_id},
+            #{result_score},
+            1
+        )
+    </insert>
+
+    <!--훈련팀별 풀이 상세 정보 hint update-->
+    <update id="hintUpdateTeam">
+        UPDATE
+            "TN_TRAIN_EXAMRESULT_TEAM"
+        SET
+            "RESULT_SCORE" = "RESULT_SCORE"+#{result_score},
+            "HINT_USE" = 1
+        WHERE
+            "TR_USER_GRP" = #{tr_user_grp}
+            AND "TR_NUM" = #{tr_num}
+            AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+            AND "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--훈련팀별 풀이 상세 정보 hint db insert-->
+    <insert id="hintInsertTeam">
+        INSERT INTO "TN_TRAIN_EXAMRESULT_TEAM"
+        (
+            "TR_USER_GRP",
+            "TEAM_CD",
+            "TR_NUM",
+            "TR_EXAM_GRPID",
+            "TR_EXAM_ID",
+            "RESULT_SCORE",
+            "HINT_USE"
+        )
+        VALUES
+        (
+            #{tr_user_grp},
+            #{team_cd},
+            #{tr_num},
+            #{tr_exam_grpid},
+            #{tr_exam_id},
+            #{result_score},
+            1
+        )
+    </insert>
+
+    <!--나의 아이디로 나의 정보 가져오기-->
+    <select id="getMyInfoByUserId" resultType="UserVO">
         SELECT
             *
-        FROM "TN_USER"
-        WHERE "TR_USER_ID" = #{id}
+        FROM
+            "TN_USER"
+        WHERE
+            "TR_USER_ID" = #{tr_user_id}
     </select>
+
+    <!--힌트 사용시 훈련자별 풀이현황 점수 setting-->
+    <update id="updateResultSumUser">
+        UPDATE
+            "TN_TRAIN_EXAMSTAT"
+        SET
+            "RESULT_SUM" = "RESULT_SUM"+#{result_sum}
+        WHERE
+            "TR_USER_ID" = #{tr_user_id}
+            AND "TR_NUM" = #{tr_num}
+            AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </update>
+    <!--힌트 사용시 훈련팀별 풀이현황 점수 setting-->
+    <update id="updateResultSumTeam">
+        UPDATE
+            "TN_TRAIN_EXAMSTAT_TEAM"
+        SET
+            "RESULT_SUM" = "RESULT_SUM"+#{result_sum}
+        WHERE
+            "TEAM_CD" = #{team_cd}
+            AND "TR_NUM" = #{tr_num}
+            AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </update>
 </mapper>
