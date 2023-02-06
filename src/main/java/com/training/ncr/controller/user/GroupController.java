@@ -7,6 +7,8 @@ import com.training.ncr.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -28,7 +30,10 @@ public class GroupController {
 
     //팀 코드 업데이트
     @PatchMapping("user/update")
-    public int callUserUpdate(@RequestBody UserVO userVO) {
+    public int callUserUpdate(@RequestBody UserVO userVO, HttpServletRequest request) {
+        HttpSession session = request.getSession();;
+        String id = (String) session.getAttribute("USERID");
+        userVO.setTr_user_id(id);
         return groupService.callUserUpdate(userVO);
     }
 

@@ -19,7 +19,7 @@ function trainingStartBtnOff() {
   $(".tn_start_btn").attr("disabled", true);
   $(".tn_start_btn").css("backgroundColor", "gray");
 }
-let tr_user_id;
+var userId = "";
 // 훈련자 정보 가져오기
 function getSessionUserInfo() {
   console.log("세션 읽어오기 실행중...");
@@ -31,12 +31,12 @@ function getSessionUserInfo() {
       console.log(response);
       var tr_user_org = response[0].tr_user_org;
       var tr_user_name = response[0].tr_user_name;
+      userId = response[0].tr_user_id;
       console.log(response);
       $("#agency_name").empty();
       $("#agency_name").append(tr_user_org);
       $("#user_name").empty();
       $("#user_name").append(tr_user_name);
-      tr_user_id = response[0].tr_user_id;
       $(".userName").empty();
       $(".userName").append(tr_user_name);
       if (response[0].tr_user_grp == 0) {
@@ -51,7 +51,7 @@ function getSessionUserInfo() {
 
 // 팀(조) 정보 가져오기
 function getTeamGroup() {
-  console.log("세션 읽어오기 실행중...");
+  console.log("팀 정보 실행중...");
   $.ajax({
     url: "http://192.168.32.44:8080/userGRP",
     type: "GET",
@@ -89,10 +89,10 @@ function userGroupSave() {
     tr_user_grp: tr_user_grp,
     team_cd: team_cd,
     tr_user_state: 1,
-    tr_user_id: tr_user_id,
   };
   console.log(jsonData);
   $.ajax({
+    async: false,
     url: "http://192.168.32.44:8080/user/update",
     type: "PATCH",
     contentType: "application/json",

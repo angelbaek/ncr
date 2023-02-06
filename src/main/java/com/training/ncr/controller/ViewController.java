@@ -26,7 +26,7 @@ public class ViewController {
         return "/html/admin_training";
     }
 
-    @GetMapping(value = {"/html/join.html","/join"})
+    @GetMapping(value = {"/html/join.html","/join", "join.html"})
     public String join(){
         return "/html/join";
     }
@@ -46,12 +46,12 @@ public class ViewController {
         return "/html/admin_exam_management";
     }
 
-    @GetMapping(value = {"html/admin_exam_explanation.html"})
+    @GetMapping(value = {"html/admin_exam_explanation.html", "admin_exam_explanation.html"})
     public String adminExamTraining(){
         return "html/admin_exam_explanation.html";
     }
 
-    @GetMapping(value = {"html/user_exam_explanation.html"})
+    @GetMapping(value = {"html/user_exam_explanation.html","/user_exam_explanation.html"})
     public String userExamExplanation(){
         return "html/user_exam_explanation.html";
     }

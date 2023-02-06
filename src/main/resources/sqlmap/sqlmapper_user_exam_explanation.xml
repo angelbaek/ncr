@@ -177,4 +177,72 @@
             AND "TR_NUM" = #{tr_num}
             AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
     </update>
+
+    <!--해당하는 문제 답안,배점 가져오기-->
+    <select id="getExamAnsAndPoint" resultType="ExamVO">
+        SELECT
+        "TR_EXAM_ANS",
+        "TR_EXAM_POINT"
+        FROM   "TN_TRAIN_EXAM"
+        WHERE "TR_EXAM_ID" = #{tr_exam_id} AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <!-- 문제 그룹정보 가져오기-->
+    <select id="getExamGrpVO" resultType="ExamGrpVO">
+        SELECT
+            *
+        FROM
+            "TN_TRAIN_EXAMGRP"
+        WHERE
+            "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <!--정답 입력횟수 남아있는지 가져오기-->
+    <select id="checkCntTryAns" resultType="ExamResultTeamVO">
+        SELECT
+            "CNT_TRY_ANS"
+        FROM
+            "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+            "TR_USER_GRP" = #{tr_user_grp}
+            AND "TEAM_CD" = #{team_cd}
+            AND "TR_NUM" = #{tr_num}
+            AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+            AND "TR_EXAM_ID" = #{tr_exam_id}
+    </select>
+
+    <!--첫 정답확인 유저 insert-->
+    <insert id="insertFirstUserAnswer">
+        INSERT INTO "TN_TRAIN_EXAMRESULT_TEAM"
+        (
+            "TR_USER_GRP",
+            "TEAM_CD",
+            "TR_NUM",
+            "TR_EXAM_GRPID",
+            "TR_EXAM_ID"
+        )
+        VALUES
+        (
+            #{tr_user_grp},
+            #{team_cd},
+            #{tr_num},
+            #{tr_exam_grpid},
+            #{tr_exam_id}
+        )
+    </insert>
+
+    <!--유저가 입력한 답이 정답일때-->
+    <update id="userInputAnswerEqualsAnswer">
+        UPDATE
+            "TN_TRAIN_EXAMRESULT_TEAM"
+        SET
+            "ANSWER_USER_ID" = #{answer_user_id},
+            "INPUT_ANSWER" = #{input_answer},
+            "RESULT_SCORE" = "RESULT_SCORE" + #{result_score},
+            "CNT_TRY_ANS" = "CNT_TRY_ANS" + 1
+        WHERE "TEAM_CD" = #{team_cd}
+            AND "TR_NUM" = #{tr_num}
+            AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+            AND "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
 </mapper>

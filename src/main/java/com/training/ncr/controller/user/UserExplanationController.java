@@ -2,6 +2,7 @@ package com.training.ncr.controller.user;
 
 import com.training.ncr.service.user.UserExplanationService;
 import com.training.ncr.vo.UserVO;
+import com.training.ncr.vo.user.ExamResultTeamVO;
 import com.training.ncr.vo.user.ExamResultVO;
 import com.training.ncr.vo.user.ExamStatTeamVO;
 import com.training.ncr.vo.user.ExamStatVO;
@@ -41,5 +42,11 @@ public class UserExplanationController {
     @PostMapping("/using_hint")
     public int hintUsing(@RequestBody ExamResultVO examResultVO, HttpServletRequest request){
         return userExplanationService.hintUsing(examResultVO, request);
+    }
+
+    // 정답확인 메소드( 객관식{복수정답 포함} )
+    @PostMapping("/using_answer_multi")
+    public int inputAnswerMuiltiple(@RequestBody ExamResultTeamVO examResultTeamVO, HttpServletRequest request){
+        return userExplanationService.inputAnswerMuiltiple(examResultTeamVO, request);
     }
 }

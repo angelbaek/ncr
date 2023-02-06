@@ -28,4 +28,6 @@
         FROM "TN_TRAIN_EXAMHINT"
         WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid} AND "TR_EXAM_ID" = #{tr_exam_id}
     </select>
+
+
 </mapper>

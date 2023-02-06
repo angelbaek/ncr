@@ -476,3 +476,7 @@ input[type="checkbox"] {
 .total_hint_deduct {
   margin-left: 10px;
 }
+
+#now_position {
+  color: blue;
+}

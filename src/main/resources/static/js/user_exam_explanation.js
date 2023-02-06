@@ -9,13 +9,13 @@ var grpnum = 0;
 grpnum = grpnameAndGrpnum["num"];
 var examGrpid = 0;
 // 세션 가져오기
-var userInfo = sessionManagementForUser();
+// var userInfo = sessionManagementForUser();
 // 유저 팀코드
 var userTeamCode = 0;
-userTeamCode = userInfo["team_cd"];
+// userTeamCode = userInfo["team_cd"];
 // 유저 grp (훈련자 지정 그룹)
 var userGrp = 0;
-userGrp = userInfo["tr_user_grp"];
+// userGrp = userInfo["tr_user_grp"];
 getStartExamAndGrp(grpname);
 // 훈련자 첫 진입 post
 insertUserTrainExamStat();
@@ -276,7 +276,7 @@ function getStartExamAndGrp(grpname) {
               html +=
                 "<div class='ans_hint_div'><button id='ans_btn_" +
                 examid +
-                "' class='common_ans_btn' onclick='checkAnsBtnMultiAns(" +
+                "' class='common_ans_btn' onclick='checkAnsBtnMulti(" +
                 examid +
                 ")'>정답확인</button><button onclick='getHintFunc(" +
                 grpid +
@@ -308,7 +308,7 @@ function getStartExamAndGrp(grpname) {
               html +=
                 "<div class='ans_hint_div'><button id='ans_btn_" +
                 examid +
-                "' class='common_ans_btn' onclick='checkAnsBtnMultiAns(" +
+                "' class='common_ans_btn' onclick='checkAnsBtnMulti(" +
                 examid +
                 ")'>정답확인</button></div>" +
                 "</div><div class='common_exam_contents' id='ans_result_div'><div class='result_exam_explanation_first_" +
@@ -474,6 +474,63 @@ function getHintFunc(grpId, examId, hintDeduct) {
         console.log("");
       } else if (response == 1) {
         console.log("");
+      }
+    },
+  });
+}
+
+// 객관식 정답확인 event
+function checkAnsBtnMulti(examId) {
+  // 사용자가 입력한 답 대입할 변수
+  let inputAnswer = "";
+  // 객관식(복수X) 값 가져오기
+  var userCheckMulti = $(
+    'input[name="radiofunc_' + examId + '"]:checked'
+  ).val();
+  console.log(userCheckMulti);
+  inputAnswer = userCheckMulti;
+  // 객관식(복수정답)
+  let = multipleAnswer = "";
+  if (userCheckMulti == undefined) {
+    console.log("이 문제는 복수정답이다");
+    for (var i = 1; i < 6; i++) {
+      var check = $(".mult_ans_input_" + i + "_" + examId).prop("checked");
+      // 활성화 된 값 가져오기
+      if (check) {
+        multipleAnswer += $(".mult_ans_input_" + i + "_" + examId).val();
+      }
+    }
+    // 답안 미선택
+    if (multipleAnswer == "") {
+      alert("답을 선택하세요");
+      return;
+    }
+    inputAnswer = multipleAnswer;
+    console.log("복수정답 잘 나옴?:" + inputAnswer);
+  }
+  console.log("최종 답안:" + inputAnswer);
+  // 객체 넣기 (답안,훈련차시)
+  var jsonData = {
+    // 훈련자 답안
+    input_answer: inputAnswer,
+    // 훈련 차시
+    tr_num: grpnum,
+    // 문제 그룹 id
+    tr_exam_grpid: examGrpid,
+    // 문제 id
+    tr_exam_id: examId,
+  };
+  console.log(jsonData);
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/using_answer_multi",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      if (response == 2) {
+        alert("해당 문제는 더 이상 풀 수 없습니다");
       }
     },
   });

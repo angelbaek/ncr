@@ -1,6 +1,8 @@
 package com.training.ncr.mapper.user;
 
 import com.training.ncr.vo.UserVO;
+import com.training.ncr.vo.admin.ExamGrpVO;
+import com.training.ncr.vo.admin.ExamVO;
 import com.training.ncr.vo.user.ExamResultTeamVO;
 import com.training.ncr.vo.user.ExamResultVO;
 import com.training.ncr.vo.user.ExamStatTeamVO;
@@ -47,4 +49,19 @@ public interface UserExplanationMapper {
 
     // 훈련팀별 힌트 사용 점수
     int updateResultSumTeam(ExamStatTeamVO examStatTeamVO);
+
+    // 해당하는 문제 답안,배점 가져오기
+    ExamVO getExamAnsAndPoint(ExamVO examVO);
+
+    // 문제 그룹정보 가져오기
+    ExamGrpVO getExamGrpVO(int tr_exam_grpid);
+
+    // 정답 입력횟수 남아있는지 가져오기
+    ExamResultTeamVO checkCntTryAns(ExamResultTeamVO examResultTeamVO);
+
+    // 첫 정답입력
+    int insertFirstUserAnswer(ExamResultTeamVO examResultTeamVO);
+
+    // 유저가 입력한 답이 정답일때
+    int userInputAnswerEqualsAnswer(ExamResultTeamVO examResultTeamVO);
 }

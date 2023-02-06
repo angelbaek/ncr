@@ -9,4 +9,5 @@ public class LoginVO {
 
     // 세션 체크를 위한 validate
     String id,pw;
+
 }
