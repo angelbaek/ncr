@@ -38,15 +38,27 @@ public class UserExplanationController {
         return userExplanationService.insertExamstatTeam(examStatTeamVO,request);
     }
 
+    // 훈련자별, 훈련팀별 db 첫 진입시 insert
+    @PostMapping("/insert_train_examresult_and_team")
+    public int insertTrainExamResultAndTeam(@RequestBody ExamResultVO examResultVO, HttpServletRequest request){
+        return userExplanationService.insertTrainExamResultAndTeam(examResultVO,request);
+    }
+
     // 힌트 using 메소드
     @PostMapping("/using_hint")
     public int hintUsing(@RequestBody ExamResultVO examResultVO, HttpServletRequest request){
-        return userExplanationService.hintUsing(examResultVO, request);
+        return userExplanationService.hintUsing(examResultVO,request);
     }
 
     // 정답확인 메소드( 객관식{복수정답 포함} )
     @PostMapping("/using_answer_multi")
     public int inputAnswerMuiltiple(@RequestBody ExamResultTeamVO examResultTeamVO, HttpServletRequest request){
-        return userExplanationService.inputAnswerMuiltiple(examResultTeamVO, request);
+        return userExplanationService.inputAnswerMuiltiple(examResultTeamVO,request);
+    }
+
+    // 정답확인 메소드( 주관식 )
+    @PostMapping("/using_answer_short_form")
+    public int inputAnswerShortForm(@RequestBody ExamResultTeamVO examResultTeamVO, HttpServletRequest request){
+        return userExplanationService.inputAnswerShortForm(examResultTeamVO,request);
     }
 }

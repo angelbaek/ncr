@@ -296,6 +296,7 @@ function popup_mit_popupStatus() {
 function getMiterMatrixByGrpid() {
   // 문제 그룹 id
   var grpId = $(".select_view_body option:selected").val();
+  console.log("grpid:" + grpId);
   var html;
   $.ajax({
     url: "http://192.168.32.44:8080/admin/get_matrix/" + grpId,
@@ -452,6 +453,8 @@ function tacticsSave() {
         alert("전술단계가 저장되었습니다");
         $(".back").toggle();
         $(".popup_mit").toggle();
+      } else if (response == 0) {
+        alert("문항을 선택해주세요");
       }
     },
   });

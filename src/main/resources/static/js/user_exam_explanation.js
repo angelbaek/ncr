@@ -5,17 +5,13 @@
 var grpnameAndGrpnum = searchMgmtState();
 var grpname = "";
 grpname = grpnameAndGrpnum["name"];
+// 훈련차시
 var grpnum = 0;
 grpnum = grpnameAndGrpnum["num"];
 var examGrpid = 0;
 // 세션 가져오기
-// var userInfo = sessionManagementForUser();
+sessionManagementForUser();
 // 유저 팀코드
-var userTeamCode = 0;
-// userTeamCode = userInfo["team_cd"];
-// 유저 grp (훈련자 지정 그룹)
-var userGrp = 0;
-// userGrp = userInfo["tr_user_grp"];
 getStartExamAndGrp(grpname);
 // 훈련자 첫 진입 post
 insertUserTrainExamStat();
@@ -390,6 +386,8 @@ function getStartExamAndGrp(grpname) {
               "</div></div>";
           }
         }
+        // insert
+        insertExamResultAndTeam(response[i].tr_exam_id);
       }
       $(".exam_explanation").empty();
       $(".exam_explanation").append(html);
@@ -407,7 +405,6 @@ function getStartExamAndGrp(grpname) {
 function insertUserTrainExamStat() {
   // 훈련자 아이디,훈련자 지정 그룹, 훈련 차시, 문제 그룹 ID
   var jsonData = {
-    tr_user_grp: userGrp,
     tr_num: grpnum,
     tr_exam_grpid: examGrpid,
   };
@@ -432,7 +429,6 @@ function insertUserTrainExamStat() {
 function insertExamstatTeam() {
   // 훈련자 아이디,훈련자 지정 그룹, 훈련 차시, 문제 그룹 ID
   var jsonData = {
-    tr_user_grp: userGrp,
     tr_num: grpnum,
     tr_exam_grpid: examGrpid,
   };
@@ -453,14 +449,38 @@ function insertExamstatTeam() {
   });
 }
 
+// 훈련자별, 훈련팀별 db 첫 진입시 insert
+function insertExamResultAndTeam(examId) {
+  var jsonData = {
+    tr_exam_id: examId,
+    tr_num: grpnum,
+    tr_exam_grpid: examGrpid,
+  };
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/insert_train_examresult_and_team",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      if (response == 1) {
+        console.log("첫 상세 db insert");
+      } else if (response == 0) {
+        console.log("상세 db 존재");
+      }
+    },
+  });
+}
+
 // 훈련자 힌트 입력 event
 function getHintFunc(grpId, examId, hintDeduct) {
   var jsonData = {
     // 획득점수에 힌트점수 반영하게
-    result_score: hintDeduct,
     tr_exam_id: examId,
+    result_score: hintDeduct,
     tr_num: grpnum,
-    tr_exam_grpid: examGrpid,
+    tr_exam_grpid: grpId,
   };
   $.ajax({
     url: "http://192.168.32.44:8080/user/using_hint",
@@ -471,9 +491,9 @@ function getHintFunc(grpId, examId, hintDeduct) {
     success: function (response) {
       console.log(response);
       if (response == 0) {
-        console.log("");
+        console.log("첫 힌트 사용자");
       } else if (response == 1) {
-        console.log("");
+        console.log("이미 힌트 사용한 팀");
       }
     },
   });
@@ -497,7 +517,12 @@ function checkAnsBtnMulti(examId) {
       var check = $(".mult_ans_input_" + i + "_" + examId).prop("checked");
       // 활성화 된 값 가져오기
       if (check) {
-        multipleAnswer += $(".mult_ans_input_" + i + "_" + examId).val();
+        if (i == 5) {
+          multipleAnswer += $(".mult_ans_input_" + i + "_" + examId).val();
+        } else {
+          multipleAnswer +=
+            $(".mult_ans_input_" + i + "_" + examId).val() + ",";
+        }
       }
     }
     // 답안 미선택
@@ -529,8 +554,56 @@ function checkAnsBtnMulti(examId) {
     data: JSON.stringify(jsonData),
     success: function (response) {
       console.log(response);
-      if (response == 2) {
+      if (response == 1) {
+        alert("풀 수 있음!!");
+      } else if (response == 0) {
         alert("해당 문제는 더 이상 풀 수 없습니다");
+      } else if (response == 9) {
+        alert("정답!");
+      } else if (response == 8) {
+        alert("오답!");
+      } else if (response == 3) {
+        alert("server에서 data를 받아 올 수 없습니다.");
+      }
+    },
+  });
+}
+
+// 주관식 정답확인 event
+function checkAnsBtnShort(examId) {
+  // 사용자가 입력한 답 대입할 변수
+  let inputAnswer = $("#short_form_input_ans_" + examId).val();
+  console.log(inputAnswer);
+
+  var jsonData = {
+    // 훈련자 답안
+    input_answer: inputAnswer,
+    // 훈련 차시
+    tr_num: grpnum,
+    // 문제 그룹 id
+    tr_exam_grpid: examGrpid,
+    // 문제 id
+    tr_exam_id: examId,
+  };
+  console.log(jsonData);
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/using_answer_short_form",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      if (response == 1) {
+        alert("풀 수 있음!!");
+      } else if (response == 0) {
+        alert("해당 문제는 더 이상 풀 수 없습니다");
+      } else if (response == 9) {
+        alert("정답!");
+      } else if (response == 8) {
+        alert("오답!");
+      } else if (response == 3) {
+        alert("server에서 data를 받아 올 수 없습니다.");
       }
     },
   });

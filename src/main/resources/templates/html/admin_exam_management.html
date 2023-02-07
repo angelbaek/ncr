@@ -341,14 +341,16 @@
               // 정답
               var exam_ans = "";
               for (var i = 0; i <= leng; i++) {
-                if (i == leng) {
-                  exam_ans += str[8 + i];
+                var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+                if (i == 0) {
+                  exam_ans += str[8 + i].replace(reg, "") + ",";
+                } else if (i == leng) {
+                  exam_ans += str[8 + i].replace(reg, "");
                 } else {
                   exam_ans += str[8 + i] + ",";
                 }
               }
               console.log("정답:" + exam_ans);
-              // var exam_ans = str[8];9 10
               // 배점
               var exam_score = str[9 + leng];
               // 난이도
@@ -455,7 +457,9 @@
           }
         };
         reader.readAsText(file, "euc-kr");
-        alert("문제를 하였습니다");
+        alert("문제를 업로드 하였습니다");
+        $(".popup_exam").toggle();
+        $(".back").toggle();
       }
       // location.reload();
     }
