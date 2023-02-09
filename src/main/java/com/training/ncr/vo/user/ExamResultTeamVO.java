@@ -13,4 +13,11 @@ public class ExamResultTeamVO {
     int point;
     // 힌트 사용 감점
     int hint;
+    // 오답 점수
+    int wrong_score;
+
+    int explanationCount; // 풀이개수
+    int resultScore; // 획득점수
+    int wrongScore; // 오답감점
+    int hintScore; // 힌트감점
 }

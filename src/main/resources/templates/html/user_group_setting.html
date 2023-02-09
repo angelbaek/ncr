@@ -70,17 +70,4 @@
   <script src="/js/common.js"></script>
   <script src="/static/js/user_group_setting.js"></script>
   <script src="/js/user_group_setting.js"></script>
-  <script>
-    var userInfo = {};
-    userInfo = sessionManagementForUser();
-    console.log("사용자 가져옴: " + userInfo);
-    const grp = userInfo.tr_user_grp;
-    const cd = userInfo.team_cd;
-    const org = userInfo.tr_user_org;
-    const name = userInfo.tr_user_name;
-    $("#team_code").text(cd);
-    $("#agency_name").text(org);
-    $("#user_name").text(name);
-    $(".team_selectedbox").val("TEAM005").prop("selected", true);
-  </script>
 </html>

@@ -4,14 +4,12 @@ import com.training.ncr.vo.UserVO;
 import com.training.ncr.vo.admin.ExamGrpVO;
 import com.training.ncr.vo.admin.ExamHintVO;
 import com.training.ncr.vo.admin.ExamVO;
-import com.training.ncr.vo.user.ExamResultTeamVO;
-import com.training.ncr.vo.user.ExamResultVO;
-import com.training.ncr.vo.user.ExamStatTeamVO;
-import com.training.ncr.vo.user.ExamStatVO;
+import com.training.ncr.vo.user.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UserExplanationMapper {
@@ -78,6 +76,9 @@ public interface UserExplanationMapper {
     // 2차 풀이에서 정답일때(객관식,주관식) and 힌트사용
     int secondAnsEqualsAnsMultiAndHintUser(ExamResultTeamVO examResultTeamVO);
 
+    // 오답 점수 update
+    int wrongScoreUpdate(ExamResultTeamVO examResultTeamVO);
+
     // 2차 풀이에서 정답일때(객관식)
     int secondAnsEqualsAnsMulti(ExamResultTeamVO examResultTeamVO);
 
@@ -104,5 +105,26 @@ public interface UserExplanationMapper {
 
     // 훈련팀별 풀이 현황정보 정답 수 update
     int countAnsExamResultTeam(ExamResultTeamVO examResultTeamVO);
+
+    // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+    Map<String,Object> getTotalStatus(ExamResultTeamVO examResultTeamVO);
+
+    // 정답 수 UPDATE (훈련팀별)
+    int updateCntCorrectAnsTeam(ExamResultTeamVO examResultTeamVO);
+
+    // 오답 수 UPDATE (훈련팀별)
+    int updateCntFalseAnsTeam(ExamResultTeamVO examResultTeamVO);
+
+    // 총 점수 UPDATE (훈련팀별)
+    int updateResultSumTeam(ExamResultTeamVO examResultTeamVO);
+
+    // 정답 수 UPDATE (훈련자별)
+    int updateCntCorrectAnsUser(ExamStatVO examStatVO);
+
+    // 오답 수 UPDATE (훈련자별)
+    int updateCntFalseAnsUser(ExamStatVO examStatVO);
+
+    // 총 점수 UPDATE (훈련자별)
+    int updateResultSumUser(ExamStatVO examStatVO);
 
 }

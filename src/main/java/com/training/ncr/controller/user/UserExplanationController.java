@@ -3,10 +3,7 @@ package com.training.ncr.controller.user;
 import com.training.ncr.service.user.UserExplanationService;
 import com.training.ncr.vo.UserVO;
 import com.training.ncr.vo.admin.ExamHintVO;
-import com.training.ncr.vo.user.ExamResultTeamVO;
-import com.training.ncr.vo.user.ExamResultVO;
-import com.training.ncr.vo.user.ExamStatTeamVO;
-import com.training.ncr.vo.user.ExamStatVO;
+import com.training.ncr.vo.user.*;
 import lombok.val;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.training.ncr.vo.UserVO.session;
 
@@ -86,4 +84,10 @@ public class UserExplanationController {
     public int countAnsExamResultTeam(@RequestBody ExamResultTeamVO examResultTeamVO, HttpServletRequest request){
         return userExplanationService.countAnsExamResultTeam(examResultTeamVO,request);
     }
+
+    // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+    @PostMapping("/get_total_status")
+    public Map<String,Object> getTotalStatus(@RequestBody ExamResultTeamVO examResultTeamVO, HttpServletRequest request){
+        return userExplanationService.getTotalStatus(examResultTeamVO, request);
+    };
 }

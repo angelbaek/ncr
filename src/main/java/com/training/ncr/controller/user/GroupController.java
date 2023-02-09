@@ -31,7 +31,7 @@ public class GroupController {
     //팀 코드 업데이트
     @PatchMapping("user/update")
     public int callUserUpdate(@RequestBody UserVO userVO, HttpServletRequest request) {
-        HttpSession session = request.getSession();;
+        HttpSession session = request.getSession();
         String id = (String) session.getAttribute("USERID");
         userVO.setTr_user_id(id);
         return groupService.callUserUpdate(userVO);
@@ -41,5 +41,13 @@ public class GroupController {
     @GetMapping("user/training/{tr_num}")
     public List<MgmtVO> callTraining(@PathVariable int tr_num){
         return groupService.callTraining(tr_num);
+    }
+
+    // 아이디로 정보 조회
+    @GetMapping("user/get_group_info_by_id")
+    public List<UserVO> getUserInfo(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String id = (String) session.getAttribute("USERID");
+        return groupService.getUserInfo(id);
     }
 }

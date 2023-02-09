@@ -22,4 +22,11 @@
         from "TN_TRAIN_MGMT"
         where "TR_NUM" = #{tr_num}
     </select>
+
+    <select id="getUserInfo" resultType="UserVO">
+        select
+        *
+        from "TN_USER"
+        where "TR_USER_ID" = #{id}
+    </select>
 </mapper>

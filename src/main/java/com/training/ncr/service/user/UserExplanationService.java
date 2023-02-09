@@ -5,10 +5,7 @@ import com.training.ncr.vo.UserVO;
 import com.training.ncr.vo.admin.ExamGrpVO;
 import com.training.ncr.vo.admin.ExamHintVO;
 import com.training.ncr.vo.admin.ExamVO;
-import com.training.ncr.vo.user.ExamResultTeamVO;
-import com.training.ncr.vo.user.ExamResultVO;
-import com.training.ncr.vo.user.ExamStatTeamVO;
-import com.training.ncr.vo.user.ExamStatVO;
+import com.training.ncr.vo.user.*;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserExplanationService {
@@ -29,11 +27,10 @@ public class UserExplanationService {
     // 첫 사용자 훈련 진입 시 db insert
     public int insertUserTrainExamStat(ExamStatVO examStatVO, HttpServletRequest request){
         HttpSession session = request.getSession();
-        // 유저 정보
-        Object Object = session.getAttribute("USER");
         // 유저 아이디
         String userId = (String) session.getAttribute("USERID");
         UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
+
         // vo에 아이디 저장, grp 저장
         examStatVO.setTr_user_id(userId);
         examStatVO.setTr_user_grp(userVO.getTr_user_grp());
@@ -196,6 +193,13 @@ public class UserExplanationService {
         examResultVO.setTr_exam_grpid(examResultTeamVO.getTr_exam_grpid()); // grpid
         examResultVO.setTr_exam_id(examResultTeamVO.getTr_exam_id()); // 문제id
 
+        // 훈련자 풀이현황 정보 set
+        ExamStatVO examStatVO = new ExamStatVO();
+        examStatVO.setTr_user_id(userId);
+        examStatVO.setTr_user_grp(examResultTeamVO.getTr_user_grp());
+        examStatVO.setTr_num(examResultTeamVO.getTr_num());
+        examStatVO.setTr_exam_grpid(examResultTeamVO.getTr_exam_grpid());
+
         if(allow==1){ // 2차 풀이 활성화
             //정답 입력횟수가 남아있는지 check
             if(tryAns==0){ // 첫 정답확인
@@ -205,10 +209,18 @@ public class UserExplanationService {
                     }else{ // 힌트 미사용
                         userExplanationMapper.firstAnsEqualsAnsMulti(examResultTeamVO);
                     }
+                    // 오답 점수 set
+                    examResultTeamVO.setWrong_score(deduct);
+                    userExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
                     // 총 점 가져오기
                     int score = userExplanationMapper.getResultScoreForUser(examResultTeamVO);
                     examResultVO.setResult_score(score); // 점수 대입
+                    // 훈련팀, 훈련자 update
                     userExplanationMapper.examResultAnsEqualsAns(examResultVO); // 훈련자 풀이 상세 db update
+                    userExplanationMapper.updateCntCorrectAnsTeam(examResultTeamVO); // 정답수 update
+                    userExplanationMapper.updateResultSumTeam(examResultTeamVO); // 총점 update
+                    userExplanationMapper.updateCntCorrectAnsUser(examStatVO);
+                    userExplanationMapper.updateResultSumUser(examStatVO);
                     return 9;
                 }else{ // 오답
                     userExplanationMapper.examResultAnsNotAns(examResultVO); // 훈련자
@@ -222,12 +234,21 @@ public class UserExplanationService {
                     }else{ // 힌트 미사용
                         userExplanationMapper.secondAnsEqualsAnsMulti(examResultTeamVO);
                     }
+                    // 오답 점수 set
+                    examResultTeamVO.setWrong_score(deduct);
+                    userExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
                     // 총 점 가져오기
                     int score = userExplanationMapper.getResultScoreForUser(examResultTeamVO);
                     examResultVO.setResult_score(score); // 점수 대입
                     userExplanationMapper.examResultAnsEqualsAns(examResultVO); // 훈련자 풀이 상세 db update
+                    userExplanationMapper.updateCntCorrectAnsTeam(examResultTeamVO); // 정답수 update
+                    userExplanationMapper.updateResultSumTeam(examResultTeamVO); // 총점 update
+                    userExplanationMapper.updateCntCorrectAnsUser(examStatVO);
+                    userExplanationMapper.updateResultSumUser(examStatVO);
                     return 9;
                 }else{ // 오답
+                    userExplanationMapper.updateCntFalseAnsTeam(examResultTeamVO); // 오답수 update
+                    userExplanationMapper.updateCntFalseAnsUser(examStatVO); // 오답수 update
                     userExplanationMapper.examResultAnsNotAns(examResultVO); // 훈련자
                     userExplanationMapper.secondAnsNotAnsMulti(examResultTeamVO); // 훈련팀
                     return 8;
@@ -244,12 +265,21 @@ public class UserExplanationService {
                     }else{ // 힌트 미사용
                         userExplanationMapper.secondAnsEqualsAnsMulti(examResultTeamVO);
                     }
+                    // 오답 점수 set
+                    examResultTeamVO.setWrong_score(deduct);
+                    userExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
                     // 총 점 가져오기
                     int score = userExplanationMapper.getResultScoreForUser(examResultTeamVO);
                     examResultVO.setResult_score(score); // 점수 대입
                     userExplanationMapper.examResultAnsEqualsAns(examResultVO); // 훈련자 풀이 상세 db update
+                    userExplanationMapper.updateCntCorrectAnsTeam(examResultTeamVO); // 정답수 update
+                    userExplanationMapper.updateResultSumTeam(examResultTeamVO); // 총점 update
+                    userExplanationMapper.updateCntCorrectAnsUser(examStatVO);
+                    userExplanationMapper.updateResultSumUser(examStatVO);
                     return 9;
                 }else{ // 오답
+                    userExplanationMapper.updateCntFalseAnsTeam(examResultTeamVO); // 오답수 update
+                    userExplanationMapper.updateCntFalseAnsUser(examStatVO); // 오답수 update
                     userExplanationMapper.examResultAnsNotAns(examResultVO); // 훈련자
                     userExplanationMapper.secondAnsNotAnsMulti(examResultTeamVO); // 훈련팀
                     return 8;
@@ -297,15 +327,46 @@ public class UserExplanationService {
         examResultTeamVO.setResult_score(deduct); // 2차 풀이 감점
         examResultTeamVO.setPoint(point); // 배점
 
+        // 힌트 사용여부 check
+        int check = userExplanationMapper.checkHintUsing(examResultTeamVO);
+        System.out.println("힌트 사용 여부:"+check);
+
         // 정답 입력횟수 받아오기
         int tryAns = userExplanationMapper.checkTryAns(examResultTeamVO);
         System.out.println("남아 있는 횟수:"+tryAns);
+
+        // 훈련자 클래스 대입
+        ExamResultVO examResultVO = new ExamResultVO();
+        examResultVO.setInput_answer(userAns); // 입력 답
+        examResultVO.setTr_user_id(userId); // 유저 id
+        examResultVO.setTr_num(examResultTeamVO.getTr_num()); // 훈련 차시
+        examResultVO.setTr_exam_grpid(examResultTeamVO.getTr_exam_grpid()); // grpid
+        examResultVO.setTr_exam_id(examResultTeamVO.getTr_exam_id()); // 문제id
+
+        // 훈련자 풀이현황 정보 set
+        ExamStatVO examStatVO = new ExamStatVO();
+        examStatVO.setTr_user_id(userId);
+        examStatVO.setTr_user_grp(examResultTeamVO.getTr_user_grp());
+        examStatVO.setTr_num(examResultTeamVO.getTr_num());
+        examStatVO.setTr_exam_grpid(examResultTeamVO.getTr_exam_grpid());
 
         if(allow==1){ // 2차 풀이 활성화
             //정답 입력횟수가 남아있는지 check
             if(tryAns==0){
                 if(userAns.equals(ans)){ // 정답일때
-                    userExplanationMapper.firstAnsEqualsAnsMulti(examResultTeamVO);
+                    if(check==1){ // 힌트 사용
+                        userExplanationMapper.firstAnsEqualsAnsMultiAndHintUse(examResultTeamVO);
+                    }else{ // 힌트 미사용
+                        userExplanationMapper.firstAnsEqualsAnsMulti(examResultTeamVO);
+                    }
+                    // 총 점 가져오기
+                    int score = userExplanationMapper.getResultScoreForUser(examResultTeamVO);
+                    examResultVO.setResult_score(score); // 점수 대입
+                    userExplanationMapper.examResultAnsEqualsAns(examResultVO); // 훈련자 풀이 상세 db update
+                    userExplanationMapper.updateCntCorrectAnsTeam(examResultTeamVO); // 정답수 update
+                    userExplanationMapper.updateResultSumTeam(examResultTeamVO); // 총점 update
+                    userExplanationMapper.updateCntCorrectAnsUser(examStatVO);
+                    userExplanationMapper.updateResultSumUser(examStatVO);
                     return 9;
                 }else{ // 오답
                     userExplanationMapper.firstAnsNotAnsMulti(examResultTeamVO);
@@ -313,10 +374,28 @@ public class UserExplanationService {
                 }
             }else if(tryAns==1){ // 남아있음 (1번 품)
                 if(userAns.equals(ans)){ // 정답일때
-                    userExplanationMapper.secondAnsEqualsAnsMulti(examResultTeamVO);
+                    if(check==1){ // 힌트 사용
+                        userExplanationMapper.secondAnsEqualsAnsMultiAndHintUser(examResultTeamVO);
+                    }else{ // 힌트 미사용
+                        userExplanationMapper.secondAnsEqualsAnsMulti(examResultTeamVO);
+                    }
+                    // 오답 점수 set
+                    examResultTeamVO.setWrong_score(deduct);
+                    userExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
+                    // 총 점 가져오기
+                    int score = userExplanationMapper.getResultScoreForUser(examResultTeamVO);
+                    examResultVO.setResult_score(score); // 점수 대입
+                    userExplanationMapper.examResultAnsEqualsAns(examResultVO); // 훈련자 풀이 상세 db update
+                    userExplanationMapper.updateCntCorrectAnsTeam(examResultTeamVO); // 정답수 update
+                    userExplanationMapper.updateResultSumTeam(examResultTeamVO); // 총점 update
+                    userExplanationMapper.updateCntCorrectAnsUser(examStatVO);
+                    userExplanationMapper.updateResultSumUser(examStatVO);
                     return 9;
                 }else{ // 오답
-                    userExplanationMapper.secondAnsNotAnsMulti(examResultTeamVO);
+                    userExplanationMapper.updateCntFalseAnsTeam(examResultTeamVO); // 오답수 update
+                    userExplanationMapper.updateCntFalseAnsUser(examStatVO); // 오답수 update
+                    userExplanationMapper.examResultAnsNotAns(examResultVO); // 훈련자
+                    userExplanationMapper.secondAnsNotAnsMulti(examResultTeamVO); // 훈련팀
                     return 8;
                 }
             }else if(tryAns==2){ // 없음
@@ -326,10 +405,28 @@ public class UserExplanationService {
             //정답 입력횟수가 남아있는지 check
             if(tryAns==0){ // 남아있음 (1번 품)
                 if(userAns.equals(ans)){ // 정답일때
-                    userExplanationMapper.secondAnsEqualsAnsMulti(examResultTeamVO);
+                    if(check==1){ // 힌트 사용
+                        userExplanationMapper.secondAnsEqualsAnsMultiAndHintUser(examResultTeamVO);
+                    }else{ // 힌트 미사용
+                        userExplanationMapper.secondAnsEqualsAnsMulti(examResultTeamVO);
+                    }
+                    // 오답 점수 set
+                    examResultTeamVO.setWrong_score(deduct);
+                    userExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
+                    // 총 점 가져오기
+                    int score = userExplanationMapper.getResultScoreForUser(examResultTeamVO);
+                    examResultVO.setResult_score(score); // 점수 대입
+                    userExplanationMapper.examResultAnsEqualsAns(examResultVO); // 훈련자 풀이 상세 db update
+                    userExplanationMapper.updateCntCorrectAnsTeam(examResultTeamVO); // 정답수 update
+                    userExplanationMapper.updateResultSumTeam(examResultTeamVO); // 총점 update
+                    userExplanationMapper.updateCntCorrectAnsUser(examStatVO);
+                    userExplanationMapper.updateResultSumUser(examStatVO);
                     return 9;
                 }else{ // 오답
-                    userExplanationMapper.secondAnsNotAnsMulti(examResultTeamVO);
+                    userExplanationMapper.updateCntFalseAnsTeam(examResultTeamVO); // 오답수 update
+                    userExplanationMapper.updateCntFalseAnsUser(examStatVO); // 오답수 update
+                    userExplanationMapper.examResultAnsNotAns(examResultVO); // 훈련자
+                    userExplanationMapper.secondAnsNotAnsMulti(examResultTeamVO); // 훈련팀
                     return 8;
                 }
             }else if(tryAns==1){ // 없음
@@ -392,4 +489,19 @@ public class UserExplanationService {
 
         return userExplanationMapper.countAnsExamResultTeam(examResultTeamVO);
     }
+
+    // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+    public Map<String,Object> getTotalStatus(ExamResultTeamVO examResultTeamVO, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        // 유저 id로 정보 가져오기(grp, team_cd)
+        String userId = (String) session.getAttribute("USERID");
+        UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
+
+        // set
+        examResultTeamVO.setTr_user_grp(userVO.getTr_user_grp());
+        examResultTeamVO.setTeam_cd(userVO.getTeam_cd());
+
+        return userExplanationMapper.getTotalStatus(examResultTeamVO);
+    };
+
 }

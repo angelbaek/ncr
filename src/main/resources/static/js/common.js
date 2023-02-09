@@ -93,15 +93,8 @@ function sessionManagementForUser() {
         alert("로그인 후 사용가능합니다.");
         location.replace("/");
       }
-      if (response[0].role == 0) {
-        // 관리자임
-        alert("해당 페이지는 일반 사용자 전용입니다.");
-        location.replace("/admin_training");
-      } else if (response[0].role == 1) {
-        // 일반 유저임
-        userInfo = response[0];
-        $(".userName").text(response[0].tr_user_name);
-      }
+      userInfo = response;
+      $(".userName").text(response[0].tr_user_name);
     },
   });
   return userInfo;

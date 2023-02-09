@@ -8,6 +8,7 @@ grpname = grpnameAndGrpnum["name"];
 // 훈련차시
 var grpnum = 0;
 grpnum = grpnameAndGrpnum["num"];
+// 문제 그룹 id
 var examGrpid = 0;
 // 세션 가져오기
 sessionManagementForUser();
@@ -21,6 +22,8 @@ insertExamstatTeam();
 clientViewUpdate();
 // 훈련진행중인 시간 가져오기
 startTrainingGetTime();
+// 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+getTotalStatus();
 // 시간 변수
 // var time = 0;
 // 시간 함수
@@ -517,6 +520,8 @@ function getHintFunc(grpId, examId, hintDeduct) {
         console.log("이미 힌트 사용한 팀");
         $(".show_hint_p_" + examId).text("");
       }
+      // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+      getTotalStatus();
     },
   });
 }
@@ -562,16 +567,21 @@ function checkAnsBtnMulti(examId) {
   let = multipleAnswer = "";
   if (userCheckMulti == undefined) {
     console.log("이 문제는 복수정답이다");
+    var arrAns = [];
     for (var i = 1; i < 6; i++) {
       var check = $(".mult_ans_input_" + i + "_" + examId).prop("checked");
       // 활성화 된 값 가져오기
       if (check) {
-        if (i == 5) {
-          multipleAnswer += $(".mult_ans_input_" + i + "_" + examId).val();
-        } else {
-          multipleAnswer +=
-            $(".mult_ans_input_" + i + "_" + examId).val() + ",";
-        }
+        var ansVal = $(".mult_ans_input_" + i + "_" + examId).val();
+        arrAns.push(ansVal);
+      }
+    }
+    console.log(arrAns.length);
+    for (var i = 0; i < arrAns.length; i++) {
+      if (i == arrAns.length - 1) {
+        multipleAnswer += arrAns[i];
+      } else {
+        multipleAnswer += arrAns[i] + ",";
       }
     }
     // 답안 미선택
@@ -620,12 +630,14 @@ function checkAnsBtnMulti(examId) {
       } else if (response == 3) {
         alert("server에서 data를 받아 올 수 없습니다.");
       }
+      // count
+      countAnsExamResultTeam();
       // view update
       clientViewUpdate();
+      // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+      getTotalStatus();
     },
   });
-  // count
-  countAnsExamResultTeam();
 }
 
 // 주관식 정답확인 event
@@ -674,6 +686,8 @@ function checkAnsBtnShort(examId) {
       }
       // view update
       clientViewUpdate();
+      // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+      getTotalStatus();
     },
   });
 }
@@ -702,6 +716,10 @@ function clientViewUpdate() {
           var examId = response[i].tr_exam_id;
           ansBtnOff(examId);
           hintBtnOff(examId);
+        }
+        if (response[i].hint_use == 1) {
+          // 힌트 사용 p 태그 공란
+          $(".show_hint_p_" + response[i].tr_exam_id).text("");
         }
       }
     },
@@ -784,7 +802,36 @@ function countAnsExamResultTeam() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
+      console.log("풀이 개수 :" + response);
+    },
+  });
+}
+
+// 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+function getTotalStatus() {
+  var jsonData = {
+    // 훈련 차시
+    tr_num: grpnum,
+    // 문제 그룹 id
+    tr_exam_grpid: examGrpid,
+  };
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/get_total_status",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
       console.log(response);
+      $(".total_count").text(
+        "풀이 개수: " +
+          response.explanationcount +
+          "/" +
+          response.maxexplanationcount
+      ); // 풀이 개수 view
+      $(".total_score").text("획득 점수: " + response.resultscore); // 획득 점수 view
+      $(".total_fail_score").text("오답점수: " + response.wrongscore);
+      $(".total_hint_deduct").text("힌트감점: " + response.hintscore); // 힌트 감점 view
     },
   });
 }

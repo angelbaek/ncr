@@ -1,5 +1,26 @@
-getSessionUserInfo();
+let selectVal = "";
+sessionManagementForUser();
+getGroupInfoById();
 getTeamGroup();
+
+function getGroupInfoById() {
+  $.ajax({
+    async: false,
+    url: "http://192.168.32.44:8080/user/get_group_info_by_id",
+    type: "GET",
+    dataType: "json",
+    success: function (response) {
+      console.log(response);
+      var grp = response[0].tr_user_grp;
+      selectVal = response[0].team_cd;
+      var org = response[0].tr_user_org;
+      var name = response[0].tr_user_name;
+      $("#team_code").text(selectVal);
+      $("#agency_name").text(org);
+      $("#user_name").text(name);
+    },
+  });
+}
 
 // 훈련 시작 버튼 활성화(클릭됨) 함수 css
 function trainingStartBtnOn() {
@@ -19,40 +40,12 @@ function trainingStartBtnOff() {
   $(".tn_start_btn").attr("disabled", true);
   $(".tn_start_btn").css("backgroundColor", "gray");
 }
-var userId = "";
-// 훈련자 정보 가져오기
-function getSessionUserInfo() {
-  console.log("세션 읽어오기 실행중...");
-  $.ajax({
-    url: "http://192.168.32.44:8080/user",
-    type: "GET",
-    dataType: "json",
-    success: function (response) {
-      console.log(response);
-      var tr_user_org = response[0].tr_user_org;
-      var tr_user_name = response[0].tr_user_name;
-      userId = response[0].tr_user_id;
-      console.log(response);
-      $("#agency_name").empty();
-      $("#agency_name").append(tr_user_org);
-      $("#user_name").empty();
-      $("#user_name").append(tr_user_name);
-      $(".userName").empty();
-      $(".userName").append(tr_user_name);
-      if (response[0].tr_user_grp == 0) {
-        trainingStartBtnOff();
-      } else if (response[0].tr_user_grp != 0) {
-        trainingStartBtnOn();
-        $("#team_code").text(response[0].team_cd);
-      }
-    },
-  });
-}
 
 // 팀(조) 정보 가져오기
 function getTeamGroup() {
   console.log("팀 정보 실행중...");
   $.ajax({
+    async: false,
     url: "http://192.168.32.44:8080/userGRP",
     type: "GET",
     dataType: "json",
@@ -70,6 +63,12 @@ function getTeamGroup() {
           "</option>";
       }
       $("#team").append(html);
+      for (var i = 0; i < response.length; i++) {
+        if (selectVal == response[i].team_cd) {
+          console.log("맞았다");
+          $("#team option:eq(" + (i + 1) + ")").prop("selected", true);
+        }
+      }
     },
   });
 }
@@ -92,7 +91,6 @@ function userGroupSave() {
   };
   console.log(jsonData);
   $.ajax({
-    async: false,
     url: "http://192.168.32.44:8080/user/update",
     type: "PATCH",
     contentType: "application/json",
@@ -102,7 +100,7 @@ function userGroupSave() {
       console.log(response);
       if (response > 0) {
         alert("훈련준비 상태가 변경되었습니다");
-        location.reload();
+        $("#team_code").text(team_cd);
       }
     },
   });
@@ -139,6 +137,7 @@ function training() {
         return;
       } else if (response[0].tr_mgmt_state == 1) {
         alert("훈련을 시작합니다");
+        location.href("user_exam_explanation.html");
       }
     },
   });
