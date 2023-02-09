@@ -2,6 +2,7 @@ package com.training.ncr.controller.user;
 
 import com.training.ncr.service.user.UserExplanationService;
 import com.training.ncr.vo.UserVO;
+import com.training.ncr.vo.admin.ExamHintVO;
 import com.training.ncr.vo.user.ExamResultTeamVO;
 import com.training.ncr.vo.user.ExamResultVO;
 import com.training.ncr.vo.user.ExamStatTeamVO;
@@ -50,6 +51,12 @@ public class UserExplanationController {
         return userExplanationService.hintUsing(examResultVO,request);
     }
 
+    // 해당 힌트 가져오기
+    @PostMapping("/get_hint")
+    public List<ExamHintVO> getHint(@RequestBody ExamHintVO examHintVO){
+        return userExplanationService.getHint(examHintVO);
+    }
+
     // 정답확인 메소드( 객관식{복수정답 포함} )
     @PostMapping("/using_answer_multi")
     public int inputAnswerMuiltiple(@RequestBody ExamResultTeamVO examResultTeamVO, HttpServletRequest request){
@@ -60,5 +67,23 @@ public class UserExplanationController {
     @PostMapping("/using_answer_short_form")
     public int inputAnswerShortForm(@RequestBody ExamResultTeamVO examResultTeamVO, HttpServletRequest request){
         return userExplanationService.inputAnswerShortForm(examResultTeamVO,request);
+    }
+
+    // 풀이 중인 훈련자 팀 가져오기
+    @PostMapping("/get_exam_result_team")
+    public List<ExamResultTeamVO> getExamResultTeamInfo(@RequestBody ExamResultTeamVO examResultTeamVO, HttpServletRequest request){
+        return userExplanationService.getExamResultTeamInfo(examResultTeamVO,request);
+    }
+
+    // 훈련 시작한 시간 가져오기
+    @PostMapping("/get_start_training_get_time")
+    public List<String> startTrainingGetTime(@RequestBody ExamStatTeamVO examStatTeamVO, HttpServletRequest request){
+        return userExplanationService.startTrainingGetTime(examStatTeamVO, request);
+    }
+
+    // 훈련팀별 풀이 현황정보 정답 수 update
+    @PostMapping("/count_ans_exam_result_team")
+    public int countAnsExamResultTeam(@RequestBody ExamResultTeamVO examResultTeamVO, HttpServletRequest request){
+        return userExplanationService.countAnsExamResultTeam(examResultTeamVO,request);
     }
 }

@@ -11,4 +11,6 @@ public class ExamResultTeamVO {
 
     // 문제 배점
     int point;
+    // 힌트 사용 감점
+    int hint;
 }

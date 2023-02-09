@@ -80,9 +80,21 @@
         <div style="background-color: #df3a01">정보 유출(Exfiltration) 5</div>
         <div style="background-color: #df0101">영향(Impact) 1</div>
       </div>
+      <!-- 제출하기 -->
+      <div class="exam_submit"><button>제출하기</button></div>
+      <!-- 백그라운드 -->
+      <div class="back"></div>
+      <!-- 힌트 -->
+      <div class="hint_popup">
+        <div class="hint_popup_div">
+          <div class="hint_popup_title">힌트</div>
+          <div class="hint_popup_contents">힌트 내용</div>
+          <div>
+            <button onclick="hintPopUp()">확인</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- 백그라운드 -->
-    <div class="back"></div>
   </body>
   <script
     src="https://code.jquery.com/jquery-3.6.3.js"
@@ -96,12 +108,13 @@
   <script>
     // sessionManagementForAdmin();
     // $("#left_menubar").css("color", "gray");
-
+    $(".hint_popup").css("display", "none");
     $(".back").css("display", "none");
     // sessionManagementForAdmin();
 
     // 경과시간
-    var time = timeReturn(); //기준시간 작성
+    // var time = timeReturn(); //기준시간 작성
+    var time;
     // 테스트를 위한 임시 시간
     var min = ""; //분
     var sec = ""; //초
@@ -120,10 +133,9 @@
       //타임아웃 시
       if (time < 0) {
         clearInterval(x); //setInterval() 실행을 끝냄
-        document.getElementById("demo").innerHTML = "시간초과";
+        document.getElementById("demo").innerHTML = "제한 시간 종료";
         alert("풀이 시간 종료!!");
-        $(".ans_hint_div button").prop("disabled", true);
-        $(".ans_hint_div button").css("backgroundColor", "gray");
+        $(".back").toggle();
       }
     }, 1000);
 

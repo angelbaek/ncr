@@ -17,6 +17,10 @@ getStartExamAndGrp(grpname);
 insertUserTrainExamStat();
 // 훈련자 첫 팀플 post
 insertExamstatTeam();
+// 풀이 중인 훈련자 팀 가져오기
+clientViewUpdate();
+// 훈련진행중인 시간 가져오기
+startTrainingGetTime();
 // 시간 변수
 // var time = 0;
 // 시간 함수
@@ -50,6 +54,8 @@ function searchMgmtState() {
   };
   return returnResult;
 }
+
+// 문제 그룹명으로 문제 불러오기
 function getStartExamAndGrp(grpname) {
   var name;
   var html = "";
@@ -174,7 +180,9 @@ function getStartExamAndGrp(grpname) {
                 examid +
                 "' class='common_ans_btn' onclick='checkAnsBtnMulti(" +
                 examid +
-                ")'>정답확인</button><button onclick='getHintFunc(" +
+                ")'>정답확인</button><button id='hint_btn_" +
+                examid +
+                "' onclick='getHintFunc(" +
                 grpid +
                 "," +
                 examid +
@@ -206,7 +214,7 @@ function getStartExamAndGrp(grpname) {
                 examid +
                 "' class='common_ans_btn' onclick='checkAnsBtnMulti(" +
                 examid +
-                ")'>정답확인</button></div>" +
+                ")'>정답확인</button><button id='hint_btn_not_use' disabled style='background-color: gray;'>힌트</button></div>" +
                 "</div><div class='common_exam_contents' id='ans_result_div'><div class='result_exam_explanation_first_" +
                 examid +
                 "'>첫번째:" +
@@ -274,7 +282,9 @@ function getStartExamAndGrp(grpname) {
                 examid +
                 "' class='common_ans_btn' onclick='checkAnsBtnMulti(" +
                 examid +
-                ")'>정답확인</button><button onclick='getHintFunc(" +
+                ")'>정답확인</button><button id='hint_btn_" +
+                examid +
+                "' onclick='getHintFunc(" +
                 grpid +
                 "," +
                 examid +
@@ -306,7 +316,7 @@ function getStartExamAndGrp(grpname) {
                 examid +
                 "' class='common_ans_btn' onclick='checkAnsBtnMulti(" +
                 examid +
-                ")'>정답확인</button></div>" +
+                ")'>정답확인</button><button id='hint_btn_not_use' disabled style='background-color: gray;'>힌트</button></div>" +
                 "</div><div class='common_exam_contents' id='ans_result_div'><div class='result_exam_explanation_first_" +
                 examid +
                 "'>첫번째:" +
@@ -337,7 +347,9 @@ function getStartExamAndGrp(grpname) {
               examid +
               "' class='common_ans_btn' onclick='checkAnsBtnShort(" +
               examid +
-              ")'>정답확인</button><button onclick='getHintFunc(" +
+              ")'>정답확인</button><button id='hint_btn_" +
+              examid +
+              "' onclick='getHintFunc(" +
               grpid +
               "," +
               examid +
@@ -369,7 +381,7 @@ function getStartExamAndGrp(grpname) {
               examid +
               "' class='common_ans_btn' onclick='checkAnsBtnShort(" +
               examid +
-              ")'>정답확인</button></div>" +
+              ")'>정답확인</button><button id='hint_btn_not_use' disabled style='background-color: gray;'>힌트</button></div>" +
               "</div><div class='common_exam_contents' id='ans_result_div'><div class='result_exam_explanation_first_" +
               examid +
               "'>첫번째:" +
@@ -475,6 +487,14 @@ function insertExamResultAndTeam(examId) {
 
 // 훈련자 힌트 입력 event
 function getHintFunc(grpId, examId, hintDeduct) {
+  // view update
+  clientViewUpdate();
+  // 힌트 가져오기
+  getHint(examId, grpId);
+  $(".hint_popup").toggle();
+  $(".back").toggle();
+  //scroll
+  scrollPause();
   var jsonData = {
     // 획득점수에 힌트점수 반영하게
     tr_exam_id: examId,
@@ -492,11 +512,40 @@ function getHintFunc(grpId, examId, hintDeduct) {
       console.log(response);
       if (response == 0) {
         console.log("첫 힌트 사용자");
+        $(".show_hint_p_" + examId).text("");
       } else if (response == 1) {
         console.log("이미 힌트 사용한 팀");
+        $(".show_hint_p_" + examId).text("");
       }
     },
   });
+}
+
+// 해당 힌트 가져오기
+function getHint(examId, grpId) {
+  var jsonData = {
+    tr_exam_id: examId,
+    tr_exam_grpid: grpId,
+  };
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/get_hint",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      var html = response[0].tr_exam_hint;
+      $(".hint_popup_contents").empty();
+      $(".hint_popup_contents").append(html);
+    },
+  });
+}
+
+// 힌트 팝업 토글
+function hintPopUp() {
+  $(".hint_popup").toggle();
+  $(".back").toggle();
 }
 
 // 객관식 정답확인 event
@@ -558,15 +607,25 @@ function checkAnsBtnMulti(examId) {
         alert("풀 수 있음!!");
       } else if (response == 0) {
         alert("해당 문제는 더 이상 풀 수 없습니다");
+        clientViewUpdate();
+        return;
       } else if (response == 9) {
         alert("정답!");
       } else if (response == 8) {
+        $('input[name="radiofunc_' + examId + '"]').prop("checked", false);
+        for (var i = 1; i < 6; i++) {
+          $(".mult_ans_input_" + i + "_" + examId).prop("checked", false);
+        }
         alert("오답!");
       } else if (response == 3) {
         alert("server에서 data를 받아 올 수 없습니다.");
       }
+      // view update
+      clientViewUpdate();
     },
   });
+  // count
+  countAnsExamResultTeam();
 }
 
 // 주관식 정답확인 event
@@ -575,6 +634,11 @@ function checkAnsBtnShort(examId) {
   let inputAnswer = $("#short_form_input_ans_" + examId).val();
   console.log(inputAnswer);
 
+  if (inputAnswer == "") {
+    alert("답안을 기입하세요");
+    $("#short_form_input_ans_" + examId).focus();
+    return;
+  }
   var jsonData = {
     // 훈련자 답안
     input_answer: inputAnswer,
@@ -598,6 +662,9 @@ function checkAnsBtnShort(examId) {
         alert("풀 수 있음!!");
       } else if (response == 0) {
         alert("해당 문제는 더 이상 풀 수 없습니다");
+        // view update
+        clientViewUpdate();
+        return;
       } else if (response == 9) {
         alert("정답!");
       } else if (response == 8) {
@@ -605,6 +672,129 @@ function checkAnsBtnShort(examId) {
       } else if (response == 3) {
         alert("server에서 data를 받아 올 수 없습니다.");
       }
+      // view update
+      clientViewUpdate();
     },
   });
+}
+
+// 풀이 중인 훈련자 팀 가져오기
+function clientViewUpdate() {
+  var jsonData = {
+    // 훈련 차시
+    tr_num: grpnum,
+    // 문제 그룹 id
+    tr_exam_grpid: examGrpid,
+  };
+  console.log(jsonData);
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/get_exam_result_team",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      for (var i = 0; i < response.length; i++) {
+        if (response[i].cnt_try_ans == 2) {
+          // 정답 기회 모두 소진
+          // 문제 id
+          var examId = response[i].tr_exam_id;
+          ansBtnOff(examId);
+          hintBtnOff(examId);
+        }
+      }
+    },
+  });
+}
+
+// 훈련진행중인 시간 가져오기
+function startTrainingGetTime() {
+  var jsonData = {
+    // 훈련 차시
+    tr_num: grpnum,
+    // 문제 그룹 id
+    tr_exam_grpid: examGrpid,
+  };
+  console.log(jsonData);
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/get_start_training_get_time",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      var txt = "";
+      txt = response[0];
+      var traingHour = parseInt(txt.substring(0, 2));
+      var traingMin = parseInt(txt.substring(3, 5)) - 4;
+      var traingSec = parseInt(txt.substring(6, 8)) + 30;
+
+      // 현재 시각
+      let now = new Date();
+
+      var hours = now.getHours(); // 현재 시간
+      console.log("시간 : ", hours);
+
+      var minutes = now.getMinutes(); // 현재 분
+      console.log("분 : ", minutes);
+
+      var seconds = now.getSeconds(); // 현재 초
+      console.log("초 : ", seconds);
+
+      var resultHour = (traingHour - hours) * 3600;
+      var resultMin = (traingMin - minutes) * 60;
+      var resultSec = traingSec - seconds;
+      var finalTime = resultHour + resultMin + resultSec;
+
+      console.log("현재 분:" + minutes + " db 분:" + traingMin);
+
+      console.log(
+        "계산 시:" +
+          resultHour +
+          " 계산 분:" +
+          resultMin +
+          " 계산 초:" +
+          resultSec
+      );
+
+      console.log("최종 초: " + finalTime);
+      time += finalTime;
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR); //응답 메시지
+      console.log(textStatus); //"error"로 고정인듯함
+      console.log(errorThrown);
+    },
+  });
+}
+
+// 훈련팀별 풀이 현황정보 정답 수 update
+function countAnsExamResultTeam() {
+  var jsonData = {
+    // 훈련 차시
+    tr_num: grpnum,
+    // 문제 그룹 id
+    tr_exam_grpid: examGrpid,
+  };
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/count_ans_exam_result_team",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+    },
+  });
+}
+
+function ansBtnOff(examId) {
+  $("#ans_btn_" + examId).prop("disabled", true);
+  $("#ans_btn_" + examId).css("backgroundColor", "gray");
+  $(".show_hint_p_" + examId).text("");
+}
+function hintBtnOff(examId) {
+  $("#hint_btn_" + examId).prop("disabled", true);
+  $("#hint_btn_" + examId).css("backgroundColor", "gray");
 }
