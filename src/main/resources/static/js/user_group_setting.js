@@ -133,11 +133,12 @@ function training() {
         return;
       }
       if (response[0].tr_mgmt_state != 1) {
-        alert("문제가 활성화 되지 않았습니다");
+        alert(num + "차시에 진행중인 문제그룹이 없습니다.");
+        $("select[name=location_num]").focus();
         return;
       } else if (response[0].tr_mgmt_state == 1) {
         alert("훈련을 시작합니다");
-        location.href("user_exam_explanation.html");
+        location.href = "user_exam_explanation";
       }
     },
   });

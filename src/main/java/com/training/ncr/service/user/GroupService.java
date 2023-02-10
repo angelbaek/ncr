@@ -22,13 +22,6 @@ public class GroupService {
     }
     //훈련자 팀,팀코드,훈련준비상태 setting
     public int callUserUpdate(UserVO userVO) {
-        userVO.getTr_user_grp();
-        userVO.getTeam_cd();
-        userVO.getTr_user_id();
-
-        System.out.println(userVO.getTr_user_grp()+"/"+
-                userVO.getTeam_cd()+"/"+
-                userVO.getTr_user_id());
         return groupMapper.callUserUpdate(userVO);
     }
 

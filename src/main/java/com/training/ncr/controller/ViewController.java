@@ -51,7 +51,7 @@ public class ViewController {
         return "html/admin_exam_explanation.html";
     }
 
-    @GetMapping(value = {"html/user_exam_explanation.html","/user_exam_explanation.html"})
+    @GetMapping(value = {"html/user_exam_explanation.html","/user_exam_explanation.html","/user_exam_explanation"})
     public String userExamExplanation(){
         return "html/user_exam_explanation.html";
     }

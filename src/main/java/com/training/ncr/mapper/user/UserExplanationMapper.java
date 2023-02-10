@@ -127,4 +127,12 @@ public interface UserExplanationMapper {
     // 총 점수 UPDATE (훈련자별)
     int updateResultSumUser(ExamStatVO examStatVO);
 
+    // 제출하기 이벤트 (훈련팀별)
+    int updateSubmitTeam(ExamStatTeamVO examStatTeamVO);
+
+    // 제출하기 이벤트 (훈련자별)
+    int updateSubmitUser(ExamStatVO examStatVO);
+
+    // 제출여부 check
+    int checkSubmitTeam(ExamStatTeamVO examStatTeamVO);
 }

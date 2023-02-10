@@ -652,5 +652,45 @@
         "TR_EXAM_GRPID" = #{tr_exam_grpid}
     </update>
 
+    <!--제출하기 이벤트 (훈련팀별)-->
+    <update id="updateSubmitTeam">
+        UPDATE
+        "TN_TRAIN_EXAMSTAT_TEAM"
+        SET
+        "SUBMIT_ANSWER" = 1,
+        "END_TIME" = NOW()
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </update>
+
+    <!--제출하기 이벤트 (훈련자별)-->
+    <update id="updateSubmitUser">
+        UPDATE
+        "TN_TRAIN_EXAMSTAT"
+        SET
+        "SUBMIT_ANSWER" = 1,
+        "END_TIME" = NOW()
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TR_USER_ID" = #{tr_user_id} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </update>
+
+    <!--제출여부 check-->
+    <select id="checkSubmitTeam" resultType="int">
+        SELECT
+            "SUBMIT_ANSWER"
+        FROM
+            "TN_TRAIN_EXAMSTAT_TEAM"
+        WHERE
+            "TR_USER_GRP" = #{tr_user_grp} AND
+            "TEAM_CD" = #{team_cd} AND
+            "TR_NUM" = #{tr_num} AND
+            "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
 
 </mapper>

@@ -90,4 +90,16 @@ public class UserExplanationController {
     public Map<String,Object> getTotalStatus(@RequestBody ExamResultTeamVO examResultTeamVO, HttpServletRequest request){
         return userExplanationService.getTotalStatus(examResultTeamVO, request);
     };
+
+    // 제출하기 event
+    @PostMapping("/update_submit")
+    public int updateSubmit(@RequestBody ExamStatTeamVO examStatTeamVO, HttpServletRequest request){
+        return userExplanationService.updateSubmit(examStatTeamVO,request);
+    }
+
+    // 제출여부 event
+    @PostMapping("/check_submit")
+    public int checkSubmit(@RequestBody ExamStatTeamVO examStatTeamVO, HttpServletRequest request){
+        return userExplanationService.checkSubmit(examStatTeamVO,request);
+    }
 }

@@ -53,14 +53,10 @@ public class ExamGroupService {
     // TRAIN_EXAM 테이블 INSERT
     public List<ExamVO> insertTrainExam(ExamGrpVO examGrpVO){
         int grpid = examGrpVO.getTr_exam_grpid();
-        System.out.println("grpid는:"+grpid);
         int grpCount = examGrpVO.getTr_exam_count();
-        System.out.println("grpCount는:"+grpCount);
         for(int i=1; i<=grpCount; i++){
             examGrpVO.setTr_exam_count(i);
             examGroupMapper.insertTrainExam(examGrpVO);
-            System.out.println(i+"번째 insert구문 목표:"+grpCount);
-            System.out.println("현재 exam count는:"+examGrpVO.getTr_exam_count());
         }
         return examGroupMapper.findExamidByGrpid(grpid);
     }

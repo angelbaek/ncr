@@ -24,6 +24,8 @@ clientViewUpdate();
 startTrainingGetTime();
 // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
 getTotalStatus();
+// 제출여부
+checkSubmitExam();
 // 시간 변수
 // var time = 0;
 // 시간 함수
@@ -44,7 +46,8 @@ function searchMgmtState() {
     success: function (response) {
       console.log(response);
       if (response.length == 0) {
-        alert("훈련 시작한 그룹이 없습니다.");
+        alert("훈련이 진행중인 문제그룹이 없습니다.");
+        location.href = "/user_group_setting";
         return;
       }
       name = response[0].tr_exam_grp;
@@ -490,6 +493,8 @@ function insertExamResultAndTeam(examId) {
 
 // 훈련자 힌트 입력 event
 function getHintFunc(grpId, examId, hintDeduct) {
+  // 제출여부
+  checkSubmitExam();
   // view update
   clientViewUpdate();
   // 힌트 가져오기
@@ -522,12 +527,16 @@ function getHintFunc(grpId, examId, hintDeduct) {
       }
       // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
       getTotalStatus();
+      // 제출여부
+      checkSubmitExam();
     },
   });
 }
 
 // 해당 힌트 가져오기
 function getHint(examId, grpId) {
+  // 제출 여부
+  checkSubmitExam();
   var jsonData = {
     tr_exam_id: examId,
     tr_exam_grpid: grpId,
@@ -555,6 +564,8 @@ function hintPopUp() {
 
 // 객관식 정답확인 event
 function checkAnsBtnMulti(examId) {
+  // 제출 여부
+  checkSubmitExam();
   // 사용자가 입력한 답 대입할 변수
   let inputAnswer = "";
   // 객관식(복수X) 값 가져오기
@@ -636,12 +647,16 @@ function checkAnsBtnMulti(examId) {
       clientViewUpdate();
       // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
       getTotalStatus();
+      // 제출여부
+      checkSubmitExam();
     },
   });
 }
 
 // 주관식 정답확인 event
 function checkAnsBtnShort(examId) {
+  // 제출 여부
+  checkSubmitExam();
   // 사용자가 입력한 답 대입할 변수
   let inputAnswer = $("#short_form_input_ans_" + examId).val();
   console.log(inputAnswer);
@@ -684,10 +699,14 @@ function checkAnsBtnShort(examId) {
       } else if (response == 3) {
         alert("server에서 data를 받아 올 수 없습니다.");
       }
+      // count
+      countAnsExamResultTeam();
       // view update
       clientViewUpdate();
       // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
       getTotalStatus();
+      // 제출여부
+      checkSubmitExam();
     },
   });
 }
@@ -829,9 +848,75 @@ function getTotalStatus() {
           "/" +
           response.maxexplanationcount
       ); // 풀이 개수 view
-      $(".total_score").text("획득 점수: " + response.resultscore); // 획득 점수 view
-      $(".total_fail_score").text("오답점수: " + response.wrongscore);
+      $(".total_score").text("획득점수: " + response.resultscore); // 획득 점수 view
+      $(".total_fail_score").text("오답감점: " + response.wrongscore);
       $(".total_hint_deduct").text("힌트감점: " + response.hintscore); // 힌트 감점 view
+      if (response.explanationcount == response.maxexplanationcount) {
+        // 다 품
+        $(".contents").scrollTop($(".contents")[0].scrollHeight);
+        $(".back").toggle();
+      }
+    },
+  });
+}
+
+// 제출하기 event
+function submitExam() {
+  if (
+    confirm(
+      "정말로 제출 하시겠습니까?\n한번 제출한 문제그룹은 더 이상 해당문제를 풀 수 없습니다."
+    )
+  ) {
+    var jsonData = {
+      // 훈련 차시
+      tr_num: grpnum,
+      // 문제 그룹 id
+      tr_exam_grpid: examGrpid,
+    };
+    console.log(jsonData);
+    $.ajax({
+      async: false,
+      url: "http://192.168.32.44:8080/user/update_submit",
+      type: "POST",
+      contentType: "application/json",
+      dataType: "json",
+      data: JSON.stringify(jsonData),
+      success: function (response) {
+        console.log(response);
+        if (response == 1) {
+          alert("문제제출이 완료되었습니다");
+          location.href = "/";
+        } else if (response == 0) {
+          alert("다른 훈련자가 이미 제출하였습니다");
+          location.href = "/";
+        }
+      },
+    });
+  }
+}
+
+// 제출여부 check
+function checkSubmitExam() {
+  var jsonData = {
+    // 훈련 차시
+    tr_num: grpnum,
+    // 문제 그룹 id
+    tr_exam_grpid: examGrpid,
+  };
+  console.log(jsonData);
+  $.ajax({
+    async: false,
+    url: "http://192.168.32.44:8080/user/check_submit",
+    type: "POST",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      if (response == 0) {
+        alert("해당 문제그룹은 더 이상 문제를 풀 수 없습니다");
+        location.href = "/";
+      }
     },
   });
 }

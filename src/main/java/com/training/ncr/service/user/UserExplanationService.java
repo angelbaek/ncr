@@ -469,10 +469,17 @@ public class UserExplanationService {
         examStatTeamVO.setTr_user_grp(userVO.getTr_user_grp());
         examStatTeamVO.setTeam_cd(userVO.getTeam_cd());
 
-        System.out.println("훈련 시작한 시간 가져오기 실행중..."+userExplanationMapper.startTrainingGetTime(examStatTeamVO));
+        System.out.println("기존 훈련팀 시작한 시간: "+userExplanationMapper.startTrainingGetTime(examStatTeamVO));
         String time = userExplanationMapper.startTrainingGetTime(examStatTeamVO);
-        List<String> subTime = Collections.singletonList(time.substring(11, 18));
-        return subTime;
+        try{
+            List<String> subTime = Collections.singletonList(time.substring(11, 18));
+            return subTime;
+        }catch (NullPointerException n){
+            System.out.println("첫 훈련이 시작되어 감소할 시간이 없습니다.");
+            return null;
+        }
+//        List<String> subTime = Collections.singletonList(time.substring(11, 18));
+//        return subTime;
     }
 
     // 훈련팀별 풀이 현황정보 정답 수 update
@@ -502,6 +509,54 @@ public class UserExplanationService {
         examResultTeamVO.setTeam_cd(userVO.getTeam_cd());
 
         return userExplanationMapper.getTotalStatus(examResultTeamVO);
-    };
+    }
 
+    // 제출하기 event
+    public int updateSubmit(ExamStatTeamVO examStatTeamVO, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        // 유저 id로 정보 가져오기
+        String userId = (String) session.getAttribute("USERID");
+        UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
+        // 훈련자 제출을 위한 set
+        ExamStatVO examStatVO = new ExamStatVO(); // 선언
+        examStatVO.setTr_user_id(userId);
+        examStatVO.setTr_user_grp(userVO.getTr_user_grp());
+        examStatVO.setTr_num(examStatTeamVO.getTr_num());
+        examStatVO.setTr_exam_grpid(examStatTeamVO.getTr_exam_grpid());
+        // 훈련팀 팀코드,grp set
+        examStatTeamVO.setTr_user_grp(userVO.getTr_user_grp());
+        examStatTeamVO.setTeam_cd(userVO.getTeam_cd());
+
+        int grp = examStatTeamVO.getTr_user_grp();
+        String team  = examStatTeamVO.getTeam_cd();
+        int num = examStatTeamVO.getTr_num();
+        int grpid = examStatTeamVO.getTr_exam_grpid();
+        System.out.println("grp:"+grp+" team:"+team+" num"+num+" grpid:"+grpid);
+        int submit = userExplanationMapper.checkSubmitTeam(examStatTeamVO);
+        if(submit==1){ // 이미 제출했을때
+            return 0;
+        }
+        // 미제출이면 update
+        userExplanationMapper.updateSubmitTeam(examStatTeamVO); // 훈련팀 제출
+        userExplanationMapper.updateSubmitUser(examStatVO); // 훈련자 제출
+        return 1;
+    }
+
+    // 제출여부 event
+    public int checkSubmit(@RequestBody ExamStatTeamVO examStatTeamVO, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        // 유저 id로 정보 가져오기
+        String userId = (String) session.getAttribute("USERID");
+        UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
+
+        // 훈련팀 팀코드,grp set
+        examStatTeamVO.setTr_user_grp(userVO.getTr_user_grp());
+        examStatTeamVO.setTeam_cd(userVO.getTeam_cd());
+
+        int submit = userExplanationMapper.checkSubmitTeam(examStatTeamVO);
+        if(submit==1){ // 이미 제출했을때
+            return 0;
+        }
+        return 1;
+    }
 }

@@ -24,16 +24,17 @@ public class LoginController {
         // 훈련자 아이디
         String id = loginVO.getId();
         String pw = loginVO.getPw();
-        System.out.println("아디:"+id+"비번:"+pw);
         // 계정 체크
         if (loginService.loginAdmin(loginVO).size() != 0){ // 관리자 계정이다
             HttpSession session = request.getSession();
             session.setAttribute("ADMIN",loginService.loginAdmin(loginVO));
+            System.out.println("ID: "+id+" 관리자 로그인...");
             return 1;
         } else if (loginService.login(loginVO).size() != 0) { // 일반 사용자다
             HttpSession session = request.getSession();
             session.setAttribute("USER",loginService.login(loginVO));
             session.setAttribute("USERID", id);
+            System.out.println("ID: "+id+" 훈련자 로그인...");
             return 2;
         }
         // 없는 계정
@@ -58,6 +59,12 @@ public class LoginController {
     public int logout(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if(session!=null){
+            String id = (String) session.getAttribute("USERID");
+            if(id!=null){
+                System.out.println("ID: "+id+" 훈련자 로그아웃...");
+            }else{
+                System.out.println( "관리자 로그아웃...");
+            }
             session.invalidate();
             return 1;
         }

@@ -33,7 +33,7 @@ public class TrainingService {
 
     //훈련 시작
     public int trainingStart(MgmtVO mgmtVO){
-        System.out.println(mgmtVO.getTr_num()+"차시 문제그룹:"+mgmtVO.getTr_exam_grp()+" 훈련시작!!");
+        System.out.println(mgmtVO.getTr_num()+"차시 문제그룹:"+mgmtVO.getTr_exam_grp()+" 훈련시작");
         return trainingMapper.trainingStart(mgmtVO);
     }
 

@@ -77,7 +77,7 @@ public class ExamManagementService {
 
     // csv 읽어서 문제 업로드
     public int examUpdateByCsv(ExamVO examVO){
-        System.out.println("정답"+examVO.getTr_exam_ans());
+        System.out.println("CSV 문제 업로드...");
         return examManagementMapper.examUpdateByCsv(examVO);
     };
 }
