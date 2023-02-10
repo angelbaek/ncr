@@ -5,13 +5,15 @@
 var grpnameAndGrpnum = searchMgmtState();
 var grpname = "";
 grpname = grpnameAndGrpnum["name"];
+// count ma
+var arrMa = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 // 훈련차시
 var grpnum = 0;
 grpnum = grpnameAndGrpnum["num"];
 // 문제 그룹 id
 var examGrpid = 0;
 // 세션 가져오기
-sessionManagementForUser();
+// sessionManagementForUser();
 // 유저 팀코드
 getStartExamAndGrp(grpname);
 // 훈련자 첫 진입 post
@@ -61,6 +63,8 @@ function searchMgmtState() {
   return returnResult;
 }
 
+let staticSecansDeduct = 0;
+let staticHintDeduct = 0;
 // 문제 그룹명으로 문제 불러오기
 function getStartExamAndGrp(grpname) {
   var name;
@@ -72,6 +76,8 @@ function getStartExamAndGrp(grpname) {
     dataType: "json",
     success: function (response) {
       console.log(response);
+      staticSecansDeduct = response[0].tr_secans_deduct; // 2차 풀이 감점
+      staticHintDeduct = response[0].tr_hint_deduct; // 힌트 사용 감점
       // 문제id 대입
       examGrpid = response[0].tr_exam_grpid;
       // 실제 총 문항 갯수 대입
@@ -87,6 +93,7 @@ function getStartExamAndGrp(grpname) {
       }
       time = response[0].tr_exam_time * 60;
       for (var i = 0; i < response.length; i++) {
+        countMaTactics(response[i].ma_tactics_id);
         // 난이도에 따른 상 중 하 텍스트 구문
         var level = response[i].tr_exam_level;
         var levelTxt = "";
@@ -103,9 +110,14 @@ function getStartExamAndGrp(grpname) {
         var examid = response[i].tr_exam_id;
         html +=
           "<div class='common_exam_title'>" +
+          "<div class='common_num_box' id='box_" +
+          response[i].ma_tactics_id +
+          "'>" +
           response[i].tr_exam_num +
-          ". " +
+          "</div>" +
+          "<div class='common_contents_only_css'>" +
           response[i].tr_exam_cont +
+          "</div>" +
           " <p class='ansTargetStr_" +
           examid +
           "'>(난이도:" +
@@ -713,6 +725,20 @@ function checkAnsBtnShort(examId) {
 
 // 풀이 중인 훈련자 팀 가져오기
 function clientViewUpdate() {
+  $("#ta1").text(arrMa[0]);
+  $("#ta2").text(arrMa[1]);
+  $("#ta3").text(arrMa[2]);
+  $("#ta4").text(arrMa[3]);
+  $("#ta5").text(arrMa[4]);
+  $("#ta6").text(arrMa[5]);
+  $("#ta7").text(arrMa[6]);
+  $("#ta8").text(arrMa[7]);
+  $("#ta9").text(arrMa[8]);
+  $("#ta10").text(arrMa[9]);
+  $("#ta11").text(arrMa[10]);
+  $("#ta40").text(arrMa[11]);
+  $("#ta42").text(arrMa[12]);
+  $("#ta43").text(arrMa[13]);
   var jsonData = {
     // 훈련 차시
     tr_num: grpnum,
@@ -729,6 +755,8 @@ function clientViewUpdate() {
     success: function (response) {
       console.log(response);
       for (var i = 0; i < response.length; i++) {
+        var userScore = response[i].result_score; // 획득 점수
+
         if (response[i].cnt_try_ans == 2) {
           // 정답 기회 모두 소진
           // 문제 id
@@ -919,6 +947,38 @@ function checkSubmitExam() {
       }
     },
   });
+}
+// ma_tactics_id get
+function countMaTactics(ma_tactics_id) {
+  if (ma_tactics_id == "TA0001") {
+    arrMa[0] += 1;
+  } else if (ma_tactics_id == "TA0002") {
+    arrMa[1] += 1;
+  } else if (ma_tactics_id == "TA0003") {
+    arrMa[2] += 1;
+  } else if (ma_tactics_id == "TA0004") {
+    arrMa[3] += 1;
+  } else if (ma_tactics_id == "TA0005") {
+    arrMa[4] += 1;
+  } else if (ma_tactics_id == "TA0006") {
+    arrMa[5] += 1;
+  } else if (ma_tactics_id == "TA0007") {
+    arrMa[6] += 1;
+  } else if (ma_tactics_id == "TA0008") {
+    arrMa[7] += 1;
+  } else if (ma_tactics_id == "TA0009") {
+    arrMa[8] += 1;
+  } else if (ma_tactics_id == "TA0010") {
+    arrMa[9] += 1;
+  } else if (ma_tactics_id == "TA0011") {
+    arrMa[10] += 1;
+  } else if (ma_tactics_id == "TA0040") {
+    arrMa[11] += 1;
+  } else if (ma_tactics_id == "TA0042") {
+    arrMa[12] += 1;
+  } else if (ma_tactics_id == "TA0043") {
+    arrMa[13] += 1;
+  }
 }
 
 function ansBtnOff(examId) {

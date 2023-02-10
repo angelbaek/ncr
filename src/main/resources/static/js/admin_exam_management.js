@@ -3,8 +3,6 @@
  */
 examGroupCall();
 
-getSessionUserInfo();
-
 // 문제 초기화 함수
 function resetExam() {
   console.log("초기화 실행댐");
@@ -180,58 +178,6 @@ function exam(exam_num) {
     },
   });
 }
-
-// // 힌트 db 추가를 위한 문제 id 가져오기
-// function hintAddDB() {
-//   // 문제 그룹id
-//   var grpId = $(".select_view_body option:selected").val();
-//   // 선택 문항 번호
-//   var num = $(".popup_hint").val();
-//   // 문제 id
-//   var examId;
-//   // 힌트 내용
-//   var hint = $(".hint_input").text();
-//   // 문제 아이디 찾기
-//   var jsonData = {
-//     tr_exam_grpid: grpId,
-//     tr_exam_num: num,
-//   };
-//   $.ajax({
-//     url: "http://192.168.32.44:8080/admin/exam_id_get",
-//     type: "POST",
-//     dataType: "json",
-//     contentType: "application/json",
-//     data: JSON.stringify(jsonData),
-//     success: function (response) {
-//       console.log(response);
-//       examId = response[0].tr_exam_id;
-//       console.log("문제 id 가져오기 완료");
-//       hintDBinsert(examId);
-//     },
-//   });
-// }
-
-// // 실질적인 힌트 db insert
-// function hintDBinsert(examId) {
-//   // 문제 그룹id
-//   var grpId = $(".select_view_body option:selected").val();
-//   // 힌트 insert
-//   var jsonData = {
-//     tr_exam_grpid: grpId,
-//     tr_exam_id: examId,
-//   };
-//   $.ajax({
-//     url: "http://192.168.32.44:8080/admin/hint_insert",
-//     type: "POST",
-//     dataType: "json",
-//     contentType: "application/json",
-//     data: JSON.stringify(jsonData),
-//     success: function (response) {
-//       console.log(response);
-//       console.log("힌트db 추가 완료");
-//     },
-//   });
-// }
 
 function popup_hint_popupStatus() {
   var txt = $(".select_view_body option:selected").text();

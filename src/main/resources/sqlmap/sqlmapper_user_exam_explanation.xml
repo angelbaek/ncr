@@ -693,4 +693,11 @@
             "TR_EXAM_GRPID" = #{tr_exam_grpid}
     </select>
 
+    <!--전술단계 id 가져오기-->
+    <select id="getMaTacticsId" resultType="map">
+        SELECT
+            "MA_TACTICS_ID"
+        FROM
+            "TC_MITERATTACK_TACTICS"
+    </select>
 </mapper>

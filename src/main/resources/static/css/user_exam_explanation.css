@@ -1,5 +1,5 @@
 .top_user_info {
-  text-align: right;
+  /* text-align: right; */
   top: 0;
   left: 50%;
   transform: translate(-50%, 0%);
@@ -15,9 +15,7 @@
   padding: 20px;
   margin-top: 70px;
   position: absolute;
-
   padding-left: 280px;
-
   width: 100%;
 }
 .common_box {
@@ -38,10 +36,16 @@
   padding-right: 70px;
 }
 .contents_title {
+  padding-left: 250px;
+  position: relative;
+  display: inline-block;
+  text-align: left;
   margin-bottom: 50px;
   font-size: 24px;
   font-weight: bold;
   color: #34395e;
+  top: 50%;
+  transform: translate(10%, -50%);
 }
 .contents_name {
   font-weight: bold;
@@ -76,8 +80,11 @@ img {
   vertical-align: middle;
 }
 .top_user_info_div {
+  float: right;
+  height: 100%;
+  display: inline-block;
   position: relative;
-  top: 50%;
+  top: 80%;
   transform: translate(0%, -50%);
   margin-right: 50px;
 }
@@ -278,6 +285,8 @@ tr td {
 }
 /* 문제 풀이 css 헤더*/
 .now_exam_status {
+  /* padding-top: 10px; */
+  display: inline-block;
   margin: auto;
   vertical-align: middle;
   padding: auto;
@@ -290,16 +299,18 @@ tr td {
 .exam_status_score {
   width: auto;
   height: auto;
-  margin-left: 330px;
-  margin-right: 50px;
+  margin-left: 630px;
 }
 .exam_status_time {
   margin-left: 10px;
 }
 .exam_status_vm {
+  width: 50px;
   display: inline-block;
   /* margin-right: 700px; */
   transform: translate(0px, -10px);
+  margin-top: 20px;
+  margin-bottom: 20px;
   /* float: right; */
 }
 
@@ -326,19 +337,34 @@ tr td {
   font-size: 14px;
   text-align: center;
   position: fixed;
-  margin-right: 50px;
   right: 0;
-  top: 50%;
+  top: 54.3%;
   transform: translate(0, -50%);
 }
+.miter_box .miter_box_common {
+  height: 57px;
+}
 .miter_box div {
-  padding: 10px;
-  color: #707070;
+  padding-top: 4px;
+  margin: auto;
+  /* box-shadow: rgb(172 181 246) 0px 2px 6px; */
+  color: rgb(240, 240, 240);
+  text-shadow: 1px 1px 1px black;
   font-weight: 500;
-  height: 40px;
+  height: auto;
+  /* -webkit-text-stroke-width: 0.2px; */
+  /* -webkit-text-stroke-color: black; */
+}
+.miter_box .miter_title {
+  padding-top: 17px;
+  height: 57px;
+  box-shadow: none;
+  text-shadow: none;
+  color: gray;
 }
 /* 문제 풀이 css */
 .common_exam_contents {
+  padding-left: 35px;
   margin-bottom: 100px;
   margin-left: 5px;
   display: inline-block;
@@ -368,6 +394,7 @@ tr td {
   font-weight: bold;
 }
 #ans_result_div {
+  display: block;
   color: gray;
   position: relative;
   float: right;
@@ -375,6 +402,7 @@ tr td {
   /* transform: translate(0%, -50%); */
 }
 .common_exam_title {
+  width: auto;
   font-weight: bold;
   color: #333333;
   margin-bottom: 30px;
@@ -440,7 +468,7 @@ tr td {
 
 /* 정답확인 버튼 클릭 후 보여질 div */
 #ans_result_div div {
-  display: none;
+  display: block;
 }
 
 .common_exam_contents div div {
@@ -551,4 +579,76 @@ input[type="checkbox"] {
 
 .hint_popup button {
   display: inline-block;
+}
+
+/* 번호 div 공통 css */
+.common_num_box {
+  text-shadow: 1px 1px 1px black;
+  transform: translate(0%, 0%);
+  vertical-align: top;
+  width: 30px;
+  text-align: center;
+  padding: 1px 5px;
+  height: auto;
+  border-radius: 2px;
+  color: rgb(240, 240, 240);
+  display: inline-block;
+  box-shadow: rgb(172 181 246) 0px 2px 6px;
+}
+/* 번호에 전술단계별 css */
+
+#box_TA0001 {
+  background-color: #0174df;
+}
+
+#box_TA0002 {
+  background-color: #01a9db;
+}
+
+#box_TA0003 {
+  background-color: #01dfd7;
+}
+
+#box_TA0004 {
+  background-color: #01df74;
+}
+
+#box_TA0005 {
+  background-color: #01df01;
+}
+#box_TA0006 {
+  background-color: #74df00;
+}
+#box_TA0007 {
+  background-color: #a5df00;
+}
+#box_TA0008 {
+  background-color: #d7df01;
+}
+#box_TA0009 {
+  background-color: #dba901;
+}
+#box_TA0010 {
+  background-color: #df3a01;
+}
+#box_TA0011 {
+  background-color: #df7401;
+}
+#box_TA0040 {
+  background-color: #df0101;
+}
+#box_TA0042 {
+  background-color: #013adf;
+}
+#box_TA0043 {
+  background-color: #0101df;
+}
+
+.common_contents_only_css {
+  width: 700px;
+  padding-left: 10px;
+  display: inline-block;
+}
+.common_exam_title p {
+  padding-left: 24px;
 }

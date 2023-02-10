@@ -135,4 +135,7 @@ public interface UserExplanationMapper {
 
     // 제출여부 check
     int checkSubmitTeam(ExamStatTeamVO examStatTeamVO);
+
+    // 전술단계 id 가져오기
+    Map<String,Object> getMaTacticsId();
 }

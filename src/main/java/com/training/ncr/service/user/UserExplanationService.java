@@ -559,4 +559,9 @@ public class UserExplanationService {
         }
         return 1;
     }
+
+    // 전술단계 id 가져오기
+    public Map<String,Object> getMaTacticsId(){
+        return userExplanationMapper.getMaTacticsId();
+    }
 }

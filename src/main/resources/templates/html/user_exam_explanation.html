@@ -29,8 +29,9 @@
       </div>
     </div>
     <div class="top_user_info">
+      <div class="contents_title">문제 풀이</div>
       <div class="top_user_info_div">
-        <img src="/public/images/avatar-4.png" alt="user" />
+        <img src="/public/images/avatar-1.png" alt="user" />
         <div class="userName">User Name</div>
         <i class="fas fa-caret-down" id="logout" onclick="showLogOutBtn()"></i>
         <div class="logout_btn" onclick="logOut()">로그아웃</div>
@@ -38,7 +39,7 @@
     </div>
     <!-- 문제 풀이 -->
     <div class="contents">
-      <div class="contents_title">문제 풀이</div>
+      <button class="exam_status_vm">VM</button>
       <div class="now_exam_status">
         <div class="exam_status_time">제한 시간:</div>
         <div id="demo"></div>
@@ -48,37 +49,66 @@
           <div class="total_fail_score">오답점수: -</div>
           <div class="total_hint_deduct">힌트점수: -</div>
         </div>
-        <button class="exam_status_vm">VM</button>
       </div>
       <div class="exam_explanation"></div>
       <div class="miter_box">
         <div class="miter_title">MITER ATTACK</div>
-        <div style="background-color: #0101df">정찰(Reconnaissances) 1</div>
-        <div style="background-color: #013adf">
-          자원 개발(Resource Development) 2
+        <div class="miter_box_common" style="background-color: #0101df">
+          <div>정찰</div>
+          <div id="ta43"></div>
         </div>
-        <div style="background-color: #0174df">최초 침투(Initial Access) 5</div>
-        <div style="background-color: #01a9db">실행(Execution) 1</div>
-        <div style="background-color: #01dfd7">지속(Persistence) 1</div>
-        <div style="background-color: #01df74">
-          권한 상승(Privilege Escalation) 4
+        <div class="miter_box_common" style="background-color: #013adf">
+          <div>자원 개발</div>
+          <div id="ta42"></div>
         </div>
-        <div style="background-color: #01df01">
-          방어 회피(Defense Evasion) 5
+        <div class="miter_box_common" style="background-color: #0174df">
+          <div>최초 침투</div>
+          <div id="ta1"></div>
         </div>
-        <div style="background-color: #74df00">
-          계정 접근(Credential Access) 3
+        <div class="miter_box_common" style="background-color: #01a9db">
+          <div>실행</div>
+          <div id="ta2"></div>
         </div>
-        <div style="background-color: #a5df00">탐색(Discovery) 6</div>
-        <div style="background-color: #d7df01">
-          측면 이동(Lateral Movement) 1
+        <div class="miter_box_common" style="background-color: #01dfd7">
+          <div>지속</div>
+          <div id="ta3"></div>
         </div>
-        <div style="background-color: #dba901">정보 수집(Collection) 1</div>
-        <div style="background-color: #df7401">
-          명령 제어(Command and Control) 4
+        <div class="miter_box_common" style="background-color: #01df74">
+          <div>권한 상승</div>
+          <div id="ta4"></div>
         </div>
-        <div style="background-color: #df3a01">정보 유출(Exfiltration) 5</div>
-        <div style="background-color: #df0101">영향(Impact) 1</div>
+        <div class="miter_box_common" style="background-color: #01df01">
+          <div>방어 회피</div>
+          <div id="ta5"></div>
+        </div>
+        <div class="miter_box_common" style="background-color: #74df00">
+          <div>계정 접근</div>
+          <div id="ta6"></div>
+        </div>
+        <div class="miter_box_common" style="background-color: #a5df00">
+          <div>탐색</div>
+          <div id="ta7"></div>
+        </div>
+        <div class="miter_box_common" style="background-color: #d7df01">
+          <div>측면 이동</div>
+          <div id="ta8"></div>
+        </div>
+        <div class="miter_box_common" style="background-color: #dba901">
+          <div>정보 수집</div>
+          <div id="ta9"></div>
+        </div>
+        <div class="miter_box_common" style="background-color: #df7401">
+          <div>명령 제어</div>
+          <div id="ta11"></div>
+        </div>
+        <div class="miter_box_common" style="background-color: #df3a01">
+          <div>정보 유출</div>
+          <div id="ta10"></div>
+        </div>
+        <div class="miter_box_common" style="background-color: #df0101">
+          <div>영향</div>
+          <div id="ta40"></div>
+        </div>
       </div>
       <!-- 제출하기 -->
       <div class="exam_submit">
@@ -143,37 +173,55 @@
       var height = $(window).scrollTop();
       if (height > 100) {
         $(".now_exam_status").css("position", "fixed");
-        $(".now_exam_status").css("width", "89%");
+        $(".now_exam_status").css("width", "75%");
         $(".now_exam_status").css("left", "250px");
         $(".now_exam_status").css("backgroundColor", "white");
-        $(".now_exam_status").css("paddingTop", "30px");
+        $(".now_exam_status").css("paddingTop", "25px");
         $(".now_exam_status").css("paddingBottom", "10px");
         $(".now_exam_status").css("paddingLeft", "10px");
         $(".now_exam_status").css("top", "0");
         $(".now_exam_status").css("z-index", "2");
-        $(".now_exam_status").css(
-          "box-shadow",
-          "0px 0.5px 3px 0px rgb(0 0 0 / 30%)"
-        );
+        // $(".now_exam_status").css(
+        //   "box-shadow",
+        //   "0px 0.5px 0px 0px rgb(0 0 0 / 30%)"
+        // );
+        $(".now_exam_status").css("top", "0");
         // 추가
-        $(".exam_status_score").css("margin-left", "800px");
-        $(".exam_status_vm").css("float", "right");
-        $(".exam_status_vm").css("margin-right", "70px");
+        $(".now_exam_status").css("height", "70px");
+        $(".exam_status_score").css("padding-left", "300px");
+        // 헤더 추가
+        $(".top_user_info").css("position", "fixed");
+        $(".top_user_info").css("backgroundColor", "white");
+        $(".top_user_info").css("color", "black");
+        $(".top_user_info").css(
+          "box-shadow",
+          "0px 0.5px 0px 1px rgb(0 0 0 / 30%)"
+        );
+        //로그아웃
+        $(".logout_btn").css("color", "white");
       } else {
         $(".now_exam_status").css("position", "relative");
         $(".now_exam_status").css("width", "auto");
         $(".now_exam_status").css("left", "auto");
-        $(".now_exam_status").css("backgroundColor", "transparent");
-        $(".now_exam_status").css("paddingTop", "0px");
+        // $(".now_exam_status").css("backgroundColor", "transparent");
+        $(".now_exam_status").css("paddingTop", "15px");
         $(".now_exam_status").css("paddingBottom", "0px");
         $(".now_exam_status").css("paddingLeft", "0px");
-        $(".now_exam_status").css("top", "auto");
+        // $(".now_exam_status").css("margin-top", "-100px");
+        // $(".exam_status_vm").css("padding-top", "-300px");
         $(".now_exam_status").css("z-index", "1");
         $(".now_exam_status").css("box-shadow", "none");
         //추가
+        // $(".now_exam_status").css("height", "10px");
         $(".exam_status_score").css("margin-left", "330px");
-        $(".exam_status_vm").css("float", "none");
-        $(".exam_status_vm").css("margin-right", "none");
+        $(".exam_status_score").css("padding-left", "300px");
+        // 헤더 추가
+        $(".top_user_info").css("position", "relative");
+        $(".top_user_info").css("backgroundColor", "#6777ef");
+        $(".top_user_info").css("color", "white");
+        $(".top_user_info").css("box-shadow", "none");
+        //?
+        $(".contents").css("margin-top", "0px");
       }
     });
   </script>
