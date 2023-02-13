@@ -11,53 +11,60 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/admin")
 public class ExamGroupController {
 
     @Autowired
     ExamGroupService examGroupService;
-    @GetMapping("/admin/exam_group")
+    @GetMapping("/exam_group")
     public List<ExamGrpVO> getExamGrp(){
         return examGroupService.getExamGrp();
     }
 
-    @PostMapping("/admin/add_exam_grp")
+    @PostMapping("/add_exam_grp")
     public int insertExamGrp(@RequestBody ExamGrpVO examGrpVO){
         return examGroupService.insertExamGrp(examGrpVO);
     }
 
     // 삭제를 위한 조회
-    @GetMapping("/admin/add_exam_grp/{mgr}")
+    @GetMapping("/add_exam_grp/{mgr}")
     public int selectMgmtState(@PathVariable String mgr){
         return examGroupService.selectMgmtState(mgr);
     }
 
     // 선택한 그룹 보여주기
-    @GetMapping("/admin/exam_group_select/{num}")
+    @GetMapping("/exam_group_select/{num}")
     public List<ExamGrpVO> getExamGrpSelect(@PathVariable int num){
         return examGroupService.getExamGrpSelect(num);
     }
 
     //삭제
-    @DeleteMapping("/admin/exam_group_delete/{name}")
+    @DeleteMapping("/exam_group_delete/{name}")
     public int getExamGrpDelete(@PathVariable String name){
         return examGroupService.getExamGrpDelete(name);
     }
 
     // 선택한 그룹명으로 grpid 찾기
-    @GetMapping("admin/exam_group_find_grpid/{name}")
+    @GetMapping("/exam_group_find_grpid/{name}")
     public List<ExamGrpVO> findByGrpid(@PathVariable String name){
         return examGroupService.findByGrpid(name);
     }
 
     // TRAIN_EXAM 테이블 INSERT
-    @PostMapping("/admin/add_train_exam")
+    @PostMapping("/add_train_exam")
     public List<ExamVO> insertTrainExam(@RequestBody ExamGrpVO examGrpVO){
         return examGroupService.insertTrainExam(examGrpVO);
     }
 
     // GrpId, ExamId로 ExamHint insert
-    @PostMapping("/admin/add_train_examhint")
+    @PostMapping("/add_train_examhint")
     public int insertExamhintByGrpIdAndExamId(@RequestBody ExamHintVO examHintVO){
         return examGroupService.insertExamhintByGrpIdAndExamId(examHintVO);
+    }
+
+    // 문제그룹 수정(update)
+    @PostMapping("/update_grp_by_grpname")
+    public int updateGrpByGrpName(@RequestBody ExamGrpVO examGrpVO){
+        return examGroupService.updateGrpByGrpName(examGrpVO);
     }
 }

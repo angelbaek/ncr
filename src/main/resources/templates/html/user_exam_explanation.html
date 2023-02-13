@@ -19,7 +19,9 @@
   />
   <body>
     <div class="left_nav">
-      <div class="nav_title">국가기간망<br />침투대응훈련</div>
+      <div class="nav_title">
+        <a href="/">국가기간망<br />침투대응훈련</a>
+      </div>
       <div class="nav_contents">
         <div class="common_left_menubar" id="now_place">
           <a href="user_group_setting.html">그룹 설정</a>
@@ -30,10 +32,10 @@
     </div>
     <div class="top_user_info">
       <div class="contents_title">문제 풀이</div>
-      <div class="top_user_info_div">
+      <div class="top_user_info_div" onclick="showLogOutBtn()">
         <img src="/public/images/avatar-1.png" alt="user" />
         <div class="userName">User Name</div>
-        <i class="fas fa-caret-down" id="logout" onclick="showLogOutBtn()"></i>
+        <i class="fas fa-caret-down" id="logout"></i>
         <div class="logout_btn" onclick="logOut()">로그아웃</div>
       </div>
     </div>
@@ -112,7 +114,7 @@
       </div>
       <!-- 제출하기 -->
       <div class="exam_submit">
-        <button onclick="submitExam()">제출하기</button>
+        <button onclick="submitPopup()">제출하기</button>
       </div>
       <!-- 백그라운드 -->
       <div class="back"></div>
@@ -126,6 +128,19 @@
           </div>
         </div>
       </div>
+      <!-- 제출하기 팝업 -->
+      <div class="submit_popup">
+        <div class="submit_popup_contents">
+          제출하시면 해당그룹은 더 이상 문제를 풀 수 없습니다.<br /><br />제출
+          하시겠습니까?
+        </div>
+        <div class="submit_popup_button">
+          <button onclick="submitExam()">제출하기</button
+          ><button onclick="submitPopup()">취소</button>
+        </div>
+      </div>
+      <!-- 정답 알림 -->
+      <div class="resultTrue">알림</div>
     </div>
   </body>
   <script
@@ -138,7 +153,9 @@
   <script src="/static/js/user_exam_explanation.js"></script>
   <script src="/js/user_exam_explanation.js"></script>
   <script>
+    $(".submit_popup").css("display", "none");
     $(".hint_popup").css("display", "none");
+    $(".resultTrue").css("display", "none");
     $(".back").css("display", "none");
 
     // 경과시간
@@ -162,9 +179,11 @@
       //타임아웃 시
       if (time < 0) {
         clearInterval(x); //setInterval() 실행을 끝냄
-        document.getElementById("demo").innerHTML = "제한 시간 종료";
+        document.getElementById("demo").innerHTML = "제한 시간이 끝났습니다.";
         alert("풀이 시간 종료!!");
         $(".back").toggle();
+        $(".common_exam_contents button").prop("disabled", true);
+        $(".common_exam_contents button").css("backgroundColor", "gray");
       }
     }, 1000);
 
@@ -199,6 +218,8 @@
         );
         //로그아웃
         $(".logout_btn").css("color", "white");
+        //사용자 정보
+        $(".userName").css("font-weight", "bold");
       } else {
         $(".now_exam_status").css("position", "relative");
         $(".now_exam_status").css("width", "auto");
@@ -222,6 +243,8 @@
         $(".top_user_info").css("box-shadow", "none");
         //?
         $(".contents").css("margin-top", "0px");
+        //사용자 정보
+        $(".userName").css("font-weight", "300");
       }
     });
   </script>

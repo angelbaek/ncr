@@ -20,4 +20,6 @@ public class ExamResultTeamVO {
     int resultScore; // 획득점수
     int wrongScore; // 오답감점
     int hintScore; // 힌트감점
+
+    int secansAllow; // 2차 풀이 활성화 여부
 }

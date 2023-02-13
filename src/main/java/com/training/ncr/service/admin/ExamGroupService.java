@@ -6,6 +6,7 @@ import com.training.ncr.vo.admin.ExamHintVO;
 import com.training.ncr.vo.admin.ExamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -64,5 +65,10 @@ public class ExamGroupService {
     // GrpId, ExamId로 ExamHint insert
     public int insertExamhintByGrpIdAndExamId(ExamHintVO examHintVO){
         return examGroupMapper.insertExamhintByGrpIdAndExamId(examHintVO);
+    }
+
+    // 문제그룹 수정(update)
+    public int updateGrpByGrpName(ExamGrpVO examGrpVO){
+        return examGroupMapper.updateGrpByGrpName(examGrpVO);
     }
 }

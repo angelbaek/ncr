@@ -200,6 +200,12 @@ public class UserExplanationService {
         examStatVO.setTr_num(examResultTeamVO.getTr_num());
         examStatVO.setTr_exam_grpid(examResultTeamVO.getTr_exam_grpid());
 
+        // 해당 문제에 대한 훈련팀 획득점수 가져오기
+        int resultScore = userExplanationMapper.getTeamResultSore(examResultTeamVO);
+
+        if(resultScore>0){ // 이미 정답을 맞춤
+            return 0;
+        }
         if(allow==1){ // 2차 풀이 활성화
             //정답 입력횟수가 남아있는지 check
             if(tryAns==0){ // 첫 정답확인
@@ -350,6 +356,12 @@ public class UserExplanationService {
         examStatVO.setTr_num(examResultTeamVO.getTr_num());
         examStatVO.setTr_exam_grpid(examResultTeamVO.getTr_exam_grpid());
 
+        // 해당 문제에 대한 훈련팀 획득점수 가져오기
+        int resultScore = userExplanationMapper.getTeamResultSore(examResultTeamVO);
+
+        if(resultScore>0){ // 이미 정답을 맞춤
+            return 0;
+        }
         if(allow==1){ // 2차 풀이 활성화
             //정답 입력횟수가 남아있는지 check
             if(tryAns==0){
@@ -508,7 +520,14 @@ public class UserExplanationService {
         examResultTeamVO.setTr_user_grp(userVO.getTr_user_grp());
         examResultTeamVO.setTeam_cd(userVO.getTeam_cd());
 
-        return userExplanationMapper.getTotalStatus(examResultTeamVO);
+        int secansAllow = examResultTeamVO.getSecansAllow();// 2차풀이 활성화 여부
+
+        if (secansAllow==1){ // 활성화
+            return userExplanationMapper.getTotalStatus(examResultTeamVO);
+        }else if(secansAllow==0){ // 비활성화
+            return userExplanationMapper.getTotalStatusNoneAllow(examResultTeamVO);
+        }
+        return null;
     }
 
     // 제출하기 event

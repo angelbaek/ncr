@@ -29,4 +29,14 @@
         from "TN_USER"
         where "TR_USER_ID" = #{id}
     </select>
+
+    <!--해당 팀에 몇명 있는지 가져오기-->
+    <select id="getGrpCountByGrp" resultType="int">
+        SELECT
+        count("TEAM_CD")
+        FROM
+        "TN_USER"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp}
+    </select>
 </mapper>

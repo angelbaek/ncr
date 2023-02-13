@@ -33,13 +33,16 @@ function logOut() {
   });
 }
 
+// 사용자 정보 표출
 function showLogOutBtn() {
   var show = $(".logout_btn").css("display");
   console.log(show);
   if (show == "none") {
     $(".logout_btn").css("display", "block");
+    $("#logout").css("transform", "rotate(180deg)");
   } else if (show == "block") {
     $(".logout_btn").css("display", "none");
+    $("#logout").css("transform", "rotate(0deg)");
   }
 }
 
@@ -69,7 +72,7 @@ function sessionManagement() {
       console.log(response);
       if (response[0].role == 0) {
         // 관리자임
-        location.href = "/admin_exam_group";
+        location.href = "/admin_training";
       } else if (response[0].role == 1) {
         // 일반 유저임
         location.href = "/user_group_setting";

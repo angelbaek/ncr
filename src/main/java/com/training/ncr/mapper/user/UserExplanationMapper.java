@@ -109,6 +109,9 @@ public interface UserExplanationMapper {
     // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
     Map<String,Object> getTotalStatus(ExamResultTeamVO examResultTeamVO);
 
+    // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기(2차 풀이 비활성화)
+    Map<String,Object> getTotalStatusNoneAllow(ExamResultTeamVO examResultTeamVO);
+
     // 정답 수 UPDATE (훈련팀별)
     int updateCntCorrectAnsTeam(ExamResultTeamVO examResultTeamVO);
 
@@ -138,4 +141,7 @@ public interface UserExplanationMapper {
 
     // 전술단계 id 가져오기
     Map<String,Object> getMaTacticsId();
+
+    // 해당 문제에 대한 훈련팀 획득점수 가져오기
+    int getTeamResultSore(ExamResultTeamVO examResultTeamVO);
 }

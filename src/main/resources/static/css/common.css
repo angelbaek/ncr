@@ -11,6 +11,10 @@ a {
   text-decoration: none;
 }
 
+.top_user_info_div:hover {
+  cursor: pointer;
+}
+
 button {
   border: none;
   background-color: #6777ef;
@@ -93,7 +97,6 @@ tr {
   color: #34395e;
   text-align: center;
 }
-
 .nav_title {
   margin-top: 10px;
   font-size: 20px;
@@ -111,7 +114,9 @@ tr {
   color: blue;
   font-weight: bold;
 }
-
+.top_user_info_div:hover .userName {
+  text-decoration: underline;
+}
 .dropdown {
   text-align: center;
   display: none;

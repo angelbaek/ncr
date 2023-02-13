@@ -40,4 +40,7 @@ public interface ExamGroupMapper {
 
     // GrpId, ExamId로 ExamHint insert
     int insertExamhintByGrpIdAndExamId(ExamHintVO examHintVO);
+
+    // 문제그룹 수정(update)
+    int updateGrpByGrpName(ExamGrpVO examGrpVO);
 }

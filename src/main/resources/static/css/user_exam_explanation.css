@@ -1,4 +1,5 @@
 .top_user_info {
+  transition: 0s all;
   /* text-align: right; */
   top: 0;
   left: 50%;
@@ -43,7 +44,8 @@
   margin-bottom: 50px;
   font-size: 24px;
   font-weight: bold;
-  color: #34395e;
+  /* color: #34395e; */
+  color: #fafbfc;
   top: 50%;
   transform: translate(10%, -50%);
 }
@@ -283,8 +285,12 @@ tr td {
   color: #394eea;
   /* text-decoration: underline; */
 }
+.common_left_menubar:hover {
+  text-decoration: underline;
+}
 /* 문제 풀이 css 헤더*/
 .now_exam_status {
+  transition: 0s all;
   /* padding-top: 10px; */
   display: inline-block;
   margin: auto;
@@ -393,13 +399,17 @@ tr td {
   color: rgb(219, 0, 0);
   font-weight: bold;
 }
+
 #ans_result_div {
-  display: block;
+  padding-left: 150px;
   color: gray;
   position: relative;
   float: right;
   margin-right: 400px;
   /* transform: translate(0%, -50%); */
+}
+#ans_result_div div {
+  display: none;
 }
 .common_exam_title {
   width: auto;
@@ -466,11 +476,6 @@ tr td {
   text-decoration: underline;
 }
 
-/* 정답확인 버튼 클릭 후 보여질 div */
-#ans_result_div div {
-  display: block;
-}
-
 .common_exam_contents div div {
   display: inline-block;
 }
@@ -535,12 +540,12 @@ input[type="checkbox"] {
 /* 백 */
 .back {
   position: absolute;
-  z-index: 5;
+  z-index: 1;
   left: 250px;
   width: 86.8%;
   height: 100%;
   background-color: #6c757d;
-  opacity: 0.3;
+  opacity: 0.2;
   top: 0;
 }
 
@@ -651,4 +656,42 @@ input[type="checkbox"] {
 }
 .common_exam_title p {
   padding-left: 24px;
+}
+/* 제출하기 팝업 */
+.submit_popup {
+  padding: 20px;
+  height: auto;
+  width: 500px;
+  border-radius: 10px;
+  background-color: #fafbfc;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
+  text-align: center;
+}
+.submit_popup button {
+  width: 150px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+.submit_popup_contents {
+  font-weight: bold;
+  margin-bottom: 50px;
+  color: red;
+}
+
+/* 정답 알림 */
+.resultTrue {
+  padding: 10px 15px;
+  position: fixed;
+  left: 50%;
+  top: 95%;
+  transform: translate(-50%, -50%);
+  background-color: #6777ef;
+  box-shadow: 0 2px 6px #acb5f6;
+  border-radius: 5px;
+  color: #fafbfc;
+  z-index: 10;
 }

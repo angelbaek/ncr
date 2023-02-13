@@ -40,6 +40,10 @@ function examGroupCall() {
 
 // 문제 그룹 추가 함수
 function grpAdd() {
+  // 속성 부여
+  $("#save_toggle_update").removeAttr("onclick");
+  $("#save_toggle_update").attr("onclick", "save()");
+  $("#save_toggle_update").text("저장");
   $("input[name=double]").prop("checked", false);
   reset();
   $(".exam_add").css("display", "block");
@@ -253,6 +257,10 @@ function grpDelete() {
 
 // 선택한 그룹 뿌려주기
 function radioBtnOn(num) {
+  // 속성 부여
+  $("#save_toggle_update").removeAttr("onclick");
+  $("#save_toggle_update").attr("onclick", "update()");
+  $("#save_toggle_update").text("수정");
   $(".exam_add").css("display", "block");
   $.ajax({
     url: "http://192.168.32.44:8080/admin/exam_group_select/" + num,
@@ -278,6 +286,93 @@ function radioBtnOn(num) {
         $(".check_two").prop("checked", true);
         //두번 감점
         $(".input_number2").val(response[0].tr_secans_deduct);
+      }
+    },
+  });
+}
+// 문제 그룹 수정
+function update() {
+  let grpName = $(".grp_name").val();
+  let grpCount = $(".grp_count").val();
+  let grpTime = $(".grp_time").val();
+  let one = $(".check_one").prop("checked");
+  let hintDeduct = $(".input_number1").val();
+  let two = $(".check_two").prop("checked");
+  let secanseDeduct = $(".input_number2").val();
+  //조건식
+  if (grpName == "") {
+    alert("그룹명을 입력하세요");
+    $(".grp_name").focus();
+    return;
+  } else if (grpCount == "") {
+    alert("문제 개수를 입력하세요");
+    $(".grp_count").focus();
+    return;
+  } else if (grpTime == "") {
+    alert("풀이시간을 입력하세요");
+    $(".grp_time").focus();
+    return;
+  }
+  // 필수입력 끝
+  if (one == false && hintDeduct != "") {
+    alert("힌트사용을 체크하세요");
+    $(".check_one").focus();
+    return;
+  } else if (one == true && hintDeduct == "") {
+    alert("힌트감점을 입력하세요");
+    $(".input_number1").focus();
+    return;
+  }
+  if (two == false && secanseDeduct != "") {
+    alert("두번풀이 허용을 체크하세요");
+    $(".check_two").focus();
+    return;
+  } else if (two == true && secanseDeduct == "") {
+    alert("두번풀이 감점을 입력하세요");
+    $(".input_number2").focus();
+    return;
+  }
+  // 타입 지정
+  // 힌트 사용 허가 변수(참,거짓)
+  if (one == true) {
+    one = 1;
+  } else {
+    one = 0;
+  }
+  // 두번 풀이 허가 변수(참,거짓)
+  if (two == true) {
+    two = 1;
+  } else {
+    two = 0;
+  }
+  // 힌트 사용 감점 변수
+  if (hintDeduct == "") {
+    hintDeduct = 0;
+  }
+  // 두번풀이 사용 감점 변수
+  if (secanseDeduct == "") {
+    secanseDeduct = 0;
+  }
+  var jsonData = {
+    tr_exam_grpname: grpName,
+    tr_exam_count: grpCount,
+    tr_hint_use: one,
+    tr_hint_deduct: hintDeduct,
+    tr_allow_secans: two,
+    tr_secans_deduct: secanseDeduct,
+    tr_exam_time: grpTime,
+  };
+  console.log(jsonData);
+  $.ajax({
+    url: "http://192.168.32.44:8080/admin/update_grp_by_grpname",
+    type: "POST",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      if (response == 1) {
+        alert("문제그룹이 수정되었습니다.");
       }
     },
   });

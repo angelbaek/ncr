@@ -19,7 +19,9 @@
   />
   <body>
     <div class="left_nav">
-      <div class="nav_title">국가기간망<br />침투대응훈련</div>
+      <div class="nav_title">
+        <a href="/">국가기간망<br />침투대응훈련</a>
+      </div>
       <div class="nav_contents">
         <div class="common_left_menubar">
           <a href="admin_training.html" id="only_css">훈련 관리</a>
@@ -49,10 +51,10 @@
       </div>
     </div>
     <div class="top_user_info">
-      <div class="top_user_info_div">
+      <div class="top_user_info_div" onclick="showLogOutBtn()">
         <img src="/public/images/avatar-4.png" alt="user" />
         <div class="userName">User Name</div>
-        <i class="fas fa-caret-down" id="logout" onclick="showLogOutBtn()"></i>
+        <i class="fas fa-caret-down" id="logout"></i>
         <div class="logout_btn" onclick="logOut()">로그아웃</div>
       </div>
     </div>

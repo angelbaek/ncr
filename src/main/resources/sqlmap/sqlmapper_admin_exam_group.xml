@@ -112,4 +112,20 @@
         #{tr_exam_id}
         )
     </insert>
+
+    <!--문제그룹 수정(update)-->
+    <update id="updateGrpByGrpName">
+        UPDATE "TN_TRAIN_EXAMGRP"
+        SET
+            "TR_EXAM_COUNT" = #{tr_exam_count},
+            "TR_HINT_USE" = #{tr_hint_use},
+            "TR_HINT_DEDUCT" = #{tr_hint_deduct},
+            "TR_ALLOW_SECANS" = #{tr_allow_secans},
+            "TR_SECANS_DEDUCT" = #{tr_secans_deduct},
+            "TR_EXAM_TIME" = #{tr_exam_time}
+        WHERE
+            "TR_EXAM_GRPNAME" = #{tr_exam_grpname}
+    </update>
+
+
 </mapper>

@@ -512,6 +512,9 @@ function examFinalSave() {
       console.log(response);
       if (response == 1) {
         alert("문제가 저장되었습니다");
+      } else if (response == 0) {
+        alert("문항을 선택하세요");
+        $(".exam_table").focus();
       }
     },
   });

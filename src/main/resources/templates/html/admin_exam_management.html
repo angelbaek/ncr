@@ -19,7 +19,9 @@
   />
   <body>
     <div class="left_nav">
-      <div class="nav_title">국가기간망<br />침투대응훈련</div>
+      <div class="nav_title">
+        <a href="/">국가기간망<br />침투대응훈련</a>
+      </div>
       <div class="nav_contents">
         <div class="common_left_menubar">
           <a href="admin_training.html" id="only_css">훈련 관리</a>
@@ -47,16 +49,16 @@
       </div>
     </div>
     <div class="top_user_info">
-      <div class="top_user_info_div">
+      <div class="contents_title">문항 관리</div>
+      <div class="top_user_info_div" onclick="showLogOutBtn()">
         <img src="/public/images/avatar-4.png" alt="user" />
         <div class="userName">User Name</div>
-        <i class="fas fa-caret-down" id="logout" onclick="showLogOutBtn()"></i>
+        <i class="fas fa-caret-down" id="logout"></i>
         <div class="logout_btn" onclick="logOut()">로그아웃</div>
       </div>
     </div>
     <!-- 문제 그룹 -->
     <div class="contents">
-      <div class="contents_title">문항 관리</div>
       <div class="contents_title_top">
         <div class="contents_title_grp_name">문제 그룹명</div>
         <select
@@ -177,7 +179,7 @@
               <div class="common_level_div">
                 <button onclick="popup_hint_popupStatus()">힌트 설정</button>
                 <button onclick="popup_mit_popupStatus()">
-                  MITRE ATT&CK 정보 입력
+                  MITER ATTACK 정보 입력
                 </button>
               </div>
             </div>
@@ -209,9 +211,9 @@
         <button onclick="popup_exam_popupStatus()">취소</button>
       </div>
     </div>
-    <!-- MITRE ATT&CK div -->
+    <!-- MITER ATTACK div -->
     <div class="popup_mit">
-      <div class="popup_mit_txt">MITRE ATT&CK 정보</div>
+      <div class="popup_mit_txt">MITER ATTACK 정보</div>
       <div>
         <select class="tactics_select" name="" id="">
           <option value="">tatic</option>

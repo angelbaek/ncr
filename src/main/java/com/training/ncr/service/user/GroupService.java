@@ -20,8 +20,15 @@ public class GroupService {
     public List<TeamCodeVO> callTeamCode(){
         return groupMapper.callTeamCode();
     }
+
     //훈련자 팀,팀코드,훈련준비상태 setting
     public int callUserUpdate(UserVO userVO) {
+
+        // 해당 팀에 몇명 있는지 가져오기
+        int count = groupMapper.getGrpCountByGrp(userVO);
+        if(count>1){
+            return 0;
+        }
         return groupMapper.callUserUpdate(userVO);
     }
 

@@ -22,4 +22,7 @@ public interface GroupMapper {
 
     // 아이디로 정보 조회
     List<UserVO> getUserInfo(String id);
+
+    // 해당 팀에 몇명 있는지 가져오기
+    int getGrpCountByGrp(UserVO userVO);
 }

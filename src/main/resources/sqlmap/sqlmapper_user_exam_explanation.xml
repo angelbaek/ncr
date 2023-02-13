@@ -321,7 +321,7 @@
             "ANSWER_USER_ID" = #{answer_user_id},
             "INPUT_ANSWER" = #{input_answer},
             "RESULT_SCORE" = "RESULT_SCORE" + #{point},
-            "CNT_TRY_ANS" = 2,
+            "CNT_TRY_ANS" = 1,
             "CORRECT_ANSWER" = 1
         WHERE
             "TR_USER_GRP" = #{tr_user_grp}
@@ -339,7 +339,7 @@
             "ANSWER_USER_ID" = #{answer_user_id},
             "INPUT_ANSWER" = #{input_answer},
             "RESULT_SCORE" = "RESULT_SCORE" + #{point} - #{hint},
-            "CNT_TRY_ANS" = 2,
+            "CNT_TRY_ANS" = 1,
             "CORRECT_ANSWER" = 1
         WHERE
             "TR_USER_GRP" = #{tr_user_grp}
@@ -553,7 +553,52 @@
             "TR_USER_GRP" = #{tr_user_grp} and
             "TEAM_CD" = #{team_cd} and
             "TR_EXAM_GRPID" = #{tr_exam_grpid} and
-            "CNT_TRY_ANS" = 2
+            "CNT_TRY_ANS" = 2 OR "RESULT_SCORE" > 0
+    </select>
+
+    <!--풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기 (2차 풀이 비활성화)-->
+    <select id="getTotalStatusNoneAllow" resultType="map">
+        SELECT
+        count("CNT_TRY_ANS") as explanationCount,
+        (SELECT
+        "TR_EXAM_COUNT"
+        FROM
+        "TN_TRAIN_EXAMGRP"
+        WHERE
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}) as maxExplanationCount,
+        (SELECT
+        sum("RESULT_SCORE")
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} and
+        "TEAM_CD" = #{team_cd} and
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} and
+        "RESULT_SCORE" >= 0) as resultScore,
+        (SELECT
+        sum("WRONG_SCORE")
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} and
+        "TEAM_CD" = #{team_cd} and
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}) as wrongScore,
+        (SELECT
+        count("STAT_ID")*10
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} and
+        "TEAM_CD" = #{team_cd} and
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} and
+        "HINT_USE"=1) as hintScore
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} and
+        "TEAM_CD" = #{team_cd} and
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} and
+        "CNT_TRY_ANS" = 1 OR "RESULT_SCORE" > 0
     </select>
 
     <!-- 정답 수 UPDATE (훈련팀별) -->
@@ -581,6 +626,20 @@
         "TR_NUM" = #{tr_num} AND
         "TR_EXAM_GRPID" = #{tr_exam_grpid}
     </update>
+
+    <!--해당 문제에 대한 훈련팀 획득점수 가져오기-->
+    <select id="getTeamResultSore" resultType="int">
+        SELECT
+            "RESULT_SCORE"
+        FROM
+            "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+            "TR_USER_GRP" = #{tr_user_grp} AND
+            "TEAM_CD" = #{team_cd} AND
+            "TR_NUM" = #{tr_num} AND
+            "TR_EXAM_GRPID" =  #{tr_exam_grpid} AND
+            "TR_EXAM_ID" = #{tr_exam_id}
+    </select>
 
     <!--총 점수 UPDATE (훈련팀별)-->
     <update id="updateResultSumTeam">

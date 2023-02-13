@@ -45,10 +45,27 @@
   padding-right: 70px;
 }
 .contents_title {
+  float: left;
+  padding-left: 250px;
+  position: relative;
+  display: inline-block;
+  text-align: left;
   margin-bottom: 50px;
   font-size: 24px;
   font-weight: bold;
-  color: #34395e;
+  /* color: #34395e; */
+  color: #fafbfc;
+  top: 50%;
+  transform: translate(10%, -50%);
+}
+.top_user_info_div {
+  float: right;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+  top: 80%;
+  transform: translate(0%, -50%);
+  margin-right: 50px;
 }
 .contents_name {
   font-weight: bold;
@@ -81,12 +98,6 @@ img {
 .userName {
   display: inline-block;
   vertical-align: middle;
-}
-.top_user_info_div {
-  position: relative;
-  top: 50%;
-  transform: translate(0%, -50%);
-  margin-right: 50px;
 }
 .contents_setup {
   padding: 50px;
@@ -175,6 +186,10 @@ tr:last-child td {
 }
 
 .exam_group {
+  margin-top: 100px;
+  /* top: 50%; */
+  /* left: 50%; */
+  /* transform: translate(50%, 50%); */
   border-radius: 10px;
   padding: 20px;
   margin-left: 30px;
