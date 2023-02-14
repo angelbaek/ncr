@@ -516,12 +516,13 @@ public class UserExplanationService {
         String userId = (String) session.getAttribute("USERID");
         UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
 
-        // set
+        // set grp, teamcd
         examResultTeamVO.setTr_user_grp(userVO.getTr_user_grp());
         examResultTeamVO.setTeam_cd(userVO.getTeam_cd());
 
         int secansAllow = examResultTeamVO.getSecansAllow();// 2차풀이 활성화 여부
 
+        System.out.println("팀:"+examResultTeamVO.getTeam_cd()+" grp:"+examResultTeamVO.getTr_user_grp()+" grpid:"+examResultTeamVO.getTr_exam_grpid());
         if (secansAllow==1){ // 활성화
             return userExplanationMapper.getTotalStatus(examResultTeamVO);
         }else if(secansAllow==0){ // 비활성화

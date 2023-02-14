@@ -10,49 +10,48 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ViewController {
 
-    @GetMapping(value = {"/","/login.html","/html/login.html","/login"})
-    public String main(){
-        return "/html/login";
-    }
-
-    @GetMapping(value = {"/user_group_setting.html","/html/user_group_setting.html","/user_group_setting"})
+    @GetMapping(value = {"/user_group_setting"})
     public String userGroup1(){
         return "/html/user_group_setting";
     }
 
 
-    @GetMapping(value = {"/admin_training.html","/html/admin_training.html","/admin_training"})
+    @GetMapping(value = {"/admin_training"})
     public String admin(){
         return "/html/admin_training";
     }
 
-    @GetMapping(value = {"/html/join.html","/join", "join.html"})
+    @GetMapping(value = {"/join"})
     public String join(){
         return "/html/join";
     }
 
-    @GetMapping(value = {"/html/login.html","/login"})
+    @GetMapping(value = {"/","/login"})
     public String login(){
         return "/html/login";
     }
 
-    @GetMapping(value = {"html/admin_exam_group.html","/admin_exam_group.html","/admin_exam_group"})
+    @GetMapping(value = {"/admin_exam_group"})
     public String adminExamGroup(){
         return "/html/admin_exam_group";
     }
 
-    @GetMapping(value = {"html/admin_exam_management.html","/admin_exam_management.html","/admin_exam_management"})
+    @GetMapping(value = {"/admin_exam_management"})
     public String adminExam(){
         return "/html/admin_exam_management";
     }
 
-    @GetMapping(value = {"html/admin_exam_explanation.html", "admin_exam_explanation.html"})
+    @GetMapping(value = {"admin_exam_explanation"})
     public String adminExamTraining(){
         return "html/admin_exam_explanation.html";
     }
 
-    @GetMapping(value = {"html/user_exam_explanation.html","/user_exam_explanation.html","/user_exam_explanation"})
+    @GetMapping(value = {"/user_exam_explanation"})
     public String userExamExplanation(){
         return "html/user_exam_explanation.html";
+    }
+    @GetMapping(value = {"user_exam_statics"})
+    public String userExamStatics(){
+        return "html/user_exam_statics.html";
     }
 }

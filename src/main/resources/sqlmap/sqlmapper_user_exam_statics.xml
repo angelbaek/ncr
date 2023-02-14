@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.training.ncr.mapper.user.UserStaticsMapper">
+    <!--개인현황 조회하기-->
+    <select id="selectUser" resultType="ExamStatVO">
+        SELECT
+            *
+        FROM
+            "TN_TRAIN_EXAMSTAT"
+        WHERE
+            "TR_NUM" = #{num}
+    </select>
+
+    <!--팀현황 조회하기-->
+    <select id="selectTeam" resultType="ExamStatTeamVO">
+        SELECT
+            *
+        FROM
+            "TN_TRAIN_EXAMSTAT_TEAM"
+        WHERE
+            "TR_NUM" = #{num}
+    </select>
+
+    <!--훈련자 기관명 가져오기-->
+    <select id="selectUserOrgByUserId" resultType="UserVO">
+        SELECT
+            *
+        FROM
+            "TN_USER"
+        WHERE
+            "TR_USER_ID" = #{id}
+    </select>
+
+    <!--선택한 훈련자 풀이현황 가져오기-->
+    <select id="getUserExamStat" resultType="ExamStatVO">
+        SELECT
+            *
+        FROM
+            "TN_TRAIN_EXAMSTAT"
+        WHERE
+            "STAT_ID" = #{stat_id} AND
+            "TR_USER_GRP" = #{tr_user_grp} AND
+            "TR_NUM" = #{tr_num} AND
+            "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+</mapper>

@@ -747,16 +747,16 @@ function checkAnsBtnShort(examId) {
       } else if (response == 3) {
         alert("server에서 data를 받아 올 수 없습니다.");
       }
-      // count
-      countAnsExamResultTeam();
-      // view update
-      clientViewUpdate();
-      // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
-      getTotalStatus();
-      // 제출여부
-      checkSubmitExam();
     },
   });
+  // count
+  countAnsExamResultTeam();
+  // view update
+  clientViewUpdate();
+  // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+  getTotalStatus();
+  // 제출여부
+  checkSubmitExam();
 }
 
 // 풀이 중인 훈련자 팀 가져오기

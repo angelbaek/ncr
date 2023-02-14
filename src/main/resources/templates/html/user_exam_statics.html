@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <!-- test css -->
+  <link rel="stylesheet" href="/static/css/common.css" />
+  <link rel="stylesheet" href="/static/css/user_exam_statics.css" />
+  <!-- common css -->
+  <link rel="stylesheet" href="/css/common.css" />
+  <link rel="stylesheet" href="/css/user_exam_statics.css" />
+  <!-- font awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+  />
+  <body>
+    <div class="left_nav">
+      <div class="nav_title">
+        <a href="/">국가기간망<br />침투대응훈련</a>
+      </div>
+      <div class="nav_contents">
+        <div class="common_left_menubar" id="now_place">
+          <a href="user_group_setting">그룹 설정</a>
+        </div>
+        <div class="common_left_menubar" id="now_position">문제 풀이</div>
+        <div class="common_left_menubar">훈련 통계</div>
+      </div>
+    </div>
+    <div class="top_user_info">
+      <div class="contents_title">훈련 통계</div>
+      <div class="top_user_info_div" onclick="showLogOutBtn()">
+        <img src="/public/images/avatar-1.png" alt="user" />
+        <div class="userName">User Name</div>
+        <i class="fas fa-caret-down" id="logout"></i>
+        <div class="logout_btn" onclick="logOut()">로그아웃</div>
+      </div>
+    </div>
+    <!-- 훈련통계 -->
+    <div class="contents">
+      <div class="user_choice">
+        <div class="user_num_div">
+          <p>차시</p>
+          <select name="num_check" id="select_num">
+            <option value="0">직접 선택</option>
+            <option value="1">1차시</option>
+            <option value="2">2차시</option>
+          </select>
+        </div>
+        <div class="user_type_div">
+          <p>유형</p>
+          <select name="type_check" id="select_type">
+            <option value="0">직접 선택</option>
+            <option value="1">개인별</option>
+            <option value="2">팀별</option>
+          </select>
+        </div>
+      </div>
+      <table>
+        <tr>
+          <th>훈련자명</th>
+          <th>기관명</th>
+          <th>차시</th>
+          <th>총점수</th>
+          <th>정답/오답</th>
+          <th>답안제출</th>
+          <th>소요시간</th>
+          <th>시작시간</th>
+          <th>종료시간</th>
+        </tr>
+        <tbody class="static_body_total"></tbody>
+      </table>
+      <table>
+        <tr>
+          <th>1</th>
+          <th>1</th>
+          <th>1</th>
+          <th>1</th>
+          <th>1</th>
+          <th>1</th>
+          <th>1</th>
+          <th>1</th>
+          <th>1</th>
+          <th>1</th>
+        </tr>
+        <tbody class="user_body_total">
+          <tr>
+            <td>2</td>
+            <td>2</td>
+            <td>2</td>
+            <td>2</td>
+            <td>2</td>
+            <td>2</td>
+            <td>2</td>
+            <td>2</td>
+            <td>2</td>
+            <td>2</td>
+          </tr>
+        </tbody>
+      </table>
+      <div></div>
+    </div>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.6.3.js"
+    integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"
+  ></script>
+  <script src="/static/js/common.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/static/js/user_exam_statics.js"></script>
+  <script src="/js/user_exam_statics.js"></script>
+</html>
