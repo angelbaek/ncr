@@ -24,5 +24,8 @@ public interface UserStaticsMapper {
     UserVO selectUserOrgByUserId(String id);
 
     // 선택한 훈련자 풀이현황 가져오기
-    ExamStatVO getUserExamStat(ExamStatVO examStatVO);
+    List<ExamResultVO> selectExamResult(ExamResultVO examResultVO);
+
+    // ExamStat 테이블 stat_id로 유저 아이디 가져오기
+    String getUserIdByExamStatId(int stat_id);
 }

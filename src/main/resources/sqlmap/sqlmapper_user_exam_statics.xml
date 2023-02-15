@@ -32,15 +32,24 @@
     </select>
 
     <!--선택한 훈련자 풀이현황 가져오기-->
-    <select id="getUserExamStat" resultType="ExamStatVO">
+    <select id="selectExamResult" resultType="ExamResultVO">
         SELECT
             *
         FROM
             "TN_TRAIN_EXAMSTAT"
         WHERE
-            "STAT_ID" = #{stat_id} AND
-            "TR_USER_GRP" = #{tr_user_grp} AND
+            "TR_USER_ID" = #{tr_user_id} AND
             "TR_NUM" = #{tr_num} AND
             "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <!--ExamStat 테이블 stat_id로 유저 아이디 가져오기-->
+    <select id="getUserIdByExamStatId" resultType="String">
+        SELECT
+            "TR_USER_ID"
+        FROM
+            "TN_TRAIN_EXAMSTAT"
+        WHERE
+            "STAT_ID" = #{stat_id}
     </select>
 </mapper>

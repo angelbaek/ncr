@@ -57,6 +57,10 @@ function getExamResultByNumAndType(num, type) {
     data: JSON.stringify(jsonData),
     success: function (response) {
       console.log(response);
+      if (response.length == 0) {
+        alert("해당 조건에 해당하는 데이터가 없습니다");
+        return;
+      }
       var id = response[0].tr_user_id;
       var html = "<tr>";
       if (id == undefined) {
@@ -74,7 +78,7 @@ function getExamResultByNumAndType(num, type) {
           var delayTime = 0; // 소요시간
 
           // 기능 테스트
-          var endTime = targetEndTime.substr(11, 16); // 종료시간 변환
+          var endTime = targetStartTime.substr(11, 8); // 종료시간 변환
           console.log("형식확인:" + endTime);
           // 종료시간이 없을때
           if (targetEndTime == null) {
@@ -141,11 +145,11 @@ function getExamResultByNumAndType(num, type) {
 
 // 선택한 훈련자 풀이현황 가져오기
 function getUserExamStat(statId, grp, num, grpId) {
-  let html = "";
+  let htmlHead = "";
+  let htmlBody = "<tr>";
   var jsonData = {
     // tr_user_id: id,
     stat_id: statId,
-    tr_user_grp: grp,
     tr_num: num,
     tr_exam_grpid: grpId,
   };
@@ -157,8 +161,29 @@ function getUserExamStat(statId, grp, num, grpId) {
     data: JSON.stringify(jsonData),
     success: function (response) {
       console.log(response);
-      var id = response.tr_user_id; // 아이디 대입
-      var org = selectUserOrgByUserId(id); // 유저id로 기관명 가져오기
+      for (var i = 0; i < response.length; i++) {
+        var answer = response[i].input_answer; // 유저가 입력한 답
+        var correct_answer = response[i].correct_answer; // 정답 여부
+        var tryAns = response[i].cnt_try_ans; // 정답 입력 횟수
+        var score = response[i].result_score; // 획득점수
+        if (answer == null) answer = "-";
+        htmlHead += "<th>" + (i + 1) + "번</th>";
+        // 정답일때
+        if (score > 0) {
+          htmlBody += "<td>" + answer + "</td>";
+          // 오답일때
+        } else if (score == 0 && tryAns > 0) {
+          htmlBody += "<td>" + answer + "</td>";
+          // 입력안했을때
+        } else if (answer == "-") {
+          htmlBody += "<td>" + answer + "</td>";
+        }
+        if (i == response.length - 1) htmlBody += "</tr>";
+      }
+      $(".user_body_total_head").empty();
+      $(".user_body_total_head").append(htmlHead);
+      $(".user_body_total").empty();
+      $(".user_body_total").append(htmlBody);
     },
   });
 }

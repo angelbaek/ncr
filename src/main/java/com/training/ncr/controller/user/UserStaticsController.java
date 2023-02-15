@@ -34,7 +34,7 @@ public class UserStaticsController {
 
     // 선택한 훈련자 풀이현황 가져오기
     @PostMapping("/get_user_exam_stat")
-    public ExamStatVO getUserExamStat(@RequestBody ExamStatVO examStatVO){
-        return userStaticsService.getUserExamStat(examStatVO);
+    public List<ExamResultVO> getUserExamStat(@RequestBody ExamResultVO examResultVO){
+        return userStaticsService.selectExamResult(examResultVO);
     }
 }

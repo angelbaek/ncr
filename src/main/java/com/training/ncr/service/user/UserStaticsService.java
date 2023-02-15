@@ -50,7 +50,11 @@ public class UserStaticsService {
     }
 
     // 선택한 훈련자 풀이현황 가져오기
-    public ExamStatVO getUserExamStat(ExamStatVO examStatVO){
-        return userStaticsMapper.getUserExamStat(examStatVO);
+    public List<ExamResultVO> selectExamResult(ExamResultVO examResultVO){
+        // stat id로 유저 id 가져오기
+        String userId = userStaticsMapper.getUserIdByExamStatId(examResultVO.getStat_id());
+        examResultVO.setTr_user_id(userId);
+
+        return userStaticsMapper.selectExamResult(examResultVO);
     }
 }
