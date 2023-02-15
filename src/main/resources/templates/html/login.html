@@ -43,6 +43,32 @@
   <!-- <script src="/static/js/login.js"></script> -->
   <script src="/js/login.js"></script>
   <script>
+    $(document).ready(function () {
+      // 입력 필드 선택자
+      var inputSelector = $(".user_login_id");
+      var inputSelector2 = $(".user_login_pw");
+
+      // 엔터키 입력시 실행할 함수
+      function onEnterKeyPressed() {
+        // TODO: 엔터키 입력시 실행할 작업 수행
+        user_login();
+      }
+
+      // 입력 필드에서 키 입력 이벤트를 처리
+      $(inputSelector).on("keydown", function (event) {
+        // 엔터키 입력인 경우 onEnterKeyPressed 함수 실행
+        if (event.keyCode == 13) {
+          onEnterKeyPressed();
+        }
+      });
+      // 입력 필드에서 키 입력 이벤트를 처리
+      $(inputSelector2).on("keydown", function (event) {
+        // 엔터키 입력인 경우 onEnterKeyPressed 함수 실행
+        if (event.keyCode == 13) {
+          onEnterKeyPressed();
+        }
+      });
+    });
     sessionManagement();
   </script>
 </html>

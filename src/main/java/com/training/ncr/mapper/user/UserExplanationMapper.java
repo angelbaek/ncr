@@ -4,6 +4,7 @@ import com.training.ncr.vo.UserVO;
 import com.training.ncr.vo.admin.ExamGrpVO;
 import com.training.ncr.vo.admin.ExamHintVO;
 import com.training.ncr.vo.admin.ExamVO;
+import com.training.ncr.vo.admin.MgmtVO;
 import com.training.ncr.vo.user.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,7 +21,7 @@ public interface UserExplanationMapper {
     int laterInsertUserTrainExamStat(ExamStatVO examStatVO);
 
     // 나의 id로 훈련자별 풀이 현황 db조회
-    List<ExamStatVO> selectByUserID(String id);
+    List<ExamStatVO> selectByUserID(ExamStatVO examStatVO);
 
     // 나의 id로 팀코드 구하기
     String getTeamcodeByUserid(String id);
@@ -144,4 +145,20 @@ public interface UserExplanationMapper {
 
     // 해당 문제에 대한 훈련팀 획득점수 가져오기
     int getTeamResultSore(ExamResultTeamVO examResultTeamVO);
+
+    // 활성화된 문제그룹 이름 가져오기
+    MgmtVO getGrpNameByMgmtStateOn();
+
+    // 활성화된 문제그룹이름으로 문제그룹id 가져오기
+    int getGrpIdByGrpName(String tr_exam_grpname);
+
+    // 문제그룹id로 문제id, 전술단계, 매트릭스 가져오기
+    List<Map<String,Object>> getGrpidAndMatrixAndTactics(int tr_exam_grpid);
+
+    // 매트릭스 스탯 통계정보 저장
+    int insertMatrixStat(MatrixStatVO matrixStatVO);
+
+    // 매트릭스 스탯 정답체크
+    int updateAnsToMatrixStat(ExamResultTeamVO examResultTeamVO);
+
 }

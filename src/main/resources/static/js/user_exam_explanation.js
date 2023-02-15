@@ -547,7 +547,7 @@ function getHintFunc(grpId, examId, hintDeduct) {
         $(".show_hint_p_" + examId).text("");
       }
       // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
-      getTotalStatus();
+      getTotalStatus(staticAllowSecans);
       // 제출여부
       checkSubmitExam();
     },
@@ -650,6 +650,8 @@ function checkAnsBtnMulti(examId) {
       } else if (response == 0) {
         alert("해당 문제는 더 이상 풀 수 없습니다");
         clientViewUpdate();
+        // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+        getTotalStatus(staticAllowSecans);
         return;
       } else if (response == 9) {
         // 정답일때
@@ -669,7 +671,7 @@ function checkAnsBtnMulti(examId) {
       // view update
       clientViewUpdate();
       // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
-      getTotalStatus();
+      getTotalStatus(staticAllowSecans);
       // 제출여부
       checkSubmitExam();
     },
@@ -754,7 +756,7 @@ function checkAnsBtnShort(examId) {
   // view update
   clientViewUpdate();
   // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
-  getTotalStatus();
+  getTotalStatus(staticAllowSecans);
   // 제출여부
   checkSubmitExam();
 }
@@ -986,8 +988,8 @@ function startTrainingGetTime() {
       var txt = "";
       txt = response[0];
       var traingHour = parseInt(txt.substring(0, 2));
-      var traingMin = parseInt(txt.substring(3, 5)) - 4;
-      var traingSec = parseInt(txt.substring(6, 8)) + 30;
+      var traingMin = parseInt(txt.substring(3, 5));
+      var traingSec = parseInt(txt.substring(6, 8));
 
       // 현재 시각
       let now = new Date();
@@ -1145,9 +1147,11 @@ function submitExam() {
         if (response == 1) {
           alert("문제제출이 완료되었습니다");
           $(".back").css("display", "block");
+          $(".submit_popup").toggle();
         } else if (response == 0) {
           alert("다른 훈련자가 이미 제출하였습니다");
           $(".back").css("display", "block");
+          $(".submit_popup").toggle();
         }
       },
     });

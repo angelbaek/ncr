@@ -791,6 +791,6 @@ function checkExamCountFunc() {
 // 풀이 갯수 맥스
 function finalMsg() {
   if (totalExamCount == realExamCount) {
-    alert("모든 문제를 클리어 하셨습니다.");
+    alert("수고하셨습니다.");
   }
 }

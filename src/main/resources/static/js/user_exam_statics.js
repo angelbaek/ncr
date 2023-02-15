@@ -44,6 +44,7 @@ $("#select_type").on("change", function () {
 
 // 차시, 유형으로 훈련현황 불러오기
 function getExamResultByNumAndType(num, type) {
+  toggleStatic();
   var jsonData = {
     num: num,
     type: type,
@@ -59,6 +60,7 @@ function getExamResultByNumAndType(num, type) {
       console.log(response);
       if (response.length == 0) {
         alert("해당 조건에 해당하는 데이터가 없습니다");
+        location.reload();
         return;
       }
       var id = response[0].tr_user_id;
@@ -76,18 +78,75 @@ function getExamResultByNumAndType(num, type) {
           var startTime = targetStartTime.substr(0, 16); // 시작시간 변환
           var targetEndTime = response[i].end_time; // 종료시간
           var delayTime = 0; // 소요시간
-
-          // 기능 테스트
-          var endTime = targetStartTime.substr(11, 8); // 종료시간 변환
-          console.log("형식확인:" + endTime);
           // 종료시간이 없을때
           if (targetEndTime == null) {
             endTime = "-";
             delayTime = "-";
+
+            // 현재 시각
+            let now = new Date();
+
+            var year = now.getFullYear() + now.getDay() + now.getDate(); // 날
+            var hours = now.getHours(); // 현재 시간
+            console.log("시간 : ", hours);
+
+            var minutes = now.getMinutes(); // 현재 분
+            console.log("분 : ", minutes);
+
+            var seconds = now.getSeconds(); // 현재 초
+            console.log("초 : ", seconds);
+
+            console.log("년:" + year);
+            var target = startTime.substr(0, 4);
+            console.log("타겟:" + target + " 이어:" + year);
+            target = target - year;
+            // 소요시간 계산 로직
+            // 시작시간
+            var start = startTime.substr(11, 5);
+            var startH = startTime.substr(11, 2);
+            var startM = startTime.substr(14, 2);
+            // 초로 변환
+            var startF = startH * 3600 + startM * 60;
+            var endF = hours * 3600 + minutes * 60;
+
+            var result = endF - startF;
+
+            var h = parseInt(result / 3600); // 시
+            var m = parseInt((result - h * 3600) / 60); // 분
+            if (h == 0) {
+              delayTime = m + "분";
+            } else if (target != 0) {
+              delayTime = "시간 초과";
+            } else {
+              delayTime = h + "시간 " + m + "분";
+            }
           } else {
-            // 소요시간 계산 로직 (미구현)
-            var endTime = parseInt(targetEndTime.substr(0, 16)); // 종료시간 변환
-            delayTime = endTime - startTime;
+            // 소요시간 계산 로직
+            var endTime = targetEndTime.substr(0, 16); // 종료시간 변환
+            // 시작시간
+            var start = startTime.substr(11, 5);
+            var startH = startTime.substr(11, 2);
+            var startM = startTime.substr(14, 2);
+            // 초로 변환
+            var startF = startH * 3600 + startM * 60;
+            // 종료시간
+            var end = endTime.substr(11, 5);
+            var endH = endTime.substr(11, 2);
+            var endM = endTime.substr(14, 2);
+            // 초로 변환
+            var endF = endH * 3600 + endM * 60;
+
+            var result = endF - startF;
+
+            var h = parseInt(result / 3600); // 시
+            var m = parseInt((result - h * 3600) / 60); // 분
+            if (h == 0) {
+              delayTime = m + "분";
+            } else {
+              delayTime = h + "시간 " + m + "분";
+            }
+
+            console.log(result);
           }
           var statId = response[i].stat_id;
           var grp = response[i].tr_user_grp;
@@ -145,8 +204,10 @@ function getExamResultByNumAndType(num, type) {
 
 // 선택한 훈련자 풀이현황 가져오기
 function getUserExamStat(statId, grp, num, grpId) {
-  let htmlHead = "";
+  toggleDetail();
+  $(".user_body_total").empty();
   let htmlBody = "<tr>";
+  let htmlHead = "<tr>";
   var jsonData = {
     // tr_user_id: id,
     stat_id: statId,
@@ -167,22 +228,51 @@ function getUserExamStat(statId, grp, num, grpId) {
         var tryAns = response[i].cnt_try_ans; // 정답 입력 횟수
         var score = response[i].result_score; // 획득점수
         if (answer == null) answer = "-";
-        htmlHead += "<th>" + (i + 1) + "번</th>";
-        // 정답일때
-        if (score > 0) {
-          htmlBody += "<td>" + answer + "</td>";
-          // 오답일때
-        } else if (score == 0 && tryAns > 0) {
-          htmlBody += "<td>" + answer + "</td>";
-          // 입력안했을때
-        } else if (answer == "-") {
-          htmlBody += "<td>" + answer + "</td>";
+        if (i % 10 == 0) {
+          htmlHead += "</tr>";
+          htmlBody += "</tr>";
+          $(".user_body_total").append(htmlHead);
+          $(".user_body_total").append(htmlBody);
+          htmlHead = "";
+          htmlBody = "";
+          // 정답일때
+          if (score > 0) {
+            htmlHead += "<tr><th>" + (i + 1) + "번</th>";
+            htmlBody += "<tr><td class='ans_true'>" + answer + "</td>";
+            // 오답일때
+          } else if (score == 0 && tryAns > 0) {
+            htmlHead += "<tr><th>" + (i + 1) + "번</th>";
+            htmlBody += "<tr><td class='ans_false'>" + answer + "</td>";
+            // 입력안했을때
+          } else if (answer == "-") {
+            htmlHead += "<tr><th>" + (i + 1) + "번</th>";
+            htmlBody += "<tr><td>" + answer + "</td>";
+          }
+          if (i == response.length - 1) {
+            htmlHead += "</tr>";
+            htmlBody += "</tr>";
+          }
+        } else {
+          // 정답일때
+          if (score > 0) {
+            htmlHead += "<th>" + (i + 1) + "번</th>";
+            htmlBody += "<td class='ans_true'>" + answer + "</td>";
+            // 오답일때
+          } else if (score == 0 && tryAns > 0) {
+            htmlHead += "<th>" + (i + 1) + "번</th>";
+            htmlBody += "<td class='ans_false'>" + answer + "</td>";
+            // 입력안했을때
+          } else if (answer == "-") {
+            htmlHead += "<th>" + (i + 1) + "번</th>";
+            htmlBody += "<td>" + answer + "</td>";
+          }
+          if (i == response.length - 1) {
+            htmlHead += "</tr>";
+            htmlBody += "</tr>";
+          }
         }
-        if (i == response.length - 1) htmlBody += "</tr>";
       }
-      $(".user_body_total_head").empty();
-      $(".user_body_total_head").append(htmlHead);
-      $(".user_body_total").empty();
+      $(".user_body_total").append(htmlHead);
       $(".user_body_total").append(htmlBody);
     },
   });
@@ -207,4 +297,16 @@ function selectUserOrgByUserId(id) {
     },
   });
   return org;
+}
+
+// 훈련통계 toggle
+function toggleStatic() {
+  $(".static_title").css("display", "block");
+  $(".show_static_body_total").css("display", "table");
+}
+
+// 훈련세부사항 toggle
+function toggleDetail() {
+  $(".static_detail_title").css("display", "block");
+  $(".user_body_status").css("display", "table");
 }

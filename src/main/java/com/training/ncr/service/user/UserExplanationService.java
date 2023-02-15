@@ -2,11 +2,10 @@ package com.training.ncr.service.user;
 
 import com.training.ncr.mapper.user.UserExplanationMapper;
 import com.training.ncr.vo.UserVO;
-import com.training.ncr.vo.admin.ExamGrpVO;
-import com.training.ncr.vo.admin.ExamHintVO;
-import com.training.ncr.vo.admin.ExamVO;
+import com.training.ncr.vo.admin.*;
 import com.training.ncr.vo.user.*;
 import org.apache.catalina.User;
+import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,11 +48,12 @@ public class UserExplanationService {
 
         if(time!=null){ // 이미 시작한 팀
             // 훈련자 풀이현황에 내가 있는지 확인하기
-            if(userExplanationMapper.selectByUserID(examStatVO.getTr_user_id()).size()!=0){ // 내가 시작했는지
+            if(userExplanationMapper.selectByUserID(examStatVO).size()!=0){ // 내가 시작했는지
                 System.out.println("훈련 진행중...");
                 return 0;
             }else{ // 다른 훈련자가 같은팀으로 시작
                 examStatVO.setStart_time(time);
+                System.out.println("다른 훈련자가 같은팀으로 시작!!");
                 userExplanationMapper.laterInsertUserTrainExamStat(examStatVO);
             }
         }else{ // 신규 시작
@@ -79,7 +79,40 @@ public class UserExplanationService {
             return 0;
         }
         // db insert
+        setMatrixStat(request);
         return userExplanationMapper.insertExamstatTeam(examStatTeamVO);
+    }
+
+    public void setMatrixStat(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        // 유저 아이디
+        String userId = (String) session.getAttribute("USERID");
+        UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
+
+        MatrixStatVO matrixStatVO = new MatrixStatVO(); // ioc
+        MgmtVO mgmtVO =userExplanationMapper.getGrpNameByMgmtStateOn(); // 활성화된 grpname, tr_num get
+        String tr_exam_grpname = mgmtVO.getTr_exam_grp(); // grp이름
+        int num = mgmtVO.getTr_num(); // 차시
+        int grpId = userExplanationMapper.getGrpIdByGrpName(tr_exam_grpname); // 활성화된 grpid get
+        List<Map<String,Object>> stringObjectMap =userExplanationMapper.getGrpidAndMatrixAndTactics(grpId); // 문제그룹id로 문제id, 전술단계, 매트릭스 가져오기
+
+        // setup
+        matrixStatVO.setTr_user_grp(userVO.getTr_user_grp());
+        matrixStatVO.setTeam_cd(userVO.getTeam_cd());
+        matrixStatVO.setTr_num(num);
+        matrixStatVO.setTr_exam_grpid(grpId);
+
+        for(int i=0; i<stringObjectMap.size(); i++){
+            int tr_exam_id = (int) stringObjectMap.get(i).get("TR_EXAM_ID");
+            String ma_tactics_id = (String) stringObjectMap.get(i).get("MA_TACTICS_ID");
+            int ma_matrix_id= (int) stringObjectMap.get(i).get("MA_MATRIX_ID");
+            // setup
+            matrixStatVO.setTr_exam_id(tr_exam_id);
+            matrixStatVO.setMa_tactics_id(ma_tactics_id);
+            matrixStatVO.setMa_matrix_id(ma_matrix_id);
+            userExplanationMapper.insertMatrixStat(matrixStatVO);
+        }
+        System.out.println(stringObjectMap.size());
     }
 
     // 첫 훈련자별, 훈련팀별 풀이 상세정보 insert
@@ -210,6 +243,8 @@ public class UserExplanationService {
             //정답 입력횟수가 남아있는지 check
             if(tryAns==0){ // 첫 정답확인
                 if(userAns.equals(ans)){ // 정답일때
+                    // 매트릭스 스탯 정답체크
+                    userExplanationMapper.updateAnsToMatrixStat(examResultTeamVO);
                     if(check==1){ // 힌트 사용
                         userExplanationMapper.firstAnsEqualsAnsMultiAndHintUse(examResultTeamVO);
                     }else{ // 힌트 미사용
@@ -235,6 +270,8 @@ public class UserExplanationService {
                 }
             }else if(tryAns==1){ // 두번째 정답확인
                 if(userAns.equals(ans)){ // 정답일때
+                    // 매트릭스 스탯 정답체크
+                    userExplanationMapper.updateAnsToMatrixStat(examResultTeamVO);
                     if(check==1){ // 힌트 사용
                         userExplanationMapper.secondAnsEqualsAnsMultiAndHintUser(examResultTeamVO);
                     }else{ // 힌트 미사용
@@ -366,6 +403,8 @@ public class UserExplanationService {
             //정답 입력횟수가 남아있는지 check
             if(tryAns==0){
                 if(userAns.equals(ans)){ // 정답일때
+                    // 매트릭스 스탯 정답체크
+                    userExplanationMapper.updateAnsToMatrixStat(examResultTeamVO);
                     if(check==1){ // 힌트 사용
                         userExplanationMapper.firstAnsEqualsAnsMultiAndHintUse(examResultTeamVO);
                     }else{ // 힌트 미사용
@@ -386,6 +425,8 @@ public class UserExplanationService {
                 }
             }else if(tryAns==1){ // 남아있음 (1번 품)
                 if(userAns.equals(ans)){ // 정답일때
+                    // 매트릭스 스탯 정답체크
+                    userExplanationMapper.updateAnsToMatrixStat(examResultTeamVO);
                     if(check==1){ // 힌트 사용
                         userExplanationMapper.secondAnsEqualsAnsMultiAndHintUser(examResultTeamVO);
                     }else{ // 힌트 미사용
@@ -417,6 +458,8 @@ public class UserExplanationService {
             //정답 입력횟수가 남아있는지 check
             if(tryAns==0){ // 남아있음 (1번 품)
                 if(userAns.equals(ans)){ // 정답일때
+                    // 매트릭스 스탯 정답체크
+                    userExplanationMapper.updateAnsToMatrixStat(examResultTeamVO);
                     if(check==1){ // 힌트 사용
                         userExplanationMapper.secondAnsEqualsAnsMultiAndHintUser(examResultTeamVO);
                     }else{ // 힌트 미사용
@@ -572,12 +615,15 @@ public class UserExplanationService {
         // 훈련팀 팀코드,grp set
         examStatTeamVO.setTr_user_grp(userVO.getTr_user_grp());
         examStatTeamVO.setTeam_cd(userVO.getTeam_cd());
-
-        int submit = userExplanationMapper.checkSubmitTeam(examStatTeamVO);
-        if(submit==1){ // 이미 제출했을때
-            return 0;
+        try{
+            int submit = userExplanationMapper.checkSubmitTeam(examStatTeamVO);
+            if(submit==1){ // 이미 제출했을때
+                return 0;
+            }
+            return 1;
+        }catch (BindingException e){
+            return 1;
         }
-        return 1;
     }
 
     // 전술단계 id 가져오기

@@ -10,6 +10,9 @@ a {
   color: #34395e;
   text-decoration: none;
 }
+.top_user_info {
+  width: 100%;
+}
 
 .top_user_info_div:hover {
   cursor: pointer;

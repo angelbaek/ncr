@@ -36,7 +36,7 @@
         SELECT
             *
         FROM
-            "TN_TRAIN_EXAMSTAT"
+            "TN_TRAIN_EXAMRESULT"
         WHERE
             "TR_USER_ID" = #{tr_user_id} AND
             "TR_NUM" = #{tr_num} AND

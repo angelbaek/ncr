@@ -59,7 +59,9 @@
           </select>
         </div>
       </div>
-      <table>
+      <!-- 훈련 통계 -->
+      <div class="static_title">훈련통계</div>
+      <table class="show_static_body_total">
         <tr>
           <th>훈련자명</th>
           <th>기관명</th>
@@ -73,10 +75,21 @@
         </tr>
         <tbody class="static_body_total"></tbody>
       </table>
-      <table>
-        <tr class="user_body_total_head"></tr>
-        <tbody class="user_body_total"></tbody>
-      </table>
+      <!-- 훈련자 세부사항 -->
+      <div class="static_detail_title">훈련 세부사항</div>
+      <div
+        style="
+          max-width: 100%;
+          overflow-x: auto;
+          padding-left: 80px;
+          padding-right: 80px;
+        "
+      >
+        <table class="user_body_status">
+          <tbody class="user_body_total"></tbody>
+        </table>
+      </div>
+
       <div></div>
     </div>
   </body>
@@ -89,4 +102,10 @@
   <script src="/js/common.js"></script>
   <script src="/static/js/user_exam_statics.js"></script>
   <script src="/js/user_exam_statics.js"></script>
+  <script>
+    $(".static_title").css("display", "none");
+    $(".show_static_body_total").css("display", "none");
+    $(".static_detail_title").css("display", "none");
+    $(".user_body_status").css("display", "none");
+  </script>
 </html>

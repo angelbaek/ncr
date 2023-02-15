@@ -17,6 +17,7 @@
   margin-top: 70px;
   position: absolute;
   padding-left: 280px;
+  padding-right: 50px;
   width: 100%;
 }
 .common_box {
@@ -144,22 +145,62 @@ tr td {
 }
 
 table {
-  width: auto;
+  width: 1400px;
   height: auto;
-  padding: 50px;
+  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
   margin-top: 30px;
+  text-align: center;
+  border-collapse: none;
+  overflow-block: scroll;
+  table-layout: fixed;
 }
 
-th,
-tr td {
-  padding: 20px 30px;
+/* table {
+  table-layout: fixed;
+  width: 100%;
+  overflow-wrap: break-word;
+} */
+
+th {
+  width: 140px;
+  text-align: center;
+  padding: 15px;
 }
+tr td {
+  text-align: center;
+  width: 140px;
+  padding: 20px 30px;
+  overflow-wrap: break-word;
+}
+
 a {
   color: #6777ef;
 }
 a:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+
+/* 정답 */
+.ans_true {
+  color: blue;
+}
+/* 오답 */
+.ans_false {
+  color: red;
+}
+
+.static_title,
+.static_detail_title {
+  color: #6c757d;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.user_body_status {
+  text-align: center;
+  margin-bottom: 50px;
 }
