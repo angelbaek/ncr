@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ExamStatTeamVO {
-    int stat_id, tr_user_grp, tr_num, tr_exam_grpid, cnt_correct_ans, result_sum, submit_answer;
+    int stat_id, tr_user_grp, tr_num, tr_exam_grpid, cnt_correct_ans, result_sum, submit_answer, cnt_false_ans;
     String team_cd, start_time, end_time;
 }

@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserStaticsService {
@@ -56,5 +54,42 @@ public class UserStaticsService {
         examResultVO.setTr_user_id(userId);
 
         return userStaticsMapper.selectExamResult(examResultVO);
+    }
+
+    // 선택한 훈련팀별 세부사항 가져오기
+    public List<ExamStatTeamVO> getExamResultTeam(ExamResultTeamVO examResultTeamVO){
+        return userStaticsMapper.getExamResultTeam(examResultTeamVO);
+    }
+
+    // 선택한 팀에 해당하는 매트릭스 스탯 가져오기
+    public List<Map<String,Object>> getMatrixStat(MatrixStatVO matrixStatVO){
+        List<Map<String, Object>> matrix = userStaticsMapper.getMatrixStat(matrixStatVO);
+        System.out.println(matrix.size());
+        return userStaticsMapper.getMatrixStat(matrixStatVO);
+    }
+
+    // 선택한 팀에 해당하는 매트릭스, 전술단계 가져오기 실행 후 // 매트릭스 id, grp, num, grpid로 최대항수, 실제 항수, 해당 matrix, 전술단계 구해서 넘겨주기
+    public List<Map<String,Object>> getMiterAttackMatrix(MatrixStatVO matrixStatVO){
+        List<Map<String,Object>> test = userStaticsMapper.getMiterAttackMatrix(matrixStatVO.getTr_exam_grpid());
+        List<Integer> target = new ArrayList<>();
+        List<String> target2 = new ArrayList<>();
+        List<Map<String,Object>> stringObjectMap = new ArrayList<>();
+        for(int i=0; i<test.size(); i++){
+            target.add((Integer) test.get(i).get("MA_MATRIX_ID"));
+            target2.add((String) test.get(i).get("MA_TACTICS_ID"));
+        }
+        for(int i=0; i<target.size(); i++){
+            matrixStatVO.setMa_matrix_id(target.get(i));
+            matrixStatVO.setMa_tactics_id(target2.get(i));
+            stringObjectMap.add(userStaticsMapper.getTotalAnsCorrectTrue(matrixStatVO));
+        }
+        //테스트 코드
+        Map<String,List<Object>> a = new HashMap<>();
+        List<Object> l1 = new ArrayList<>();
+        l1.add(1);
+        List<Object> l2 = new ArrayList<>();
+        l2.add(2);
+
+        return stringObjectMap;
     }
 }

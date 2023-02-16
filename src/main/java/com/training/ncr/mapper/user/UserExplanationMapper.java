@@ -161,4 +161,7 @@ public interface UserExplanationMapper {
     // 매트릭스 스탯 정답체크
     int updateAnsToMatrixStat(ExamResultTeamVO examResultTeamVO);
 
+    // 제한시간 경과 시 완료 시간 업데이트
+    int endTimeUpdateTime(ExamStatVO examStatVO);
+
 }

@@ -834,4 +834,15 @@
             "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
             "TR_EXAM_ID" = #{tr_exam_id}
     </update>
+
+    <!--제한시간 경과 시 완료 시간 업데이트-->
+    <update id="endTimeUpdateTime">
+        UPDATE "TN_TRAIN_EXAMSTAT"
+        SET
+            "END_TIME" = NOW()
+        WHERE
+            "TR_USER_ID" = #{tr_user_id} AND
+            "TR_NUM" = #{tr_num} AND
+            "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </update>
 </mapper>

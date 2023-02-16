@@ -993,6 +993,11 @@ function startTrainingGetTime() {
 
       // 현재 시각
       let now = new Date();
+      // 날 계산
+      var year = now.getFullYear() + now.getDay() + now.getDate(); // 날
+      var target = txt.substr(0, 4);
+      target = target - year; //여기까지
+      console.log("날 지낫니?:" + target);
 
       var hours = now.getHours(); // 현재 시간
       console.log("시간 : ", hours);
@@ -1214,6 +1219,29 @@ function countMaTactics(ma_tactics_id) {
   } else if (ma_tactics_id == "TA0043") {
     arrMa[13] += 1;
   }
+}
+
+function endTimeUpdateTime() {
+  var jsonData = {
+    // 훈련 차시
+    tr_num: grpnum,
+    // 문제 그룹 id
+    tr_exam_grpid: examGrpid,
+  };
+  console.log(jsonData);
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/end_time_update_time",
+    type: "POST",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      if (response == 1) {
+        console.log("제한시간이 되어 시간 업데이트...");
+      }
+    },
+  });
 }
 
 function ansBtnOff(examId) {

@@ -102,4 +102,10 @@ public class UserExplanationController {
     public int checkSubmit(@RequestBody ExamStatTeamVO examStatTeamVO, HttpServletRequest request){
         return userExplanationService.checkSubmit(examStatTeamVO,request);
     }
+
+    // 제한시간 경과 시 완료 시간 업데이트
+    @PostMapping("/end_time_update_time")
+    public int endTimeUpdateTime(@RequestBody ExamStatVO examStatVO, HttpServletRequest request){
+        return userExplanationService.endTimeUpdateTime(examStatVO, request);
+    }
 }

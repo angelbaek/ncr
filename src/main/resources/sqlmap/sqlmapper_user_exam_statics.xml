@@ -52,4 +52,95 @@
         WHERE
             "STAT_ID" = #{stat_id}
     </select>
+
+    <!--선택한 훈련팀별 세부사항 가져오기-->
+    <select id="getExamResultTeam" resultType="ExamResultTeamVO">
+        SELECT
+            *
+        FROM
+            "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+            "TR_USER_GRP" = #{tr_user_grp} AND
+            "TR_NUM" = #{tr_num} AND
+            "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        ORDER BY "TR_EXAM_ID" ASC
+    </select>
+
+    <!--선택한 팀에 해당하는 매트릭스 스탯 가져오기-->
+    <select id="getMatrixStat" resultType="map">
+        SELECT
+            "MA_TACTICS_ID",
+            "MA_MATRIX_ID",
+            "CORRECT_ANSWER"
+        FROM
+            "TN_TRAIN_MATRIXSTAT"
+        WHERE
+            "TR_USER_GRP" = #{tr_user_grp} AND
+            "TR_NUM" = #{tr_num} AND
+            "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        ORDER BY "MA_MATRIX_ID" ASC
+    </select>
+
+    <!--선택한 팀에 해당하는 매트릭스, 전술단계 가져오기-->
+    <select id="getMiterAttackMatrix" resultType="map">
+        SELECT
+            "MA_TACTICS_ID",
+            "MA_MATRIX_ID"
+        FROM
+            "TC_MITERATTCK_MATRIX"
+        WHERE
+            "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        ORDER BY "MA_MATRIX_ID" ASC
+    </select>
+
+    <!--매트릭스 id, grp, num, grpid로 최대항수, 실제 항수 구하기-->
+    <select id="getTotalAnsCorrectTrue" resultType="map">
+        SELECT
+            count("STAT_ID") AS total,
+            (SELECT
+                count("STAT_ID")
+            FROM
+                "TN_TRAIN_MATRIXSTAT"
+            WHERE
+                "TR_USER_GRP" = #{tr_user_grp} AND
+                "TR_NUM" = #{tr_num} AND
+                "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+                "MA_MATRIX_ID" = #{ma_matrix_id} AND
+                "CORRECT_ANSWER" =1) AS real,
+            "MA_MATRIX_ID",
+            "MA_TACTICS_ID",
+            (SELECT
+                "MA_TACTICS_TECH"
+            FROM
+                "TC_MITERATTCK_MATRIX"
+            WHERE
+                "MA_MATRIX_ID" = #{ma_matrix_id}) AS MA_TACTICS_TECH,
+            (SELECT
+                "MA_TACTICS_MITIG"
+            FROM
+                "TC_MITERATTCK_MATRIX"
+            WHERE
+                "MA_MATRIX_ID" = #{ma_matrix_id}) AS MA_TACTICS_MITIG,
+            (SELECT
+                "MA_TACTICS_DESC"
+            FROM
+                "TC_MITERATTCK_TACTICS"
+            WHERE
+                "MA_TACTICS_ID" = #{ma_tactics_id}) AS MA_TACTICS_DESC,
+            (SELECT
+                "MA_TACTICS_NAME"
+            FROM
+                "TC_MITERATTCK_TACTICS"
+            WHERE
+                "MA_TACTICS_ID" = #{ma_tactics_id}) AS MA_TACTICS_NAME
+        FROM
+            "TN_TRAIN_MATRIXSTAT"
+        WHERE
+            "TR_USER_GRP" = #{tr_user_grp} AND
+            "TR_NUM" = #{tr_num} AND
+            "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+            "MA_MATRIX_ID" = #{ma_matrix_id}
+        GROUP BY
+            "MA_MATRIX_ID","MA_TACTICS_ID"
+    </select>
 </mapper>

@@ -37,4 +37,22 @@ public class UserStaticsController {
     public List<ExamResultVO> getUserExamStat(@RequestBody ExamResultVO examResultVO){
         return userStaticsService.selectExamResult(examResultVO);
     }
+
+    // 선택한 훈련팀별 세부사항 가져오기
+    @PostMapping("/static/get_exam_result_team")
+    public List<ExamStatTeamVO> getExamResultTeam(@RequestBody ExamResultTeamVO examResultTeamVO){
+        return userStaticsService.getExamResultTeam(examResultTeamVO);
+    }
+
+    // 선택한 팀에 해당하는 매트릭스 스탯 가져오기
+    @PostMapping("/static/get_matrix_stat")
+    public List<Map<String,Object>> getMatrixStat(@RequestBody MatrixStatVO matrixStatVO){
+        return userStaticsService.getMatrixStat(matrixStatVO);
+    }
+
+    // 선택한 팀에 해당하는 매트릭스, 전술단계 가져오기
+    @PostMapping("/static/get_matrix")
+    List<Map<String,Object>> getMiterAttackMatrix(@RequestBody MatrixStatVO matrixStatVO){
+        return userStaticsService.getMiterAttackMatrix(matrixStatVO);
+    }
 }

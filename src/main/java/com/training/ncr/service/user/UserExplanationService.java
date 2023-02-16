@@ -524,6 +524,8 @@ public class UserExplanationService {
         examStatTeamVO.setTr_user_grp(userVO.getTr_user_grp());
         examStatTeamVO.setTeam_cd(userVO.getTeam_cd());
 
+        System.out.println("팀코드:"+examStatTeamVO.getTeam_cd()+" 차시:"+examStatTeamVO.getTr_num()+" grp:"+examStatTeamVO.getTr_user_grp()+" grpid:"+examStatTeamVO.getTr_exam_grpid());
+
         System.out.println("기존 훈련팀 시작한 시간: "+userExplanationMapper.startTrainingGetTime(examStatTeamVO));
         String time = userExplanationMapper.startTrainingGetTime(examStatTeamVO);
         try{
@@ -629,5 +631,17 @@ public class UserExplanationService {
     // 전술단계 id 가져오기
     public Map<String,Object> getMaTacticsId(){
         return userExplanationMapper.getMaTacticsId();
+    }
+
+    // 제한시간 경과 시 완료 시간 업데이트
+    public int endTimeUpdateTime(ExamStatVO examStatVO,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        // 유저 id로 정보 가져오기
+        String userId = (String) session.getAttribute("USERID");
+        UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
+
+        examStatVO.setTr_user_grp(userVO.getTr_user_grp());
+        examStatVO.setTr_user_id(userVO.getTr_user_id());
+        return userExplanationMapper.endTimeUpdateTime(examStatVO);
     }
 }

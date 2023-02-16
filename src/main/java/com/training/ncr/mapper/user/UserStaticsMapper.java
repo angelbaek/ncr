@@ -28,4 +28,16 @@ public interface UserStaticsMapper {
 
     // ExamStat 테이블 stat_id로 유저 아이디 가져오기
     String getUserIdByExamStatId(int stat_id);
+
+    // 선택한 훈련팀별 세부사항 가져오기
+    List<ExamStatTeamVO> getExamResultTeam(ExamResultTeamVO examResultTeamVO);
+
+    // 선택한 팀에 해당하는 매트릭스 스탯 가져오기
+    List<Map<String,Object>> getMatrixStat(MatrixStatVO matrixStatVO);
+
+    // 선택한 팀에 해당하는 매트릭스, 전술단계 가져오기
+    List<Map<String,Object>> getMiterAttackMatrix(int tr_exam_grpid);
+
+    // 매트릭스 id, grp, num, grpid로 최대항수, 실제 항수 구하기
+    Map<String, Object> getTotalAnsCorrectTrue(MatrixStatVO matrixStatVO);
 }
