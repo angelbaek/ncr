@@ -164,4 +164,7 @@ public interface UserExplanationMapper {
     // 제한시간 경과 시 완료 시간 업데이트
     int endTimeUpdateTime(ExamStatVO examStatVO);
 
+    // 나의 끝난 시간이 있는지 조회
+    String checkMyEndTime(ExamStatVO examStatVO);
+
 }

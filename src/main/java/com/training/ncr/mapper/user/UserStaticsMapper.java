@@ -40,4 +40,7 @@ public interface UserStaticsMapper {
 
     // 매트릭스 id, grp, num, grpid로 최대항수, 실제 항수 구하기
     Map<String, Object> getTotalAnsCorrectTrue(MatrixStatVO matrixStatVO);
+
+    // 해당문제 기본 시간 가져오기
+    int getTotalTime(int tr_exam_grpid);
 }

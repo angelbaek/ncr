@@ -143,4 +143,14 @@
         GROUP BY
             "MA_MATRIX_ID","MA_TACTICS_ID"
     </select>
+
+    <!--해당문제 기본 시간 가져오기-->
+    <select id="getTotalTime" resultType="int">
+        SELECT
+            "TR_EXAM_TIME"
+        FROM
+            "TN_TRAIN_EXAMGRP"
+        WHERE
+            "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
 </mapper>

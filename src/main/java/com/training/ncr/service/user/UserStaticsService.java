@@ -92,4 +92,9 @@ public class UserStaticsService {
 
         return stringObjectMap;
     }
+
+    // 해당문제 기본 시간 가져오기
+    public int getTotalTime(int tr_exam_grpid){
+        return userStaticsMapper.getTotalTime(tr_exam_grpid);
+    }
 }

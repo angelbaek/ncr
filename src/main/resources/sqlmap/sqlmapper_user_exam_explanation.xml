@@ -841,8 +841,22 @@
         SET
             "END_TIME" = NOW()
         WHERE
+            "TR_USER_GRP" = #{tr_user_grp} AND
             "TR_USER_ID" = #{tr_user_id} AND
             "TR_NUM" = #{tr_num} AND
             "TR_EXAM_GRPID" = #{tr_exam_grpid}
     </update>
+
+    <!--나의 끝난 시간이 있는지 조회-->
+    <select id="checkMyEndTime" resultType="String">
+        SELECT
+            "END_TIME"
+        FROM
+            "TN_TRAIN_EXAMSTAT"
+        WHERE
+            "TR_USER_GRP" = #{tr_user_grp} AND
+            "TR_USER_ID" = #{tr_user_id} AND
+            "TR_NUM" = #{tr_num} AND
+            "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
 </mapper>

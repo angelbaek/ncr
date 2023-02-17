@@ -985,20 +985,35 @@ function startTrainingGetTime() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
+      console.log("결과값:" + response);
       var txt = "";
-      txt = response[0];
-      var traingHour = parseInt(txt.substring(0, 2));
-      var traingMin = parseInt(txt.substring(3, 5));
-      var traingSec = parseInt(txt.substring(6, 8));
+      txt = response.toString();
+      console.log("기본값:" + txt);
+      var traingHour = txt.substring(11, 13);
+      var traingMin = parseInt(txt.substring(14, 16));
+      var traingSec = parseInt(txt.substring(17, 19));
 
+      console.log("h:" + traingHour + "m:" + traingMin + "s:" + traingSec);
       // 현재 시각
       let now = new Date();
       // 날 계산
       var year = now.getFullYear() + now.getDay() + now.getDate(); // 날
-      var target = txt.substr(0, 4);
+      console.log("year:" + year);
+      console.log("txt:" + txt);
+      var target = parseInt(txt.substr(0, 4));
+      console.log("첫번째 target:" + target);
+      target += parseInt(txt.substring(6, 8));
+      console.log("두번째 target:" + target);
+      target += parseInt(txt.substring(8, 11));
+      console.log("머임 이거:" + txt.substring(8, 11));
+      console.log("세첫번째 target:" + target);
+      console.log("target:" + target);
       target = target - year; //여기까지
       console.log("날 지낫니?:" + target);
-
+      if (target != 0) {
+        time = 0;
+        return;
+      }
       var hours = now.getHours(); // 현재 시간
       console.log("시간 : ", hours);
 
@@ -1239,6 +1254,8 @@ function endTimeUpdateTime() {
       console.log(response);
       if (response == 1) {
         console.log("제한시간이 되어 시간 업데이트...");
+      } else if (response == 0) {
+        console.log("해당유저는 이미 종료함...");
       }
     },
   });

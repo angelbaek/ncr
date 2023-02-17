@@ -183,6 +183,8 @@
         clearInterval(x); //setInterval() 실행을 끝냄
         document.getElementById("demo").innerHTML = "제한 시간이 끝났습니다.";
         alert("제한 시간이 종료되었습니다.");
+        // 업데이트
+        endTimeUpdateTime();
         $(".back").css("display", "block");
         $(".common_exam_contents button").prop("disabled", true);
         $(".common_exam_contents button").css("backgroundColor", "gray");

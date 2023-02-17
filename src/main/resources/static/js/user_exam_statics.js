@@ -68,9 +68,11 @@ function getExamResultByNumAndType(num, type) {
         location.reload();
         return;
       }
+      var grpid = response[0].tr_exam_grpid;
       var id = response[0].tr_user_id;
       var htmlHead = "";
       var html = "<tr>";
+      var examTime = getTotalTime(grpid);
       if (id == undefined) {
         // 팀별 조회
         $(".static_title").text("훈련팀별 통계");
@@ -130,7 +132,9 @@ function getExamResultByNumAndType(num, type) {
             if (h == 0) {
               delayTime = m + "분";
             } else if (target != 0) {
-              delayTime = "시간 초과";
+              var h = parseInt(examTime / 3600); // 시
+              var m = parseInt((examTime - h * 3600) / 60); // 분
+              delayTime = h + "시간 " + m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
             }
@@ -156,6 +160,10 @@ function getExamResultByNumAndType(num, type) {
             var m = parseInt((result - h * 3600) / 60); // 분
             if (h == 0) {
               delayTime = m + "분";
+            } else if (target != 0) {
+              var h = parseInt(examTime / 3600); // 시
+              var m = parseInt((examTime - h * 3600) / 60); // 분
+              delayTime = h + "시간 " + m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
             }
@@ -240,20 +248,53 @@ function getExamResultByNumAndType(num, type) {
             if (h == 0) {
               delayTime = m + "분";
             } else if (target != 0) {
-              delayTime = "시간 초과";
+              var h = parseInt(examTime / 3600); // 시
+              var m = parseInt((examTime - h * 3600) / 60); // 분
+              delayTime = h + "시간 " + m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
             }
           } else {
+            // // 현재 시각
+            // let now = new Date();
+
+            // var year = now.getFullYear() + now.getDay() + now.getDate(); // 날
+            // var hours = now.getHours(); // 현재 시간
+
+            // var minutes = now.getMinutes(); // 현재 분
+
+            // var seconds = now.getSeconds(); // 현재 초
+
+            // var target = parseInt(startTime.substr(0, 4));
+            // console.log("중간찍기:" + target + "/" + year);
+            // console.log(startTime);
+            // console.log(startTime.substr(5, 2));
+            // console.log(startTime.substr(8, 2));
+            // target +=
+            //   parseInt(startTime.substr(5, 2)) +
+            //   parseInt(startTime.substr(8, 2));
+            // console.log("타겟게산결과:" + target);
+            // target = target - year;
             // 소요시간 계산 로직
             var endTime = targetEndTime.substr(0, 16); // 종료시간 변환
             // 시작시간
+            // 날 계산
+            var startY =
+              parseInt(startTime.substr(0, 4)) +
+              parseInt(startTime.substr(5, 2)) +
+              parseInt(startTime.substr(8, 2));
             var start = startTime.substr(11, 5);
             var startH = startTime.substr(11, 2);
             var startM = startTime.substr(14, 2);
             // 초로 변환
             var startF = startH * 3600 + startM * 60;
             // 종료시간
+            var endY =
+              parseInt(endTime.substr(0, 4)) +
+              parseInt(endTime.substr(5, 2)) +
+              parseInt(endTime.substr(8, 2));
+            var resultY = startY - endY;
+
             var end = endTime.substr(11, 5);
             var endH = endTime.substr(11, 2);
             var endM = endTime.substr(14, 2);
@@ -264,7 +305,11 @@ function getExamResultByNumAndType(num, type) {
 
             var h = parseInt(result / 3600); // 시
             var m = parseInt((result - h * 3600) / 60); // 분
-            if (h == 0) {
+            if (resultY != 0) {
+              var h = parseInt(examTime / 3600); // 시
+              var m = parseInt((examTime - h * 3600) / 60); // 분
+              delayTime = h + "시간 " + m + "분";
+            } else if (h == 0) {
               delayTime = m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
@@ -327,7 +372,21 @@ function getExamResultByNumAndType(num, type) {
     },
   });
 }
-
+// 해당문제 기본 시간 가져오기
+function getTotalTime(grpid) {
+  var time = 0;
+  $.ajax({
+    async: false,
+    url: "http://192.168.32.44:8080/user/static/get_time/" + grpid,
+    type: "GET",
+    dataType: "json",
+    contentType: "application/json",
+    success: function (response) {
+      time = response * 60;
+    },
+  });
+  return time;
+}
 // 선택한 훈련자 풀이현황 가져오기
 function getUserExamStat(statId, grp, num, grpId) {
   var name = $(".user_name_" + statId).text(); // 훈련자 이름
@@ -508,8 +567,19 @@ function getMatrixStat(grpid, grp, num) {
   });
 }
 
+function matrixOn() {
+  $(".matrix_title").css("display", "block");
+  $(".matrix_div").css("display", "block");
+}
+function matrixOff() {
+  $(".matrix_title").css("display", "none");
+  $(".matrix_div").css("display", "none");
+}
+
 // 선택한 훈련팀 매트릭스 가져오기
 function getMiterAttackMatrix(grpid, grp, num) {
+  $(".matrix_div").empty();
+  matrixOn();
   var htmlHead = "";
   var htmlBody = "";
   console.log(grpid);
@@ -538,9 +608,9 @@ function getMiterAttackMatrix(grpid, grp, num) {
           htmlHead =
             "<div class='test_" +
             response[i].MA_TACTICS_ID +
-            "'>" +
+            "'><div class='common_matrix_title'>" +
             response[i].ma_tactics_name +
-            "</div>";
+            "</div></div>";
           $(".matrix_div").append(htmlHead);
           htmlBody =
             "<div>" +

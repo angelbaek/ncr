@@ -529,7 +529,7 @@ public class UserExplanationService {
         System.out.println("기존 훈련팀 시작한 시간: "+userExplanationMapper.startTrainingGetTime(examStatTeamVO));
         String time = userExplanationMapper.startTrainingGetTime(examStatTeamVO);
         try{
-            List<String> subTime = Collections.singletonList(time.substring(11, 18));
+            List<String> subTime = Collections.singletonList(time);
             return subTime;
         }catch (NullPointerException n){
             System.out.println("첫 훈련이 시작되어 감소할 시간이 없습니다.");
@@ -642,6 +642,15 @@ public class UserExplanationService {
 
         examStatVO.setTr_user_grp(userVO.getTr_user_grp());
         examStatVO.setTr_user_id(userVO.getTr_user_id());
-        return userExplanationMapper.endTimeUpdateTime(examStatVO);
+        examStatVO.setTr_user_grp(userVO.getTr_user_grp());
+
+        //나의 종료시간이 있는지 체크하기 로직
+        String endTime = userExplanationMapper.checkMyEndTime(examStatVO);
+        System.out.println("해당 유저의 종료시간: "+endTime);
+        if(endTime==null){ // 종료시간이 없음
+            return userExplanationMapper.endTimeUpdateTime(examStatVO);
+        }else{
+            return 0;
+        }
     }
 }

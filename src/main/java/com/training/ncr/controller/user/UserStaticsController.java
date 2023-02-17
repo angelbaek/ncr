@@ -55,4 +55,10 @@ public class UserStaticsController {
     List<Map<String,Object>> getMiterAttackMatrix(@RequestBody MatrixStatVO matrixStatVO){
         return userStaticsService.getMiterAttackMatrix(matrixStatVO);
     }
+
+    // 해당문제 기본 시간 가져오기
+    @GetMapping("/static/get_time/{tr_exam_grpid}")
+    public int getTotalTime(@PathVariable int tr_exam_grpid){
+        return userStaticsService.getTotalTime(tr_exam_grpid);
+    }
 }
