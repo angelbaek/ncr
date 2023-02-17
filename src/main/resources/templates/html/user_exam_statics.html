@@ -58,6 +58,12 @@
             <option value="2">팀별</option>
           </select>
         </div>
+        <div>
+          <button class="ratate_btn" onclick="refresh()">
+            <div class="rotate_ic"><i class="fas fa-sync-alt"></i></div>
+            &nbspAuto Refresh
+          </button>
+        </div>
       </div>
       <!-- 훈련 통계 -->
       <div class="static_title">훈련통계</div>
@@ -82,7 +88,7 @@
       </div>
       <div class="matrix_title">MATRIX</div>
       <!-- 훈련팀 매트릭스 -->
-      <div class="matrix_div" style="margin: auto; margin-bottom: 50px"></div>
+      <div class="matrix_div" style="margin: auto"></div>
     </div>
   </body>
   <script
@@ -90,6 +96,9 @@
     integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"
   ></script>
+  <script>
+    $(".matrix_title").css("display", "flex");
+  </script>
   <script src="/static/js/common.js"></script>
   <script src="/js/common.js"></script>
   <script src="/static/js/user_exam_statics.js"></script>

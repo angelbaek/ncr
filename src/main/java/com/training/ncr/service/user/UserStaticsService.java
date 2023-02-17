@@ -30,12 +30,12 @@ public class UserStaticsService {
         int num = userStaticsVO.getNum();
 
         System.out.println("팀:"+type+"차시:"+num);
-        System.out.println(userStaticsMapper.selectUser(num));
+        System.out.println("테스트다:"+userStaticsVO.getTr_exam_grpid());
 
         if(type==1){ // 개인
-            return userStaticsMapper.selectUser(num);
+            return userStaticsMapper.selectUser(userStaticsVO);
         }else if(type==2){ // 팀
-            return userStaticsMapper.selectTeam(num);
+            return userStaticsMapper.selectTeam(userStaticsVO);
         }
         return null;
     }

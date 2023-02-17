@@ -7,8 +7,14 @@
             *
         FROM
             "TN_TRAIN_EXAMSTAT"
-        WHERE
-            "TR_NUM" = #{num}
+        <where>
+            <if test="tr_exam_grpid != 0">
+                AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+            </if>
+            <if test="num != 0">
+                AND "TR_NUM" = #{num}
+            </if>
+        </where>
     </select>
 
     <!--팀현황 조회하기-->
@@ -17,8 +23,14 @@
             *
         FROM
             "TN_TRAIN_EXAMSTAT_TEAM"
-        WHERE
-            "TR_NUM" = #{num}
+        <where>
+            <if test="tr_exam_grpid != 0">
+                AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+            </if>
+            <if test="num != 0">
+                AND "TR_NUM" = #{num}
+            </if>
+        </where>
     </select>
 
     <!--훈련자 기관명 가져오기-->
@@ -132,7 +144,13 @@
             FROM
                 "TC_MITERATTCK_TACTICS"
             WHERE
-                "MA_TACTICS_ID" = #{ma_tactics_id}) AS MA_TACTICS_NAME
+                "MA_TACTICS_ID" = #{ma_tactics_id}) AS MA_TACTICS_NAME,
+            (SELECT
+                "OBJECT_ID"
+            FROM
+                "TC_MITERATTCK_TACTICS"
+            WHERE
+                "MA_TACTICS_ID" = #{ma_tactics_id}) AS OBJECT_ID
         FROM
             "TN_TRAIN_MATRIXSTAT"
         WHERE
@@ -141,7 +159,8 @@
             "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
             "MA_MATRIX_ID" = #{ma_matrix_id}
         GROUP BY
-            "MA_MATRIX_ID","MA_TACTICS_ID"
+            "MA_MATRIX_ID", "MA_TACTICS_ID", OBJECT_ID
+        ORDER BY OBJECT_ID ASC
     </select>
 
     <!--해당문제 기본 시간 가져오기-->

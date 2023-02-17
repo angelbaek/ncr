@@ -8,4 +8,5 @@ import lombok.Setter;
 public class UserStaticsVO {
     int num; // 훈련차시
     int type; // 팀별,개인
+    int tr_exam_grpid; // if문 조건을 위한 추가
 }

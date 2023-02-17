@@ -15,10 +15,10 @@ import java.util.Map;
 public interface UserStaticsMapper {
 
     // 개인현황 조회하기
-    List<ExamStatVO> selectUser(int num);
+    List<ExamStatVO> selectUser(UserStaticsVO userStaticsVO);
 
     // 팀현황 조회하기
-    List<ExamStatTeamVO> selectTeam(int num);
+    List<ExamStatTeamVO> selectTeam(UserStaticsVO userStaticsVO);
 
     // 훈련자 기관명 가져오기
     UserVO selectUserOrgByUserId(String id);

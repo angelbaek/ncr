@@ -48,11 +48,18 @@ $("#select_type").on("change", function () {
 });
 
 // 차시, 유형으로 훈련현황 불러오기
-function getExamResultByNumAndType(num, type) {
+function getExamResultByNumAndType(num, type, grpId) {
+  console.log(grpId);
+  if (grpId == undefined) {
+    grpId = 0;
+  }
+  matrixOff();
   toggleStatic();
+  console.log(grpId);
   var jsonData = {
     num: num,
     type: type,
+    tr_exam_grpid: grpId,
   };
   $.ajax({
     async: false,
@@ -114,8 +121,17 @@ function getExamResultByNumAndType(num, type) {
 
             var seconds = now.getSeconds(); // 현재 초
 
-            var target = startTime.substr(0, 4);
+            var target = parseInt(startTime.substr(0, 4));
+            console.log("중간찍기:" + target + "/" + year);
+            console.log(startTime);
+            console.log(startTime.substr(5, 2));
+            console.log(startTime.substr(8, 2));
+            target +=
+              parseInt(startTime.substr(5, 2)) +
+              parseInt(startTime.substr(8, 2));
+            console.log("타겟게산결과:" + target);
             target = target - year;
+            console.log("최종게산결과:" + target);
             // 소요시간 계산 로직
             // 시작시간
             var start = startTime.substr(11, 5);
@@ -129,12 +145,12 @@ function getExamResultByNumAndType(num, type) {
 
             var h = parseInt(result / 3600); // 시
             var m = parseInt((result - h * 3600) / 60); // 분
-            if (h == 0) {
-              delayTime = m + "분";
-            } else if (target != 0) {
+            if (target != 0) {
               var h = parseInt(examTime / 3600); // 시
               var m = parseInt((examTime - h * 3600) / 60); // 분
               delayTime = h + "시간 " + m + "분";
+            } else if (h == 0) {
+              delayTime = m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
             }
@@ -255,26 +271,6 @@ function getExamResultByNumAndType(num, type) {
               delayTime = h + "시간 " + m + "분";
             }
           } else {
-            // // 현재 시각
-            // let now = new Date();
-
-            // var year = now.getFullYear() + now.getDay() + now.getDate(); // 날
-            // var hours = now.getHours(); // 현재 시간
-
-            // var minutes = now.getMinutes(); // 현재 분
-
-            // var seconds = now.getSeconds(); // 현재 초
-
-            // var target = parseInt(startTime.substr(0, 4));
-            // console.log("중간찍기:" + target + "/" + year);
-            // console.log(startTime);
-            // console.log(startTime.substr(5, 2));
-            // console.log(startTime.substr(8, 2));
-            // target +=
-            //   parseInt(startTime.substr(5, 2)) +
-            //   parseInt(startTime.substr(8, 2));
-            // console.log("타겟게산결과:" + target);
-            // target = target - year;
             // 소요시간 계산 로직
             var endTime = targetEndTime.substr(0, 16); // 종료시간 변환
             // 시작시간
@@ -326,7 +322,9 @@ function getExamResultByNumAndType(num, type) {
             submit = "제출";
           }
           html +=
-            "<td onclick='getUserExamStat(" +
+            "<td class-'" +
+            id +
+            "' onclick='getUserExamStat(" +
             statId +
             "," +
             grp +
@@ -389,6 +387,12 @@ function getTotalTime(grpid) {
 }
 // 선택한 훈련자 풀이현황 가져오기
 function getUserExamStat(statId, grp, num, grpId) {
+  $(".static_body_total tr td a").css("backgroundColor", "white");
+  $(".static_body_total tr td a").css("color", "blue");
+  $(".user_name_" + statId).css("backgroundColor", "#6777ef");
+  $(".user_name_" + statId).css("padding", "10px 15px");
+  $(".user_name_" + statId).css("color", "#fafbfc");
+  $(".user_name_" + statId).css("border-radius", "5px");
   var name = $(".user_name_" + statId).text(); // 훈련자 이름
   $(".static_detail_title").text(name + " 훈련자 세부사항");
   toggleDetail();
@@ -467,6 +471,12 @@ function getUserExamStat(statId, grp, num, grpId) {
 
 // 선택한 훈련팀별 세부사항 가져오기
 function getExamResultTeam(statId, num, grpId, grp) {
+  $(".static_body_total tr td a").css("backgroundColor", "white");
+  $(".static_body_total tr td a").css("color", "blue");
+  $(".team_name_" + statId).css("backgroundColor", "#6777ef");
+  $(".team_name_" + statId).css("padding", "10px 15px");
+  $(".team_name_" + statId).css("color", "#fafbfc");
+  $(".team_name_" + statId).css("border-radius", "5px");
   var name = $(".team_name_" + statId).text(); // 선택한 팀 이름
   $(".static_detail_title").text(name + " 팀 훈련 세부사항");
   toggleDetail();
@@ -569,7 +579,7 @@ function getMatrixStat(grpid, grp, num) {
 
 function matrixOn() {
   $(".matrix_title").css("display", "block");
-  $(".matrix_div").css("display", "block");
+  $(".matrix_div").css("display", "flex");
 }
 function matrixOff() {
   $(".matrix_title").css("display", "none");
@@ -602,6 +612,7 @@ function getMiterAttackMatrix(grpid, grp, num) {
         if (response[i] == null) {
           continue;
         } else if (empty != response[i].MA_TACTICS_ID) {
+          var kor = extractKorean(response[i].ma_tactics_name);
           empty = response[i].MA_TACTICS_ID;
           console.log(empty);
           console.log("전술단계 뿌려주기 로직 실행");
@@ -609,11 +620,11 @@ function getMiterAttackMatrix(grpid, grp, num) {
             "<div class='test_" +
             response[i].MA_TACTICS_ID +
             "'><div class='common_matrix_title'>" +
-            response[i].ma_tactics_name +
+            kor +
             "</div></div>";
           $(".matrix_div").append(htmlHead);
           htmlBody =
-            "<div>" +
+            "<div class='common_tactics'>" +
             response[i].ma_tactics_tech +
             "(" +
             response[i].real +
@@ -625,7 +636,7 @@ function getMiterAttackMatrix(grpid, grp, num) {
         }
         if (response[i] != null) {
           htmlBody =
-            "<div>" +
+            "<div class='common_tactics_nth'>" +
             response[i].ma_tactics_tech +
             "(" +
             response[i].real +
@@ -639,7 +650,17 @@ function getMiterAttackMatrix(grpid, grp, num) {
     },
   });
 }
+// 한글만 추출
+function extractKorean(str) {
+  // 정규식 패턴으로 한글만 추출
+  const koreanPattern = /[ㄱ-ㅎㅏ-ㅣ가-힣]+/g;
 
+  // 정규식에 매칭되는 부분을 배열로 반환
+  const matches = str.match(koreanPattern);
+
+  // 배열의 모든 요소를 합쳐서 반환
+  return matches ? matches.join("") : "";
+}
 // 훈련자 기관명 가져오기
 function selectUserOrgByUserId(id) {
   var org = 0;
@@ -672,4 +693,51 @@ function toggleStatic() {
 function toggleDetail() {
   $(".static_detail_title").css("display", "block");
   $(".user_body_status").css("display", "table");
+}
+
+// 훈련중인 팀별, 개인별 현황 보여주기
+var turn = 1;
+var bg = 0;
+var on = false;
+function refresh() {
+  // 버튼 로직
+  if (on == false) {
+    on = true;
+  } else if (on == true) {
+    on = false;
+  }
+  console.log(on);
+  // 배경 css
+  bg++;
+  if (bg % 2 != 0) {
+    $(".ratate_btn").css("backgroundColor", "blue");
+    $(".ratate_btn").css("box-shadow", "none");
+    $(".ratate_btn").css("margin-left", "5px");
+    $(".ratate_btn").css("margin-top", "5px");
+    $(".user_num_div").css("display", "none");
+  } else {
+    $(".ratate_btn").css("backgroundColor", "#6777ef");
+    $(".ratate_btn").css("box-shadow", "3px 3px 3px gray");
+    $(".ratate_btn").css("margin-left", "0px");
+    $(".ratate_btn").css("margin-top", "0px");
+    $(".user_num_div").css("display", "inline-block");
+  }
+  // 활성화 여부
+  if (on == true) {
+    console.log("활성화댐");
+    refreshAuto();
+  }
+}
+
+// 재귀함수
+function refreshAuto() {
+  console.log("재귀함수 실행...");
+  $(".rotate_ic").css("transform", "rotate(" + turn + "turn)");
+  turn++;
+  if (on) {
+    setTimeout(function () {
+      refreshAuto();
+    }, 1500);
+  } else {
+  }
 }
