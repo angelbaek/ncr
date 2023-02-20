@@ -97,4 +97,14 @@ public class UserStaticsService {
     public int getTotalTime(int tr_exam_grpid){
         return userStaticsMapper.getTotalTime(tr_exam_grpid);
     }
+
+    // 활성화된 문제 그룹 가져오기
+    public int getGrpidByMgmtStateOn(){
+        return userStaticsMapper.getGrpidByMgmtStateOn();
+    }
+
+    // 훈련팀 기관명 가져오기
+    public List<String> getTeamOrg(String team_cd){
+        return userStaticsMapper.getTeamOrg(team_cd);
+    }
 }

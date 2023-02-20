@@ -61,4 +61,16 @@ public class UserStaticsController {
     public int getTotalTime(@PathVariable int tr_exam_grpid){
         return userStaticsService.getTotalTime(tr_exam_grpid);
     }
+
+    // 활성화된 문제 그룹 가져오기
+    @GetMapping("/static/get_grpid")
+    public int getGrpidByMgmtStateOn(){
+        return userStaticsService.getGrpidByMgmtStateOn();
+    }
+
+    // 훈련팀 기관명 가져오기
+    @GetMapping("/static/get_org/{team_cd}")
+    public List<String> getTeamOrg(@PathVariable String team_cd){
+        return userStaticsService.getTeamOrg(team_cd);
+    }
 }

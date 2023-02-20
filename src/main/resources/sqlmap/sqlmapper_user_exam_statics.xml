@@ -172,4 +172,29 @@
         WHERE
             "TR_EXAM_GRPID" = #{tr_exam_grpid}
     </select>
+
+    <!--활성화된 문제 그룹 가져오기-->
+    <select id="getGrpidByMgmtStateOn" resultType="int">
+    SELECT
+        "TR_EXAM_GRPID"
+    FROM
+        "TN_TRAIN_EXAMGRP"
+    WHERE
+        "TR_EXAM_GRPNAME" = (SELECT
+            "TR_EXAM_GRP"
+        FROM
+            "TN_TRAIN_MGMT"
+        WHERE
+            "TR_MGMT_STATE"=1)
+    </select>
+
+    <!--훈련팀 기관명 가져오기-->
+    <select id="getTeamOrg" resultType="String">
+        SELECT
+            "TR_USER_ORG"
+        FROM
+            "TN_USER"
+        WHERE
+            "TEAM_CD" = #{team_cd}
+    </select>
 </mapper>

@@ -2,6 +2,10 @@
 // sessionManagementForUser();
 // 해당하는 매트릭스id를 저장할 배열
 let matrixArray = new Array();
+// 훈련중인 팀별, 개인별 현황 보여주기
+var turn = 1;
+var bg = 0;
+var on = false;
 // select 감지
 // 차시 감지
 $("#select_num").on("change", function () {
@@ -49,10 +53,10 @@ $("#select_type").on("change", function () {
 
 // 차시, 유형으로 훈련현황 불러오기
 function getExamResultByNumAndType(num, type, grpId) {
-  console.log(grpId);
-  if (grpId == undefined) {
+  if (on == false) {
     grpId = 0;
   }
+  console.log(grpId);
   matrixOff();
   toggleStatic();
   console.log(grpId);
@@ -89,6 +93,7 @@ function getExamResultByNumAndType(num, type, grpId) {
         console.log("팀별 조회...");
         for (var i = 0; i < response.length; i++) {
           var team = response[i].team_cd; // 팀코드
+          var targetOrg = getTeamOrg(team);
           var org; // 기관명
           var num = response[i].tr_num; // 차시
           var grpId = response[i].tr_exam_grpid; // grp id
@@ -197,7 +202,9 @@ function getExamResultByNumAndType(num, type, grpId) {
             response[i].stat_id +
             "'>" +
             team +
-            "</a></td><td>기관명</td><td>" +
+            "</a></td><td>" +
+            targetOrg +
+            "</td><td>" +
             num +
             "</td><td>" +
             resultPoint +
@@ -385,6 +392,22 @@ function getTotalTime(grpid) {
   });
   return time;
 }
+
+// 활성화된 grpid 가져오기
+function getGrpid() {
+  var grpid = 0;
+  $.ajax({
+    async: false,
+    url: "http://192.168.32.44:8080/user/static/get_grpid",
+    type: "GET",
+    dataType: "json",
+    contentType: "application/json",
+    success: function (response) {
+      grpid = response;
+    },
+  });
+  return grpid;
+}
 // 선택한 훈련자 풀이현황 가져오기
 function getUserExamStat(statId, grp, num, grpId) {
   $(".static_body_total tr td a").css("backgroundColor", "white");
@@ -394,7 +417,7 @@ function getUserExamStat(statId, grp, num, grpId) {
   $(".user_name_" + statId).css("color", "#fafbfc");
   $(".user_name_" + statId).css("border-radius", "5px");
   var name = $(".user_name_" + statId).text(); // 훈련자 이름
-  $(".static_detail_title").text(name + " 훈련자 세부사항");
+  $(".static_detail_title").text("훈련자 세부사항");
   toggleDetail();
   $(".user_body_total").empty();
   let htmlBody = "<tr>";
@@ -478,7 +501,7 @@ function getExamResultTeam(statId, num, grpId, grp) {
   $(".team_name_" + statId).css("color", "#fafbfc");
   $(".team_name_" + statId).css("border-radius", "5px");
   var name = $(".team_name_" + statId).text(); // 선택한 팀 이름
-  $(".static_detail_title").text(name + " 팀 훈련 세부사항");
+  $(".static_detail_title").text("팀 훈련 세부사항");
   toggleDetail();
   $(".user_body_total").empty();
   let htmlBody = "<tr>";
@@ -695,11 +718,12 @@ function toggleDetail() {
   $(".user_body_status").css("display", "table");
 }
 
-// 훈련중인 팀별, 개인별 현황 보여주기
-var turn = 1;
-var bg = 0;
-var on = false;
 function refresh() {
+  var type = $("select[name=type_check] option:selected").val();
+  if (type == 0) {
+    alert("유형을 선택 후 사용하세요");
+    return;
+  }
   // 버튼 로직
   if (on == false) {
     on = true;
@@ -731,13 +755,47 @@ function refresh() {
 
 // 재귀함수
 function refreshAuto() {
+  var type = $("select[name=type_check] option:selected").val();
+  if (type == 0) {
+    alert("유형을 선택 후 사용하세요");
+    return;
+  }
   console.log("재귀함수 실행...");
   $(".rotate_ic").css("transform", "rotate(" + turn + "turn)");
   turn++;
+  console.log("on의 상태:" + on);
   if (on) {
     setTimeout(function () {
+      grpId = getGrpid();
+      console.log("타입:" + type + " grpId:" + grpId);
+      getExamResultByNumAndType(0, type, grpId);
       refreshAuto();
     }, 1500);
   } else {
   }
+}
+
+// 팀 org 가져오기
+function getTeamOrg(team_cd) {
+  console.log(team_cd);
+  let returnVal = "";
+  $.ajax({
+    async: false,
+    url: "http://192.168.32.44:8080/user/static/get_org/" + team_cd,
+    type: "GET",
+    dataType: "json",
+    contentType: "application/json",
+    success: function (response) {
+      console.log(response);
+      if (response.length > 1) {
+        if (response[0] != response[1]) {
+          console.log("서로 다른 이름");
+          returnVal = "상이";
+        }
+      } else {
+        returnVal = response[0];
+      }
+    },
+  });
+  return returnVal;
 }

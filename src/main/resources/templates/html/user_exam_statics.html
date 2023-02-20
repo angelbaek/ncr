@@ -26,8 +26,8 @@
         <div class="common_left_menubar" id="now_place">
           <a href="user_group_setting">그룹 설정</a>
         </div>
-        <div class="common_left_menubar" id="now_position">문제 풀이</div>
-        <div class="common_left_menubar">훈련 통계</div>
+        <div class="common_left_menubar">문제 풀이</div>
+        <div class="common_left_menubar" id="now_position">훈련 통계</div>
       </div>
     </div>
     <div class="top_user_info">
@@ -58,7 +58,7 @@
             <option value="2">팀별</option>
           </select>
         </div>
-        <div>
+        <div class="rotate_div">
           <button class="ratate_btn" onclick="refresh()">
             <div class="rotate_ic"><i class="fas fa-sync-alt"></i></div>
             &nbspAuto Refresh
@@ -109,5 +109,16 @@
     $(".static_detail_title").css("display", "none");
     $(".user_body_status").css("display", "none");
     matrixOff();
+
+    $(window).scroll(function () {
+      var height = $(window).scrollTop();
+      if (height > 0) {
+        $(".rotate_div").css("position", "absolute");
+        $(".rotate_div").css("top", "90px");
+      } else {
+        $(".rotate_div").css("position", "fixed");
+        $(".rotate_div").css("top", "160px");
+      }
+    });
   </script>
 </html>

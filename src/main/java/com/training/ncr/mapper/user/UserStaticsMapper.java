@@ -43,4 +43,10 @@ public interface UserStaticsMapper {
 
     // 해당문제 기본 시간 가져오기
     int getTotalTime(int tr_exam_grpid);
+
+    // 활성화된 문제 그룹 가져오기
+    int getGrpidByMgmtStateOn();
+
+    // 훈련팀 기관명 가져오기
+    List<String> getTeamOrg(String team_cd);
 }

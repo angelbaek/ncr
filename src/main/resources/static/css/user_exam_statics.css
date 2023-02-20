@@ -172,9 +172,9 @@ tr td {
   overflow-wrap: break-word;
 }
 
-a {
+/* a {
   color: blue;
-}
+} */
 a:hover {
   cursor: pointer;
   text-decoration: underline;
@@ -232,6 +232,10 @@ a:hover {
   overflow-wrap: break-word;
 }
 .matrix_div .common_tactics {
+  padding-top: 10px;
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
   border-bottom: 1px solid gray;
 }
 .common_tactics_nth {
@@ -267,8 +271,30 @@ a:hover {
   color: rgb(108, 117, 125);
   font-weight: bold;
 }
+.rotate_div {
+  transition: none;
+  position: fixed;
+  top: 160px;
+  right: 50px;
+  transform: translate(-50%, -50%);
+}
 
 .ratate_btn {
   width: auto;
   box-shadow: 3px 3px 3px gray;
+}
+
+#now_position {
+  color: blue;
+}
+
+.common_left_menubar {
+  color: #34395e;
+}
+.common_left_menubar:hover {
+  text-decoration: underline;
+}
+
+.show_static_body_total a {
+  color: blue;
 }
