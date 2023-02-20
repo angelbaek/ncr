@@ -4,6 +4,7 @@ import com.training.ncr.service.user.UserExplanationService;
 import com.training.ncr.service.user.UserStaticsService;
 import com.training.ncr.vo.UserVO;
 import com.training.ncr.vo.admin.ExamHintVO;
+import com.training.ncr.vo.admin.MatrixVO;
 import com.training.ncr.vo.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -72,5 +73,11 @@ public class UserStaticsController {
     @GetMapping("/static/get_org/{team_cd}")
     public List<String> getTeamOrg(@PathVariable String team_cd){
         return userStaticsService.getTeamOrg(team_cd);
+    }
+
+    // 선택한 매트릭스 내용 가져오기
+    @PostMapping("/get_tech_and_mit")
+    public List<Map<String,String>> popUp(@RequestBody MatrixVO matrixVO){
+        return userStaticsService.popUp(matrixVO);
     }
 }

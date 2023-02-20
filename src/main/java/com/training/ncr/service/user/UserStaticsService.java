@@ -6,7 +6,9 @@ import com.training.ncr.vo.UserVO;
 import com.training.ncr.vo.admin.ExamGrpVO;
 import com.training.ncr.vo.admin.ExamHintVO;
 import com.training.ncr.vo.admin.ExamVO;
+import com.training.ncr.vo.admin.MatrixVO;
 import com.training.ncr.vo.user.*;
+import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -100,11 +102,25 @@ public class UserStaticsService {
 
     // 활성화된 문제 그룹 가져오기
     public int getGrpidByMgmtStateOn(){
-        return userStaticsMapper.getGrpidByMgmtStateOn();
+        try{
+            return userStaticsMapper.getGrpidByMgmtStateOn();
+        }catch (BindingException e){
+         return 0;
+        }
     }
 
     // 훈련팀 기관명 가져오기
     public List<String> getTeamOrg(String team_cd){
         return userStaticsMapper.getTeamOrg(team_cd);
+    }
+
+    // 선택한 매트릭스 내용 가져오기
+    public List<Map<String,String>> popUp(MatrixVO matrixVO){
+        System.out.println(matrixVO.getMa_matrix_id());
+        System.out.println(matrixVO.getMa_tactics_id());
+
+        System.out.println(userStaticsMapper.popUp(matrixVO).get(0).get("MA_TACTICS_TECH"));
+        System.out.println(userStaticsMapper.popUp(matrixVO).get(0).get("MA_TACTICS_MITIG"));
+        return userStaticsMapper.popUp(matrixVO);
     }
 }

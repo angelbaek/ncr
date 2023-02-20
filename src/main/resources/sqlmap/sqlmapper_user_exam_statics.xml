@@ -197,4 +197,16 @@
         WHERE
             "TEAM_CD" = #{team_cd}
     </select>
+
+    <!--선택한 매트릭스 내용 가져오기-->
+    <select id="popUp" resultType="map">
+        SELECT
+            "MA_TACTICS_TECH",
+            "MA_TACTICS_MITIG"
+        FROM
+            "TC_MITERATTCK_MATRIX"
+        WHERE
+            "MA_MATRIX_ID" = #{ma_matrix_id} AND
+            "MA_TACTICS_ID" = #{ma_tactics_id}
+    </select>
 </mapper>

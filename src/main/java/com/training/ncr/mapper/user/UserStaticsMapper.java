@@ -4,6 +4,7 @@ import com.training.ncr.vo.UserVO;
 import com.training.ncr.vo.admin.ExamGrpVO;
 import com.training.ncr.vo.admin.ExamHintVO;
 import com.training.ncr.vo.admin.ExamVO;
+import com.training.ncr.vo.admin.MatrixVO;
 import com.training.ncr.vo.user.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,4 +50,7 @@ public interface UserStaticsMapper {
 
     // 훈련팀 기관명 가져오기
     List<String> getTeamOrg(String team_cd);
+
+    // 선택한 매트릭스 내용 가져오기
+    List<Map<String,String>> popUp(MatrixVO matrixVO);
 }

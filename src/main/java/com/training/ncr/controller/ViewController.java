@@ -12,33 +12,33 @@ public class ViewController {
 
     @GetMapping(value = {"/user_group_setting"})
     public String userGroup1(){
-        return "/html/user_group_setting";
+        return "html/user_group_setting";
     }
 
 
     @GetMapping(value = {"/admin_training"})
     public String admin(){
-        return "/html/admin_training";
+        return "html/admin_training";
     }
 
     @GetMapping(value = {"/join"})
     public String join(){
-        return "/html/join";
+        return "html/join";
     }
 
     @GetMapping(value = {"/","/login"})
     public String login(){
-        return "/html/login";
+        return "html/login";
     }
 
     @GetMapping(value = {"/admin_exam_group"})
     public String adminExamGroup(){
-        return "/html/admin_exam_group";
+        return "html/admin_exam_group";
     }
 
     @GetMapping(value = {"/admin_exam_management"})
     public String adminExam(){
-        return "/html/admin_exam_management";
+        return "html/admin_exam_management";
     }
 
     @GetMapping(value = {"admin_exam_explanation"})

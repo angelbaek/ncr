@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <!-- test css -->
+  <link rel="stylesheet" href="/static/css/common.css" />
+  <link rel="stylesheet" href="/static/css/admin_exam_result.css" />
+  <!-- common css -->
+  <link rel="stylesheet" href="/css/common.css" />
+  <link rel="stylesheet" href="/css/admin_exam_result.css" />
+  <!-- font awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+  />
+  <body>
+    <div class="left_nav">
+      <div class="nav_title">
+        <a href="/">국가기간망<br />침투대응훈련</a>
+      </div>
+      <div class="nav_contents">
+        <div class="common_left_menubar">
+          <a href="admin_training" id="only_css">훈련 관리</a>
+        </div>
+        <div
+          class="common_left_menubar"
+          id="left_menubar"
+          onclick="dropdownMenu()"
+        >
+          문제 관리
+          <i class="fas fa-caret-down" id="dropbox_ic"></i>
+          <ul class="dropdown">
+            <li><a href="admin_exam_group">문제 그룹</a></li>
+            <li>
+              <a class="exam_manage_css" href="admin_exam_management"
+                >문항 관리</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="common_left_menubar" id="only_css">
+          <a href="admin_exam_explanation">문제 풀이</a>
+        </div>
+        <div class="common_left_menubar" id="now_position">결과 보기</div>
+      </div>
+    </div>
+    <div class="top_user_info">
+      <div class="contents_title">결과 보기</div>
+      <div class="top_user_info_div" onclick="showLogOutBtn()">
+        <img src="/public/images/avatar-4.png" alt="user" />
+        <div class="userName">User Name</div>
+        <i class="fas fa-caret-down" id="logout"></i>
+        <div class="logout_btn" onclick="logOut()">로그아웃</div>
+      </div>
+    </div>
+    <!-- 훈련통계 -->
+    <div class="contents">
+      <div class="user_choice">
+        <div class="user_num_div">
+          <p>차시</p>
+          <select name="num_check" id="select_num">
+            <option value="0">직접 선택</option>
+            <option value="1">1차시</option>
+            <option value="2">2차시</option>
+          </select>
+        </div>
+        <div class="user_type_div">
+          <p>유형</p>
+          <select name="type_check" id="select_type">
+            <option value="0">직접 선택</option>
+            <option value="1">개인별</option>
+            <option value="2">팀별</option>
+          </select>
+        </div>
+        <div class="rotate_div">
+          <button class="ratate_btn" onclick="refresh()">
+            <div class="rotate_ic"><i class="fas fa-sync-alt"></i></div>
+            &nbspAuto Refresh
+          </button>
+        </div>
+      </div>
+      <!-- 훈련 통계 -->
+      <div class="static_title">훈련통계</div>
+      <table class="show_static_body_total">
+        <thead class="static_head_total"></thead>
+        <tbody class="static_body_total"></tbody>
+      </table>
+      <!-- 훈련자 세부사항 -->
+      <div class="static_detail_title">훈련 세부사항</div>
+      <!-- <div
+        style="
+          max-width: 100%;
+          overflow-x: auto;
+          padding-left: 80px;
+          padding-right: 80px;
+        "
+      > -->
+      <div>
+        <table class="user_body_status">
+          <tbody class="user_body_total"></tbody>
+        </table>
+      </div>
+      <div class="matrix_title">MATRIX</div>
+      <!-- 훈련팀 매트릭스 -->
+      <div class="matrix_div" style="margin: auto"></div>
+      <!-- 선택한 매트릭스 내용 -->
+      <div class="matrix_mit_tech">
+        <div class="common_css_title">TECH</div>
+        <div class="title"></div>
+        <div class="common_css_title">MITIG</div>
+        <div class="contents"></div>
+        <button onclick="togglePopUpMat()">확인</button>
+      </div>
+    </div>
+    <!-- 백그라운드 -->
+    <div class="back"></div>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.6.3.js"
+    integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    $(".matrix_title").css("display", "flex");
+  </script>
+  <script src="/static/js/common.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/static/js/admin_exam_result.js"></script>
+  <script src="/js/admin_exam_result.js"></script>
+  <script>
+    $(".back").css("display", "none");
+    $(".static_title").css("display", "none");
+    $(".show_static_body_total").css("display", "none");
+    $(".static_detail_title").css("display", "none");
+    $(".user_body_status").css("display", "none");
+    $(".matrix_mit_tech").css("display", "none");
+    matrixOff();
+
+    $(window).scroll(function () {
+      var height = $(window).scrollTop();
+      if (height > 0) {
+        $(".rotate_div").css("position", "absolute");
+        $(".rotate_div").css("top", "90px");
+      } else {
+        $(".rotate_div").css("position", "fixed");
+        $(".rotate_div").css("top", "160px");
+      }
+    });
+  </script>
+</html>
