@@ -1,5 +1,5 @@
 // 세션 가져오기
-// sessionManagementForUser();
+sessionManagementForUser();
 // 해당하는 매트릭스id를 저장할 배열
 let matrixArray = new Array();
 // 훈련중인 팀별, 개인별 현황 보여주기
@@ -792,6 +792,8 @@ function getTeamOrg(team_cd) {
           console.log("서로 다른 이름");
           returnVal = "상이";
         }
+      } else if (response[0] == undefined) {
+        returnVal = "미입력";
       } else {
         returnVal = response[0];
       }

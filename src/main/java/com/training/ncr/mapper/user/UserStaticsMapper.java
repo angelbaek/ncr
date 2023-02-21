@@ -53,4 +53,13 @@ public interface UserStaticsMapper {
 
     // 선택한 매트릭스 내용 가져오기
     List<Map<String,String>> popUp(MatrixVO matrixVO);
+
+    // 정답으로 바꿀 문제의 배점 가져오기
+    int getPointByExamId(int tr_exam_id);
+
+    // 훈련팀별 풀이 현황 정보 update
+    int updateExamStatTeam(Map<String,Object> map);
+    int updateExamResultTeam(Map<String,Object> map);
+
+    int updateMatrixStat(Map<String, Object> map);
 }

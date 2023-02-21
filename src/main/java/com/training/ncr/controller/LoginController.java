@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 로그인 처리를 위한 컨트롤러
@@ -28,6 +29,7 @@ public class LoginController {
         if (loginService.loginAdmin(loginVO).size() != 0){ // 관리자 계정이다
             HttpSession session = request.getSession();
             session.setAttribute("ADMIN",loginService.loginAdmin(loginVO));
+            session.setAttribute("ADMINID", id);
             System.out.println("ID: "+id+" 관리자 로그인...");
             return 1;
         } else if (loginService.login(loginVO).size() != 0) { // 일반 사용자다
@@ -69,5 +71,13 @@ public class LoginController {
             return 1;
         }
         return 0;
+    }
+
+    @GetMapping("/get_user_teamcode_view")
+    public List<String> getUserTeamcodeView(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String id = (String) session.getAttribute("USERID");
+        System.out.println("아이디:"+id);
+        return loginService.getUserTeamcodeView(id);
     }
 }

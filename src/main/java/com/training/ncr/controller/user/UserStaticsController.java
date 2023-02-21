@@ -80,4 +80,10 @@ public class UserStaticsController {
     public List<Map<String,String>> popUp(@RequestBody MatrixVO matrixVO){
         return userStaticsService.popUp(matrixVO);
     }
+
+    // 오답 정답으로 변환
+    @PostMapping("/static/false_change_true")
+    public int falseToTrue(@RequestBody Map<String,Object> map){
+        return userStaticsService.falseToTrue(map);
+    }
 }

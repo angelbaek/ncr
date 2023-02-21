@@ -101,6 +101,7 @@ function userGroupSave() {
       if (response == 1) {
         alert("훈련준비 상태가 변경되었습니다");
         $("#team_code").text(team_cd);
+        location.reload();
       } else if (response == 0) {
         alert("해당팀은 인원이 마감되었습니다");
       }

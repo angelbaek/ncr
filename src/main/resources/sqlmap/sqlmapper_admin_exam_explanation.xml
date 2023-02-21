@@ -29,5 +29,651 @@
         WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid} AND "TR_EXAM_ID" = #{tr_exam_id}
     </select>
 
+    <!--나의 id로 팀코드 구하기-->
+    <select id="getTeamcodeByUserid" resultType="String">
+        SELECT
+        "TEAM_CD"
+        FROM
+        "TN_USER"
+        WHERE
+        "TR_USER_ID" = #{id}
+    </select>
 
+    <!--첫 훈련팀별 풀이현황 db insert-->
+    <insert id="insertExamstatTeam">
+        INSERT INTO
+        "TN_TRAIN_EXAMSTAT_TEAM"
+        (
+        "TR_USER_GRP",
+        "TEAM_CD",
+        "TR_NUM",
+        "TR_EXAM_GRPID",
+        "START_TIME"
+        )
+        VALUES
+        (
+        #{tr_user_grp},
+        #{team_cd},
+        #{tr_num},
+        #{tr_exam_grpid},
+        NOW()
+        )
+    </insert>
+
+    <!--훈련팀별 풀이현황에 내가 있는지 확인하기-->
+    <select id="selectByTeamcd" resultType="ExamStatTeamVO">
+        SELECT
+        "STAT_ID"
+        FROM
+        "TN_TRAIN_EXAMSTAT_TEAM"
+        WHERE
+        "TEAM_CD" = #{team_cd}
+    </select>
+
+
+    <!--첫 풀이 훈련팀별 상세정보 db insert를 하기위한 check 팀별 db가 있는지-->
+    <select id="checkExamResultTeamVO" resultType="ExamResultTeamVO">
+        SELECT
+        "STAT_ID"
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+        "TR_EXAM_ID" = #{tr_exam_id}
+    </select>
+
+    <!--첫 풀이 훈련팀별 상세정보 db insert-->
+    <insert id="insertTrainExamResultTeam">
+        INSERT INTO "TN_TRAIN_EXAMRESULT_TEAM"
+        (
+        "TR_USER_GRP",
+        "TEAM_CD",
+        "TR_NUM",
+        "TR_EXAM_GRPID",
+        "TR_EXAM_ID"
+        )
+        VALUES
+        (
+        #{tr_user_grp},
+        #{team_cd},
+        #{tr_num},
+        #{tr_exam_grpid},
+        #{tr_exam_id}
+        )
+    </insert>
+
+    <!--나의 아이디로 나의 정보 가져오기-->
+    <select id="getMyInfoByUserId" resultType="UserVO">
+        SELECT
+        *
+        FROM
+        "TN_USER"
+        WHERE
+        "TR_USER_ID" = #{tr_user_id}
+    </select>
+
+    <!--해당하는 문제 답안,배점 가져오기-->
+    <select id="getExamAnsAndPoint" resultType="ExamVO">
+        SELECT
+        "TR_EXAM_ANS",
+        "TR_EXAM_POINT"
+        FROM   "TN_TRAIN_EXAM"
+        WHERE "TR_EXAM_ID" = #{tr_exam_id} AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <!-- 문제 그룹정보 가져오기-->
+    <select id="getExamGrpVO" resultType="ExamGrpVO">
+        SELECT
+        *
+        FROM
+        "TN_TRAIN_EXAMGRP"
+        WHERE
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <!--정답 입력횟수 남아있는지 가져오기-->
+    <select id="checkCntTryAns" resultType="ExamResultTeamVO">
+        SELECT
+        "CNT_TRY_ANS"
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp}
+        AND "TEAM_CD" = #{team_cd}
+        AND "TR_NUM" = #{tr_num}
+        AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+    </select>
+
+    <!--해당 힌트 가져오기-->
+    <select id="getHint" resultType="ExamHintVO">
+        SELECT
+        *
+        FROM
+        "TN_TRAIN_EXAMHINT"
+        WHERE
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+        "TR_EXAM_ID" = #{tr_exam_id}
+    </select>
+
+    <!--힌트 사용여부 check-->
+    <select id="checkHintUsing" resultType="int">
+        SELECT
+        "HINT_USE"
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp}
+        AND "TEAM_CD" = #{team_cd}
+        AND "TR_NUM" = #{tr_num}
+        AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+    </select>
+
+    <!--힌트 첫 사용 update (훈련팀별)-->
+    <update id="firstHintUsingTeam">
+        UPDATE "TN_TRAIN_EXAMRESULT_TEAM"
+        SET
+        "HINT_USE" = 1
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp}
+        AND "TEAM_CD" = #{team_cd}
+        AND "TR_NUM" = #{tr_num}
+        AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--문제그룹id로 정보 가져오기 (2차 풀이여부, 2차 풀이 감점, 힌트감점)-->
+    <select id="getExamGrpInfo" resultType="ExamGrpVO">
+        SELECT
+        *
+        FROM
+        "TN_TRAIN_EXAMGRP"
+        WHERE
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+    <!--문제id로 정보 가져오기(정답, 배점)-->
+    <select id="getExamInfo" resultType="ExamVO">
+        SELECT
+        "TR_EXAM_ANS",
+        "TR_EXAM_POINT"
+        FROM
+        "TN_TRAIN_EXAM"
+        WHERE
+        "TR_EXAM_ID" = #{tr_exam_id}
+    </select>
+
+    <!--정답 입력 횟수 남아있는지 check-->
+    <select id="checkTryAns" resultType="int">
+        SELECT
+        "CNT_TRY_ANS"
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+        "TR_EXAM_ID" = #{tr_exam_id}
+    </select>
+
+    <!--2차 풀이 활성화인데 1차에서 오답일때(객관식,주관식)-->
+    <update id="firstAnsNotAnsMulti">
+        UPDATE
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        SET
+        "ANSWER_USER_ID" = #{answer_user_id},
+        "INPUT_ANSWER" = #{input_answer},
+        "CNT_TRY_ANS" = 1
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp}
+        AND "TEAM_CD" = #{team_cd}
+        AND "TR_NUM" = #{tr_num}
+        AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--2차 풀이 활성화인데 1차에서 정답일때(객관식,주관식)-->
+    <update id="firstAnsEqualsAnsMulti">
+        UPDATE
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        SET
+        "ANSWER_USER_ID" = #{answer_user_id},
+        "INPUT_ANSWER" = #{input_answer},
+        "RESULT_SCORE" = "RESULT_SCORE" + #{point},
+        "CNT_TRY_ANS" = 1,
+        "CORRECT_ANSWER" = 1
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp}
+        AND "TEAM_CD" = #{team_cd}
+        AND "TR_NUM" = #{tr_num}
+        AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--2차 풀이 활성화인데 1차에서 정답일때(객관식,주관식) and 힌트사용-->
+    <update id="firstAnsEqualsAnsMultiAndHintUse">
+        UPDATE
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        SET
+        "ANSWER_USER_ID" = #{answer_user_id},
+        "INPUT_ANSWER" = #{input_answer},
+        "RESULT_SCORE" = "RESULT_SCORE" + #{point} - #{hint},
+        "CNT_TRY_ANS" = 1,
+        "CORRECT_ANSWER" = 1
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp}
+        AND "TEAM_CD" = #{team_cd}
+        AND "TR_NUM" = #{tr_num}
+        AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--2차 풀이에서 정답일때(객관식,주관식)-->
+    <update id="secondAnsEqualsAnsMulti">
+        UPDATE
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        SET
+        "ANSWER_USER_ID" = #{answer_user_id},
+        "INPUT_ANSWER" = #{input_answer},
+        "RESULT_SCORE" = "RESULT_SCORE" - #{result_score} + #{point},
+        "CNT_TRY_ANS" = 2,
+        "CORRECT_ANSWER" = 1
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp}
+        AND "TEAM_CD" = #{team_cd}
+        AND "TR_NUM" = #{tr_num}
+        AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--오답 점수 update-->
+    <update id="wrongScoreUpdate">
+        UPDATE
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        SET
+        "WRONG_SCORE" = #{wrong_score}
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp}
+        AND "TEAM_CD" = #{team_cd}
+        AND "TR_NUM" = #{tr_num}
+        AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--2차 풀이에서 정답일때(객관식,주관식) and 힌트사용 -->
+    <update id="secondAnsEqualsAnsMultiAndHintUser">
+        UPDATE
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        SET
+        "ANSWER_USER_ID" = #{answer_user_id},
+        "INPUT_ANSWER" = #{input_answer},
+        "RESULT_SCORE" = "RESULT_SCORE" - #{result_score} + #{point} - #{hint},
+        "CNT_TRY_ANS" = 2,
+        "CORRECT_ANSWER" = 1
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp}
+        AND "TEAM_CD" = #{team_cd}
+        AND "TR_NUM" = #{tr_num}
+        AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--2차 풀이에서 오답일때(객관식,주관식)-->
+    <update id="secondAnsNotAnsMulti">
+        UPDATE
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        SET
+        "ANSWER_USER_ID" = #{answer_user_id},
+        "INPUT_ANSWER" = #{input_answer},
+        "RESULT_SCORE" = 0,
+        "CNT_TRY_ANS" = 2
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp}
+        AND "TEAM_CD" = #{team_cd}
+        AND "TR_NUM" = #{tr_num}
+        AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--풀이 중인 훈련자 팀 가져오기-->
+    <select id="getExamResultTeamInfo" resultType="ExamResultTeamVO">
+        SELECT
+        *
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp}
+        AND "TEAM_CD" = #{team_cd}
+        AND "TR_NUM" = #{tr_num}
+        AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <!--정답일때 획득한 점수 가져오기(훈련팀별 점수) 훈련자에 뿌려주기 위함-->
+    <select id="getResultScoreForUser" resultType="int">
+        SELECT
+        "RESULT_SCORE"
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp}
+        AND "TEAM_CD" = #{team_cd}
+        AND "TR_NUM" = #{tr_num}
+        AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        AND "TR_EXAM_ID" = #{tr_exam_id}
+    </select>
+
+    <!--뒤늦게 시작한 훈련자의 훈련팀 시작 시간 가져오기-->
+    <select id="laterUserGetTeamStartTime" resultType="String">
+        SELECT
+        "START_TIME"
+        FROM
+        "TN_TRAIN_EXAMSTAT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <!--현재 훈련 진행중인 시간 가져오기-->
+    <select id="startTrainingGetTime" resultType="String">
+        SELECT
+        "START_TIME"
+        FROM
+        "TN_TRAIN_EXAMSTAT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <!--훈련팀별 풀이 현황정보 정답 수 update-->
+    <select id="countAnsExamResultTeam" resultType="int">
+        SELECT
+        count("STAT_ID")
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "RESULT_SCORE" > 0 AND
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <!--풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기-->
+    <select id="getTotalStatus" resultType="map">
+        SELECT
+        count("CNT_TRY_ANS") as explanationCount,
+        (SELECT
+        "TR_EXAM_COUNT"
+        FROM
+        "TN_TRAIN_EXAMGRP"
+        WHERE
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}) as maxExplanationCount,
+        (SELECT
+        sum("RESULT_SCORE")
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} and
+        "TEAM_CD" = #{team_cd} and
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} and
+        "RESULT_SCORE" >= 0) as resultScore,
+        (SELECT
+        sum("WRONG_SCORE")
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} and
+        "TEAM_CD" = #{team_cd} and
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}) as wrongScore,
+        (SELECT
+        count("STAT_ID")*10
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} and
+        "TEAM_CD" = #{team_cd} and
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} and
+        "HINT_USE"=1) as hintScore
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} and
+        "TEAM_CD" = #{team_cd} and
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} and
+        ("CNT_TRY_ANS" = 2 OR "RESULT_SCORE" > 0)
+    </select>
+
+    <!--풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기 (2차 풀이 비활성화)-->
+    <select id="getTotalStatusNoneAllow" resultType="map">
+        SELECT
+        count("CNT_TRY_ANS") as explanationCount,
+        (SELECT
+        "TR_EXAM_COUNT"
+        FROM
+        "TN_TRAIN_EXAMGRP"
+        WHERE
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}) as maxExplanationCount,
+
+        (SELECT
+        sum("RESULT_SCORE")
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} and
+        "TEAM_CD" = #{team_cd} and
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} and
+        "RESULT_SCORE" >= 0) as resultScore,
+
+        (SELECT
+        sum("WRONG_SCORE")
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} and
+        "TEAM_CD" = #{team_cd} and
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}) as wrongScore,
+
+        (SELECT
+        count("STAT_ID")*10
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} and
+        "TEAM_CD" = #{team_cd} and
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} and
+        "HINT_USE"=1) as hintScore
+
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} and
+        "TEAM_CD" = #{team_cd} and
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} and
+        ("CNT_TRY_ANS" = 1 OR "RESULT_SCORE" > 0)
+    </select>
+
+    <!-- 정답 수 UPDATE (훈련팀별) -->
+    <update id="updateCntCorrectAnsTeam">
+        UPDATE
+        "TN_TRAIN_EXAMSTAT_TEAM"
+        SET
+        "CNT_CORRECT_ANS" = "CNT_CORRECT_ANS"+1
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </update>
+
+    <!--오답 수 UPDATE (훈련팀별)-->
+    <update id="updateCntFalseAnsTeam">
+        UPDATE
+        "TN_TRAIN_EXAMSTAT_TEAM"
+        SET
+        "CNT_FALSE_ANS" = "CNT_FALSE_ANS"+1
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </update>
+
+    <!--해당 문제에 대한 훈련팀 획득점수 가져오기-->
+    <select id="getTeamResultSore" resultType="int">
+        SELECT
+        "RESULT_SCORE"
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" =  #{tr_exam_grpid} AND
+        "TR_EXAM_ID" = #{tr_exam_id}
+    </select>
+
+    <!--총 점수 UPDATE (훈련팀별)-->
+    <update id="updateResultSumTeam">
+        UPDATE
+        "TN_TRAIN_EXAMSTAT_TEAM"
+        SET
+        "RESULT_SUM" = (
+        SELECT
+        sum("RESULT_SCORE")
+        FROM
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" =  #{tr_exam_grpid})
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </update>
+
+    <!--제출하기 이벤트 (훈련팀별)-->
+    <update id="updateSubmitTeam">
+        UPDATE
+        "TN_TRAIN_EXAMSTAT_TEAM"
+        SET
+        "SUBMIT_ANSWER" = 1,
+        "END_TIME" = NOW()
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </update>
+
+    <!--제출여부 check-->
+    <select id="checkSubmitTeam" resultType="int">
+        SELECT
+        "SUBMIT_ANSWER"
+        FROM
+        "TN_TRAIN_EXAMSTAT_TEAM"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <!--전술단계 id 가져오기-->
+    <select id="getMaTacticsId" resultType="map">
+        SELECT
+        "MA_TACTICS_ID"
+        FROM
+        "TC_MITERATTACK_TACTICS"
+    </select>
+
+    <!--활성화된 문제그룹 이름 가져오기-->
+    <select id="getGrpNameByMgmtStateOn" resultType="MgmtVO">
+        SELECT
+        "TR_EXAM_GRP",
+        "TR_NUM"
+        FROM
+        "TN_TRAIN_MGMT"
+        WHERE
+        "TR_MGMT_STATE" = 1
+    </select>
+
+    <!--활성화된 문제그룹이름으로 문제그룹id 가져오기-->
+    <select id="getGrpIdByGrpName" resultType="int">
+        SELECT
+        "TR_EXAM_GRPID"
+        FROM
+        "TN_TRAIN_EXAMGRP"
+        WHERE
+        "TR_EXAM_GRPNAME" = #{tr_exam_grpname}
+    </select>
+
+    <!--문제그룹id로 문제id, 전술단계, 매트릭스 가져오기-->
+    <select id="getGrpidAndMatrixAndTactics" resultType="Map">
+        SELECT
+        "TR_EXAM_ID",
+        "MA_TACTICS_ID",
+        "MA_MATRIX_ID"
+        FROM
+        "TN_TRAIN_EXAM"
+        WHERE
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <!--매트릭스 스탯 통계정보 저장-->
+    <insert id="insertMatrixStat">
+        INSERT INTO "TN_TRAIN_MATRIXSTAT"(
+        "TR_USER_GRP",
+        "TEAM_CD",
+        "TR_NUM",
+        "TR_EXAM_GRPID",
+        "TR_EXAM_ID",
+        "MA_TACTICS_ID",
+        "MA_MATRIX_ID"
+        )VALUES(
+        #{tr_user_grp},
+        #{team_cd},
+        #{tr_num},
+        #{tr_exam_grpid},
+        #{tr_exam_id},
+        #{ma_tactics_id},
+        #{ma_matrix_id}
+        )
+    </insert>
+
+    <!--매트릭스 스탯 정답체크-->
+    <update id="updateAnsToMatrixStat">
+        UPDATE "TN_TRAIN_MATRIXSTAT"
+        SET
+        "CORRECT_ANSWER" = 1
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+        "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--나의 끝난 시간이 있는지 조회-->
+    <select id="checkMyEndTime" resultType="String">
+        SELECT
+        "END_TIME"
+        FROM
+        "TN_TRAIN_EXAMSTAT"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TR_USER_ID" = #{tr_user_id} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
 </mapper>

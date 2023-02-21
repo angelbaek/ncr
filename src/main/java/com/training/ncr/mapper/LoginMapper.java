@@ -17,4 +17,6 @@ public interface LoginMapper {
 
     // 로그인(어드민)
     List<AdminVO> loginAdmin(LoginVO loginVO);
+
+    List<String> getUserTeamcodeView(String id);
 }

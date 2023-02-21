@@ -461,7 +461,7 @@ function getUserExamStat(statId, grp, num, grpId) {
             // 오답일때
           } else if (score == 0 && tryAns > 0) {
             htmlHead += "<tr><th>" + (i + 1) + "번</th>";
-            htmlBody += "<tr><td class='ans_false'>" + answer + "</td>";
+            htmlBody += "<tr><td class='ans_false' >" + answer + "</td>";
             // 입력안했을때
           } else if (answer == "-") {
             htmlHead += "<tr><th>" + (i + 1) + "번</th>";
@@ -523,7 +523,7 @@ function getExamResultTeam(statId, num, grpId, grp) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      console.log(response);
       var grpid = response[0].tr_exam_grpid; // grpid
       var grp = response[0].tr_user_grp; // grp
       var num = response[0].tr_num; // num
@@ -547,7 +547,27 @@ function getExamResultTeam(statId, num, grpId, grp) {
             // 오답일때
           } else if (score == 0 && tryAns > 0) {
             htmlHead += "<tr><th>" + (i + 1) + "번</th>";
-            htmlBody += "<tr><td class='ans_false'>" + answer + "</td>";
+            // 오답 td에 넣을 id값을 위한 변수 대입
+            var grp = response[i].tr_user_grp;
+            var num = response[i].tr_num;
+            var grpId = response[i].tr_exam_grpid;
+            var examId = response[i].tr_exam_id;
+            htmlBody +=
+              "<tr><td class='ans_false' id='false_" +
+              (i + 1) +
+              "' onclick='popUpFalseToTrue(" +
+              grp +
+              "," +
+              num +
+              "," +
+              grpId +
+              "," +
+              examId +
+              "," +
+              (i + 1) +
+              ")'>" +
+              answer +
+              "</td>";
             // 입력안했을때
           } else if (answer == "-") {
             htmlHead += "<tr><th>" + (i + 1) + "번</th>";
@@ -558,6 +578,11 @@ function getExamResultTeam(statId, num, grpId, grp) {
             htmlBody += "</tr>";
           }
         } else {
+          // 오답 td에 넣을 id값을 위한 변수 대입
+          var grp = response[i].tr_user_grp;
+          var num = response[i].tr_num;
+          var grpId = response[i].tr_exam_grpid;
+          var examId = response[i].tr_exam_id;
           // 정답일때
           if (score > 0) {
             htmlHead += "<th>" + (i + 1) + "번</th>";
@@ -565,7 +590,22 @@ function getExamResultTeam(statId, num, grpId, grp) {
             // 오답일때
           } else if (score == 0 && tryAns > 0) {
             htmlHead += "<th>" + (i + 1) + "번</th>";
-            htmlBody += "<td class='ans_false'>" + answer + "</td>";
+            htmlBody +=
+              "<td class='ans_false' id='false_" +
+              (i + 1) +
+              "' onclick='popUpFalseToTrue(" +
+              grp +
+              "," +
+              num +
+              "," +
+              grpId +
+              "," +
+              examId +
+              "," +
+              (i + 1) +
+              ")'>" +
+              answer +
+              "</td>";
             // 입력안했을때
           } else if (answer == "-") {
             htmlHead += "<th>" + (i + 1) + "번</th>";
@@ -584,6 +624,52 @@ function getExamResultTeam(statId, num, grpId, grp) {
     },
   });
 }
+function popUpFalseToTrue(grp, num, grpId, examId, i) {
+  scrollPause();
+  $(".false_exam_num").text("문항: " + i + "번");
+  var txt = $("#false_" + i).text();
+  $(".false_exam_ans").text("기입답안: " + txt);
+  $(".false_ans_change_true_div").css("display", "block");
+  $(".back").css("display", "block");
+  $(".ok_false_to_true").attr(
+    "onclick",
+    "falseToTrue(" + grp + "," + num + "," + grpId + "," + examId + ")"
+  );
+}
+
+function canclePopUpFalseToTrue() {
+  scrollPlay();
+  $(".false_ans_change_true_div").css("display", "none");
+  $(".back").css("display", "none");
+}
+
+// 오답 정답으로 변환
+function falseToTrue(grp, num, grpId, examId) {
+  var jsonData = {
+    tr_user_grp: grp,
+    tr_num: num,
+    tr_exam_grpid: grpId,
+    tr_exam_id: examId,
+  };
+  $.ajax({
+    async: false,
+    url: "http://192.168.32.44:8080/user/static/false_change_true",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      if (response == 1) {
+        alert("업데이트 성공!");
+        history.go(0);
+      } else {
+        console.log("업데이트 실패...");
+      }
+    },
+  });
+}
+
 // 선택한 훈련팀 매트릭스스탯 가져오기
 function getMatrixStat(grpid, grp, num) {
   console.log(grpid + "/" + grp + "/" + num);
@@ -719,6 +805,7 @@ function popUpMatrix() {
   $(".back").css("display", "block");
 }
 function togglePopUpMat() {
+  scrollPlay();
   $(".matrix_mit_tech").css("display", "none");
   $(".back").css("display", "none");
 }
@@ -840,6 +927,8 @@ function getTeamOrg(team_cd) {
           console.log("서로 다른 이름");
           returnVal = "상이";
         }
+      } else if (response[0] == undefined) {
+        returnVal = "미입력";
       } else {
         returnVal = response[0];
       }

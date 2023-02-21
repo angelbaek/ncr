@@ -985,6 +985,9 @@ function startTrainingGetTime() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
+      if (response == "") {
+        return;
+      }
       console.log("결과값:" + response);
       var txt = "";
       txt = response.toString();
@@ -1040,7 +1043,7 @@ function startTrainingGetTime() {
       );
 
       console.log("최종 초: " + finalTime);
-      time += finalTime;
+      time = finalTime;
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(jqXHR); //응답 메시지
@@ -1198,6 +1201,7 @@ function checkSubmitExam() {
       console.log(response);
       if (response == 0) {
         alert("해당 문제그룹은 더 이상 문제를 풀 수 없습니다");
+        clearInterval(x);
         $(".back").css("display", "block");
       }
     },

@@ -117,6 +117,9 @@ tr {
   color: blue;
   font-weight: bold;
 }
+.userName {
+  transition: 0s;
+}
 .top_user_info_div:hover .userName {
   text-decoration: underline;
 }
@@ -173,15 +176,16 @@ tr {
 }
 
 .logout_btn {
+  width: auto;
   position: absolute;
   background-color: #6777ef;
   border-radius: 5px;
   font-weight: bold;
   border: 1px solid #ced4da;
-  padding: 10px 15px;
   box-shadow: 0px 4px 8px rgb(0 0 0 / 30%);
   right: 0;
   transition: 0.3s;
+  text-align: center;
 }
 #logout:hover {
   cursor: pointer;
@@ -211,4 +215,22 @@ select:focus {
   width: 100%;
   z-index: 2;
   background-color: rgba(0, 0, 0, 0.2);
+}
+body.no-scroll {
+  overflow: hidden !important;
+}
+
+#dropbox_ic {
+  transform: translate(0%, 0%);
+}
+
+.user_teamcode_view {
+  padding: 5px 15px;
+  background-color: #fafbfc;
+  color: gray;
+}
+
+.user_logout_btn {
+  width: 102.672px;
+  padding: 5px 15px;
 }

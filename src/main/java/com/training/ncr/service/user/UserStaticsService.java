@@ -11,11 +11,13 @@ import com.training.ncr.vo.user.*;
 import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserStaticsService {
@@ -122,5 +124,29 @@ public class UserStaticsService {
         System.out.println(userStaticsMapper.popUp(matrixVO).get(0).get("MA_TACTICS_TECH"));
         System.out.println(userStaticsMapper.popUp(matrixVO).get(0).get("MA_TACTICS_MITIG"));
         return userStaticsMapper.popUp(matrixVO);
+    }
+
+    // 오답 정답으로 변환
+    public int falseToTrue(Map<String,Object> map){
+        int grp = (int) map.get("tr_user_grp");
+        int num = (int) map.get("tr_num");
+        int grpId = (int) map.get("tr_exam_grpid");
+        int examId = (int) map.get("tr_exam_id");
+        // 배점 가져오기
+        int point = userStaticsMapper.getPointByExamId(examId);
+        map.put("point",point);
+        System.out.println("grp:"+grp+" num:"+num+"  grpID:"+grpId+" examId"+examId);
+        System.out.println("배점:"+point);
+        int result = userStaticsMapper.updateExamResultTeam(map);
+        if(result==1){
+            int result2 = userStaticsMapper.updateMatrixStat(map);
+            if(result2==1){
+                return userStaticsMapper.updateExamStatTeam(map);
+            }else{
+                return 0;
+            }
+        }else{
+            return 0;
+        }
     }
 }

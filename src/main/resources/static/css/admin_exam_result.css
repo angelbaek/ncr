@@ -188,7 +188,11 @@ a:hover {
 .ans_false {
   color: red;
 }
-
+.ans_false:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
+}
 .static_title,
 .static_detail_title {
   color: #6c757d;
@@ -348,4 +352,41 @@ a:hover {
 }
 .matrix_div a:hover {
   color: blue;
+}
+.false_ans_change_true_div {
+  z-index: 3;
+  position: fixed;
+  background-color: #fafbfc;
+  box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 50%);
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+.false_ans_change_true_div_title {
+  margin: 10px;
+  color: red;
+  /* font-weight: bold; */
+  text-align: center;
+}
+.false_ans_change_true_div_btn button {
+  width: 100px;
+  margin: 10px;
+  display: inline-block;
+}
+.false_exam_num {
+  margin-left: 10px;
+  text-align: left;
+  color: gray;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.false_exam_ans {
+  margin-left: 10px;
+  text-align: left;
+  color: gray;
+  font-weight: bold;
+  margin-bottom: 10px;
 }

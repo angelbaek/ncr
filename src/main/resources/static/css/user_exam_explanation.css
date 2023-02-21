@@ -517,7 +517,7 @@ input[type="checkbox"] {
 /* 제출하기 */
 .exam_submit {
   display: inline-block;
-  margin-top: 100px;
+  /* margin-top: 100px; */
   /* background-color: #333333; */
   padding-right: 250px;
   width: 100%;
@@ -659,6 +659,7 @@ input[type="checkbox"] {
 }
 /* 제출하기 팝업 */
 .submit_popup {
+  z-index: 3;
   padding: 20px;
   height: auto;
   width: 500px;

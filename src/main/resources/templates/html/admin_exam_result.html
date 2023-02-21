@@ -54,7 +54,10 @@
         <img src="/public/images/avatar-4.png" alt="user" />
         <div class="userName">User Name</div>
         <i class="fas fa-caret-down" id="logout"></i>
-        <div class="logout_btn" onclick="logOut()">로그아웃</div>
+        <div class="logout_btn" onclick="logOut()">
+          <div class="user_teamcode_view">팀코드</div>
+          <div class="user_logout_btn">로그아웃</div>
+        </div>
       </div>
     </div>
     <!-- 훈련통계 -->
@@ -115,6 +118,20 @@
         <div class="contents"></div>
         <button onclick="togglePopUpMat()">확인</button>
       </div>
+      <!-- 정답 체크 할지 팝업 -->
+      <div class="false_ans_change_true_div">
+        <div class="false_exam_num"></div>
+        <div class="false_exam_ans"></div>
+        <div class="false_ans_change_true_div_title">
+          정말로 해당 문제를 정답으로 체크하시겠습니까?
+        </div>
+        <div class="false_ans_change_true_div_btn">
+          <button class="ok_false_to_true" onclick="falseToTrue()">
+            정답체크
+          </button>
+          <button onclick="canclePopUpFalseToTrue()">취소</button>
+        </div>
+      </div>
     </div>
     <!-- 백그라운드 -->
     <div class="back"></div>
@@ -133,6 +150,7 @@
   <script src="/js/admin_exam_result.js"></script>
   <script>
     $(".back").css("display", "none");
+    $(".false_ans_change_true_div").css("display", "none");
     $(".static_title").css("display", "none");
     $(".show_static_body_total").css("display", "none");
     $(".static_detail_title").css("display", "none");

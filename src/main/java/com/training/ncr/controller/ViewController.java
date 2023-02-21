@@ -43,15 +43,20 @@ public class ViewController {
 
     @GetMapping(value = {"admin_exam_explanation"})
     public String adminExamTraining(){
-        return "html/admin_exam_explanation.html";
+        return "html/admin_exam_explanation";
     }
 
     @GetMapping(value = {"/user_exam_explanation"})
     public String userExamExplanation(){
-        return "html/user_exam_explanation.html";
+        return "html/user_exam_explanation";
     }
     @GetMapping(value = {"user_exam_statics"})
     public String userExamStatics(){
-        return "html/user_exam_statics.html";
+        return "html/user_exam_statics";
+    }
+
+    @GetMapping(value = {"admin_exam_result"})
+    public String admin_exam_result(){
+        return "html/admin_exam_result";
     }
 }

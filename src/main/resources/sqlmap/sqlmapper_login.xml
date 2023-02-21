@@ -17,4 +17,13 @@
         from "TN_ADMIN"
         where "ADMIN_ID" = #{id} AND "ADMIN_PASSWD" = #{pw}
     </select>
+
+    <select id="getUserTeamcodeView" resultType="String">
+        SELECT
+            "TEAM_CD"
+        FROM
+            "TN_USER"
+        WHERE
+            "TR_USER_ID" = #{id}
+    </select>
 </mapper>

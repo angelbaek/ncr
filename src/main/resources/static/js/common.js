@@ -35,6 +35,25 @@ function logOut() {
 
 // 사용자 정보 표출
 function showLogOutBtn() {
+  $.ajax({
+    url: "http://192.168.32.44:8080/get_user_teamcode_view",
+    type: "GET",
+    dataType: "json",
+    success: function (response) {
+      console.log(response);
+      var team = response[0];
+      if (team == "") {
+        $(".user_teamcode_view").text("팀없음");
+      } else {
+        $(".user_teamcode_view").text(team);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR); //응답 메시지
+      console.log(textStatus); //"error"로 고정인듯함
+      console.log(errorThrown);
+    },
+  });
   var show = $(".logout_btn").css("display");
   console.log(show);
   if (show == "none") {
@@ -48,17 +67,12 @@ function showLogOutBtn() {
 
 // 스크롤 막기
 function scrollPause() {
-  //스크롤 막기
-  $(".back").on("scroll touchmove mousewheel", function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-    return false;
-  });
+  $("body").addClass("no-scroll");
 }
 
 // 스크롤 다시 실행
 function scrollPlay() {
-  $(".back").off("scroll touchmove mousewheel");
+  $("body").removeClass("no-scroll");
 }
 
 // 세션 관리

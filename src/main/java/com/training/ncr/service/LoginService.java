@@ -31,4 +31,8 @@ public class LoginService {
         return loginMapper.loginAdmin(loginVO);
     }
 
+    public List<String> getUserTeamcodeView(String id) {
+        System.out.println("팀코드:"+loginMapper.getUserTeamcodeView(id));
+        return loginMapper.getUserTeamcodeView(id);
+    }
 }

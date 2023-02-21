@@ -38,7 +38,10 @@
         <img src="/public/images/avatar-1.png" alt="user" />
         <div class="userName">User Name</div>
         <i class="fas fa-caret-down" id="logout"></i>
-        <div class="logout_btn" onclick="logOut()">로그아웃</div>
+        <div class="logout_btn" onclick="logOut()">
+          <div class="user_teamcode_view">팀코드</div>
+          <div class="user_logout_btn">로그아웃</div>
+        </div>
       </div>
     </div>
     <!-- 문제 풀이 -->
@@ -150,10 +153,6 @@
     integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"
   ></script>
-  <script src="/static/js/common.js"></script>
-  <script src="/js/common.js"></script>
-  <script src="/static/js/user_exam_explanation.js"></script>
-  <script src="/js/user_exam_explanation.js"></script>
   <script>
     $(".submit_popup").css("display", "none");
     $(".hint_popup").css("display", "none");
@@ -252,4 +251,8 @@
       }
     });
   </script>
+  <script src="/static/js/common.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/static/js/user_exam_explanation.js"></script>
+  <script src="/js/user_exam_explanation.js"></script>
 </html>
