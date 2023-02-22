@@ -1,6 +1,8 @@
 /**
  * 문항 관리 js
  */
+// 관리자 세션
+sessionManagementForAdmin();
 examGroupCall();
 
 // 문제 초기화 함수
@@ -23,6 +25,7 @@ function resetExam() {
   $("input[name=trio]").prop("checked", false);
   // 복수 정답 해제
   $(".tr_exam_mult_ans").prop("checked", false);
+  alert("저장버튼을 눌러 초기화된 값을 저장하세요.");
 }
 
 // 문제 그룹 불러오기
@@ -191,6 +194,12 @@ function popup_hint_popupStatus() {
   scrollPause();
 }
 
+function popup_hint_popupStatusOff() {
+  $(".back").toggle();
+  $(".popup_hint").toggle();
+  scrollPlay();
+}
+
 function popup_exam_popupStatus() {
   var txt = $(".select_view_body option:selected").text();
   if (txt == "직접선택") {
@@ -201,6 +210,12 @@ function popup_exam_popupStatus() {
   $(".back").toggle();
   $(".popup_exam").toggle();
   scrollPause();
+}
+
+function popup_exam_popupStatusOff() {
+  $(".back").toggle();
+  $(".popup_exam").toggle();
+  scrollPlay();
 }
 
 function popup_mit_popupStatus() {
@@ -267,22 +282,60 @@ function getMiterMatrixByGrpid() {
 function popup_mit_popupStatus_cancel() {
   $(".back").toggle();
   $(".popup_mit").toggle();
+  scrollPlay();
 }
+// test
+function test() {
+  // $("#fileUploadForm").on("submit", function (event) {
+  event.preventDefault();
 
+  var formData = new FormData();
+  formData.append("fileInput", $("#fileInput")[0].files[0]);
+  var returnVal = "";
+  $.ajax({
+    async: false,
+    url: "http://192.168.32.44:8080/admin/uploadFile",
+    type: "POST",
+    data: formData,
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: function (response) {
+      console.log(response);
+      returnVal = response;
+      console.log("File uploaded successfully!");
+    },
+    error: function (response) {
+      console.error(response);
+    },
+  });
+  return returnVal;
+  // });
+}
 // 힌트 update
 function updateHint() {
+  var fileInput = document.getElementById("fileInput");
   // 문제 그룹id
   var grpId = $(".select_view_body option:selected").val();
   // 선택 문항 번호
   var num = $(".popup_hint").val();
   // 문제 id
   var examId;
-
+  // 힌트 업로드 파일 이름
+  var uploadFile;
+  if (fileInput.files.length > 0) {
+    console.log("file selected.");
+    uploadFile = test();
+  } else {
+    console.log("No file selected.");
+  }
   // 문제 아이디 찾기
   var jsonData = {
     tr_exam_grpid: grpId,
     tr_exam_num: num,
+    tr_exam_hint_file_path: uploadFile,
   };
+  console.log(jsonData);
   $.ajax({
     url: "http://192.168.32.44:8080/admin/exam_id_get",
     type: "POST",
@@ -292,13 +345,14 @@ function updateHint() {
     success: function (response) {
       console.log(response);
       examId = response[0].tr_exam_id;
-      updateHintGo(examId);
+      updateHintGo(examId, uploadFile);
     },
   });
 }
 
 // 실질적인 hintDB update
-function updateHintGo(examId) {
+function updateHintGo(examId, upload) {
+  console.log("잘 나오니:" + upload);
   // 문제 그룹id
   var grpId = $(".select_view_body option:selected").val();
   // 힌트 내용
@@ -308,6 +362,7 @@ function updateHintGo(examId) {
     tr_exam_grpid: grpId,
     tr_exam_id: examId,
     tr_exam_hint: hint,
+    tr_exam_hint_file_path: upload,
   };
   $.ajax({
     url: "http://192.168.32.44:8080/admin/hintUpdate",
@@ -321,6 +376,7 @@ function updateHintGo(examId) {
         alert("힌트가 저장되었습니다");
         $(".popup_hint").toggle();
         $(".back").toggle();
+        scrollPlay();
       }
     },
   });
@@ -399,8 +455,13 @@ function tacticsSave() {
         alert("전술단계가 저장되었습니다");
         $(".back").toggle();
         $(".popup_mit").toggle();
+        scrollPlay();
       } else if (response == 0) {
         alert("문항을 선택해주세요");
+        $(".back").toggle();
+        $(".popup_mit").toggle();
+        scrollPlay();
+        $("html, body").animate({ scrollTop: 0 }, 400);
       }
     },
   });

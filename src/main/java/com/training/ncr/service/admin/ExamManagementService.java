@@ -47,6 +47,13 @@ public class ExamManagementService {
     // 힌트 업데이트
     public int hintUpdate(ExamHintVO examHintVO){
         examManagementMapper.hintUpdateExam(examHintVO);
+        System.out.println("힌트 파일 경로:"+examHintVO.getTr_exam_hint_file_path());
+        String check = examHintVO.getTr_exam_hint_file_path();
+        if(check!=null){
+            examHintVO.setTr_exam_hint_file(1);
+        }else{
+            examHintVO.setTr_exam_hint_file(0);
+        }
         return examManagementMapper.hintUpdate(examHintVO);
     }
 

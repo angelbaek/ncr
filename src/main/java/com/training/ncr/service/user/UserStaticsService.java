@@ -33,9 +33,6 @@ public class UserStaticsService {
         // 훈련 차시
         int num = userStaticsVO.getNum();
 
-        System.out.println("팀:"+type+"차시:"+num);
-        System.out.println("테스트다:"+userStaticsVO.getTr_exam_grpid());
-
         if(type==1){ // 개인
             return userStaticsMapper.selectUser(userStaticsVO);
         }else if(type==2){ // 팀
@@ -47,7 +44,6 @@ public class UserStaticsService {
      // 훈련자 기관명 가져오기
     public UserVO selectUserOrgByUserId(Map<String,Object> stringObjectMap){
         String id = (String) stringObjectMap.get("id");
-        System.out.println("org:"+userStaticsMapper.selectUserOrgByUserId(id));
         return userStaticsMapper.selectUserOrgByUserId(id);
     }
 
@@ -68,7 +64,6 @@ public class UserStaticsService {
     // 선택한 팀에 해당하는 매트릭스 스탯 가져오기
     public List<Map<String,Object>> getMatrixStat(MatrixStatVO matrixStatVO){
         List<Map<String, Object>> matrix = userStaticsMapper.getMatrixStat(matrixStatVO);
-        System.out.println(matrix.size());
         return userStaticsMapper.getMatrixStat(matrixStatVO);
     }
 
@@ -135,8 +130,7 @@ public class UserStaticsService {
         // 배점 가져오기
         int point = userStaticsMapper.getPointByExamId(examId);
         map.put("point",point);
-        System.out.println("grp:"+grp+" num:"+num+"  grpID:"+grpId+" examId"+examId);
-        System.out.println("배점:"+point);
+
         int result = userStaticsMapper.updateExamResultTeam(map);
         if(result==1){
             int result2 = userStaticsMapper.updateMatrixStat(map);

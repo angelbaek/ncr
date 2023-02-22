@@ -1,5 +1,7 @@
 let selectVal = "";
+//세션
 sessionManagementForUser();
+//그룹 정보
 getGroupInfoById();
 getTeamGroup();
 
@@ -104,6 +106,10 @@ function userGroupSave() {
         location.reload();
       } else if (response == 0) {
         alert("해당팀은 인원이 마감되었습니다");
+      } else if (response == 2) {
+        alert("훈련도중 그룹을 변경할 수 없습니다");
+        getGroupInfoById();
+        getTeamGroup();
       }
     },
   });

@@ -2,10 +2,17 @@ package com.training.ncr.controller.admin;
 
 import com.training.ncr.service.admin.ExamManagementService;
 import com.training.ncr.vo.admin.*;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -91,5 +98,20 @@ public class ExamManagementController {
     @PatchMapping("/exam_update_csv")
     public int examUpdateByCsv(@RequestBody ExamVO examVO){
         return examManagementService.examUpdateByCsv(examVO);
+    }
+
+    @PostMapping("/uploadFile")
+    public String uploadFile(@RequestParam("fileInput") MultipartFile file) {
+        try {
+            String originalFilename = file.getOriginalFilename();
+            String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+            String fileName = UUID.randomUUID().toString() + "." + extension;
+            File targetFile = new File("/path/to/upload/directory/" + fileName);
+            FileUtils.writeByteArrayToFile(targetFile, file.getBytes());
+            return fileName;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error uploading file";
+        }
     }
 }

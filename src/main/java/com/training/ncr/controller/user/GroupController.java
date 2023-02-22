@@ -34,7 +34,7 @@ public class GroupController {
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("USERID");
         userVO.setTr_user_id(id);
-        return groupService.callUserUpdate(userVO);
+        return groupService.callUserUpdate(userVO,request);
     }
 
     //훈련 시작

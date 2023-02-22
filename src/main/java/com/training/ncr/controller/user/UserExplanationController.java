@@ -6,12 +6,19 @@ import com.training.ncr.vo.admin.ExamHintVO;
 import com.training.ncr.vo.user.*;
 import lombok.val;
 import org.apache.catalina.User;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 
@@ -107,5 +114,20 @@ public class UserExplanationController {
     @PostMapping("/end_time_update_time")
     public int endTimeUpdateTime(@RequestBody ExamStatVO examStatVO, HttpServletRequest request){
         return userExplanationService.endTimeUpdateTime(examStatVO, request);
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<byte[]> downloadFile(@RequestParam("filename") String filename) throws IOException {
+        String filePath = "/path/to/upload/directory/" + filename; // 파일 경로를 상대 경로로 지정합니다.
+        File file = new File(filePath);
+        if (!file.exists()) {
+            throw new FileNotFoundException("File not found: " + filePath);
+        }
+        byte[] bytes = FileUtils.readFileToByteArray(file);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", filename);
+        headers.setContentLength(bytes.length);
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
 }

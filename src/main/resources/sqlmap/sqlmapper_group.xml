@@ -39,4 +39,11 @@
         WHERE
         "TR_USER_GRP" = #{tr_user_grp}
     </select>
+
+    <!--내가 훈련중인지 가져오기-->
+    <select id="getTrUserStateByUserid" resultType="int">
+        SELECT "TR_USER_STATE"
+        FROM "TN_USER"
+        WHERE "TR_USER_ID" = #{id}
+    </select>
 </mapper>

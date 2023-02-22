@@ -201,10 +201,14 @@
       <div class="popup_hint_txt">힌트 내용</div>
       <input class="hint_input" type="text" />
       <div class="popup_hint_txt">힌트 파일 첨부</div>
-      <input type="file" id="hint_file" />
+      <!-- <input name="uploadFiles" type="file" id="hint_file" /> -->
+      <form id="fileUploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="fileInput" />
+        <!-- <button type="submit">Upload</button> -->
+      </form>
       <div>
-        <button onclick="updateHint()">확인</button>
-        <button onclick="popup_hint_popupStatus()">취소</button>
+        <button class="uploadBtn" onclick="updateHint()">확인</button>
+        <button onclick="popup_hint_popupStatusOff()">취소</button>
       </div>
     </div>
     <!-- 문제 업로드 div -->
@@ -213,7 +217,7 @@
       <input type="file" name="file" id="exam_file" accept=".csv" />
       <div>
         <button onclick="testing()">확인</button>
-        <button onclick="popup_exam_popupStatus()">취소</button>
+        <button onclick="popup_exam_popupStatusOff()">취소</button>
       </div>
     </div>
     <!-- MITER ATTACK div -->
@@ -300,8 +304,12 @@
       // 파일
       file = this.files[0];
     };
-
     function testing() {
+      if (file == undefined) {
+        alert("csv파일을 선택하세요.");
+        $("#exam_file").focus();
+        return;
+      }
       // 문제 그룹명
       var grpName = $(".select_view_body option:selected").text();
       if (confirm(grpName + " 문제 그룹을 업로드 하시겠습니까?")) {
@@ -463,15 +471,16 @@
             }
           }
         };
+
+        console.log(file);
+
         reader.readAsText(file, "euc-kr");
         alert("문제를 업로드 하였습니다");
         $(".popup_exam").toggle();
         $(".back").toggle();
+        scrollPlay();
       }
       // location.reload();
     }
-  </script>
-  <script>
-    sessionManagementForAdmin();
   </script>
 </html>

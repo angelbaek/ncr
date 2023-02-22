@@ -509,6 +509,13 @@ function insertExamResultAndTeam(examId) {
 function submitPopup() {
   $(".submit_popup").toggle();
   $(".back").toggle();
+  scrollPause();
+}
+// 제출하기 팝업 off
+function submitPopupOff() {
+  $(".submit_popup").toggle();
+  $(".back").toggle();
+  scrollPlay();
 }
 
 // 훈련자 힌트 입력 event
@@ -573,6 +580,46 @@ function getHint(examId, grpId) {
       var html = response[0].tr_exam_hint;
       $(".hint_popup_contents").empty();
       $(".hint_popup_contents").append(html);
+      if (response[0].tr_exam_hint_file == 1) {
+        console.log("파일 넣기 실행중..");
+        $(".file_download_div").empty();
+        var fileName = response[0].tr_exam_hint_file_path;
+        var html =
+          // "<form>" +
+          // '<label for="filename">Enter Filename:</label>' +
+          // '<input type="text" id="filename" name="filename" value="' +
+          // fileName +
+          // '">' +
+          // '<button type="button" onclick="downloadFile()">Download</button>' +
+          // "</form>";
+
+          '<input type="hidden" id="filename" name="filename" value="' +
+          fileName +
+          '">' +
+          '<div class="file_div"><p>File Down: </p><a name="filename" onclick="downloadFile()">' +
+          fileName +
+          "</a><div>";
+        $(".file_download_div").append(html);
+      }
+    },
+  });
+}
+// 다운로드 구현중
+function downloadFile() {
+  var filename = $("#filename").val();
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/download?filename=" + filename,
+    method: "GET",
+    xhrFields: {
+      responseType: "blob",
+    },
+    success: function (data) {
+      var a = document.createElement("a");
+      var url = window.URL.createObjectURL(data);
+      a.href = url;
+      a.download = filename;
+      a.click();
+      window.URL.revokeObjectURL(url);
     },
   });
 }
@@ -581,6 +628,7 @@ function getHint(examId, grpId) {
 function hintPopUp() {
   $(".hint_popup").toggle();
   $(".back").toggle();
+  scrollPlay();
 }
 
 // 객관식 정답확인 event
@@ -985,6 +1033,7 @@ function startTrainingGetTime() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
+      console.log(response);
       if (response == "") {
         return;
       }
@@ -1000,8 +1049,11 @@ function startTrainingGetTime() {
       // 현재 시각
       let now = new Date();
       // 날 계산
-      var year = now.getFullYear() + now.getDay() + now.getDate(); // 날
-      console.log("year:" + year);
+      var year =
+        now.getFullYear() + parseInt(now.getMonth() + 1) + now.getDate(); // 날
+      console.log(
+        "year:" + year + "day:" + now.getDay() + "date:" + now.getDate()
+      );
       console.log("txt:" + txt);
       var target = parseInt(txt.substr(0, 4));
       console.log("첫번째 target:" + target);
@@ -1030,7 +1082,9 @@ function startTrainingGetTime() {
       var resultMin = (traingMin - minutes) * 60;
       var resultSec = traingSec - seconds;
       var finalTime = resultHour + resultMin + resultSec;
-
+      console.log(
+        "db 시: " + traingHour + " db분: " + traingMin + "db초: " + traingSec
+      );
       console.log("현재 분:" + minutes + " db 분:" + traingMin);
 
       console.log(
@@ -1043,7 +1097,7 @@ function startTrainingGetTime() {
       );
 
       console.log("최종 초: " + finalTime);
-      time = finalTime;
+      time += finalTime;
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(jqXHR); //응답 메시지
@@ -1171,10 +1225,12 @@ function submitExam() {
           alert("문제제출이 완료되었습니다");
           $(".back").css("display", "block");
           $(".submit_popup").toggle();
+          scrollPlay();
         } else if (response == 0) {
           alert("다른 훈련자가 이미 제출하였습니다");
           $(".back").css("display", "block");
           $(".submit_popup").toggle();
+          scrollPlay();
         }
       },
     });

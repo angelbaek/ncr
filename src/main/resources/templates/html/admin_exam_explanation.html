@@ -146,6 +146,8 @@
         <div class="hint_popup_div">
           <div class="hint_popup_title">힌트</div>
           <div class="hint_popup_contents">힌트 내용</div>
+          <!-- 여기에 힌트 다운로드 구현할거임 -->
+          <div class="file_download_div"></div>
           <div>
             <button onclick="hintPopUp()">확인</button>
           </div>
@@ -159,7 +161,7 @@
         </div>
         <div class="submit_popup_button">
           <button onclick="submitExam()">제출하기</button
-          ><button onclick="submitPopup()">취소</button>
+          ><button onclick="submitPopupOff()">취소</button>
         </div>
       </div>
       <!-- 정답 알림 -->
@@ -171,6 +173,8 @@
     integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"
   ></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.5.0/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
   <script src="/static/js/common.js"></script>
   <script src="/js/common.js"></script>
   <script src="/static/js/admin_exam_explanation.js"></script>

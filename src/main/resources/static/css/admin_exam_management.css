@@ -361,9 +361,10 @@ tr td {
   margin-bottom: 10px;
 }
 .popup_hint input {
+  vertical-align: middle;
   width: 100%;
   height: 30px;
-  padding: 10px 15px;
+  /* padding: 10px 15px; */
   margin-bottom: 40px;
 }
 .popup_hint #hint_file {

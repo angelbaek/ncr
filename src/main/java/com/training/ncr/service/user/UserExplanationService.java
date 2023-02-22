@@ -34,7 +34,6 @@ public class UserExplanationService {
         examStatVO.setTr_user_id(userId);
         examStatVO.setTr_user_grp(userVO.getTr_user_grp());
 
-        System.out.println("세션에 저장된 아이디:"+userId);
         // 뒤늦게 시작한 훈련자의 훈련팀 시작 시간 가져오기 위한 객체 대입
         ExamStatTeamVO examStatTeamVO = new ExamStatTeamVO();
         examStatTeamVO.setTr_user_grp(userVO.getTr_user_grp());
@@ -49,14 +48,17 @@ public class UserExplanationService {
         if(time!=null){ // 이미 시작한 팀
             // 훈련자 풀이현황에 내가 있는지 확인하기
             if(userExplanationMapper.selectByUserID(examStatVO).size()!=0){ // 내가 시작했는지
-                System.out.println("훈련 진행중...");
+                System.out.println("이미 훈련 진행중...");
                 return 0;
             }else{ // 다른 훈련자가 같은팀으로 시작
                 examStatVO.setStart_time(time);
                 System.out.println("다른 훈련자가 같은팀으로 시작!!");
+                userExplanationMapper.updateTrUserIdByTrUserId(userId);
                 userExplanationMapper.laterInsertUserTrainExamStat(examStatVO);
             }
         }else{ // 신규 시작
+            System.out.println("신규 문제풀이 시작!");
+            userExplanationMapper.updateTrUserIdByTrUserId(userId);
             userExplanationMapper.insertUserTrainExamStat(examStatVO);
         }
         return 1;
@@ -72,12 +74,13 @@ public class UserExplanationService {
         UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
         examStatTeamVO.setTr_user_grp(userVO.getTr_user_grp());
         examStatTeamVO.setTeam_cd(teamCd);
-        System.out.println("팀코드:"+examStatTeamVO.getTeam_cd());
+
         // 훈련자 풀이현황에 내가 있는지 확인하기
-        if(userExplanationMapper.selectByTeamcd(examStatTeamVO.getTeam_cd()).size()!=0){
-            System.out.println("훈련 팀별 진행중...");
+        if(userExplanationMapper.selectByTeamcd(examStatTeamVO).size()!=0){
+            System.out.println("이미 훈련 팀별 진행중...");
             return 0;
         }
+        System.out.println("신규 훈련 팀별 시작!");
         // db insert
         setMatrixStat(request);
         return userExplanationMapper.insertExamstatTeam(examStatTeamVO);
@@ -167,12 +170,10 @@ public class UserExplanationService {
         examResultTeamVO.setResult_score(examResultVO.getResult_score());
         // 힌트 사용여부 check
         int check = userExplanationMapper.checkHintUsing(examResultTeamVO);
-        System.out.println("힌트사용"+check);
+
         if(check==1){ // 사용
 
         }else if(check==0){ // 미사용
-            System.out.println("감점:"+examResultTeamVO.getResult_score());
-            System.out.println("감점:"+examResultVO.getResult_score());
             userExplanationMapper.firstHintUsingTeam(examResultTeamVO);
             userExplanationMapper.firstHintUsingUser(examResultVO);
             return 0;
@@ -199,7 +200,6 @@ public class UserExplanationService {
         int allow = examGrpVO.getTr_allow_secans();
         int deduct = examGrpVO.getTr_secans_deduct();
         int hintDeduct = examGrpVO.getTr_hint_deduct();
-        System.out.println("2차 풀이여부:"+allow+" 감점:"+deduct+" 힌트감점:"+hintDeduct);
 
         // 문제id로 정보 가져오기(정답, 배점)
         ExamVO examVO = userExplanationMapper.getExamInfo(examResultTeamVO.getTr_exam_id());
@@ -212,11 +212,9 @@ public class UserExplanationService {
 
         // 정답 입력횟수 받아오기
         int tryAns = userExplanationMapper.checkTryAns(examResultTeamVO);
-        System.out.println("남아 있는 횟수:"+tryAns);
 
         // 힌트 사용여부 check
         int check = userExplanationMapper.checkHintUsing(examResultTeamVO);
-        System.out.println("힌트 사용 여부:"+check);
 
         // 훈련자 클래스 대입
         ExamResultVO examResultVO = new ExamResultVO();
@@ -336,7 +334,6 @@ public class UserExplanationService {
 
     // 정답확인 메소드( 주관식 )
     public int inputAnswerShortForm(@RequestBody ExamResultTeamVO examResultTeamVO, HttpServletRequest request) {
-        System.out.println("주관식 실행중...");
         HttpSession session = request.getSession();
         // 유저 기입 답
         String userAns = examResultTeamVO.getInput_answer();
@@ -356,7 +353,6 @@ public class UserExplanationService {
         ExamGrpVO examGrpVO = userExplanationMapper.getExamGrpInfo(examResultTeamVO.getTr_exam_grpid());
         int allow = examGrpVO.getTr_allow_secans();
         int deduct = examGrpVO.getTr_secans_deduct();
-        System.out.println("2차 풀이여부:"+allow+" 감점:"+deduct);
 
         // 문제id로 정보 가져오기(정답, 배점)
         ExamVO examVO = userExplanationMapper.getExamInfo(examResultTeamVO.getTr_exam_id());
@@ -372,11 +368,9 @@ public class UserExplanationService {
 
         // 힌트 사용여부 check
         int check = userExplanationMapper.checkHintUsing(examResultTeamVO);
-        System.out.println("힌트 사용 여부:"+check);
 
         // 정답 입력횟수 받아오기
         int tryAns = userExplanationMapper.checkTryAns(examResultTeamVO);
-        System.out.println("남아 있는 횟수:"+tryAns);
 
         // 훈련자 클래스 대입
         ExamResultVO examResultVO = new ExamResultVO();
@@ -503,8 +497,6 @@ public class UserExplanationService {
         examResultTeamVO.setTeam_cd(userVO.getTeam_cd());
         examResultTeamVO.setAnswer_user_id(userId);
 
-        System.out.println("팀:"+examResultTeamVO.getTeam_cd()+"grp:"+examResultTeamVO.getTr_user_grp()+"num"+examResultTeamVO.getTr_num()+"grpid:"+examResultTeamVO.getTr_exam_grpid());
-
         return userExplanationMapper.getExamResultTeamInfo(examResultTeamVO);
     };
 
@@ -524,15 +516,13 @@ public class UserExplanationService {
         examStatTeamVO.setTr_user_grp(userVO.getTr_user_grp());
         examStatTeamVO.setTeam_cd(userVO.getTeam_cd());
 
-        System.out.println("팀코드:"+examStatTeamVO.getTeam_cd()+" 차시:"+examStatTeamVO.getTr_num()+" grp:"+examStatTeamVO.getTr_user_grp()+" grpid:"+examStatTeamVO.getTr_exam_grpid());
-
         System.out.println("기존 훈련팀 시작한 시간: "+userExplanationMapper.startTrainingGetTime(examStatTeamVO));
         String time = userExplanationMapper.startTrainingGetTime(examStatTeamVO);
         try{
             List<String> subTime = Collections.singletonList(time);
             return subTime;
         }catch (NullPointerException n){
-            System.out.println("첫 훈련이 시작되어 감소할 시간이 없습니다.");
+            System.out.println("첫 훈련이 시작되어 감소할 시간이 없습니다...");
             return null;
         }
 //        List<String> subTime = Collections.singletonList(time.substring(11, 18));
@@ -567,7 +557,6 @@ public class UserExplanationService {
 
         int secansAllow = examResultTeamVO.getSecansAllow();// 2차풀이 활성화 여부
 
-        System.out.println("팀:"+examResultTeamVO.getTeam_cd()+" grp:"+examResultTeamVO.getTr_user_grp()+" grpid:"+examResultTeamVO.getTr_exam_grpid());
         if (secansAllow==1){ // 활성화
             return userExplanationMapper.getTotalStatus(examResultTeamVO);
         }else if(secansAllow==0){ // 비활성화
@@ -596,11 +585,13 @@ public class UserExplanationService {
         String team  = examStatTeamVO.getTeam_cd();
         int num = examStatTeamVO.getTr_num();
         int grpid = examStatTeamVO.getTr_exam_grpid();
-        System.out.println("grp:"+grp+" team:"+team+" num"+num+" grpid:"+grpid);
+        System.out.println("제출하기!! grp:"+grp+" team:"+team+" num"+num+" grpid:"+grpid);
         int submit = userExplanationMapper.checkSubmitTeam(examStatTeamVO);
         if(submit==1){ // 이미 제출했을때
+            System.out.println("이미 제출한 팀");
             return 0;
         }
+        System.out.println("제출완료!");
         // 미제출이면 update
         userExplanationMapper.updateSubmitTeam(examStatTeamVO); // 훈련팀 제출
         userExplanationMapper.updateSubmitUser(examStatVO); // 훈련자 제출
@@ -620,8 +611,10 @@ public class UserExplanationService {
         try{
             int submit = userExplanationMapper.checkSubmitTeam(examStatTeamVO);
             if(submit==1){ // 이미 제출했을때
+                System.out.println("이미 제출한 팀");
                 return 0;
             }
+            System.out.println("제출안한 팀");
             return 1;
         }catch (BindingException e){
             return 1;

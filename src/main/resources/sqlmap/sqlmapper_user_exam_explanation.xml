@@ -94,24 +94,26 @@
         FROM
             "TN_TRAIN_EXAMSTAT_TEAM"
         WHERE
-            "TEAM_CD" = #{team_cd}
+            "TEAM_CD" = #{team_cd} AND
+            "TR_NUM" = #{tr_num} AND
+            "TR_EXAM_GRPID" = #{tr_exam_grpid}
     </select>
 
     <!--첫 풀이 훈련자별 상세정보 db insert-->
     <insert id="insertTrainExamResult">
         INSERT INTO "TN_TRAIN_EXAMRESULT"
         (
-        "TR_USER_ID",
-        "TR_NUM",
-        "TR_EXAM_GRPID",
-        "TR_EXAM_ID"
+            "TR_USER_ID",
+            "TR_NUM",
+            "TR_EXAM_GRPID",
+            "TR_EXAM_ID"
         )
         VALUES
         (
-        #{tr_user_id},
-        #{tr_num},
-        #{tr_exam_grpid},
-        #{tr_exam_id}
+            #{tr_user_id},
+            #{tr_num},
+            #{tr_exam_grpid},
+            #{tr_exam_id}
         )
     </insert>
 
@@ -859,4 +861,11 @@
             "TR_NUM" = #{tr_num} AND
             "TR_EXAM_GRPID" = #{tr_exam_grpid}
     </select>
+
+    <!--훈련자 TN_USER 테이블 훈련 진행상태 변경-->
+    <update id="updateTrUserIdByTrUserId">
+        UPDATE "TN_USER"
+        SET "TR_USER_STATE" = 2
+        WHERE "TR_USER_ID" = #{id}
+    </update>
 </mapper>

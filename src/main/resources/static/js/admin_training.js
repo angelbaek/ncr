@@ -422,7 +422,7 @@ function teamcodeView() {
 function teamcode_view_btn() {
   $(".teamcode_view").css("display", "none");
   $(".back").toggle();
-  scrollPause();
+  scrollPlay();
 }
 
 // 수정 버튼

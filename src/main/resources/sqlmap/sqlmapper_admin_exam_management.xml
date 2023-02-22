@@ -67,6 +67,10 @@
     <update id="hintUpdate">
         UPDATE "TN_TRAIN_EXAMHINT"
         SET
+        <if test="tr_exam_hint_file_path != null">
+            "TR_EXAM_HINT_FILE_PATH" = #{tr_exam_hint_file_path},
+        </if>
+            "TR_EXAM_HINT_FILE" = #{tr_exam_hint_file},
             "TR_EXAM_HINT" = #{tr_exam_hint}
         WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid}
         AND "TR_EXAM_ID" = #{tr_exam_id}

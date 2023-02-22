@@ -8,6 +8,8 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -22,18 +24,29 @@ public class GroupService {
     }
 
     //훈련자 팀,팀코드,훈련준비상태 setting
-    public int callUserUpdate(UserVO userVO) {
+    public int callUserUpdate(UserVO userVO, HttpServletRequest request) {
+        // 훈련중인지 가져오기
+        HttpSession session = request.getSession();
+        String id = (String) session.getAttribute("USERID");
+        int state = groupMapper.getTrUserStateByUserid(id);
+        if(state==2){ // 훈련중임
+            System.out.println("훈련중임...");
+            return 2;
+        }
 
         // 해당 팀에 몇명 있는지 가져오기
         int count = groupMapper.getGrpCountByGrp(userVO);
         if(count>1){
+            System.out.println("해당 팀은 인원초과!");
             return 0;
         }
+        System.out.println("훈련중이 아님...");
         return groupMapper.callUserUpdate(userVO);
     }
 
     //훈련 시작 체크
     public List<MgmtVO> callTraining(int tr_num){
+        System.out.println("훈련 시작 체크!!");
         return groupMapper.callTraining(tr_num);
     }
 

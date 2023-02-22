@@ -54,7 +54,7 @@ public interface UserExplanationMapper {
     ExamVO getExamInfo(int tr_exam_id);
 
     // 나의 id로 훈련팀별 풀이 현황 db조회
-    List<ExamStatVO> selectByTeamcd(String team_cd);
+    List<ExamStatVO> selectByTeamcd(ExamStatTeamVO examStatTeamVO);
 
     // 나의 id로 내 정보 가져오기
     UserVO getMyInfoByUserId(String tr_user_id);
@@ -167,4 +167,6 @@ public interface UserExplanationMapper {
     // 나의 끝난 시간이 있는지 조회
     String checkMyEndTime(ExamStatVO examStatVO);
 
+    // 훈련자 TN_USER 테이블 훈련 진행상태 변경
+    int updateTrUserIdByTrUserId(String id);
 }

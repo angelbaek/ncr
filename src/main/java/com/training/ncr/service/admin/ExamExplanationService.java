@@ -138,12 +138,11 @@ public class ExamExplanationService {
         examResultTeamVO.setResult_score(examResultVO.getResult_score());
         // 힌트 사용여부 check
         int check = examExplanationMapper.checkHintUsing(examResultTeamVO);
-        System.out.println("힌트사용"+check);
+
         if(check==1){ // 사용
 
         }else if(check==0){ // 미사용
-            System.out.println("감점:"+examResultTeamVO.getResult_score());
-            System.out.println("감점:"+examResultVO.getResult_score());
+
             examExplanationMapper.firstHintUsingTeam(examResultTeamVO);
             return 0;
         }
@@ -168,7 +167,6 @@ public class ExamExplanationService {
         int allow = examGrpVO.getTr_allow_secans();
         int deduct = examGrpVO.getTr_secans_deduct();
         int hintDeduct = examGrpVO.getTr_hint_deduct();
-        System.out.println("2차 풀이여부:"+allow+" 감점:"+deduct+" 힌트감점:"+hintDeduct);
 
         // 문제id로 정보 가져오기(정답, 배점)
         ExamVO examVO = examExplanationMapper.getExamInfo(examResultTeamVO.getTr_exam_id());
@@ -181,11 +179,9 @@ public class ExamExplanationService {
 
         // 정답 입력횟수 받아오기
         int tryAns = examExplanationMapper.checkTryAns(examResultTeamVO);
-        System.out.println("남아 있는 횟수:"+tryAns);
 
         // 힌트 사용여부 check
         int check = examExplanationMapper.checkHintUsing(examResultTeamVO);
-        System.out.println("힌트 사용 여부:"+check);
 
         // 훈련자 클래스 대입
         ExamResultVO examResultVO = new ExamResultVO();
@@ -300,7 +296,6 @@ public class ExamExplanationService {
 
     // 정답확인 메소드( 주관식 )
     public int inputAnswerShortForm(@RequestBody ExamResultTeamVO examResultTeamVO, HttpServletRequest request) {
-        System.out.println("주관식 실행중...");
         HttpSession session = request.getSession();
         // 유저 기입 답
         String userAns = examResultTeamVO.getInput_answer();
@@ -319,7 +314,6 @@ public class ExamExplanationService {
         ExamGrpVO examGrpVO = examExplanationMapper.getExamGrpInfo(examResultTeamVO.getTr_exam_grpid());
         int allow = examGrpVO.getTr_allow_secans();
         int deduct = examGrpVO.getTr_secans_deduct();
-        System.out.println("2차 풀이여부:"+allow+" 감점:"+deduct);
 
         // 문제id로 정보 가져오기(정답, 배점)
         ExamVO examVO = examExplanationMapper.getExamInfo(examResultTeamVO.getTr_exam_id());
@@ -335,11 +329,9 @@ public class ExamExplanationService {
 
         // 힌트 사용여부 check
         int check = examExplanationMapper.checkHintUsing(examResultTeamVO);
-        System.out.println("힌트 사용 여부:"+check);
 
         // 정답 입력횟수 받아오기
         int tryAns = examExplanationMapper.checkTryAns(examResultTeamVO);
-        System.out.println("남아 있는 횟수:"+tryAns);
 
         // 훈련자 클래스 대입
         ExamResultVO examResultVO = new ExamResultVO();
@@ -539,11 +531,13 @@ public class ExamExplanationService {
         String team  = examStatTeamVO.getTeam_cd();
         int num = examStatTeamVO.getTr_num();
         int grpid = examStatTeamVO.getTr_exam_grpid();
-        System.out.println("grp:"+grp+" team:"+team+" num"+num+" grpid:"+grpid);
+        System.out.println("제출하기 시도 grp:"+grp+" team:"+team+" num"+num+" grpid:"+grpid);
         int submit = examExplanationMapper.checkSubmitTeam(examStatTeamVO);
         if(submit==1){ // 이미 제출했을때
+            System.out.println("이미 제출한 관리자");
             return 0;
         }
+        System.out.println("관리자 제출 완료!");
         // 미제출이면 update
         examExplanationMapper.updateSubmitTeam(examStatTeamVO); // 훈련팀 제출
         return 1;

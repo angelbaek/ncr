@@ -25,4 +25,7 @@ public interface GroupMapper {
 
     // 해당 팀에 몇명 있는지 가져오기
     int getGrpCountByGrp(UserVO userVO);
+
+    // 내가 훈련중인지 가져오기
+    int getTrUserStateByUserid(String id);
 }
