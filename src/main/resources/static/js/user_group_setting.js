@@ -80,6 +80,12 @@ let team_cd;
 
 // 팀 코드 세팅
 function userGroupSave() {
+  var result = confirm(
+    "훈련이 시작되면 팀그룹을 변경할 수 없습니다.\r\n변경 하시겠습니까?"
+  );
+  if (!result) {
+    return;
+  }
   console.log(tr_user_grp);
   console.log(team_cd);
   if (tr_user_grp == undefined) {
@@ -100,6 +106,7 @@ function userGroupSave() {
     data: JSON.stringify(jsonData),
     success: function (response) {
       console.log(response);
+
       if (response == 1) {
         alert("훈련준비 상태가 변경되었습니다");
         $("#team_code").text(team_cd);
@@ -109,7 +116,7 @@ function userGroupSave() {
       } else if (response == 2) {
         alert("훈련도중 그룹을 변경할 수 없습니다");
         getGroupInfoById();
-        getTeamGroup();
+        location.reload();
       }
     },
   });

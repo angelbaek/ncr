@@ -263,6 +263,7 @@ public class ExamExplanationService {
             }
         }else{ // 비활성화
             //정답 입력횟수가 남아있는지 check
+            System.out.println("입력횟수:"+tryAns+" 유저입력:"+userAns+" 답:"+ans);
             if(tryAns==0){ // 남아있음 (1번 품)
                 if(userAns.equals(ans)){ // 정답일때
                     if(check==1){ // 힌트 사용
@@ -276,14 +277,11 @@ public class ExamExplanationService {
                     // 총 점 가져오기
                     int score = examExplanationMapper.getResultScoreForUser(examResultTeamVO);
                     examResultVO.setResult_score(score); // 점수 대입
-
                     examExplanationMapper.updateCntCorrectAnsTeam(examResultTeamVO); // 정답수 update
                     examExplanationMapper.updateResultSumTeam(examResultTeamVO); // 총점 update
-
                     return 9;
                 }else{ // 오답
                     examExplanationMapper.updateCntFalseAnsTeam(examResultTeamVO); // 오답수 update
-
                     examExplanationMapper.secondAnsNotAnsMulti(examResultTeamVO); // 훈련팀
                     return 8;
                 }
@@ -577,8 +575,8 @@ public class ExamExplanationService {
         examStatVO.setTr_user_grp(99);
         examStatVO.setTr_user_id(userId);
 
-        //나의 종료시간이 있는지 체크하기 로직
-        String endTime = examExplanationMapper.checkMyEndTime(examStatVO);
+        //나의 종료시간이 있는지 체크하기 로직 (관리자 전용)
+        String endTime = examExplanationMapper.getAdminEndTime(examStatVO);
         System.out.println("해당 유저의 종료시간: "+endTime);
         if(endTime==null){ // 종료시간이 없음
             return examExplanationMapper.endTimeUpdateTime(examStatVO);

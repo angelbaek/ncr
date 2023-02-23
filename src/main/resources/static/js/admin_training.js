@@ -138,11 +138,9 @@ function getTraining() {
     success: function (response) {
       console.log(response);
       for (var i = 0; i < response.length; i++) {
-        console.log("실행중...");
         html += '<option value="">' + response[i].tr_exam_grpname + "</option>";
         // 마지막 탐색 후 select에 option 추가
         if (i == response.length - 1) {
-          console.log(html);
           $("#selectOne").append(html);
           $("#selectTwo").append(html);
         }
@@ -162,8 +160,6 @@ function trainingStart() {
   // 차시별 문제그룹 설정이 되있는지 boolean 변수
   var groupOneBoolean = $("#selectOne").prop("disabled");
   var groupTwoBoolean = $("#selectTwo").prop("disabled");
-  console.log("1차 활성화?: " + groupOneBoolean);
-  console.log("2차 활성화?: " + groupTwoBoolean);
   if (
     typeof groupOneBoolean == "undefined" ||
     typeof groupTwoBoolean == "undefined"
@@ -171,14 +167,10 @@ function trainingStart() {
     alert("훈련 설정이 안된 그룹이 있습니다");
     return;
   }
-
-  console.log("선택 차시:" + one + " 선택 그룹:" + groupOne);
-  console.log("선택 차시:" + two + " 선택 그룹:" + groupTwo);
   if (one == false && two == false) {
     alert("훈련 시작할 차시를 설정하세요");
     return;
   }
-  console.log(groupOne);
   // 1차시 훈련 시작
   if (one == true) {
     var jsonData = {
@@ -256,7 +248,6 @@ function grpActive(trainingNumbers) {
       tr_num: 1,
       tr_exam_grp: one,
     };
-    console.log(jsonData);
     $.ajax({
       url: "http://192.168.32.44:8080/admin/gprAct",
       type: "POST",

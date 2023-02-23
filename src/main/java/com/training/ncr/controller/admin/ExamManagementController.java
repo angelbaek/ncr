@@ -114,4 +114,10 @@ public class ExamManagementController {
             return "Error uploading file";
         }
     }
+
+    // csv파일을 읽기 위한 문항수 가져오기
+    @GetMapping("/get_exam_length/{exam_grpid}")
+    public int getExamLength(@PathVariable int exam_grpid){
+        return examManagementService.getExamLength(exam_grpid);
+    }
 }

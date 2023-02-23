@@ -126,17 +126,8 @@ function getExamResultByNumAndType(num, type, grpId) {
 
             var seconds = now.getSeconds(); // 현재 초
 
-            var target = parseInt(startTime.substr(0, 4));
-            console.log("중간찍기:" + target + "/" + year);
-            console.log(startTime);
-            console.log(startTime.substr(5, 2));
-            console.log(startTime.substr(8, 2));
-            target +=
-              parseInt(startTime.substr(5, 2)) +
-              parseInt(startTime.substr(8, 2));
-            console.log("타겟게산결과:" + target);
+            var target = startTime.substr(0, 4);
             target = target - year;
-            console.log("최종게산결과:" + target);
             // 소요시간 계산 로직
             // 시작시간
             var start = startTime.substr(11, 5);
@@ -150,12 +141,12 @@ function getExamResultByNumAndType(num, type, grpId) {
 
             var h = parseInt(result / 3600); // 시
             var m = parseInt((result - h * 3600) / 60); // 분
-            if (target != 0) {
+            if (h == 0) {
+              delayTime = m + "분";
+            } else if (target != 0) {
               var h = parseInt(examTime / 3600); // 시
               var m = parseInt((examTime - h * 3600) / 60); // 분
               delayTime = h + "시간 " + m + "분";
-            } else if (h == 0) {
-              delayTime = m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
             }
@@ -511,6 +502,7 @@ function getExamResultTeam(statId, num, grpId, grp) {
     tr_exam_grpid: grpId,
     tr_user_grp: grp,
   };
+  console.log("넘겨주기:" + num + " / " + grpId + " / " + grp);
   $.ajax({
     url: "http://192.168.32.44:8080/user/static/get_exam_result_team",
     type: "POST",

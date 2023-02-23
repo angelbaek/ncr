@@ -148,4 +148,14 @@
         "MA_MATRIX_ID" = #{ma_matrix_id}
         WHERE "TR_EXAM_GRPID" = #{tr_exam_grpid} AND "TR_EXAM_NUM" = #{tr_exam_num}
     </update>
+
+    <!--csv파일을 읽기 위한 문항수 가져오기-->
+    <select id="getExamLength" resultType="int">
+        SELECT
+            count("TR_EXAM_ID")
+        FROM
+            "TN_TRAIN_EXAM"
+        WHERE
+            "TR_EXAM_GRPID" = #{exam_grpid}
+    </select>
 </mapper>

@@ -28,10 +28,10 @@ public class GroupService {
         // 훈련중인지 가져오기
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("USERID");
-        int state = groupMapper.getTrUserStateByUserid(id);
-        if(state==2){ // 훈련중임
-            System.out.println("훈련중임...");
-            return 2;
+        List<MgmtVO> mgmtVOS = groupMapper.getTrUserStateByUserid();
+        for (int i=0; i<mgmtVOS.size(); i++){
+            int state = mgmtVOS.get(i).getTr_mgmt_state();
+            if(state==1) return 2;
         }
 
         // 해당 팀에 몇명 있는지 가져오기

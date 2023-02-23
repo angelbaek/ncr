@@ -53,6 +53,7 @@
             "TR_USER_ID" = #{tr_user_id} AND
             "TR_NUM" = #{tr_num} AND
             "TR_EXAM_GRPID" = #{tr_exam_grpid}
+        ORDER BY "TR_EXAM_ID" ASC
     </select>
 
     <!--ExamStat 테이블 stat_id로 유저 아이디 가져오기-->
@@ -108,60 +109,60 @@
     <!--매트릭스 id, grp, num, grpid로 최대항수, 실제 항수 구하기-->
     <select id="getTotalAnsCorrectTrue" resultType="map">
         SELECT
-            count("STAT_ID") AS total,
-            (SELECT
-                count("STAT_ID")
-            FROM
-                "TN_TRAIN_MATRIXSTAT"
-            WHERE
-                "TR_USER_GRP" = #{tr_user_grp} AND
-                "TR_NUM" = #{tr_num} AND
-                "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
-                "MA_MATRIX_ID" = #{ma_matrix_id} AND
-                "CORRECT_ANSWER" =1) AS real,
-            "MA_MATRIX_ID",
-            "MA_TACTICS_ID",
-            (SELECT
-                "MA_TACTICS_TECH"
-            FROM
-                "TC_MITERATTCK_MATRIX"
-            WHERE
-                "MA_MATRIX_ID" = #{ma_matrix_id}) AS MA_TACTICS_TECH,
-            (SELECT
-                "MA_TACTICS_MITIG"
-            FROM
-                "TC_MITERATTCK_MATRIX"
-            WHERE
-                "MA_MATRIX_ID" = #{ma_matrix_id}) AS MA_TACTICS_MITIG,
-            (SELECT
-                "MA_TACTICS_DESC"
-            FROM
-                "TC_MITERATTCK_TACTICS"
-            WHERE
-                "MA_TACTICS_ID" = #{ma_tactics_id}) AS MA_TACTICS_DESC,
-            (SELECT
-                "MA_TACTICS_NAME"
-            FROM
-                "TC_MITERATTCK_TACTICS"
-            WHERE
-                "MA_TACTICS_ID" = #{ma_tactics_id}) AS MA_TACTICS_NAME,
-        CAST((SELECT
-                "OBJECT_ID"
-            FROM
-                "TC_MITERATTCK_TACTICS"
-            WHERE
-                "MA_TACTICS_ID" = #{ma_tactics_id}) AS INTEGER) AS OBJECT_ID
+        count("STAT_ID") AS total,
+        (SELECT
+        count("STAT_ID")
         FROM
-            "TN_TRAIN_MATRIXSTAT"
+        "TN_TRAIN_MATRIXSTAT"
         WHERE
-            "TR_USER_GRP" = #{tr_user_grp} AND
-            "TR_NUM" = #{tr_num} AND
-            "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
-            "MA_MATRIX_ID" = #{ma_matrix_id}
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+        "MA_MATRIX_ID" = #{ma_matrix_id} AND
+        "CORRECT_ANSWER" =1) AS real,
+        "MA_MATRIX_ID",
+        "MA_TACTICS_ID",
+        (SELECT
+        "MA_TACTICS_TECH"
+        FROM
+        "TC_MITERATTCK_MATRIX"
+        WHERE
+        "MA_MATRIX_ID" = #{ma_matrix_id}) AS MA_TACTICS_TECH,
+        (SELECT
+        "MA_TACTICS_MITIG"
+        FROM
+        "TC_MITERATTCK_MATRIX"
+        WHERE
+        "MA_MATRIX_ID" = #{ma_matrix_id}) AS MA_TACTICS_MITIG,
+        (SELECT
+        "MA_TACTICS_DESC"
+        FROM
+        "TC_MITERATTCK_TACTICS"
+        WHERE
+        "MA_TACTICS_ID" = #{ma_tactics_id}) AS MA_TACTICS_DESC,
+        (SELECT
+        "MA_TACTICS_NAME"
+        FROM
+        "TC_MITERATTCK_TACTICS"
+        WHERE
+        "MA_TACTICS_ID" = #{ma_tactics_id}) AS MA_TACTICS_NAME,
+        CAST((SELECT
+        "OBJECT_ID"
+        FROM
+        "TC_MITERATTCK_TACTICS"
+        WHERE
+        "MA_TACTICS_ID" = #{ma_tactics_id}) AS INTEGER) AS OBJECT_ID
+        FROM
+        "TN_TRAIN_MATRIXSTAT"
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+        "MA_MATRIX_ID" = #{ma_matrix_id}
         GROUP BY
-            "MA_MATRIX_ID", "MA_TACTICS_ID", OBJECT_ID
+        "MA_MATRIX_ID", "MA_TACTICS_ID", OBJECT_ID
         ORDER BY
-            OBJECT_ID ASC
+        OBJECT_ID ASC
     </select>
 
     <!--해당문제 기본 시간 가져오기-->

@@ -374,10 +374,17 @@ tr td {
   margin-bottom: 100px;
   margin-left: 5px;
   display: inline-block;
-  height: 200px;
-  width: 30%;
+  height: auto;
+  width: 37%;
   text-align: left;
   vertical-align: middle;
+}
+.common_exam_contents div {
+  /* width: 700px; */
+  width: auto;
+}
+.common_exam_contents div div {
+  display: inline-block;
 }
 .common_exam_contents input {
   margin-right: 5px;

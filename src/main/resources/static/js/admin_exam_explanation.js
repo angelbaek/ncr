@@ -14,8 +14,114 @@ var grpnum = 0;
 grpnum = grpnameAndGrpnum["num"];
 // 문제 그룹 id
 var examGrpid = 0;
+// 경과시간
+// var time = timeReturn(); //기준시간 작성
+var time = 60;
+var invalidata;
+var timeoutId;
+// 테스트를 위한 임시 시간
+var min = ""; //분
+var sec = ""; //초
+/**
+ *  css =================================================================================
+ */
+$(".submit_popup").css("display", "none");
+$(".hint_popup").css("display", "none");
+$(".resultTrue").css("display", "none");
+$(".back").css("display", "none");
+
+// 스크롤에 따른 이벤트
+$(window).scroll(function () {
+  var height = $(window).scrollTop();
+  if (height > 100) {
+    $(".now_exam_status").css("position", "fixed");
+    $(".now_exam_status").css("width", "75%");
+    $(".now_exam_status").css("left", "250px");
+    $(".now_exam_status").css("backgroundColor", "white");
+    $(".now_exam_status").css("paddingTop", "25px");
+    $(".now_exam_status").css("paddingBottom", "10px");
+    $(".now_exam_status").css("paddingLeft", "10px");
+    $(".now_exam_status").css("top", "0");
+    $(".now_exam_status").css("z-index", "2");
+    // $(".now_exam_status").css(
+    //   "box-shadow",
+    //   "0px 0.5px 0px 0px rgb(0 0 0 / 30%)"
+    // );
+    $(".now_exam_status").css("top", "0");
+    // 추가
+    $(".now_exam_status").css("height", "70px");
+    $(".exam_status_score").css("padding-left", "300px");
+    // 헤더 추가
+    $(".top_user_info").css("position", "fixed");
+    $(".top_user_info").css("backgroundColor", "white");
+    $(".top_user_info").css("color", "black");
+    $(".top_user_info").css("box-shadow", "0px 0.5px 0px 1px rgb(0 0 0 / 30%)");
+    //로그아웃
+    $(".logout_btn").css("color", "white");
+    //사용자 정보
+    $(".userName").css("font-weight", "bold");
+  } else {
+    $(".now_exam_status").css("position", "relative");
+    $(".now_exam_status").css("width", "auto");
+    $(".now_exam_status").css("left", "auto");
+    // $(".now_exam_status").css("backgroundColor", "transparent");
+    $(".now_exam_status").css("paddingTop", "15px");
+    $(".now_exam_status").css("paddingBottom", "0px");
+    $(".now_exam_status").css("paddingLeft", "0px");
+    // $(".now_exam_status").css("margin-top", "-100px");
+    // $(".exam_status_vm").css("padding-top", "-300px");
+    $(".now_exam_status").css("z-index", "1");
+    $(".now_exam_status").css("box-shadow", "none");
+    //추가
+    // $(".now_exam_status").css("height", "10px");
+    $(".exam_status_score").css("margin-left", "330px");
+    $(".exam_status_score").css("padding-left", "300px");
+    // 헤더 추가
+    $(".top_user_info").css("position", "relative");
+    $(".top_user_info").css("backgroundColor", "#6777ef");
+    $(".top_user_info").css("color", "white");
+    $(".top_user_info").css("box-shadow", "none");
+    //?
+    $(".contents").css("margin-top", "0px");
+    //사용자 정보
+    $(".userName").css("font-weight", "300");
+  }
+});
+/**
+ *  css end==============================================================================
+ */
+/**
+ *  time ================================================================================
+ */
+
+//setInterval(함수, 시간) : 주기적인 실행
+invalidata = setInterval(function () {
+  //parseInt() : 정수를 반환
+  h = parseInt(time / 3600); // 시
+  m = parseInt((time - h * 3600) / 60);
+  sec = time % 60; //나머지를 계산
+
+  document.getElementById("demo").innerHTML =
+    " &nbsp" + h + "시 " + m + "분 " + sec + "초 ";
+  time--;
+
+  //타임아웃 시
+  if (time < 0) {
+    clearInterval(invalidata); //setInterval() 실행을 끝냄
+    document.getElementById("demo").innerHTML = "제한 시간이 끝났습니다.";
+    alert("제한 시간이 종료되었습니다.");
+    // 업데이트
+    endTimeUpdateTime();
+    $(".back").css("display", "block");
+    $(".common_exam_contents button").prop("disabled", true);
+    $(".common_exam_contents button").css("backgroundColor", "gray");
+  }
+}, 1000);
+/**
+ *  time end=============================================================================
+ */
 // 세션 가져오기
-// sessionManagementForAdmin();
+sessionManagementForAdmin();
 // 유저 팀코드
 getStartExamAndGrp(grpname);
 // 훈련자 첫 진입 post
@@ -31,10 +137,6 @@ getTotalStatus(staticAllowSecans);
 // 제출여부
 checkSubmitExam();
 
-// 시간 함수
-function timeReturn() {
-  return time;
-}
 // 훈련 시작한 그룹 불러오기
 function searchMgmtState() {
   //그룹명
@@ -784,9 +886,13 @@ function checkAnsBtnShort(examId) {
       } else if (response == 9) {
         // 정답일때
         alramAns(1);
+        // view update
+        clientViewUpdate();
       } else if (response == 8) {
         // 오답일때
         alramAns(0);
+        // view update
+        clientViewUpdate();
       } else if (response == 3) {
         alert("server에서 data를 받아 올 수 없습니다.");
       }
@@ -985,7 +1091,9 @@ function clientViewUpdate() {
               $(".exam_deduct_status_" + examId).css("display", "block");
               $(".exam_deduct_status_" + examId).text("감점여부: 힌트");
             }
-          } else if (userScore == 0) {
+          } else if (response[i].cnt_try_ans == 1) {
+            ansBtnOff(examId);
+            hintBtnOff(examId);
             // 답을 못맞춤
             // 정답 view
             $(".answer_" + examId).css("display", "block");

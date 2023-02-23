@@ -49,4 +49,7 @@ public interface ExamManagementMapper {
 
     // csv 읽어서 문제 업로드
     int examUpdateByCsv(ExamVO examVO);
+
+    // csv파일을 읽기 위한 문항수 가져오기
+    int getExamLength(int exam_grpid);
 }

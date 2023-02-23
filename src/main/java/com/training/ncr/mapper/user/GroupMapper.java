@@ -27,5 +27,5 @@ public interface GroupMapper {
     int getGrpCountByGrp(UserVO userVO);
 
     // 내가 훈련중인지 가져오기
-    int getTrUserStateByUserid(String id);
+    List<MgmtVO> getTrUserStateByUserid();
 }

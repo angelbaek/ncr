@@ -413,7 +413,7 @@
             "ANSWER_USER_ID" = #{answer_user_id},
             "INPUT_ANSWER" = #{input_answer},
             "RESULT_SCORE" = 0,
-            "CNT_TRY_ANS" = 2
+            "CNT_TRY_ANS" = "CNT_TRY_ANS"+1
         WHERE
             "TR_USER_GRP" = #{tr_user_grp}
             AND "TEAM_CD" = #{team_cd}
@@ -744,7 +744,6 @@
         "END_TIME" = NOW()
         WHERE
         "TR_USER_GRP" = #{tr_user_grp} AND
-        "TR_USER_ID" = #{tr_user_id} AND
         "TR_NUM" = #{tr_num} AND
         "TR_EXAM_GRPID" = #{tr_exam_grpid}
     </update>

@@ -5,6 +5,7 @@ import com.training.ncr.mapper.admin.ExamManagementMapper;
 import com.training.ncr.vo.admin.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -86,5 +87,10 @@ public class ExamManagementService {
     public int examUpdateByCsv(ExamVO examVO){
         System.out.println("CSV 문제 업로드...");
         return examManagementMapper.examUpdateByCsv(examVO);
-    };
+    }
+
+    // csv파일을 읽기 위한 문항수 가져오기
+    public int getExamLength(int exam_grpid){
+        return examManagementMapper.getExamLength(exam_grpid);
+    }
 }

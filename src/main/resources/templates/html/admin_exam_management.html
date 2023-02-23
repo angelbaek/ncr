@@ -300,6 +300,7 @@
   </script>
   <script>
     var file;
+    var count = 0;
     document.getElementById("exam_file").onchange = function () {
       // 파일
       file = this.files[0];
@@ -319,15 +320,24 @@
         // 파일 읽기
         var reader = new FileReader();
         reader.onload = function (progressEvent) {
+          // 여기에 길이 함수 맞추자
+          let examLength = getExamLength();
+          // console.log(examLength);
           // Entire file
           // console.log(this.result);
-
           // By lines
           var lines = this.result.split("\n");
+          // 조건식 +2한 이유는 기본 줄 수에서 +2됨
+          // console.log("줄수:" + lines.length);
+          if (examLength + 2 < lines.length) {
+            alert("CSV파일의 문항수를 확인하세요");
+            return;
+          }
           for (var line = 1; line < lines.length; line++) {
             // console.log("포함?" + lines[line].includes('"'));
+            // console.log("길이:" + lines.length);
             if (lines[line].indexOf('"') != -1) {
-              console.log("포함됨");
+              // console.log("포함됨");
               var start = lines[line].indexOf('"');
               // 첫번째 " 자름
               var substr = lines[line].substr(start + 1, lines[line].length);
@@ -336,11 +346,11 @@
               var twoSubstr = substr.substr(0, end); // 정답
               var sl = twoSubstr.split(",");
               var leng = sl.length - 1;
-              console.log("몇번 자름?:" + leng);
-              console.log(twoSubstr);
+              // console.log("몇번 자름?:" + leng);
+              // console.log(twoSubstr);
               // 여기까지가 구하는 식
               var str = lines[line].split(",");
-              console.log(str);
+              // console.log(str);
               // 문제 번호
               var exam_num = str[0];
               // 문제 유형
@@ -358,6 +368,7 @@
               for (var i = 0; i <= leng; i++) {
                 var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
                 if (i == 0) {
+                  // console.log(str[8 + i]);
                   exam_ans += str[8 + i].replace(reg, "") + ",";
                 } else if (i == leng) {
                   exam_ans += str[8 + i].replace(reg, "");
@@ -365,7 +376,7 @@
                   exam_ans += str[8 + i] + ",";
                 }
               }
-              console.log("정답:" + exam_ans);
+              // console.log("정답:" + exam_ans);
               // 배점
               var exam_score = str[9 + leng];
               // 난이도
@@ -379,7 +390,7 @@
               // 매트릭스 ID
               var exam_matrix = str[14 + leng];
 
-              console.log("한줄 읽기:" + lines[line]);
+              // console.log("한줄 읽기:" + lines[line]);
               // ajax TN_TRAIN_EXAM update
               var jsonData = {
                 tr_exam_grpid: grpid,
@@ -399,7 +410,7 @@
                 ma_tactics_id: exam_tac,
                 ma_matrix_id: exam_matrix,
               };
-              console.log(jsonData);
+              // console.log(jsonData);
               $.ajax({
                 url: "http://192.168.32.44:8080/admin/exam_update_csv",
                 type: "PATCH",
@@ -409,9 +420,9 @@
                 success: function (response) {},
               });
             } else {
-              console.log("미포함");
+              // console.log("미포함");
               var str = lines[line].split(",");
-              console.log(str);
+              // console.log(str);
               // 문제 번호
               var exam_num = str[0];
               // 문제 유형
@@ -439,7 +450,7 @@
               // 매트릭스 ID
               var exam_matrix = str[14];
 
-              console.log("한줄 읽기:" + lines[line]);
+              // console.log("한줄 읽기:" + lines[line]);
               // ajax TN_TRAIN_EXAM update
               var jsonData = {
                 tr_exam_grpid: grpid,
@@ -459,23 +470,25 @@
                 ma_tactics_id: exam_tac,
                 ma_matrix_id: exam_matrix,
               };
-              console.log(jsonData);
+              // console.log(jsonData);
               $.ajax({
                 url: "http://192.168.32.44:8080/admin/exam_update_csv",
                 type: "PATCH",
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(jsonData),
-                success: function (response) {},
+                success: function (response) {
+                  count++;
+                  if (count == 1) {
+                    alert("문제를 업로드 하였습니다");
+                  }
+                },
               });
             }
           }
         };
-
-        console.log(file);
-
+        // console.log(file);
         reader.readAsText(file, "euc-kr");
-        alert("문제를 업로드 하였습니다");
         $(".popup_exam").toggle();
         $(".back").toggle();
         scrollPlay();

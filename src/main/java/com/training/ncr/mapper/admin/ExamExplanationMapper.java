@@ -146,4 +146,7 @@ public interface ExamExplanationMapper {
 
     // 나의 끝난 시간이 있는지 조회
     String checkMyEndTime(ExamStatVO examStatVO);
+
+    // 관리자의 종료시간 조회
+    String getAdminEndTime(ExamStatVO examStatVO);
 }

@@ -212,6 +212,7 @@ public class UserExplanationService {
 
         // 정답 입력횟수 받아오기
         int tryAns = userExplanationMapper.checkTryAns(examResultTeamVO);
+        System.out.println("미리 횟수 찍어보자:"+tryAns);
 
         // 힌트 사용여부 check
         int check = userExplanationMapper.checkHintUsing(examResultTeamVO);
@@ -299,6 +300,7 @@ public class UserExplanationService {
             }
         }else{ // 비활성화
             //정답 입력횟수가 남아있는지 check
+            System.out.println("입력횟수:"+tryAns+" 유저입력:"+userAns+" 답:"+ans);
             if(tryAns==0){ // 남아있음 (1번 품)
                 if(userAns.equals(ans)){ // 정답일때
                     if(check==1){ // 힌트 사용

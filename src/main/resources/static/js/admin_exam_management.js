@@ -25,7 +25,6 @@ function resetExam() {
   $("input[name=trio]").prop("checked", false);
   // 복수 정답 해제
   $(".tr_exam_mult_ans").prop("checked", false);
-  alert("저장버튼을 눌러 초기화된 값을 저장하세요.");
 }
 
 // 문제 그룹 불러오기
@@ -36,7 +35,7 @@ function examGroupCall() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       for (var i = 0; i < response.length; i++) {
         html +=
           "<option value=" +
@@ -63,7 +62,7 @@ function selectGrpChange() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       // 추가 edit
       for (var i = 0; i < response[0].tr_exam_count; i++) {
         html +=
@@ -579,4 +578,20 @@ function examFinalSave() {
       }
     },
   });
+}
+
+function getExamLength() {
+  let leng = 0;
+  var exam_grpid = $("select[name=grp_name] option:selected").val();
+  $.ajax({
+    async: false,
+    url: "http://192.168.32.44:8080/admin/get_exam_length/" + exam_grpid,
+    type: "GET",
+    dataType: "json",
+    success: function (response) {
+      // console.log(response);
+      leng = response;
+    },
+  });
+  return leng;
 }

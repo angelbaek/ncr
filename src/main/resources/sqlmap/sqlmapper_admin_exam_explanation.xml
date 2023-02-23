@@ -330,7 +330,7 @@
         "ANSWER_USER_ID" = #{answer_user_id},
         "INPUT_ANSWER" = #{input_answer},
         "RESULT_SCORE" = 0,
-        "CNT_TRY_ANS" = 2
+        "CNT_TRY_ANS" = "CNT_TRY_ANS"+1
         WHERE
         "TR_USER_GRP" = #{tr_user_grp}
         AND "TEAM_CD" = #{team_cd}
@@ -676,4 +676,27 @@
         "TR_NUM" = #{tr_num} AND
         "TR_EXAM_GRPID" = #{tr_exam_grpid}
     </select>
+
+    <!--관리자의 종료시간 조회-->
+    <select id="getAdminEndTime" resultType="String">
+        SELECT
+            "END_TIME"
+        FROM
+            "TN_TRAIN_EXAMSTAT_TEAM"
+        WHERE
+            "TR_NUM" = #{tr_num} AND
+            "TR_USER_GRP" = 99 AND
+            "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <update id="endTimeUpdateTime">
+        UPDATE "TN_TRAIN_EXAMSTAT_TEAM"
+        SET
+            "END_TIME" = NOW(),
+            "SUBMIT_ANSWER" = 1
+        WHERE
+            "TR_NUM" = #{tr_num} AND
+            "TR_USER_GRP" = 99 AND
+            "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </update>
 </mapper>

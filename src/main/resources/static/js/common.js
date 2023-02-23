@@ -119,13 +119,13 @@ function sessionManagementForUser() {
 
 // 세션 관리 (관리자용)
 function sessionManagementForAdmin() {
-  console.log("관리자 사용자 세션 체크...");
+  // console.log("관리자 사용자 세션 체크...");
   $.ajax({
     url: "http://192.168.32.44:8080/sessionCheck",
     type: "GET",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       if (response == true) {
         alert("로그인 후 사용가능합니다.");
         location.replace("/");

@@ -1,5 +1,5 @@
 // 세션 가져오기
-// sessionManagementForUser();
+sessionManagementForAdmin();
 // 해당하는 매트릭스id를 저장할 배열
 let matrixArray = new Array();
 // 훈련중인 팀별, 개인별 현황 보여주기
