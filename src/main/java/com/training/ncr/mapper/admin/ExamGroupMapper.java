@@ -43,4 +43,7 @@ public interface ExamGroupMapper {
 
     // 문제그룹 수정(update)
     int updateGrpByGrpName(ExamGrpVO examGrpVO);
+
+    // 문제이름으로 문제그룹의 문제갯수 가져오기
+    int getExamCountByGrpName(String tr_exam_grpname);
 }

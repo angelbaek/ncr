@@ -49,7 +49,7 @@ public interface UserStaticsMapper {
     int getGrpidByMgmtStateOn();
 
     // 훈련팀 기관명 가져오기
-    List<String> getTeamOrg(String team_cd);
+    String getTeamOrg(String id);
 
     // 선택한 매트릭스 내용 가져오기
     List<Map<String,String>> popUp(MatrixVO matrixVO);
@@ -62,4 +62,10 @@ public interface UserStaticsMapper {
     int updateExamResultTeam(Map<String,Object> map);
 
     int updateMatrixStat(Map<String, Object> map);
+
+    // 그룹번호, 차시,그룹id로 유저id가져오기
+    List<String> getUserIdByGrpAndNumAndGrpId(Map<String,Object> map);
+
+    // 훈련자의 grp 가져오기
+    int getGrpByUserIdAndTrNum(UserStaticsVO userStaticsVO);
 }

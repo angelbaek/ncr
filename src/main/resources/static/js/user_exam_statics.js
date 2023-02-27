@@ -93,7 +93,6 @@ function getExamResultByNumAndType(num, type, grpId) {
         console.log("팀별 조회...");
         for (var i = 0; i < response.length; i++) {
           var team = response[i].team_cd; // 팀코드
-          var targetOrg = getTeamOrg(team);
           var org; // 기관명
           var num = response[i].tr_num; // 차시
           var grpId = response[i].tr_exam_grpid; // grp id
@@ -102,6 +101,8 @@ function getExamResultByNumAndType(num, type, grpId) {
           var ans = response[i].cnt_correct_ans; // 정답수
           var falseAns = response[i].cnt_false_ans; // 오답수
           var submit = response[i].submit_answer; // 답안제출
+          // 로직 기관명 구하기
+          var targetOrg = getTeamOrg(num, grpId, grp);
           if (submit == 1) {
             submit = "제출";
           } else {
@@ -566,8 +567,8 @@ function getExamResultTeam(statId, num, grpId, grp) {
       }
       $(".user_body_total").append(htmlHead);
       $(".user_body_total").append(htmlBody);
-      getMatrixStat(grpid, grp, num);
-      getMiterAttackMatrix(grpid, grp, num);
+      // getMatrixStat(grpid, grp, num);
+      // getMiterAttackMatrix(grpid, grp, num);
     },
   });
 }
@@ -710,82 +711,86 @@ function toggleDetail() {
   $(".user_body_status").css("display", "table");
 }
 
-function refresh() {
-  var type = $("select[name=type_check] option:selected").val();
-  if (type == 0) {
-    alert("유형을 선택 후 사용하세요");
-    return;
-  }
-  // 버튼 로직
-  if (on == false) {
-    on = true;
-  } else if (on == true) {
-    on = false;
-  }
-  console.log(on);
-  // 배경 css
-  bg++;
-  if (bg % 2 != 0) {
-    $(".ratate_btn").css("backgroundColor", "blue");
-    $(".ratate_btn").css("box-shadow", "none");
-    $(".ratate_btn").css("margin-left", "5px");
-    $(".ratate_btn").css("margin-top", "5px");
-    $(".user_num_div").css("display", "none");
-  } else {
-    $(".ratate_btn").css("backgroundColor", "#6777ef");
-    $(".ratate_btn").css("box-shadow", "3px 3px 3px gray");
-    $(".ratate_btn").css("margin-left", "0px");
-    $(".ratate_btn").css("margin-top", "0px");
-    $(".user_num_div").css("display", "inline-block");
-  }
-  // 활성화 여부
-  if (on == true) {
-    console.log("활성화댐");
-    refreshAuto();
-  }
-}
+// function refresh() {
+//   var type = $("select[name=type_check] option:selected").val();
+//   if (type == 0) {
+//     alert("유형을 선택 후 사용하세요");
+//     return;
+//   }
+//   // 버튼 로직
+//   if (on == false) {
+//     on = true;
+//   } else if (on == true) {
+//     on = false;
+//   }
+//   console.log(on);
+//   // 배경 css
+//   bg++;
+//   if (bg % 2 != 0) {
+//     $(".ratate_btn").css("backgroundColor", "blue");
+//     $(".ratate_btn").css("box-shadow", "none");
+//     $(".ratate_btn").css("margin-left", "5px");
+//     $(".ratate_btn").css("margin-top", "5px");
+//     $(".user_num_div").css("display", "none");
+//   } else {
+//     $(".ratate_btn").css("backgroundColor", "#6777ef");
+//     $(".ratate_btn").css("box-shadow", "3px 3px 3px gray");
+//     $(".ratate_btn").css("margin-left", "0px");
+//     $(".ratate_btn").css("margin-top", "0px");
+//     $(".user_num_div").css("display", "inline-block");
+//   }
+//   // 활성화 여부
+//   if (on == true) {
+//     console.log("활성화댐");
+//     // refreshAuto();
+//   }
+// }
 
-// 재귀함수
-function refreshAuto() {
-  var type = $("select[name=type_check] option:selected").val();
-  if (type == 0) {
-    alert("유형을 선택 후 사용하세요");
-    return;
-  }
-  console.log("재귀함수 실행...");
-  $(".rotate_ic").css("transform", "rotate(" + turn + "turn)");
-  turn++;
-  console.log("on의 상태:" + on);
-  if (on) {
-    setTimeout(function () {
-      grpId = getGrpid();
-      console.log("타입:" + type + " grpId:" + grpId);
-      getExamResultByNumAndType(0, type, grpId);
-      refreshAuto();
-    }, 1500);
-  } else {
-  }
-}
+// // 재귀함수
+// function refreshAuto() {
+//   var type = $("select[name=type_check] option:selected").val();
+//   if (type == 0) {
+//     alert("유형을 선택 후 사용하세요");
+//     return;
+//   }
+//   console.log("재귀함수 실행...");
+//   $(".rotate_ic").css("transform", "rotate(" + turn + "turn)");
+//   turn++;
+//   console.log("on의 상태:" + on);
+//   if (on) {
+//     setTimeout(function () {
+//       grpId = getGrpid();
+//       console.log("타입:" + type + " grpId:" + grpId);
+//       getExamResultByNumAndType(0, type, grpId);
+//       refreshAuto();
+//     }, 1500);
+//   } else {
+//   }
+// }
 
 // 팀 org 가져오기
-function getTeamOrg(team_cd) {
-  console.log(team_cd);
+function getTeamOrg(num, grpId, grp) {
   let returnVal = "";
+  var jsonData = {
+    num: num,
+    grpId: grpId,
+    grp: grp,
+  };
   $.ajax({
     async: false,
-    url: "http://192.168.32.44:8080/user/static/get_org/" + team_cd,
-    type: "GET",
+    url: "http://192.168.32.44:8080/user/static/get_org",
+    type: "POST",
     dataType: "json",
     contentType: "application/json",
+    data: JSON.stringify(jsonData),
     success: function (response) {
       console.log(response);
       if (response.length > 1) {
         if (response[0] != response[1]) {
-          console.log("서로 다른 이름");
-          returnVal = "상이";
+          returnVal = "-";
         }
       } else if (response[0] == undefined) {
-        returnVal = "미입력";
+        returnVal = "-";
       } else {
         returnVal = response[0];
       }

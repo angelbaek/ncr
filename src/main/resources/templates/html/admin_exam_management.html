@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>기간망 침투대응훈련</title>
   </head>
   <!-- test css -->
   <link rel="stylesheet" href="/static/css/common.css" />
@@ -57,7 +57,6 @@
         <div class="userName">User Name</div>
         <i class="fas fa-caret-down" id="logout"></i>
         <div class="logout_btn" onclick="logOut()">
-          <div class="user_teamcode_view">팀코드</div>
           <div class="user_logout_btn">로그아웃</div>
         </div>
       </div>
@@ -89,12 +88,11 @@
         <div class="exam_answer_div">
           <div class="exam_answer_div_div">
             <div class="exam_answer_title">문제</div>
-            <input class="exam_answer_title_const" type="text" />
+            <!-- <input class="exam_answer_title_const" type="text" /> -->
+            <textarea class="exam_answer_title_const"></textarea>
           </div>
           <div class="answer_input_text">
-            문제유형 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;문제보기
-          </div>
-          <div class="test">
+            <div>문제유형</div>
             <div class="slice_box1">
               <div class="exam_answer_common_text">
                 <input
@@ -119,6 +117,33 @@
                 <div class="exam_answer_common_text_check">단답형</div>
               </div>
             </div>
+          </div>
+          <div class="test">
+            <!-- <div class="slice_box1">
+              <div class="exam_answer_common_text">
+                <input
+                  type="radio"
+                  class="common_check"
+                  value="1"
+                  id="exam-type1"
+                  name="double"
+                />
+                <div class="exam_answer_common_text_check" id="only_css_check">
+                  객관식
+                </div>
+              </div>
+              <div class="exam_answer_common_text" id="left_call_div">
+                <input
+                  type="radio"
+                  class="common_check"
+                  value="2"
+                  id="exam-type2"
+                  name="double"
+                />
+                <div class="exam_answer_common_text_check">단답형</div>
+              </div>
+            </div> -->
+            <div class="exam_show_title">문제보기</div>
             <div class="slice_box2">
               <div class="exam_answer_common_text">
                 <div>1번</div>
@@ -200,7 +225,7 @@
     <div class="popup_hint">
       <div class="popup_hint_txt">힌트 내용</div>
       <input class="hint_input" type="text" />
-      <div class="popup_hint_txt">힌트 파일 첨부</div>
+      <div class="popup_hint_txt">힌트 파일</div>
       <!-- <input name="uploadFiles" type="file" id="hint_file" /> -->
       <form id="fileUploadForm" enctype="multipart/form-data">
         <input type="file" id="fileInput" name="fileInput" />
@@ -213,7 +238,7 @@
     </div>
     <!-- 문제 업로드 div -->
     <div class="popup_exam">
-      <div class="popup_exam_txt">문제 파일 첨부</div>
+      <div class="popup_exam_txt">문제 파일</div>
       <input type="file" name="file" id="exam_file" accept=".csv" />
       <div>
         <button onclick="testing()">확인</button>
@@ -306,6 +331,8 @@
       file = this.files[0];
     };
     function testing() {
+      // 가이드 라인 변수
+      var num = 2;
       if (file == undefined) {
         alert("csv파일을 선택하세요.");
         $("#exam_file").focus();
@@ -329,7 +356,7 @@
           var lines = this.result.split("\n");
           // 조건식 +2한 이유는 기본 줄 수에서 +2됨
           // console.log("줄수:" + lines.length);
-          if (examLength + 2 < lines.length) {
+          if (examLength + 2 + num < lines.length) {
             alert("CSV파일의 문항수를 확인하세요");
             return;
           }
@@ -423,32 +450,59 @@
               // console.log("미포함");
               var str = lines[line].split(",");
               // console.log(str);
+              // // 문제 번호
+              // var exam_num = str[0];
+              // // 문제 유형
+              // var exam_type = str[1];
+              // // 문제 내용
+              // var exam_cont = str[2];
+              // // 객관식_번호
+              // var exam_cho1 = str[3];
+              // var exam_cho2 = str[4];
+              // var exam_cho3 = str[5];
+              // var exam_cho4 = str[6];
+              // var exam_cho5 = str[7];
+              // // 정답
+              // var exam_ans = str[8];
+              // // 배점
+              // var exam_score = str[9];
+              // // 난이도
+              // var exam_level = str[10];
+              // // 복수정답 여부
+              // var exam_mult = str[11];
+              // // 힌트 여부
+              // var exam_hint = str[12];
+              // // 전술 ID
+              // var exam_tac = str[13];
+              // // 매트릭스 ID
+              // var exam_matrix = str[14];
+
               // 문제 번호
-              var exam_num = str[0];
+              var exam_num = str[0 + num];
               // 문제 유형
-              var exam_type = str[1];
+              var exam_type = str[1 + num];
               // 문제 내용
-              var exam_cont = str[2];
+              var exam_cont = str[2 + num];
               // 객관식_번호
-              var exam_cho1 = str[3];
-              var exam_cho2 = str[4];
-              var exam_cho3 = str[5];
-              var exam_cho4 = str[6];
-              var exam_cho5 = str[7];
+              var exam_cho1 = str[3 + num];
+              var exam_cho2 = str[4 + num];
+              var exam_cho3 = str[5 + num];
+              var exam_cho4 = str[6 + num];
+              var exam_cho5 = str[7 + num];
               // 정답
-              var exam_ans = str[8];
+              var exam_ans = str[8 + num];
               // 배점
-              var exam_score = str[9];
+              var exam_score = str[9 + num];
               // 난이도
-              var exam_level = str[10];
+              var exam_level = str[10 + num];
               // 복수정답 여부
-              var exam_mult = str[11];
+              var exam_mult = str[11 + num];
               // 힌트 여부
-              var exam_hint = str[12];
+              var exam_hint = str[12 + num];
               // 전술 ID
-              var exam_tac = str[13];
+              var exam_tac = str[13 + num];
               // 매트릭스 ID
-              var exam_matrix = str[14];
+              var exam_matrix = str[14 + num];
 
               // console.log("한줄 읽기:" + lines[line]);
               // ajax TN_TRAIN_EXAM update

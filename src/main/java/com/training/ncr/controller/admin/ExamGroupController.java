@@ -67,4 +67,10 @@ public class ExamGroupController {
     public int updateGrpByGrpName(@RequestBody ExamGrpVO examGrpVO){
         return examGroupService.updateGrpByGrpName(examGrpVO);
     }
+
+    // 문제이름으로 문제그룹의 문제갯수 가져오기
+    @GetMapping("/get_examcount_by_grpname/{tr_exam_grpname}")
+    public int getExamCountByGrpName(@PathVariable String tr_exam_grpname){
+        return examGroupService.getExamCountByGrpName(tr_exam_grpname);
+    }
 }

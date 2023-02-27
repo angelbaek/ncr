@@ -23,8 +23,8 @@ public class UserStaticsController {
 
     // 선택한 차시, 유형으로 뿌려주기
     @PostMapping("/get_exam_result_by_num_and_type")
-    public Object getExamResultByNumAndType(@RequestBody UserStaticsVO userStaticsVO){
-        return userStaticsService.getExamResultByNumAndType(userStaticsVO);
+    public Object getExamResultByNumAndType(@RequestBody UserStaticsVO userStaticsVO,HttpServletRequest request){
+        return userStaticsService.getExamResultByNumAndType(userStaticsVO,request);
     }
 
     // 훈련자 기관명 가져오기
@@ -70,9 +70,9 @@ public class UserStaticsController {
     }
 
     // 훈련팀 기관명 가져오기
-    @GetMapping("/static/get_org/{team_cd}")
-    public List<String> getTeamOrg(@PathVariable String team_cd){
-        return userStaticsService.getTeamOrg(team_cd);
+    @PostMapping("/static/get_org")
+    public List<String> getTeamOrg(@RequestBody Map<String,Object> map){
+        return userStaticsService.getTeamOrg(map);
     }
 
     // 선택한 매트릭스 내용 가져오기

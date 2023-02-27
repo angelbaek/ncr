@@ -648,4 +648,9 @@ public class UserExplanationService {
             return 0;
         }
     }
+
+    // 문제id로 문제형식 가져오기
+    public int getExamTypeByExamId(int examId){
+        return userExplanationMapper.getExamTypeByExamId(examId);
+    };
 }

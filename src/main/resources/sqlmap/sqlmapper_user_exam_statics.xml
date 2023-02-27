@@ -14,6 +14,9 @@
             <if test="num != 0">
                 AND "TR_NUM" = #{num}
             </if>
+            <if test="id != null">
+                AND "TR_USER_ID" = #{id}
+            </if>
         </where>
     </select>
 
@@ -29,6 +32,9 @@
             </if>
             <if test="num != 0">
                 AND "TR_NUM" = #{num}
+            </if>
+            <if test="grp != 0">
+                AND "TR_USER_GRP" = #{grp}
             </if>
         </where>
     </select>
@@ -197,7 +203,18 @@
         FROM
             "TN_USER"
         WHERE
-            "TEAM_CD" = #{team_cd}
+            "TR_USER_ID" = #{id}
+    </select>
+
+    <!--그룹번호, 차시,그룹id로 유저id가져오기-->
+    <select id="getUserIdByGrpAndNumAndGrpId" resultType="String">
+        SELECT
+            "TR_USER_ID"
+        FROM "TN_TRAIN_EXAMSTAT"
+        WHERE
+            "TR_USER_GRP" = #{grp} AND
+            "TR_NUM" = #{num} AND
+            "TR_EXAM_GRPID" = #{grpId}
     </select>
 
     <!--선택한 매트릭스 내용 가져오기-->
@@ -257,4 +274,15 @@
             "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
             "TR_EXAM_ID" = #{tr_exam_id}
     </update>
+
+    <!--훈련자의 grp를 가져오기-->
+    <select id="getGrpByUserIdAndTrNum" resultType="int">
+        SELECT
+            "TR_USER_GRP"
+        FROM
+            "TN_TRAIN_EXAMSTAT"
+        WHERE
+            "TR_USER_ID" = #{id} AND
+            "TR_NUM" = #{num}
+    </select>
 </mapper>

@@ -1,3 +1,6 @@
+* {
+  transition: 0s;
+}
 .top_user_info {
   transition: 0s all;
   /* text-align: right; */
@@ -169,6 +172,7 @@ tr td {
   color: #34395e;
   font-weight: bold;
 }
+
 .exam_answer_common_text input {
   height: 30px;
   padding: 10px;
@@ -313,10 +317,11 @@ tr td {
 .exam_status_vm {
   width: 50px;
   display: inline-block;
-  /* margin-right: 700px; */
-  transform: translate(0px, -10px);
-  margin-top: 20px;
-  margin-bottom: 20px;
+  float: right;
+  margin-right: 150px;
+  transform: translate(0px, 10px);
+  /* margin-top: 50px; */
+  /* margin-bottom: 20px; */
   /* float: right; */
 }
 
@@ -343,7 +348,7 @@ tr td {
   font-size: 14px;
   text-align: center;
   position: fixed;
-  right: 0;
+  right: 15px;
   top: 54.3%;
   transform: translate(0, -50%);
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>기간망 침투대응훈련</title>
   </head>
   <!-- test css -->
   <link rel="stylesheet" href="/static/css/common.css" />
@@ -39,14 +39,13 @@
         <div class="userName">User Name</div>
         <i class="fas fa-caret-down" id="logout"></i>
         <div class="logout_btn" onclick="logOut()">
-          <div class="user_teamcode_view">팀코드</div>
+          <div class="user_teamcode_view"></div>
           <div class="user_logout_btn">로그아웃</div>
         </div>
       </div>
     </div>
     <!-- 문제 풀이 -->
     <div class="contents">
-      <button class="exam_status_vm">VM</button>
       <div class="now_exam_status">
         <div class="exam_status_time">제한 시간:</div>
         <div id="demo"></div>
@@ -57,6 +56,7 @@
           <div class="total_hint_deduct">힌트점수: -</div>
         </div>
       </div>
+      <button class="exam_status_vm">VM</button>
       <div class="exam_explanation"></div>
       <div class="miter_box">
         <div class="miter_title">MITER ATTACK</div>
@@ -137,6 +137,10 @@
       </div>
       <!-- 제출하기 팝업 -->
       <div class="submit_popup">
+        <div class="submit_popup_count">풀이개수</div>
+        <div class="submit_popup_score">획득점수</div>
+        <div class="submit_popup_deduct">오답감점</div>
+        <div class="submit_popup_hint_deduct">힌트감점</div>
         <div class="submit_popup_contents">
           제출하시면 해당그룹은 더 이상 문제를 풀 수 없습니다.<br /><br />제출
           하시겠습니까?
@@ -155,6 +159,15 @@
     integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"
   ></script>
+  <script>
+    /**
+     *  css =================================================================================
+     */
+    $(".submit_popup").css("display", "none");
+    $(".hint_popup").css("display", "none");
+    $(".resultTrue").css("display", "none");
+    $(".back").css("display", "none");
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.5.0/dist/jszip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
   <script src="/static/js/common.js"></script>

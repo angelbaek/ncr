@@ -132,14 +132,25 @@ tr {
   display: block;
 } */
 .dropdown a {
+  float: left;
+  margin-left: 5px;
+  margin-bottom: 10px;
   font-weight: bold;
   /* text-decoration: line-through; */
 }
 
 .common_left_menubar {
+  width: auto;
+  height: 20px;
   font-size: 16px;
   color: #34395e;
+  text-align: left;
   margin: 50px;
+  margin-top: 70px;
+  margin-left: 80px;
+}
+.common_left_menubar a {
+  text-align: left;
 }
 #left_menubar a {
   font-size: 14px;
@@ -157,12 +168,20 @@ a:hover {
 
 .tr_add {
   display: grid;
-  grid-template-columns: repeat(20, 70px);
-  /* grid-template-rows: 50px 50px; */
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  grid-auto-rows: 50px;
+  grid-gap: 10px;
+  max-width: 1200px;
+  width: auto;
   align-items: center;
   place-items: center;
+  /* overflow: scroll; */
 }
-
+@media screen and (max-width: 1300px) {
+  .tr_add {
+    max-width: 500px;
+  }
+}
 .exam_common_css {
   /* background-color: lightblue;
   border: 1px solid darkblue; */

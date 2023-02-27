@@ -26,8 +26,14 @@ public class UserStaticsService {
     UserStaticsMapper userStaticsMapper;
 
     // 선택한 차시, 유형으로 뿌려주기
-    public Object getExamResultByNumAndType(UserStaticsVO userStaticsVO){
-
+    public Object getExamResultByNumAndType(UserStaticsVO userStaticsVO,HttpServletRequest request){
+        // 사용자 인지 구별을 위한 세션 받기
+        HttpSession session = request.getSession();
+        String id = (String) session.getAttribute("USERID");
+        if(id!=null) {
+            userStaticsVO.setId(id);
+            userStaticsVO.setGrp(userStaticsMapper.getGrpByUserIdAndTrNum(userStaticsVO));
+        }
         // 팀별, 개인 파악하기
         int type = userStaticsVO.getType();
         // 훈련 차시
@@ -107,8 +113,18 @@ public class UserStaticsService {
     }
 
     // 훈련팀 기관명 가져오기
-    public List<String> getTeamOrg(String team_cd){
-        return userStaticsMapper.getTeamOrg(team_cd);
+    public List<String> getTeamOrg(Map<String,Object> map){
+        List<String> strings = userStaticsMapper.getUserIdByGrpAndNumAndGrpId(map);
+        if(strings.size()>0){
+            List<String> resultString = new ArrayList<>();
+            for(int i=0; i<strings.size(); i++){
+                String id = strings.get(i);
+                resultString.add(userStaticsMapper.getTeamOrg(id));
+            }
+            return resultString;
+        }else{
+            return null;
+        }
     }
 
     // 선택한 매트릭스 내용 가져오기

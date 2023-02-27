@@ -79,8 +79,8 @@ public class ExamManagementService {
     }
 
     // 문제 그룹id로 matrix 가져오기
-    public List<MatrixVO> getMiterMatrixByGrpid(int grpId){
-        return examManagementMapper.getMiterMatrixByGrpid(grpId);
+    public List<MatrixVO> getMiterMatrixByGrpid(MatrixVO matrixVO){
+        return examManagementMapper.getMiterMatrixByGrpid(matrixVO);
     }
 
     // csv 읽어서 문제 업로드

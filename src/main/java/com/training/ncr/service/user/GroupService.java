@@ -7,6 +7,7 @@ import com.training.ncr.vo.UserVO;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -53,5 +54,15 @@ public class GroupService {
     // 아이디로 정보 조회
     public List<UserVO> getUserInfo(String id){
         return groupMapper.getUserInfo(id);
+    }
+
+    // 훈련 시작 여부
+    public int getTrainingState(@PathVariable int num){
+        return groupMapper.getTrainingState(num);
+    }
+
+    // 활성화된 문제그룹이 있는지 가져오기
+    public int getTrainingStateActiveOn(){
+        return groupMapper.getTrainingStateActiveOn();
     }
 }

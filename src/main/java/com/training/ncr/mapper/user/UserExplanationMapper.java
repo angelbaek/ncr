@@ -169,4 +169,7 @@ public interface UserExplanationMapper {
 
     // 훈련자 TN_USER 테이블 훈련 진행상태 변경
     int updateTrUserIdByTrUserId(String id);
+
+    // 문제id로 문제형식 가져오기
+    int getExamTypeByExamId(int examId);
 }

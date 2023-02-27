@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>기간망 침투대응훈련</title>
   </head>
   <!-- test css -->
   <link rel="stylesheet" href="/static/css/common.css" />
@@ -59,7 +59,6 @@
         <div class="userName">User Name</div>
         <i class="fas fa-caret-down" id="logout"></i>
         <div class="logout_btn" onclick="logOut()">
-          <div class="user_teamcode_view">팀코드</div>
           <div class="user_logout_btn">로그아웃</div>
         </div>
       </div>
@@ -79,18 +78,14 @@
           <div class="contents_setup_one">
             <input class="check_one" type="radio" name="double" />
             <div>1차시</div>
-            <select name="location1" id="selectOne">
-              <option value="">직접 선택</option>
-            </select>
+            <select name="location1" id="selectOne"></select>
             <button class="btn_ok1" onclick="grpActive(1)">확인</button>
             <button class="btn_edit1" onclick="edit(1)">수정</button>
           </div>
           <div class="contents_setup_one">
             <input class="check_two" type="radio" name="double" />
             <div>2차시</div>
-            <select name="location2" id="selectTwo">
-              <option value="">직접 선택</option>
-            </select>
+            <select name="location2" id="selectTwo"></select>
             <button class="btn_ok2" onclick="grpActive(2)">확인</button>
             <button class="btn_edit2" onclick="edit(2)">수정</button>
           </div>

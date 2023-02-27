@@ -6,6 +6,7 @@ import com.training.ncr.vo.admin.ExamHintVO;
 import com.training.ncr.vo.admin.ExamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -70,5 +71,10 @@ public class ExamGroupService {
     // 문제그룹 수정(update)
     public int updateGrpByGrpName(ExamGrpVO examGrpVO){
         return examGroupMapper.updateGrpByGrpName(examGrpVO);
+    }
+
+    // 문제이름으로 문제그룹의 문제갯수 가져오기
+    public int getExamCountByGrpName(String tr_exam_grpname){
+        return examGroupMapper.getExamCountByGrpName(tr_exam_grpname);
     }
 }

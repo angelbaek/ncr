@@ -95,3 +95,7 @@ a:hover {
   margin-bottom: 50px;
   text-align: left;
 }
+.contents_div_div a {
+  font-weight: bold;
+  text-decoration: underline;
+}

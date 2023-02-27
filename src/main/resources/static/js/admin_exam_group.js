@@ -3,9 +3,8 @@
  */
 // 문제 그룹 불러오기
 examGroupCall();
-
-getSessionUserInfo();
-
+// 세션
+sessionManagementForAdmin();
 // 문제 그룹 불러오기 함수
 function examGroupCall() {
   var html = "";
@@ -44,15 +43,33 @@ function grpAdd() {
   $("#save_toggle_update").removeAttr("onclick");
   $("#save_toggle_update").attr("onclick", "save()");
   $("#save_toggle_update").text("저장");
+  $(".reset_btn").removeAttr("onclick");
+  $(".reset_btn").attr("onclick", "reset()");
+  $(".reset_btn").text("초기화");
   $("input[name=double]").prop("checked", false);
   reset();
   $(".exam_add").css("display", "block");
+  grpNameOn();
 }
 
 // 초기화 함수
 function reset() {
   //  문제 그룹명 변수
   $(".grp_name").val("");
+  //   문제 개수 변수
+  $(".grp_count").val("");
+  //   문제 풀이시간 변수
+  $(".grp_time").val("");
+  // 힌트 사용 허가 변수(참,거짓)
+  $(".check_one").prop("checked", false);
+  // 힌트 사용 허가 변수(참,거짓)
+  $(".check_two").prop("checked", false);
+  // 힌트 사용 감점 변수
+  $(".input_number1").val("");
+  // 두번풀이 사용 감점 변수
+  $(".input_number2").val("");
+}
+function resetRadio() {
   //   문제 개수 변수
   $(".grp_count").val("");
   //   문제 풀이시간 변수
@@ -121,6 +138,14 @@ function save() {
   } else if (two == false && num2 != 0) {
     alert("두번 풀이 허용을 체크하세요");
     return;
+  } else if (count == 0) {
+    alert("최소 1문항 이상으로만 지정할 수 있습니다");
+    $(".grp_count").focus();
+    return;
+  } else if (time == 0) {
+    alert("최소 1분 이상 지정할 수 있습니다");
+    $(".grp_time").focus();
+    return;
   }
   // 조건식 통과 후 서버 요청
   var jsonData = {
@@ -152,7 +177,7 @@ function save() {
         console.log("찾은것:" + grpIdAndCount["grpid"]);
         console.log("찾은것:" + grpIdAndCount["count"]);
         insertTrainExam(grpId, grpCount);
-        // location.reload();
+        location.reload();
       } else if (response == 0) {
         alert("문제 그룹명이 중복됩니다.");
       }
@@ -226,7 +251,10 @@ function findByGrpid() {
 // 삭제 함수
 function grpDelete() {
   var check = $("input:radio[name=double]:checked").val();
-  console.log(check);
+  if (check == undefined) {
+    alert("문제그룹을 선택하세요");
+    $('input[name="double"]').focus();
+  }
   var regex = /[^0-9]/g; // 숫자가 아닌 문자열을 선택하는 정규식
   var result = check.replace(regex, ""); // 원래 문자열에서 숫자가 아닌 모든 문자열을 빈 문자로 변경
   console.log(result); // 결과 출력
@@ -236,6 +264,7 @@ function grpDelete() {
   // console.log(test);
   if (confirm("정말로 삭제하시겠습니까?")) {
     $.ajax({
+      async: false,
       url: "http://192.168.32.44:8080/admin/exam_group_delete/" + name,
       type: "DELETE",
       dataType: "json",
@@ -255,13 +284,26 @@ function grpDelete() {
   }
 }
 
+function grpNameOn() {
+  $(".grp_name").prop("disabled", false);
+  $(".grp_name").css("backgroundColor", "#fafbfc");
+}
+function grpNameOff() {
+  $(".grp_name").prop("disabled", true);
+  $(".grp_name").css("backgroundColor", "rgb(222,222,222)");
+}
 // 선택한 그룹 뿌려주기
 function radioBtnOn(num) {
   // 속성 부여
   $("#save_toggle_update").removeAttr("onclick");
   $("#save_toggle_update").attr("onclick", "update()");
   $("#save_toggle_update").text("수정");
+  $(".reset_btn").removeAttr("onclick");
+  $(".reset_btn").attr("onclick", "resetChangeOk()");
+  $(".reset_btn").text("확인");
   $(".exam_add").css("display", "block");
+  grpNameOff();
+
   $.ajax({
     url: "http://192.168.32.44:8080/admin/exam_group_select/" + num,
     type: "GET",
@@ -312,6 +354,14 @@ function update() {
     alert("풀이시간을 입력하세요");
     $(".grp_time").focus();
     return;
+  } else if (grpCount == 0) {
+    alert("최소 1문항 이상으로만 지정할 수 있습니다");
+    $(".grp_count").focus();
+    return;
+  } else if (grpTime == 0) {
+    alert("최소 1분 이상 지정할 수 있습니다");
+    $(".grp_time").focus();
+    return;
   }
   // 필수입력 끝
   if (one == false && hintDeduct != "") {
@@ -353,27 +403,65 @@ function update() {
   if (secanseDeduct == "") {
     secanseDeduct = 0;
   }
-  var jsonData = {
-    tr_exam_grpname: grpName,
-    tr_exam_count: grpCount,
-    tr_hint_use: one,
-    tr_hint_deduct: hintDeduct,
-    tr_allow_secans: two,
-    tr_secans_deduct: secanseDeduct,
-    tr_exam_time: grpTime,
-  };
-  console.log(jsonData);
+  // 문항수 다른지 체크
+  const countExam = getExamCountByGrpName(grpName);
+  if (grpCount != countExam) {
+    // 다를때 문제그룹 삭제하고 insert시켜야함
+    var result = confirm(
+      "문제 개수가 기존과 다를 시 기존문항을 삭제 후 추가됩니다.\r\n진행 하시겠습니까?"
+    );
+    if (result) {
+      grpDelete();
+      save();
+    }
+    return;
+  } else if (grpCount == countExam) {
+    var jsonData = {
+      tr_exam_grpname: grpName,
+      tr_exam_count: grpCount,
+      tr_hint_use: one,
+      tr_hint_deduct: hintDeduct,
+      tr_allow_secans: two,
+      tr_secans_deduct: secanseDeduct,
+      tr_exam_time: grpTime,
+    };
+    console.log(jsonData);
+    $.ajax({
+      url: "http://192.168.32.44:8080/admin/update_grp_by_grpname",
+      type: "POST",
+      contentType: "application/json",
+      dataType: "json",
+      data: JSON.stringify(jsonData),
+      success: function (response) {
+        console.log(response);
+        if (response == 1) {
+          alert("문제그룹이 수정되었습니다.");
+          location.reload();
+        }
+      },
+    });
+  }
+}
+
+// 문제이름으로 문제그룹의 문제갯수 가져오기
+function getExamCountByGrpName(grpName) {
+  let countExam = 0;
   $.ajax({
-    url: "http://192.168.32.44:8080/admin/update_grp_by_grpname",
-    type: "POST",
+    async: false,
+    url: "http://192.168.32.44:8080/admin/get_examcount_by_grpname/" + grpName,
+    type: "GET",
     contentType: "application/json",
     dataType: "json",
-    data: JSON.stringify(jsonData),
     success: function (response) {
       console.log(response);
-      if (response == 1) {
-        alert("문제그룹이 수정되었습니다.");
-      }
+      countExam = response;
     },
   });
+  return countExam;
+}
+
+// 라디오 버튼 클릭시 확인버튼
+function resetChangeOk() {
+  $(".exam_add").toggle();
+  $(".teamcode_view_body input").prop("checked", false);
 }

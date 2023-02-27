@@ -5,6 +5,7 @@ import com.training.ncr.vo.TeamCodeVO;
 import com.training.ncr.vo.UserVO;
 import org.apache.catalina.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -28,4 +29,10 @@ public interface GroupMapper {
 
     // 내가 훈련중인지 가져오기
     List<MgmtVO> getTrUserStateByUserid();
+
+    // 훈련 시작 여부
+    int getTrainingState(int num);
+
+    // 활성화된 문제그룹이 있는지 가져오기
+    int getTrainingStateActiveOn();
 }

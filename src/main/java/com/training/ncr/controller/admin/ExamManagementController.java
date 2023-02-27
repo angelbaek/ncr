@@ -89,9 +89,9 @@ public class ExamManagementController {
     }
 
     // 문제 그룹id로 matrix 가져오기
-    @GetMapping("/get_matrix/{grpId}")
-    public List<MatrixVO> getMiterMatrixByGrpid(@PathVariable int grpId){
-        return examManagementService.getMiterMatrixByGrpid(grpId);
+    @PostMapping("/get_matrix")
+    public List<MatrixVO> getMiterMatrixByGrpid(@RequestBody MatrixVO matrixVO){
+        return examManagementService.getMiterMatrixByGrpid(matrixVO);
     }
 
     // csv 읽어서 문제 업로드

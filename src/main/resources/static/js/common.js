@@ -5,9 +5,11 @@ function dropdownMenu() {
   var show = $(".dropdown").css("display");
   console.log(show);
   if (show == "none") {
+    // $(".common_left_menubar").css("margin-top", "70px");
     $("#dropbox_ic").css("transform", "rotate(180deg)");
     $(".dropdown").css("display", "block");
   } else if (show == "block") {
+    // $(".common_left_menubar").css("margin-top", "50px");
     $("#dropbox_ic").css("transform", "rotate(0deg)");
     $(".dropdown").css("display", "none");
   }
@@ -22,7 +24,6 @@ function logOut() {
       console.log(response);
       if (response == 1) {
         //로그아웃 성공
-        alert("로그아웃 합니다");
         location.replace("/");
       } else if (response == 0) {
         //로그아웃 실패

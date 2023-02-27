@@ -867,4 +867,14 @@
         SET "TR_USER_STATE" = 2
         WHERE "TR_USER_ID" = #{id}
     </update>
+
+    <!--문제id로 문제형식 가져오기-->
+    <select id="getExamTypeByExamId" resultType="int">
+        SELECT
+            "TR_EXAM_TYPE"
+        FROM
+            "TN_TRAIN_EXAM"
+        WHERE
+            "TR_EXAM_ID" = #{examId}
+    </select>
 </mapper>

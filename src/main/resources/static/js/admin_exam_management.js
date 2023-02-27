@@ -5,6 +5,7 @@
 sessionManagementForAdmin();
 examGroupCall();
 
+$(".exam_answer").css("display", "none");
 // 문제 초기화 함수
 function resetExam() {
   console.log("초기화 실행댐");
@@ -51,6 +52,7 @@ function examGroupCall() {
 
 // 문제 그룹 select 변경 시 함수
 function selectGrpChange() {
+  $(".exam_answer").css("display", "none");
   var grpId = $(".select_view_body option:selected").val();
   var txt = $(".select_view_body option:selected").text();
   if (txt == "직접선택") {
@@ -87,6 +89,7 @@ function selectGrpChange() {
 var exam_num;
 var target_num = 0;
 function exam(exam_num) {
+  $(".exam_answer").css("display", "block");
   $("#exam_id_" + target_num).css("backgroundColor", "white");
   $("#exam_id_" + target_num).css("color", "blue");
   $("#exam_id_" + target_num).css(
@@ -256,14 +259,30 @@ function popup_mit_popupStatus() {
 function getMiterMatrixByGrpid() {
   // 문제 그룹 id
   var grpId = $(".select_view_body option:selected").val();
+  var ta = $(".tactics_select option:selected").val();
   console.log("grpid:" + grpId);
+  console.log("ta:" + ta);
   var html;
+  var jsonData = {
+    tr_exam_grpid: grpId,
+    ma_tactics_id: ta,
+  };
   $.ajax({
-    url: "http://192.168.32.44:8080/admin/get_matrix/" + grpId,
-    type: "GET",
+    url: "http://192.168.32.44:8080/admin/get_matrix",
+    type: "POST",
     dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
     success: function (response) {
       console.log(response);
+      if (response.length == 0) {
+        html = "<option>해당없음</option>";
+        $(".matrix_select").empty();
+        $(".matrix_select").append(html);
+        $(".matrix_select").prop("disabled", true);
+      } else {
+        $(".matrix_select").prop("disabled", false);
+      }
       for (var i = 0; i < response.length; i++) {
         html +=
           "<option value=" +
@@ -277,7 +296,12 @@ function getMiterMatrixByGrpid() {
     },
   });
 }
-
+// 셀렉트 감지
+$(document).ready(function () {
+  $(".tactics_select").change(function () {
+    getMiterMatrixByGrpid();
+  });
+});
 function popup_mit_popupStatus_cancel() {
   $(".back").toggle();
   $(".popup_mit").toggle();

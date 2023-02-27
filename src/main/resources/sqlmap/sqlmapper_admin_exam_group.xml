@@ -55,14 +55,14 @@
     <!--문제 그룹 삭제를 위한 조회-->
     <select id="selectMgmtState">
         SELECT
-        "TR_MGMT_STATE"
+            "TR_MGMT_STATE"
         FROM "TN_TRAIN_MGMT"
         WHERE "TR_EXAM_GRP" = #{grp}
     </select>
 
     <select id="getExamGrpSelect" resultType="ExamGrpVO">
         SELECT
-        *
+            *
         FROM "TN_TRAIN_EXAMGRP"
         WHERE "TR_EXAM_GRPID" = #{num}
     </select>
@@ -127,5 +127,17 @@
             "TR_EXAM_GRPNAME" = #{tr_exam_grpname}
     </update>
 
-
+    <!--문제이름으로 문제그룹의 문제갯수 가져오기-->
+    <select id="getExamCountByGrpName" resultType="int">
+        SELECT
+            count("TR_EXAM_ID")
+        FROM
+            "TN_TRAIN_EXAM"
+        WHERE
+            "TR_EXAM_GRPID" = (
+            SELECT "TR_EXAM_GRPID"
+            FROM "TN_TRAIN_EXAMGRP"
+            WHERE "TR_EXAM_GRPNAME" = #{tr_exam_grpname}
+            )
+    </select>
 </mapper>

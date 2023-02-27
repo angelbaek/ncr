@@ -50,4 +50,18 @@ public class GroupController {
         String id = (String) session.getAttribute("USERID");
         return groupService.getUserInfo(id);
     }
+
+    // 훈련 시작 여부
+    @GetMapping("user/get_training_state/{num}")
+    public int getTrainingState(@PathVariable int num){
+        return groupService.getTrainingState(num);
+    }
+
+    // 활성화된 문제그룹이 있는지 가져오기
+    @GetMapping("user/get_training_state_active_on")
+    public int getTrainingStateActiveOn(){
+        return groupService.getTrainingStateActiveOn();
+    }
+
+
 }

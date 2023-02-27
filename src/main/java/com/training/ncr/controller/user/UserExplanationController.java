@@ -130,4 +130,10 @@ public class UserExplanationController {
         headers.setContentLength(bytes.length);
         return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
+
+    // 문제id로 문제형식 가져오기
+    @GetMapping("/get_exam_type_by_exam_id/{examId}")
+    public int getExamTypeByExamId(@PathVariable int examId) {
+        return userExplanationService.getExamTypeByExamId(examId);
+    }
 }

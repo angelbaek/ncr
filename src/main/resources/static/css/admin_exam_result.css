@@ -296,7 +296,7 @@ a:hover {
   color: #34395e;
 }
 .common_left_menubar:hover {
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 
 .show_static_body_total a {

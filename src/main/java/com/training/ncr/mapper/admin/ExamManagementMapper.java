@@ -45,7 +45,7 @@ public interface ExamManagementMapper {
     int updateExamFinal(ExamVO examVO);
 
     // 문제 그룹id로 matrix 가져오기
-    List<MatrixVO> getMiterMatrixByGrpid(int grpId);
+    List<MatrixVO> getMiterMatrixByGrpid(MatrixVO matrixVO);
 
     // csv 읽어서 문제 업로드
     int examUpdateByCsv(ExamVO examVO);

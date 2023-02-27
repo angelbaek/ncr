@@ -45,4 +45,24 @@
         SELECT "TR_MGMT_STATE"
         FROM "TN_TRAIN_MGMT"
     </select>
+
+    <!--해당 차시 훈련여부-->
+    <select id="getTrainingState" resultType="int">
+        SELECT
+            "TR_MGMT_STATE"
+        FROM
+            "TN_TRAIN_MGMT"
+        WHERE
+            "TR_NUM" = #{num}
+    </select>
+
+    <!--활성화된 문제그룹이 있는지 가져오기-->
+    <select id="getTrainingStateActiveOn" resultType="int">
+        SELECT
+            "TR_MGMT_STATE"
+        FROM
+            "TN_TRAIN_MGMT"
+        WHERE
+        "TR_MGMT_STATE" = 1
+    </select>
 </mapper>

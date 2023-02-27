@@ -15,11 +15,9 @@ function user_login() {
       console.log(response);
       if (response == 1) {
         // 관리자
-        alert("관리자 로그인을 합니다.");
         location.href = "/admin_training";
       } else if (response == 2) {
         // 사용자
-        alert("사용자 로그인을 합니다.");
         location.href = "/user_group_setting";
       } else {
         alert("계정을 확인해주세요.");

@@ -93,7 +93,6 @@ function getExamResultByNumAndType(num, type, grpId) {
         console.log("팀별 조회...");
         for (var i = 0; i < response.length; i++) {
           var team = response[i].team_cd; // 팀코드
-          var targetOrg = getTeamOrg(team);
           var org; // 기관명
           var num = response[i].tr_num; // 차시
           var grpId = response[i].tr_exam_grpid; // grp id
@@ -102,6 +101,8 @@ function getExamResultByNumAndType(num, type, grpId) {
           var ans = response[i].cnt_correct_ans; // 정답수
           var falseAns = response[i].cnt_false_ans; // 오답수
           var submit = response[i].submit_answer; // 답안제출
+          // 로직 기관명 구하기
+          var targetOrg = getTeamOrg(num, grpId, grp);
           if (submit == 1) {
             submit = "제출";
           } else {
@@ -126,17 +127,8 @@ function getExamResultByNumAndType(num, type, grpId) {
 
             var seconds = now.getSeconds(); // 현재 초
 
-            var target = parseInt(startTime.substr(0, 4));
-            console.log("중간찍기:" + target + "/" + year);
-            console.log(startTime);
-            console.log(startTime.substr(5, 2));
-            console.log(startTime.substr(8, 2));
-            target +=
-              parseInt(startTime.substr(5, 2)) +
-              parseInt(startTime.substr(8, 2));
-            console.log("타겟게산결과:" + target);
+            var target = startTime.substr(0, 4);
             target = target - year;
-            console.log("최종게산결과:" + target);
             // 소요시간 계산 로직
             // 시작시간
             var start = startTime.substr(11, 5);
@@ -150,12 +142,12 @@ function getExamResultByNumAndType(num, type, grpId) {
 
             var h = parseInt(result / 3600); // 시
             var m = parseInt((result - h * 3600) / 60); // 분
-            if (target != 0) {
+            if (h == 0) {
+              delayTime = m + "분";
+            } else if (target != 0) {
               var h = parseInt(examTime / 3600); // 시
               var m = parseInt((examTime - h * 3600) / 60); // 분
               delayTime = h + "시간 " + m + "분";
-            } else if (h == 0) {
-              delayTime = m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
             }
@@ -911,24 +903,28 @@ function refreshAuto() {
 }
 
 // 팀 org 가져오기
-function getTeamOrg(team_cd) {
-  console.log(team_cd);
+function getTeamOrg(num, grpId, grp) {
   let returnVal = "";
+  var jsonData = {
+    num: num,
+    grpId: grpId,
+    grp: grp,
+  };
   $.ajax({
     async: false,
-    url: "http://192.168.32.44:8080/user/static/get_org/" + team_cd,
-    type: "GET",
+    url: "http://192.168.32.44:8080/user/static/get_org",
+    type: "POST",
     dataType: "json",
     contentType: "application/json",
+    data: JSON.stringify(jsonData),
     success: function (response) {
       console.log(response);
       if (response.length > 1) {
         if (response[0] != response[1]) {
-          console.log("서로 다른 이름");
-          returnVal = "상이";
+          returnVal = "-";
         }
       } else if (response[0] == undefined) {
-        returnVal = "미입력";
+        returnVal = "-";
       } else {
         returnVal = response[0];
       }

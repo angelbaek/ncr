@@ -123,9 +123,12 @@
     <!--문제 그룹id로 matrix 가져오기-->
     <select id="getMiterMatrixByGrpid" resultType="MatrixVO">
         SELECT
-        *
-        FROM "TC_MITERATTCK_MATRIX"
-        WHERE "TR_EXAM_GRPID" = #{grpId}
+            *
+        FROM
+            "TC_MITERATTCK_MATRIX"
+        WHERE
+            "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+            "MA_TACTICS_ID" = #{ma_tactics_id}
     </select>
 
     <!--csv 읽어서 문제 업로드-->

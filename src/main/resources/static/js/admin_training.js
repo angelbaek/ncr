@@ -132,19 +132,25 @@ function getTraining() {
   console.log("세션 읽어오기 실행중...");
   var html = "";
   $.ajax({
+    async: false,
     url: "http://192.168.32.44:8080/admin/mgmt",
     type: "GET",
     dataType: "json",
     success: function (response) {
       console.log(response);
       for (var i = 0; i < response.length; i++) {
-        html += '<option value="">' + response[i].tr_exam_grpname + "</option>";
-        // 마지막 탐색 후 select에 option 추가
-        if (i == response.length - 1) {
-          $("#selectOne").append(html);
-          $("#selectTwo").append(html);
-        }
+        html +=
+          '<option value="' +
+          response[i].tr_exam_grpname +
+          '">' +
+          response[i].tr_exam_grpname +
+          "</option>";
       }
+      // 마지막 탐색 후 select에 option 추가
+      $("#selectOne").empty();
+      $("#selectTwo").empty();
+      $("#selectOne").append(html);
+      $("#selectTwo").append(html);
     },
   });
 }
@@ -264,7 +270,7 @@ function grpActive(trainingNumbers) {
           // 수정 버튼 활성화
           $(".btn_edit1").attr("disabled", false);
           $(".btn_edit1").css("backgroundColor", "#6777ef");
-          location.reload();
+          // location.reload();
         }
       },
     });
@@ -473,6 +479,7 @@ function getTrainMgmt() {
   trainingPauseBtnOff();
   trainingStartBtnOff();
   $.ajax({
+    async: false,
     url: "http://192.168.32.44:8080/admin/get_train_mgmt",
     type: "GET",
     dataType: "json",
@@ -481,17 +488,13 @@ function getTrainMgmt() {
       for (var i = 0; i < response.length; i++) {
         // 1차시 설정된 그룹 뿌려주기
         if (response[i].tr_num == 1) {
-          $("select[name=location1] option:selected").text(
-            response[i].tr_exam_grp
-          );
+          $("#selectOne").val(response[i].tr_exam_grp);
           $("#selectOne").attr("disabled", true);
           ok1BtnOff();
           trainingStartBtnOn();
           // 2차시 설정된 그룹 뿌려주기
         } else if (response[i].tr_num == 2) {
-          $("select[name=location2] option:selected").text(
-            response[i].tr_exam_grp
-          );
+          $("#selectTwo").val(response[i].tr_exam_grp);
           $("#selectTwo").attr("disabled", true);
           ok2BtnOff();
           trainingStartBtnOn();

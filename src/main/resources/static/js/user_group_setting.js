@@ -1,10 +1,11 @@
-let selectVal = "";
+var selectVal = "";
 //세션
-sessionManagementForUser();
+sessionManagementForUserGroup();
 //그룹 정보
 getGroupInfoById();
 getTeamGroup();
-
+getTrainingState();
+getTrainingStateActiveOn();
 function getGroupInfoById() {
   $.ajax({
     async: false,
@@ -20,10 +21,41 @@ function getGroupInfoById() {
       $("#team_code").text(selectVal);
       $("#agency_name").text(org);
       $("#user_name").text(name);
+      if (selectVal == null) {
+        trainingStartBtnOff();
+      }
     },
   });
+  console.log(selectVal);
 }
 
+// 세션 관리 (일반 훈련자용)
+function sessionManagementForUserGroup() {
+  var userInfo = {};
+  console.log("일반 사용자 세션 체크...");
+  $.ajax({
+    async: false,
+    url: "http://192.168.32.44:8080/sessionCheck",
+    type: "GET",
+    dataType: "json",
+    success: function (response) {
+      console.log(response);
+      if (response == true) {
+        alert("로그인 후 사용가능합니다.");
+        location.replace("/");
+      }
+      userInfo = response;
+      $(".userName").text(response[0].tr_user_name);
+      if (response[0].team_cd == null) {
+        console.log("어 널이다");
+        $("#team_code").text("위의 팀(조)를 선택하여 팀 코드를 배정받으세요");
+
+        trainingStartBtnOff();
+      }
+    },
+  });
+  return userInfo;
+}
 // 훈련 시작 버튼 활성화(클릭됨) 함수 css
 function trainingStartBtnOn() {
   $(".tn_start_btn").attr("disabled", false);
@@ -64,11 +96,18 @@ function getTeamGroup() {
           "조" +
           "</option>";
       }
+      $("#team").empty();
       $("#team").append(html);
       for (var i = 0; i < response.length; i++) {
         if (selectVal == response[i].team_cd) {
           console.log("맞았다");
-          $("#team option:eq(" + (i + 1) + ")").prop("selected", true);
+          $("#team option:eq(" + i + ")").prop("selected", true);
+          $("#team_code").text(selectVal);
+          trainingStartBtnOn();
+          break;
+        } else {
+          $("#team_code").text("위의 팀(조)를 선택하여 팀 코드를 배정받으세요");
+          trainingStartBtnOff();
         }
       }
     },
@@ -136,6 +175,7 @@ $("select[name=location]").change(function () {
 //훈련 시작
 function training() {
   var num = $("select[name=location_num]").val();
+  var text = $("#team_code").text();
   console.log("훈련 함수 실행중...");
   console.log(tr_user_grp);
   $.ajax({
@@ -159,3 +199,48 @@ function training() {
     },
   });
 }
+
+// 해당 차시 훈련 시작여부
+function getTrainingState() {
+  var num = $("select[name=location_num]").val();
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/get_training_state/" + num,
+    type: "GET",
+    dataType: "json",
+    success: function (response) {
+      console.log(response);
+      if (response == 1) {
+        if (selectVal != null) {
+          trainingStartBtnOn();
+        }
+      } else {
+        trainingStartBtnOff();
+      }
+    },
+  });
+}
+
+// 활성화된 문제그룹이 있는지 가져오기
+function getTrainingStateActiveOn() {
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/get_training_state_active_on",
+    type: "GET",
+    dataType: "json",
+    success: function (response) {
+      console.log(response);
+      if (response == 1) {
+        $(".saveButton").prop("disabled", true);
+        $(".saveButton").css("backgroundColor", "gray");
+      } else {
+        $(".saveButton").prop("disabled", false);
+        $(".saveButton").css("backgroundColor", "#6777ef");
+      }
+    },
+  });
+}
+
+$(document).ready(function () {
+  $("select[name=location_num]").change(function () {
+    getTrainingState();
+  });
+});
