@@ -83,8 +83,9 @@ function getExamResultByNumAndType(num, type, grpId) {
     success: function (response) {
       console.log(response);
       if (response.length == 0) {
-        alert("해당 조건에 해당하는 데이터가 없습니다");
-        location.reload();
+        alert("해당 조건에 데이터가 없습니다");
+        $(".static_title").css("display", "none");
+        $(".show_static_body_total").css("display", "none");
         return;
       }
       var grpid = response[0].tr_exam_grpid;
@@ -96,7 +97,7 @@ function getExamResultByNumAndType(num, type, grpId) {
         // 팀별 조회
         $(".static_title").text("훈련팀별 통계");
         htmlHead =
-          "<tr><th>팀코드</th><th>기관명</th><th>차시</th><th>총 점수</th><th>정답/오답</th><th>답안제출</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
+          "<tr><th>팀코드</th><th>기관명</th><th>차시</th><th><score>총 점수</score></th><th>정답/오답</th><th>답안제출</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
 
         console.log("팀별 조회...");
         for (var i = 0; i < response.length; i++) {
@@ -229,7 +230,7 @@ function getExamResultByNumAndType(num, type, grpId) {
         console.log("개인별 조회...");
         $(".static_title").text("훈련자별 통계");
         htmlHead =
-          "<tr><th>훈련자명</th><th>기관명</th><th>차시</th><th>총 점수</th><th>정답/오답</th><th>답안제출</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
+          "<tr><th>훈련자명</th><th>기관명</th><th>차시</th><th><score>총 점수</score></th><th>정답/오답</th><th>답안제출</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
         for (var i = 0; i < response.length; i++) {
           var id = response[i].tr_user_id; // 아이디 대입
           var org = selectUserOrgByUserId(id); // 유저id로 기관명 가져오기
@@ -374,7 +375,8 @@ function getExamResultByNumAndType(num, type, grpId) {
       console.log(textStatus); //"error"로 고정인듯함
       console.log(errorThrown);
       alert("조회된 데이터가 없습니다");
-      location.reload();
+      $(".static_title").css("display", "none");
+      $(".show_static_body_total").css("display", "none");
     },
   });
 }
@@ -943,3 +945,38 @@ function getTeamOrg(num, grpId, grp) {
   });
   return returnVal;
 }
+
+// 정렬 기능
+// $(document).ready(function () {
+//   $("th score").click(function () {
+//     var table = $(this).parents("table").eq(0);
+//     var rows = table
+//       .find("tr:gt(0)")
+//       .toArray()
+//       .sort(comparer($(this).index()));
+//     this.asc = !this.asc;
+//     if (!this.asc) {
+//       rows = rows.reverse();
+//     }
+//     for (var i = 0; i < rows.length; i++) {
+//       table.append(rows[i]);
+//     }
+//   });
+
+//   function comparer(index) {
+//     return function (a, b) {
+//       var valA = getCellValue(a, index),
+//         valB = getCellValue(b, index);
+//       return $.isNumeric(valA) && $.isNumeric(valB)
+//         ? valA - valB
+//         : valA.toString().localeCompare(valB);
+//     };
+//   }
+
+//   function getCellValue(row, index) {
+//     return $(row).children("td").eq(index).text();
+//   }
+// });
+setTimeout(function () {
+  $("html").css("display", "block");
+}, 500);

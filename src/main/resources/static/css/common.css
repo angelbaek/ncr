@@ -209,10 +209,6 @@ tr {
 #logout:hover {
   cursor: pointer;
 }
-.logout_btn:hover {
-  background-color: #394eea;
-  cursor: pointer;
-}
 
 #only_css:hover {
   text-decoration: underline;
@@ -248,8 +244,17 @@ body.no-scroll {
   background-color: #fafbfc;
   color: gray;
 }
+.user_teamcode_view:hover {
+  cursor: default;
+}
 
 .user_logout_btn {
   width: 102.672px;
   padding: 5px 15px;
+}
+
+.user_logout_btn:hover {
+  color: #fafbfc;
+  background-color: #394eea;
+  cursor: pointer;
 }

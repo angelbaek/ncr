@@ -46,4 +46,7 @@ public interface ExamGroupMapper {
 
     // 문제이름으로 문제그룹의 문제갯수 가져오기
     int getExamCountByGrpName(String tr_exam_grpname);
+
+    // mgmt 에 있으면 같이 삭제시키기
+    int deleteMgmt(String name);
 }

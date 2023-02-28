@@ -4,6 +4,7 @@
 // 관리자 세션
 sessionManagementForAdmin();
 examGroupCall();
+selectGrpChange();
 
 $(".exam_answer").css("display", "none");
 // 문제 초기화 함수
@@ -32,6 +33,7 @@ function resetExam() {
 function examGroupCall() {
   var html = "";
   $.ajax({
+    async: false,
     url: "http://192.168.32.44:8080/admin/exam_mng_grp",
     type: "GET",
     dataType: "json",
@@ -54,17 +56,14 @@ function examGroupCall() {
 function selectGrpChange() {
   $(".exam_answer").css("display", "none");
   var grpId = $(".select_view_body option:selected").val();
-  var txt = $(".select_view_body option:selected").text();
-  if (txt == "직접선택") {
-    location.reload();
-  }
+  console.log(grpId);
   var html = "";
   $.ajax({
     url: "http://192.168.32.44:8080/admin/exam_mng_grp/" + grpId,
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      console.log(response);
       // 추가 edit
       for (var i = 0; i < response[0].tr_exam_count; i++) {
         html +=

@@ -44,6 +44,8 @@ public class ExamGroupService {
 
     //삭제
     public int getExamGrpDelete(String name){
+        // mgmt 에 있으면 같이 삭제시키기
+        examGroupMapper.deleteMgmt(name);
         return examGroupMapper.getExamGrpDelete(name);
     }
 

@@ -13,7 +13,7 @@ function examGroupCall() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       for (var i = 0; i < response.length; i++) {
         html +=
           "<tr class='tr_even'><td>" +
@@ -87,7 +87,7 @@ function resetRadio() {
 var grpName;
 // 저장 함수
 function save() {
-  console.log("save함수 실행된다~~");
+  // console.log("save함수 실행된다~~");
   //  문제 그룹명 변수
   var name = $(".grp_name").val();
   //   문제 개수 변수
@@ -157,7 +157,7 @@ function save() {
     tr_secans_deduct: num2,
     tr_exam_time: time,
   };
-  console.log(jsonData);
+  // console.log(jsonData);
   $.ajax({
     async: false,
     url: "http://192.168.32.44:8080/admin/add_exam_grp",
@@ -166,7 +166,7 @@ function save() {
     dataType: "json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       if (response == 1) {
         alert("문제 그룹이 추가되었습니다.");
         grpName = name;
@@ -174,8 +174,8 @@ function save() {
         var grpIdAndCount = findByGrpid();
         var grpId = grpIdAndCount["grpid"];
         var grpCount = grpIdAndCount["count"];
-        console.log("찾은것:" + grpIdAndCount["grpid"]);
-        console.log("찾은것:" + grpIdAndCount["count"]);
+        // console.log("찾은것:" + grpIdAndCount["grpid"]);
+        // console.log("찾은것:" + grpIdAndCount["count"]);
         insertTrainExam(grpId, grpCount);
         location.reload();
       } else if (response == 0) {
@@ -192,7 +192,7 @@ function insertTrainExam(grpId, grpCount) {
     tr_exam_grpid: grpId,
     tr_exam_count: grpCount,
   };
-  console.log(jsonData);
+  // console.log(jsonData);
   $.ajax({
     async: false,
     url: "http://192.168.32.44:8080/admin/add_train_exam",
@@ -201,7 +201,7 @@ function insertTrainExam(grpId, grpCount) {
     dataType: "json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       for (var i = 0; i < response.length; i++) {
         var examId = response[i].tr_exam_id;
         insertExamhintByGrpIdAndExamId(grpId, examId);
@@ -216,7 +216,7 @@ function insertExamhintByGrpIdAndExamId(grpId, examId) {
     tr_exam_grpid: grpId,
     tr_exam_id: examId,
   };
-  console.log(jsonData);
+  // console.log(jsonData);
   $.ajax({
     async: false,
     url: "http://192.168.32.44:8080/admin/add_train_examhint",
@@ -225,7 +225,7 @@ function insertExamhintByGrpIdAndExamId(grpId, examId) {
     dataType: "json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
     },
   });
 }
@@ -240,7 +240,7 @@ function findByGrpid() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       map["grpid"] = response[0].tr_exam_grpid;
       map["count"] = response[0].tr_exam_count;
     },
@@ -257,11 +257,11 @@ function grpDelete() {
   }
   var regex = /[^0-9]/g; // 숫자가 아닌 문자열을 선택하는 정규식
   var result = check.replace(regex, ""); // 원래 문자열에서 숫자가 아닌 모든 문자열을 빈 문자로 변경
-  console.log(result); // 결과 출력
+  // console.log(result); // 결과 출력
   var grpname = "grp_" + result;
-  // console.log(grpname);
+  // // console.log(grpname);
   var name = $("." + grpname).text();
-  // console.log(test);
+  // // console.log(test);
   if (confirm("정말로 삭제하시겠습니까?")) {
     $.ajax({
       async: false,
@@ -275,9 +275,9 @@ function grpDelete() {
         }
       },
       error: function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR); //응답 메시지
-        console.log(textStatus); //"error"로 고정인듯함
-        console.log(errorThrown);
+        // console.log(jqXHR); //응답 메시지
+        // console.log(textStatus); //"error"로 고정인듯함
+        // console.log(errorThrown);
         alert("해당 문제그룹에 설정된 문항이 유효합니다");
       },
     });
@@ -310,7 +310,7 @@ function radioBtnOn(num) {
     dataType: "json",
     success: function (response) {
       reset();
-      console.log(response);
+      // console.log(response);
       //문제 그룹명
       $(".grp_name").val(response[0].tr_exam_grpname);
       //문제 개수
@@ -425,7 +425,7 @@ function update() {
       tr_secans_deduct: secanseDeduct,
       tr_exam_time: grpTime,
     };
-    console.log(jsonData);
+    // console.log(jsonData);
     $.ajax({
       url: "http://192.168.32.44:8080/admin/update_grp_by_grpname",
       type: "POST",
@@ -433,7 +433,7 @@ function update() {
       dataType: "json",
       data: JSON.stringify(jsonData),
       success: function (response) {
-        console.log(response);
+        // console.log(response);
         if (response == 1) {
           alert("문제그룹이 수정되었습니다.");
           location.reload();
@@ -453,7 +453,7 @@ function getExamCountByGrpName(grpName) {
     contentType: "application/json",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       countExam = response;
     },
   });

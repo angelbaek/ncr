@@ -877,4 +877,14 @@
         WHERE
             "TR_EXAM_ID" = #{examId}
     </select>
+
+    <!--해당 문제 정보 가져오기-->
+    <select id="getExamGrpInfoByGrpName" resultType="ExamGrpVO">
+        SELECT
+            *
+        FROM
+            "TN_TRAIN_EXAMGRP"
+        WHERE
+            "TR_EXAM_GRPNAME" = #{name}
+    </select>
 </mapper>

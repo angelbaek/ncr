@@ -655,4 +655,9 @@ public class UserExplanationService {
     public int getExamTypeByExamId(int examId){
         return userExplanationMapper.getExamTypeByExamId(examId);
     };
+
+    // 해당 문제 정보 가져오기
+    public ExamGrpVO getExamGrpInfoByGrpName(String name){
+        return userExplanationMapper.getExamGrpInfoByGrpName(name);
+    }
 }

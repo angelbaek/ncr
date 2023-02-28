@@ -12,7 +12,7 @@ function user_login() {
     dataType: "json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       if (response == 1) {
         // 관리자
         location.href = "/admin_training";

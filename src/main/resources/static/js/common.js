@@ -3,7 +3,7 @@ $(".logout_btn").css("display", "none");
 // 드랍다운 메뉴
 function dropdownMenu() {
   var show = $(".dropdown").css("display");
-  console.log(show);
+  // console.log(show);
   if (show == "none") {
     // $(".common_left_menubar").css("margin-top", "70px");
     $("#dropbox_ic").css("transform", "rotate(180deg)");
@@ -21,7 +21,7 @@ function logOut() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       if (response == 1) {
         //로그아웃 성공
         location.replace("/");
@@ -41,7 +41,7 @@ function showLogOutBtn() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       var team = response[0];
       if (team == "") {
         $(".user_teamcode_view").text("팀없음");
@@ -50,13 +50,13 @@ function showLogOutBtn() {
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR); //응답 메시지
-      console.log(textStatus); //"error"로 고정인듯함
-      console.log(errorThrown);
+      // console.log(jqXHR); //응답 메시지
+      // console.log(textStatus); //"error"로 고정인듯함
+      // console.log(errorThrown);
     },
   });
   var show = $(".logout_btn").css("display");
-  console.log(show);
+  // console.log(show);
   if (show == "none") {
     $(".logout_btn").css("display", "block");
     $("#logout").css("transform", "rotate(180deg)");
@@ -78,13 +78,13 @@ function scrollPlay() {
 
 // 세션 관리
 function sessionManagement() {
-  console.log("세션 체크...");
+  // console.log("세션 체크...");
   $.ajax({
     url: "http://192.168.32.44:8080/sessionCheck",
     type: "GET",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       if (response[0].role == 0) {
         // 관리자임
         location.href = "/admin_training";
@@ -99,14 +99,14 @@ function sessionManagement() {
 // 세션 관리 (일반 훈련자용)
 function sessionManagementForUser() {
   var userInfo = {};
-  console.log("일반 사용자 세션 체크...");
+  // console.log("일반 사용자 세션 체크...");
   $.ajax({
     async: false,
     url: "http://192.168.32.44:8080/sessionCheck",
     type: "GET",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       if (response == true) {
         alert("로그인 후 사용가능합니다.");
         location.replace("/");
@@ -120,13 +120,13 @@ function sessionManagementForUser() {
 
 // 세션 관리 (관리자용)
 function sessionManagementForAdmin() {
-  // console.log("관리자 사용자 세션 체크...");
+  // // console.log("관리자 사용자 세션 체크...");
   $.ajax({
     url: "http://192.168.32.44:8080/sessionCheck",
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       if (response == true) {
         alert("로그인 후 사용가능합니다.");
         location.replace("/");

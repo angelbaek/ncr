@@ -172,4 +172,7 @@ public interface UserExplanationMapper {
 
     // 문제id로 문제형식 가져오기
     int getExamTypeByExamId(int examId);
+
+    // 해당 문제 정보 가져오기
+    ExamGrpVO getExamGrpInfoByGrpName(String name);
 }

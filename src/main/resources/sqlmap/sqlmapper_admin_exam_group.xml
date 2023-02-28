@@ -140,4 +140,10 @@
             WHERE "TR_EXAM_GRPNAME" = #{tr_exam_grpname}
             )
     </select>
+
+    <!--mgmt 에 있으면 같이 삭제시키기-->
+    <delete id="deleteMgmt">
+        DELETE FROM "TN_TRAIN_MGMT"
+        WHERE "TR_EXAM_GRP" = #{name}
+    </delete>
 </mapper>

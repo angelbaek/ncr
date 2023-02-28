@@ -2,6 +2,7 @@ package com.training.ncr.controller.user;
 
 import com.training.ncr.service.user.UserExplanationService;
 import com.training.ncr.vo.UserVO;
+import com.training.ncr.vo.admin.ExamGrpVO;
 import com.training.ncr.vo.admin.ExamHintVO;
 import com.training.ncr.vo.user.*;
 import lombok.val;
@@ -135,5 +136,11 @@ public class UserExplanationController {
     @GetMapping("/get_exam_type_by_exam_id/{examId}")
     public int getExamTypeByExamId(@PathVariable int examId) {
         return userExplanationService.getExamTypeByExamId(examId);
+    }
+
+    // 해당 문제 정보 가져오기
+    @GetMapping("/get_exam_grp_info/{name}")
+    public ExamGrpVO getExamGrpInfoByGrpName(@PathVariable String name){
+        return userExplanationService.getExamGrpInfoByGrpName(name);
     }
 }

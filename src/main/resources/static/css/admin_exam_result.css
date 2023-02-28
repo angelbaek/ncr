@@ -391,3 +391,7 @@ a:hover {
   font-weight: bold;
   margin-bottom: 10px;
 }
+
+th score:hover {
+  cursor: pointer;
+}

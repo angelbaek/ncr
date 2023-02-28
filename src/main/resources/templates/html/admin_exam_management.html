@@ -56,8 +56,8 @@
         <img src="/public/images/avatar-4.png" alt="user" />
         <div class="userName">User Name</div>
         <i class="fas fa-caret-down" id="logout"></i>
-        <div class="logout_btn" onclick="logOut()">
-          <div class="user_logout_btn">로그아웃</div>
+        <div class="logout_btn">
+          <div class="user_logout_btn" onclick="logOut()">로그아웃</div>
         </div>
       </div>
     </div>
@@ -70,9 +70,7 @@
           id=""
           class="select_view_body"
           onchange="selectGrpChange()"
-        >
-          <option value="">직접선택</option>
-        </select>
+        ></select>
         <button class="exam_upload" onclick="popup_exam_popupStatus()">
           문제 업로드
         </button>
@@ -297,6 +295,11 @@
       $(".tr_exam_choice_3").css("backgroundColor", "white");
       $(".tr_exam_choice_4").css("backgroundColor", "white");
       $(".tr_exam_choice_5").css("backgroundColor", "white");
+      $(".tr_exam_choice_1").css("color", "black");
+      $(".tr_exam_choice_2").css("color", "black");
+      $(".tr_exam_choice_3").css("color", "black");
+      $(".tr_exam_choice_4").css("color", "black");
+      $(".tr_exam_choice_5").css("color", "black");
     }
     //객관식 비활성화 함수
     function choiceOff() {
@@ -310,6 +313,11 @@
       $(".tr_exam_choice_3").css("backgroundColor", "#cccccc");
       $(".tr_exam_choice_4").css("backgroundColor", "#cccccc");
       $(".tr_exam_choice_5").css("backgroundColor", "#cccccc");
+      $(".tr_exam_choice_1").css("color", "#cccccc");
+      $(".tr_exam_choice_2").css("color", "#cccccc");
+      $(".tr_exam_choice_3").css("color", "#cccccc");
+      $(".tr_exam_choice_4").css("color", "#cccccc");
+      $(".tr_exam_choice_5").css("color", "#cccccc");
     }
     choiceOff();
 

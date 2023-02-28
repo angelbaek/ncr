@@ -56,8 +56,8 @@
         <img src="/public/images/avatar-4.png" alt="user" />
         <div class="userName">User Name</div>
         <i class="fas fa-caret-down" id="logout"></i>
-        <div class="logout_btn" onclick="logOut()">
-          <div class="user_logout_btn">로그아웃</div>
+        <div class="logout_btn">
+          <div class="user_logout_btn" onclick="logOut()">로그아웃</div>
         </div>
       </div>
     </div>
@@ -141,6 +141,39 @@
     crossorigin="anonymous"
   ></script>
   <script>
+    $("html").css("display", "none");
+    //정렬
+    $(document).on("click", "th score", function () {
+      // 정렬 처리 코드
+      $("th score").click(function () {
+        var table = $(this).parents("table").eq(0);
+        var rows = table
+          .find("tr:gt(0)")
+          .toArray()
+          .sort(comparer($(this).index()));
+        this.asc = !this.asc;
+        if (!this.asc) {
+          rows = rows.reverse();
+        }
+        for (var i = 0; i < rows.length; i++) {
+          table.append(rows[i]);
+        }
+        function comparer(index) {
+          return function (a, b) {
+            var valA = getCellValue(a, index),
+              valB = getCellValue(b, index);
+            return $.isNumeric(valA) && $.isNumeric(valB)
+              ? valA - valB
+              : valA.toString().localeCompare(valB);
+          };
+        }
+
+        function getCellValue(row, index) {
+          return $(row).children("td").eq(index).text();
+        }
+      });
+    });
+    //
     $(".back").css("display", "none");
     $(".matrix_title").css("display", "flex");
     $(".false_ans_change_true_div").css("display", "none");
