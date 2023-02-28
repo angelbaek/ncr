@@ -6,6 +6,14 @@ let matrixArray = new Array();
 var turn = 1;
 var bg = 0;
 var on = false;
+// 기본셋 실행
+defaultSet();
+// 기본셋 실행함수
+function defaultSet() {
+  let num = $("#select_num").val();
+  let type = $("#select_type").val();
+  getExamResultByNumAndType(num, type);
+}
 // select 감지
 // 차시 감지
 $("#select_num").on("change", function () {
@@ -366,6 +374,7 @@ function getExamResultByNumAndType(num, type, grpId) {
       console.log(textStatus); //"error"로 고정인듯함
       console.log(errorThrown);
       alert("조회된 데이터가 없습니다");
+      location.reload();
     },
   });
 }
@@ -567,8 +576,8 @@ function getExamResultTeam(statId, num, grpId, grp) {
       }
       $(".user_body_total").append(htmlHead);
       $(".user_body_total").append(htmlBody);
-      // getMatrixStat(grpid, grp, num);
-      // getMiterAttackMatrix(grpid, grp, num);
+      getMatrixStat(grpid, grp, num);
+      getMiterAttackMatrix(grpid, grp, num);
     },
   });
 }
@@ -629,6 +638,8 @@ function getMiterAttackMatrix(grpid, grp, num) {
           continue;
         } else if (empty != response[i].MA_TACTICS_ID) {
           var kor = extractKorean(response[i].ma_tactics_name);
+          console.log(response[i].MA_TACTICS_ID);
+          var test = '"' + response[i].MA_TACTICS_ID + '"';
           empty = response[i].MA_TACTICS_ID;
           console.log(empty);
           console.log("전술단계 뿌려주기 로직 실행");
@@ -640,31 +651,73 @@ function getMiterAttackMatrix(grpid, grp, num) {
             "</div></div>";
           $(".matrix_div").append(htmlHead);
           htmlBody =
-            "<div class='common_tactics'>" +
+            "<div class='common_tactics' onclick='popUp(" +
+            test +
+            "," +
+            response[i].MA_MATRIX_ID +
+            ")'><a>" +
             response[i].ma_tactics_tech +
             "(" +
             response[i].real +
             "/" +
             response[i].total +
-            ")</div>";
+            ")</a></div>";
           $(".test_" + response[i].MA_TACTICS_ID).append(htmlBody);
           continue;
         }
         if (response[i] != null) {
           htmlBody =
-            "<div class='common_tactics_nth'>" +
+            "<div class='common_tactics_nth' onclick='popUp(" +
+            test +
+            "," +
+            response[i].MA_MATRIX_ID +
+            ")'><a>" +
             response[i].ma_tactics_tech +
             "(" +
             response[i].real +
             "/" +
             response[i].total +
-            ")</div>";
+            ")</a></div>";
           $(".test_" + response[i].MA_TACTICS_ID).append(htmlBody);
           // console.log("그냥 매트릭스 뿌려주기실행");
         }
       }
     },
   });
+}
+function popUp(MA_TACTICS_ID, MA_MATRIX_ID) {
+  console.log(MA_TACTICS_ID + "/" + MA_MATRIX_ID);
+  var jsonData = {
+    ma_matrix_id: MA_MATRIX_ID,
+    ma_tactics_id: MA_TACTICS_ID,
+  };
+  $.ajax({
+    async: false,
+    url: "http://192.168.32.44:8080/user/get_tech_and_mit",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      popUpMatrix();
+      console.log(response);
+      $(".matrix_mit_tech .title").empty();
+      $(".matrix_mit_tech .title").text(response[0].MA_TACTICS_TECH);
+      $(".matrix_mit_tech .contents").empty();
+      $(".matrix_mit_tech .contents").text(response[0].MA_TACTICS_MITIG);
+    },
+  });
+}
+
+function popUpMatrix() {
+  scrollPause();
+  $(".matrix_mit_tech").css("display", "block");
+  $(".back").css("display", "block");
+}
+function togglePopUpMat() {
+  scrollPlay();
+  $(".matrix_mit_tech").css("display", "none");
+  $(".back").css("display", "none");
 }
 // 한글만 추출
 function extractKorean(str) {
@@ -770,7 +823,7 @@ function toggleDetail() {
 
 // 팀 org 가져오기
 function getTeamOrg(num, grpId, grp) {
-  let returnVal = "";
+  var returnVal;
   var jsonData = {
     num: num,
     grpId: grpId,
@@ -785,9 +838,12 @@ function getTeamOrg(num, grpId, grp) {
     data: JSON.stringify(jsonData),
     success: function (response) {
       console.log(response);
+      console.log(response[0]);
       if (response.length > 1) {
         if (response[0] != response[1]) {
           returnVal = "-";
+        } else {
+          returnVal = response[0];
         }
       } else if (response[0] == undefined) {
         returnVal = "-";

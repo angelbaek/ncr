@@ -106,6 +106,8 @@
                   객관식
                 </div>
               </div>
+            </div>
+            <div>
               <div class="exam_answer_common_text" id="left_call_div">
                 <input
                   type="radio"
@@ -360,7 +362,7 @@
             alert("CSV파일의 문항수를 확인하세요");
             return;
           }
-          for (var line = 1; line < lines.length; line++) {
+          for (var line = 1 + num; line < lines.length; line++) {
             // console.log("포함?" + lines[line].includes('"'));
             // console.log("길이:" + lines.length);
             if (lines[line].indexOf('"') != -1) {
@@ -450,59 +452,32 @@
               // console.log("미포함");
               var str = lines[line].split(",");
               // console.log(str);
-              // // 문제 번호
-              // var exam_num = str[0];
-              // // 문제 유형
-              // var exam_type = str[1];
-              // // 문제 내용
-              // var exam_cont = str[2];
-              // // 객관식_번호
-              // var exam_cho1 = str[3];
-              // var exam_cho2 = str[4];
-              // var exam_cho3 = str[5];
-              // var exam_cho4 = str[6];
-              // var exam_cho5 = str[7];
-              // // 정답
-              // var exam_ans = str[8];
-              // // 배점
-              // var exam_score = str[9];
-              // // 난이도
-              // var exam_level = str[10];
-              // // 복수정답 여부
-              // var exam_mult = str[11];
-              // // 힌트 여부
-              // var exam_hint = str[12];
-              // // 전술 ID
-              // var exam_tac = str[13];
-              // // 매트릭스 ID
-              // var exam_matrix = str[14];
-
               // 문제 번호
-              var exam_num = str[0 + num];
+              var exam_num = str[0];
               // 문제 유형
-              var exam_type = str[1 + num];
+              var exam_type = str[1];
               // 문제 내용
-              var exam_cont = str[2 + num];
+              var exam_cont = str[2];
               // 객관식_번호
-              var exam_cho1 = str[3 + num];
-              var exam_cho2 = str[4 + num];
-              var exam_cho3 = str[5 + num];
-              var exam_cho4 = str[6 + num];
-              var exam_cho5 = str[7 + num];
+              var exam_cho1 = str[3];
+              var exam_cho2 = str[4];
+              var exam_cho3 = str[5];
+              var exam_cho4 = str[6];
+              var exam_cho5 = str[7];
               // 정답
-              var exam_ans = str[8 + num];
+              var exam_ans = str[8];
               // 배점
-              var exam_score = str[9 + num];
+              var exam_score = str[9];
               // 난이도
-              var exam_level = str[10 + num];
+              var exam_level = str[10];
               // 복수정답 여부
-              var exam_mult = str[11 + num];
+              var exam_mult = str[11];
               // 힌트 여부
-              var exam_hint = str[12 + num];
+              var exam_hint = str[12];
               // 전술 ID
-              var exam_tac = str[13 + num];
+              var exam_tac = str[13];
               // 매트릭스 ID
-              var exam_matrix = str[14 + num];
+              var exam_matrix = str[14];
 
               // console.log("한줄 읽기:" + lines[line]);
               // ajax TN_TRAIN_EXAM update

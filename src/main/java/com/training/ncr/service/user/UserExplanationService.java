@@ -303,6 +303,8 @@ public class UserExplanationService {
             System.out.println("입력횟수:"+tryAns+" 유저입력:"+userAns+" 답:"+ans);
             if(tryAns==0){ // 남아있음 (1번 품)
                 if(userAns.equals(ans)){ // 정답일때
+                    // 매트릭스 스탯 정답체크
+                    userExplanationMapper.updateAnsToMatrixStat(examResultTeamVO);
                     if(check==1){ // 힌트 사용
                         userExplanationMapper.secondAnsEqualsAnsMultiAndHintUser(examResultTeamVO);
                     }else{ // 힌트 미사용

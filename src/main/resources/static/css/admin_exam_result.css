@@ -123,6 +123,7 @@ tr td {
 
 /* 본 내용 */
 .user_choice {
+  height: auto;
   margin-top: 50px;
   text-align: center;
 }
@@ -276,10 +277,10 @@ a:hover {
   font-weight: bold;
 }
 .rotate_div {
-  transition: none;
-  position: fixed;
-  top: 160px;
-  right: 50px;
+  transition: 0.3s;
+  position: relative;
+  top: 20px;
+  /* right: 10px; */
   transform: translate(-50%, -50%);
 }
 

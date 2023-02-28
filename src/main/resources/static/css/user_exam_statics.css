@@ -299,3 +299,55 @@ a:hover {
 .show_static_body_total a {
   color: blue;
 }
+
+/* 훈련팀 매트릭스 */
+.matrix_mit_tech {
+  z-index: 3;
+  position: fixed;
+  width: 1000px;
+  height: auto;
+  background-color: #fafbfc;
+  border-radius: 10px;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 50%);
+  text-align: center;
+  padding: 30px;
+}
+
+.matrix_mit_tech div {
+  padding: 0px;
+  margin: 0px;
+  position: relative;
+  width: auto;
+  height: auto;
+  display: block;
+}
+.matrix_mit_tech .title {
+  margin-bottom: 20px;
+}
+.matrix_mit_tech .contents {
+  text-align: justify;
+  margin-bottom: 30px;
+}
+.matrix_mit_tech button {
+  display: block;
+  position: relative;
+  margin: auto;
+  padding: 0px;
+  /* left: 0;
+  top: 0; */
+}
+
+.matrix_mit_tech .common_css_title {
+  color: gray;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.matrix_div a {
+  color: rgb(66, 66, 66);
+}
+.matrix_div a:hover {
+  color: blue;
+}

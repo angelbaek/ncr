@@ -50,7 +50,6 @@
         <div class="user_num_div">
           <p>차시</p>
           <select name="num_check" id="select_num">
-            <option value="0">직접 선택</option>
             <option value="1">1차시</option>
             <option value="2">2차시</option>
           </select>
@@ -58,7 +57,6 @@
         <div class="user_type_div">
           <p>유형</p>
           <select name="type_check" id="select_type">
-            <option value="0">직접 선택</option>
             <option value="1">개인별</option>
             <option value="2">팀별</option>
           </select>
@@ -91,10 +89,20 @@
           <tbody class="user_body_total"></tbody>
         </table>
       </div>
-      <div class="matrix_title">MATRIX</div>
       <!-- 훈련팀 매트릭스 -->
+      <div class="matrix_title">MITER ATTACK MATRIX</div>
       <div class="matrix_div" style="margin: auto"></div>
+      <!-- 선택한 매트릭스 내용 -->
+      <div class="matrix_mit_tech">
+        <div class="common_css_title">TECH</div>
+        <div class="title"></div>
+        <div class="common_css_title">MITIG</div>
+        <div class="contents"></div>
+        <button onclick="togglePopUpMat()">확인</button>
+      </div>
     </div>
+    <!-- 백그라운드 -->
+    <div class="back"></div>
   </body>
   <script
     src="https://code.jquery.com/jquery-3.6.3.js"
@@ -102,17 +110,13 @@
     crossorigin="anonymous"
   ></script>
   <script>
-    $(".matrix_title").css("display", "flex");
-  </script>
-  <script src="/static/js/common.js"></script>
-  <script src="/js/common.js"></script>
-  <script src="/static/js/user_exam_statics.js"></script>
-  <script src="/js/user_exam_statics.js"></script>
-  <script>
+    $(".back").css("display", "none");
     $(".static_title").css("display", "none");
     $(".show_static_body_total").css("display", "none");
     $(".static_detail_title").css("display", "none");
     $(".user_body_status").css("display", "none");
+    $(".matrix_mit_tech").css("display", "none");
+    $(".matrix_title").css("display", "flex");
     matrixOff();
 
     $(window).scroll(function () {
@@ -126,4 +130,8 @@
       }
     });
   </script>
+  <script src="/static/js/common.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/static/js/user_exam_statics.js"></script>
+  <script src="/js/user_exam_statics.js"></script>
 </html>

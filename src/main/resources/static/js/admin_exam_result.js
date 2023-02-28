@@ -6,6 +6,14 @@ let matrixArray = new Array();
 var turn = 1;
 var bg = 0;
 var on = false;
+// 기본셋 실행
+defaultSet();
+// 기본셋 실행함수
+function defaultSet() {
+  let num = $("#select_num").val();
+  let type = $("#select_type").val();
+  getExamResultByNumAndType(num, type);
+}
 // select 감지
 // 차시 감지
 $("#select_num").on("change", function () {
@@ -366,6 +374,7 @@ function getExamResultByNumAndType(num, type, grpId) {
       console.log(textStatus); //"error"로 고정인듯함
       console.log(errorThrown);
       alert("조회된 데이터가 없습니다");
+      location.reload();
     },
   });
 }
@@ -611,8 +620,8 @@ function getExamResultTeam(statId, num, grpId, grp) {
       }
       $(".user_body_total").append(htmlHead);
       $(".user_body_total").append(htmlBody);
-      getMatrixStat(grpid, grp, num);
-      getMiterAttackMatrix(grpid, grp, num);
+      // getMatrixStat(grpid, grp, num);
+      // getMiterAttackMatrix(grpid, grp, num);
     },
   });
 }
@@ -861,17 +870,17 @@ function refresh() {
   // 배경 css
   bg++;
   if (bg % 2 != 0) {
-    $(".ratate_btn").css("backgroundColor", "blue");
+    $(".ratate_btn").css("backgroundColor", "green");
     $(".ratate_btn").css("box-shadow", "none");
-    $(".ratate_btn").css("margin-left", "5px");
-    $(".ratate_btn").css("margin-top", "5px");
-    $(".user_num_div").css("display", "none");
+    $(".rotate_div").css("left", "3px");
+    $(".rotate_div").css("top", "23px");
+    $("#select_num").prop("disabled", true);
   } else {
     $(".ratate_btn").css("backgroundColor", "#6777ef");
     $(".ratate_btn").css("box-shadow", "3px 3px 3px gray");
-    $(".ratate_btn").css("margin-left", "0px");
-    $(".ratate_btn").css("margin-top", "0px");
-    $(".user_num_div").css("display", "inline-block");
+    $(".rotate_div").css("left", "0px");
+    $(".rotate_div").css("top", "20px");
+    $("#select_num").prop("disabled", false);
   }
   // 활성화 여부
   if (on == true) {
@@ -922,6 +931,8 @@ function getTeamOrg(num, grpId, grp) {
       if (response.length > 1) {
         if (response[0] != response[1]) {
           returnVal = "-";
+        } else {
+          returnVal = response[0];
         }
       } else if (response[0] == undefined) {
         returnVal = "-";

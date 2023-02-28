@@ -155,12 +155,13 @@ tr td {
 .exam_answer_common_text {
   display: inline-block;
   width: auto;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 .exam_answer_common_text div {
   color: #666;
   /* margin-bottom: 10px; */
   text-align: center;
+  margin-bottom: 5px;
 }
 .test {
   text-align: left;
@@ -171,10 +172,11 @@ tr td {
 .answer_input_text {
   padding-left: 60px;
   text-align: left;
-  margin-top: 50px;
+  margin-top: 20px;
   margin-bottom: 50px;
   color: #34395e;
   font-weight: bold;
+  vertical-align: middle;
 }
 .answer_input_text div {
   vertical-align: middle;

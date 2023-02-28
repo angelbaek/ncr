@@ -43,6 +43,7 @@ $(window).scroll(function () {
     $(".now_exam_status").css("top", "0");
     // 추가
     $(".now_exam_status").css("height", "70px");
+    $(".exam_status_score").css("margin-left", "330px");
     $(".exam_status_score").css("padding-left", "300px");
     // 헤더 추가
     $(".top_user_info").css("position", "fixed");
@@ -1365,7 +1366,7 @@ function getTotalStatus(staticAllowSecans) {
       success: function (response) {
         console.log(response);
         $(".total_count").text(
-          "풀이 개수: " +
+          "풀이개수: " +
             response.explanationcount +
             "/" +
             response.maxexplanationcount

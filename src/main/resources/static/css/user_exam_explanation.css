@@ -703,10 +703,10 @@ input[type="checkbox"] {
 /* 제출하기 팝업 */
 .submit_popup {
   z-index: 3;
-  padding: 20px;
+  /* padding: 20px; */
   height: auto;
   width: 500px;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: #fafbfc;
   position: fixed;
   left: 50%;
@@ -715,15 +715,57 @@ input[type="checkbox"] {
   box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
   text-align: center;
 }
+.submit_popup_title {
+  text-align: left;
+  background-color: #6777ef;
+  box-shadow: 0 1px 2px 1px rgb(0 0 0 / 50%);
+  color: #fafbfc;
+  font-weight: bold;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 33px;
+  margin-bottom: 10px;
+}
+
 .submit_popup button {
   width: 150px;
   margin-left: 30px;
   margin-right: 30px;
+  margin-bottom: 20px;
 }
 .submit_popup_contents {
+  text-align: center;
   font-weight: bold;
-  margin-bottom: 50px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  /* padding-left: 30px; */
   color: red;
+}
+/* 풀이 개수 */
+.submit_popup_count {
+  margin-left: 33px;
+  text-align: left;
+  margin-bottom: 5px;
+}
+/* 정답점수 */
+.submit_popup_score {
+  margin-left: 33px;
+  text-align: left;
+  margin-bottom: 5px;
+}
+/* 오답점수 */
+.submit_popup_deduct {
+  margin-left: 33px;
+  text-align: left;
+  margin-bottom: 5px;
+}
+/* 힌트점수 */
+.submit_popup_hint_deduct {
+  margin-left: 33px;
+  text-align: left;
+  margin-bottom: 5px;
 }
 
 /* 정답 알림 */

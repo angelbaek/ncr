@@ -22,13 +22,6 @@ var timeoutId;
 // 테스트를 위한 임시 시간
 var min = ""; //분
 var sec = ""; //초
-/**
- *  css =================================================================================
- */
-$(".submit_popup").css("display", "none");
-$(".hint_popup").css("display", "none");
-$(".resultTrue").css("display", "none");
-$(".back").css("display", "none");
 
 // 스크롤에 따른 이벤트
 $(window).scroll(function () {
@@ -50,6 +43,7 @@ $(window).scroll(function () {
     $(".now_exam_status").css("top", "0");
     // 추가
     $(".now_exam_status").css("height", "70px");
+    $(".exam_status_score").css("margin-left", "330px");
     $(".exam_status_score").css("padding-left", "300px");
     // 헤더 추가
     $(".top_user_info").css("position", "fixed");
@@ -121,21 +115,33 @@ invalidata = setInterval(function () {
  *  time end=============================================================================
  */
 // 세션 가져오기
-sessionManagementForAdmin();
+sessionManagementForUser();
+$("body").css("display", "none");
 // 유저 팀코드
 getStartExamAndGrp(grpname);
-// 훈련자 첫 진입 post
-insertUserTrainExamStat();
-// 훈련자 첫 팀플 post
-insertExamstatTeam();
-// 풀이 중인 훈련자 팀 가져오기
-clientViewUpdate();
-// 훈련진행중인 시간 가져오기
-startTrainingGetTime();
-// 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
-getTotalStatus(staticAllowSecans);
 // 제출여부
-checkSubmitExam();
+let submit = checkSubmitExam();
+if (submit == 1) {
+  // 풀이 중인 훈련자 팀 가져오기
+  clientViewUpdate();
+  // 훈련진행중인 시간 가져오기
+  startTrainingGetTime();
+  // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+  getTotalStatus(staticAllowSecans);
+  $("body").css("display", "block");
+} else {
+  // 훈련자 첫 진입 post
+  insertUserTrainExamStat();
+  // 훈련자 첫 팀플 post
+  insertExamstatTeam();
+  // 풀이 중인 훈련자 팀 가져오기
+  clientViewUpdate();
+  // 훈련진행중인 시간 가져오기
+  startTrainingGetTime();
+  // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+  getTotalStatus(staticAllowSecans);
+  $("body").css("display", "block");
+}
 
 // 훈련 시작한 그룹 불러오기
 function searchMgmtState() {
@@ -907,7 +913,20 @@ function checkAnsBtnShort(examId) {
   // 제출여부
   checkSubmitExam();
 }
-
+function getExamTypeByExamId(examId) {
+  var type;
+  $.ajax({
+    async: false,
+    url: "http://192.168.32.44:8080/user/get_exam_type_by_exam_id/" + examId,
+    type: "GET",
+    dataType: "json",
+    success: function (response) {
+      console.log(response);
+      type = response;
+    },
+  });
+  return type;
+}
 // 풀이 중인 훈련자 팀 가져오기
 function clientViewUpdate() {
   $("#ta1").text(arrMa[0]);
@@ -945,6 +964,24 @@ function clientViewUpdate() {
         var examId = response[i].tr_exam_id; // 문제 id
         var cntTryAns = response[i].cnt_try_ans; // 정답 입력 횟수
         var hintUse = response[i].hint_use;
+        var inputAnswer = response[i].input_answer;
+        var type = getExamTypeByExamId(examId);
+        // console.log("타입:" + type);
+        // 입력답이 있을때
+        if (inputAnswer != null) {
+          if (type == 1) {
+            // 객관식
+            $(
+              ".mult_ans_input_" + examId + '[value="' + inputAnswer + '"]'
+            ).prop("checked", true);
+          } else if (type == 2) {
+            // 주관식
+            $("#short_form_input_ans_" + examId).val(inputAnswer);
+            console.log("주관식임");
+            console.log(inputAnswer);
+            console.log($("#short_form_input_ans_" + examId).text());
+          }
+        }
         if (staticAllowSecans == 1) {
           // 활성
           if (userScore > 0) {

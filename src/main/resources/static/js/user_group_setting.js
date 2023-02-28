@@ -172,6 +172,9 @@ $("select[name=location]").change(function () {
   $("#team_code").append(team_cd);
 });
 
+// 이미 훈련한
+function findUserForStarted() {}
+
 //훈련 시작
 function training() {
   var num = $("select[name=location_num]").val();
