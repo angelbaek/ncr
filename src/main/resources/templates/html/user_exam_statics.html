@@ -119,17 +119,6 @@
     $(".matrix_mit_tech").css("display", "none");
     $(".matrix_title").css("display", "flex");
     matrixOff();
-
-    $(window).scroll(function () {
-      var height = $(window).scrollTop();
-      if (height > 0) {
-        $(".rotate_div").css("position", "absolute");
-        $(".rotate_div").css("top", "90px");
-      } else {
-        $(".rotate_div").css("position", "fixed");
-        $(".rotate_div").css("top", "160px");
-      }
-    });
   </script>
   <script src="/static/js/common.js"></script>
   <script src="/js/common.js"></script>

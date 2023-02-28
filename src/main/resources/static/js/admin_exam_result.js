@@ -1,3 +1,4 @@
+matrixOff();
 // 세션 가져오기
 sessionManagementForAdmin();
 // 해당하는 매트릭스id를 저장할 배열

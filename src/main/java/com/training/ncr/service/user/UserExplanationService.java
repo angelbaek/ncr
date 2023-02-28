@@ -43,21 +43,21 @@ public class UserExplanationService {
         examStatTeamVO.setTr_exam_grpid(examStatVO.getTr_exam_grpid());
 
         String time = userExplanationMapper.laterUserGetTeamStartTime(examStatTeamVO);
-        System.out.println("시작한 시간: "+time);
+        // System.out.println("시작한 시간: "+time);
 
         if(time!=null){ // 이미 시작한 팀
             // 훈련자 풀이현황에 내가 있는지 확인하기
             if(userExplanationMapper.selectByUserID(examStatVO).size()!=0){ // 내가 시작했는지
-                System.out.println("이미 훈련 진행중...");
+                // System.out.println("이미 훈련 진행중...");
                 return 0;
             }else{ // 다른 훈련자가 같은팀으로 시작
                 examStatVO.setStart_time(time);
-                System.out.println("다른 훈련자가 같은팀으로 시작!!");
+                // System.out.println("다른 훈련자가 같은팀으로 시작!!");
                 userExplanationMapper.updateTrUserIdByTrUserId(userId);
                 userExplanationMapper.laterInsertUserTrainExamStat(examStatVO);
             }
         }else{ // 신규 시작
-            System.out.println("신규 문제풀이 시작!");
+            // System.out.println("신규 문제풀이 시작!");
             userExplanationMapper.updateTrUserIdByTrUserId(userId);
             userExplanationMapper.insertUserTrainExamStat(examStatVO);
         }
@@ -77,10 +77,10 @@ public class UserExplanationService {
 
         // 훈련자 풀이현황에 내가 있는지 확인하기
         if(userExplanationMapper.selectByTeamcd(examStatTeamVO).size()!=0){
-            System.out.println("이미 훈련 팀별 진행중...");
+            // System.out.println("이미 훈련 팀별 진행중...");
             return 0;
         }
-        System.out.println("신규 훈련 팀별 시작!");
+        // System.out.println("신규 훈련 팀별 시작!");
         // db insert
         setMatrixStat(request);
         return userExplanationMapper.insertExamstatTeam(examStatTeamVO);
@@ -115,7 +115,7 @@ public class UserExplanationService {
             matrixStatVO.setMa_matrix_id(ma_matrix_id);
             userExplanationMapper.insertMatrixStat(matrixStatVO);
         }
-        System.out.println(stringObjectMap.size());
+        // System.out.println(stringObjectMap.size());
     }
 
     // 첫 훈련자별, 훈련팀별 풀이 상세정보 insert
@@ -212,7 +212,7 @@ public class UserExplanationService {
 
         // 정답 입력횟수 받아오기
         int tryAns = userExplanationMapper.checkTryAns(examResultTeamVO);
-        System.out.println("미리 횟수 찍어보자:"+tryAns);
+        // System.out.println("미리 횟수 찍어보자:"+tryAns);
 
         // 힌트 사용여부 check
         int check = userExplanationMapper.checkHintUsing(examResultTeamVO);
@@ -300,7 +300,7 @@ public class UserExplanationService {
             }
         }else{ // 비활성화
             //정답 입력횟수가 남아있는지 check
-            System.out.println("입력횟수:"+tryAns+" 유저입력:"+userAns+" 답:"+ans);
+            // System.out.println("입력횟수:"+tryAns+" 유저입력:"+userAns+" 답:"+ans);
             if(tryAns==0){ // 남아있음 (1번 품)
                 if(userAns.equals(ans)){ // 정답일때
                     // 매트릭스 스탯 정답체크
@@ -520,13 +520,13 @@ public class UserExplanationService {
         examStatTeamVO.setTr_user_grp(userVO.getTr_user_grp());
         examStatTeamVO.setTeam_cd(userVO.getTeam_cd());
 
-        System.out.println("기존 훈련팀 시작한 시간: "+userExplanationMapper.startTrainingGetTime(examStatTeamVO));
+        // System.out.println("기존 훈련팀 시작한 시간: "+userExplanationMapper.startTrainingGetTime(examStatTeamVO));
         String time = userExplanationMapper.startTrainingGetTime(examStatTeamVO);
         try{
             List<String> subTime = Collections.singletonList(time);
             return subTime;
         }catch (NullPointerException n){
-            System.out.println("첫 훈련이 시작되어 감소할 시간이 없습니다...");
+            // System.out.println("첫 훈련이 시작되어 감소할 시간이 없습니다...");
             return null;
         }
 //        List<String> subTime = Collections.singletonList(time.substring(11, 18));
@@ -589,13 +589,13 @@ public class UserExplanationService {
         String team  = examStatTeamVO.getTeam_cd();
         int num = examStatTeamVO.getTr_num();
         int grpid = examStatTeamVO.getTr_exam_grpid();
-        System.out.println("제출하기!! grp:"+grp+" team:"+team+" num"+num+" grpid:"+grpid);
+        // System.out.println("제출하기!! grp:"+grp+" team:"+team+" num"+num+" grpid:"+grpid);
         int submit = userExplanationMapper.checkSubmitTeam(examStatTeamVO);
         if(submit==1){ // 이미 제출했을때
-            System.out.println("이미 제출한 팀");
+            // System.out.println("이미 제출한 팀");
             return 0;
         }
-        System.out.println("제출완료!");
+        // System.out.println("제출완료!");
         // 미제출이면 update
         userExplanationMapper.updateSubmitTeam(examStatTeamVO); // 훈련팀 제출
         userExplanationMapper.updateSubmitUser(examStatVO); // 훈련자 제출
@@ -615,10 +615,10 @@ public class UserExplanationService {
         try{
             int submit = userExplanationMapper.checkSubmitTeam(examStatTeamVO);
             if(submit==1){ // 이미 제출했을때
-                System.out.println("이미 제출한 팀");
+                // System.out.println("이미 제출한 팀");
                 return 0;
             }
-            System.out.println("제출안한 팀");
+            // System.out.println("제출안한 팀");
             return 1;
         }catch (BindingException e){
             return 1;
@@ -643,7 +643,7 @@ public class UserExplanationService {
 
         //나의 종료시간이 있는지 체크하기 로직
         String endTime = userExplanationMapper.checkMyEndTime(examStatVO);
-        System.out.println("해당 유저의 종료시간: "+endTime);
+        // System.out.println("해당 유저의 종료시간: "+endTime);
         if(endTime==null){ // 종료시간이 없음
             return userExplanationMapper.endTimeUpdateTime(examStatVO);
         }else{
