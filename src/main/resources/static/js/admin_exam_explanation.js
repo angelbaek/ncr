@@ -115,8 +115,8 @@ invalidata = setInterval(function () {
  *  time end=============================================================================
  */
 // 세션 가져오기
-sessionManagementForUser();
-$("body").css("display", "none");
+sessionManagementForAdmin();
+// $("body").css("display", "none");
 // 유저 팀코드
 getStartExamAndGrp(grpname);
 // 제출여부
@@ -699,7 +699,7 @@ function getHintFunc(grpId, examId, hintDeduct) {
     tr_exam_grpid: grpId,
   };
   $.ajax({
-    url: "http://192.168.32.44:8080/user/using_hint",
+    url: "http://192.168.32.44:8080/admin/using_hint",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -717,7 +717,7 @@ function getHintFunc(grpId, examId, hintDeduct) {
       // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
       getTotalStatus(staticAllowSecans);
       // 제출여부
-      checkSubmitExam();
+      // checkSubmitExam();
     },
   });
 }
@@ -736,7 +736,7 @@ function getHint(examId, grpId) {
     tr_exam_grpid: grpId,
   };
   $.ajax({
-    url: "http://192.168.32.44:8080/user/get_hint",
+    url: "http://192.168.32.44:8080/admin/get_hint",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -791,7 +791,7 @@ function hintPopUp() {
 // 객관식 정답확인 event
 function checkAnsBtnMulti(examId) {
   // 훈련상태 가져오기
-  searchMgmtState();
+  // searchMgmtState();
   // 제출 여부
   let checkSub = checkSubmitExam();
   if (checkSub == 1) {
@@ -850,7 +850,7 @@ function checkAnsBtnMulti(examId) {
   };
   // // console.log(jsonData);
   $.ajax({
-    url: "http://192.168.32.44:8080/user/using_answer_multi",
+    url: "http://192.168.32.44:8080/admin/using_answer_multi",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -861,7 +861,6 @@ function checkAnsBtnMulti(examId) {
         alert("풀 수 있음!!");
       } else if (response == 0) {
         alert("해당 문제는 더 이상 풀 수 없습니다");
-
         clientViewUpdate();
         // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
         getTotalStatus(staticAllowSecans);
@@ -886,7 +885,7 @@ function checkAnsBtnMulti(examId) {
       // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
       getTotalStatus(staticAllowSecans);
       // 제출여부
-      checkSubmitExam();
+      // checkSubmitExam();
     },
   });
 }
@@ -946,7 +945,7 @@ function checkAnsBtnShort(examId) {
   };
   // // console.log(jsonData);
   $.ajax({
-    url: "http://192.168.32.44:8080/user/using_answer_short_form",
+    url: "http://192.168.32.44:8080/admin/using_answer_short_form",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1031,7 +1030,7 @@ function clientViewUpdate() {
   // // console.log(jsonData);
   $.ajax({
     async: false,
-    url: "http://192.168.32.44:8080/user/get_exam_result_team",
+    url: "http://192.168.32.44:8080/admin/get_exam_result_team",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1594,6 +1593,6 @@ function endTimeUpdateTime() {
     },
   });
 }
-setTimeout(function () {
-  $("body").css("display", "block");
-}, 500);
+// setTimeout(function () {
+//   $("body").css("display", "block");
+// }, 500);

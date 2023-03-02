@@ -14,8 +14,6 @@ var grpnum = 0;
 grpnum = grpnameAndGrpnum["num"];
 // 문제 그룹 id
 var examGrpid = 0;
-// 경과시간
-// var time = timeReturn(); //기준시간 작성
 var time = 60;
 var invalidata;
 var timeoutId;
@@ -669,7 +667,7 @@ function getHintFunc(grpId, examId, hintDeduct) {
     return;
   }
   // view update
-  clientViewUpdate();
+  // clientViewUpdate();
   // 힌트 가져오기
   getHint(examId, grpId);
   $(".hint_popup").toggle();
@@ -867,12 +865,12 @@ function checkAnsBtnMulti(examId) {
       }
       // count
       countAnsExamResultTeam();
-      // view update
-      clientViewUpdate();
       // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
       getTotalStatus(staticAllowSecans);
       // 제출여부
       checkSubmitExam();
+      // view update
+      clientViewUpdate();
     },
   });
 }
@@ -996,6 +994,7 @@ function getExamTypeByExamId(examId) {
 
 // 풀이 중인 훈련자 팀 가져오기
 function clientViewUpdate() {
+  console.log("몇 번 실행됨");
   $("#ta1").text("(" + arrMa[0] + ")");
   $("#ta2").text("(" + arrMa[1] + ")");
   $("#ta3").text("(" + arrMa[2] + ")");
@@ -1018,7 +1017,6 @@ function clientViewUpdate() {
   };
   // // console.log(jsonData);
   $.ajax({
-    async: false,
     url: "http://192.168.32.44:8080/user/get_exam_result_team",
     type: "POST",
     dataType: "json",
@@ -1225,6 +1223,7 @@ function clientViewUpdate() {
           }
         }
       }
+      console.log("완료 시간:");
     },
   });
 }
@@ -1352,7 +1351,6 @@ function getTotalStatus(staticAllowSecans) {
       secansAllow: 1,
     };
     $.ajax({
-      async: false,
       url: "http://192.168.32.44:8080/user/get_total_status",
       type: "POST",
       dataType: "json",
