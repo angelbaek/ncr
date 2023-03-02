@@ -1,13 +1,9 @@
 package com.training.ncr.mapper.user;
 
 import com.training.ncr.vo.UserVO;
-import com.training.ncr.vo.admin.ExamGrpVO;
-import com.training.ncr.vo.admin.ExamHintVO;
-import com.training.ncr.vo.admin.ExamVO;
 import com.training.ncr.vo.admin.MatrixVO;
 import com.training.ncr.vo.user.*;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Map;

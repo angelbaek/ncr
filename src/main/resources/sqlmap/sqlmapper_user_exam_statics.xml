@@ -8,9 +8,9 @@
         FROM
             "TN_TRAIN_EXAMSTAT"
         <where>
-            <if test="tr_exam_grpid != 0">
-                AND "TR_EXAM_GRPID" = #{tr_exam_grpid}
-            </if>
+<!--            <if test="tr_exam_grpid != 0">-->
+<!--                AND "TR_EXAM_GRPID" = #{tr_exam_grpid}-->
+<!--            </if>-->
             <if test="num != 0">
                 AND "TR_NUM" = #{num}
             </if>

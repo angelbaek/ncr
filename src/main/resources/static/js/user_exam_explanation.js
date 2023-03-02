@@ -128,7 +128,7 @@ if (submit == 1) {
   startTrainingGetTime();
   // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
   getTotalStatus(staticAllowSecans);
-  $("body").css("display", "block");
+  // $("body").css("display", "block");
 } else {
   // 훈련자 첫 진입 post
   insertUserTrainExamStat();
@@ -140,7 +140,7 @@ if (submit == 1) {
   startTrainingGetTime();
   // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
   getTotalStatus(staticAllowSecans);
-  $("body").css("display", "block");
+  // $("body").css("display", "block");
 }
 
 // 해당 문제 정보 가져오기
@@ -1557,5 +1557,5 @@ function hintBtnOff(examId) {
 }
 
 setTimeout(function () {
-  $("html").css("display", "block");
+  $("body").css("display", "block");
 }, 500);

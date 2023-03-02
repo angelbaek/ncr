@@ -917,6 +917,9 @@ function refreshAuto() {
 // 팀 org 가져오기
 function getTeamOrg(num, grpId, grp) {
   let returnVal = "";
+  if (grp == 99) {
+    return "관리자";
+  }
   var jsonData = {
     num: num,
     grpId: grpId,
@@ -979,5 +982,5 @@ function getTeamOrg(num, grpId, grp) {
 //   }
 // });
 setTimeout(function () {
-  $("html").css("display", "block");
+  $("body").css("display", "block");
 }, 500);

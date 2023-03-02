@@ -32,7 +32,11 @@ public class UserStaticsService {
         String id = (String) session.getAttribute("USERID");
         if(id!=null) {
             userStaticsVO.setId(id);
-            userStaticsVO.setGrp(userStaticsMapper.getGrpByUserIdAndTrNum(userStaticsVO));
+            try{
+                userStaticsVO.setGrp(userStaticsMapper.getGrpByUserIdAndTrNum(userStaticsVO));
+            }catch (BindingException e){
+                System.out.println("선택한 차시 유형에 해당하는 데이터가 없습니다");
+            }
         }
         // 팀별, 개인 파악하기
         int type = userStaticsVO.getType();
@@ -129,11 +133,6 @@ public class UserStaticsService {
 
     // 선택한 매트릭스 내용 가져오기
     public List<Map<String,String>> popUp(MatrixVO matrixVO){
-        System.out.println(matrixVO.getMa_matrix_id());
-        System.out.println(matrixVO.getMa_tactics_id());
-
-        System.out.println(userStaticsMapper.popUp(matrixVO).get(0).get("MA_TACTICS_TECH"));
-        System.out.println(userStaticsMapper.popUp(matrixVO).get(0).get("MA_TACTICS_MITIG"));
         return userStaticsMapper.popUp(matrixVO);
     }
 

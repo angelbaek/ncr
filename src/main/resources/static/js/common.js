@@ -142,3 +142,16 @@ function sessionManagementForAdmin() {
     },
   });
 }
+
+/**
+ * view page
+ */
+
+// function adminExamResult() {
+//   $.ajax({
+//     url: "http://192.168.32.44:8080/admin_exam_result",
+//     type: "GET",
+//     dataType: "json",
+//     success: function (response) {},
+//   });
+// }

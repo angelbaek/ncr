@@ -497,9 +497,18 @@ public class UserExplanationService {
         UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
 
         // examResultTeamVO에 set(grp, team_cd)
-        examResultTeamVO.setTr_user_grp(userVO.getTr_user_grp());
-        examResultTeamVO.setTeam_cd(userVO.getTeam_cd());
-        examResultTeamVO.setAnswer_user_id(userId);
+        if(userId==null){
+            examResultTeamVO.setTr_user_grp(99);
+            examResultTeamVO.setTeam_cd("TEAM099");
+            String userId2 = (String) session.getAttribute("ADMINID");
+            examResultTeamVO.setAnswer_user_id(userId2);
+        }else{
+            examResultTeamVO.setTr_user_grp(userVO.getTr_user_grp());
+            examResultTeamVO.setTeam_cd(userVO.getTeam_cd());
+            examResultTeamVO.setAnswer_user_id(userId);
+        }
+
+
 
         return userExplanationMapper.getExamResultTeamInfo(examResultTeamVO);
     };
@@ -517,8 +526,15 @@ public class UserExplanationService {
         UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
 
         // set
-        examStatTeamVO.setTr_user_grp(userVO.getTr_user_grp());
-        examStatTeamVO.setTeam_cd(userVO.getTeam_cd());
+//        examStatTeamVO.setTr_user_grp(userVO.getTr_user_grp());
+//        examStatTeamVO.setTeam_cd(userVO.getTeam_cd());
+        if(userId==null){
+            examStatTeamVO.setTr_user_grp(99);
+            examStatTeamVO.setTeam_cd("TEAM099");
+        }else{
+            examStatTeamVO.setTr_user_grp(userVO.getTr_user_grp());
+            examStatTeamVO.setTeam_cd(userVO.getTeam_cd());
+        }
 
         // System.out.println("기존 훈련팀 시작한 시간: "+userExplanationMapper.startTrainingGetTime(examStatTeamVO));
         String time = userExplanationMapper.startTrainingGetTime(examStatTeamVO);

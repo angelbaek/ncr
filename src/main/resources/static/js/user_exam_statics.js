@@ -827,6 +827,9 @@ function toggleDetail() {
 // 팀 org 가져오기
 function getTeamOrg(num, grpId, grp) {
   var returnVal;
+  if (grp == 99) {
+    return "관리자";
+  }
   var jsonData = {
     num: num,
     grpId: grpId,
@@ -840,7 +843,7 @@ function getTeamOrg(num, grpId, grp) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      console.log("콘솔:" + response);
       // console.log(response[0]);
       if (response.length > 1) {
         if (response[0] != response[1]) {
@@ -859,5 +862,5 @@ function getTeamOrg(num, grpId, grp) {
 }
 
 setTimeout(function () {
-  $("html").css("display", "block");
+  $("body").css("display", "block");
 }, 500);

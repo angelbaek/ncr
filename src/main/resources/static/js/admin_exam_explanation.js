@@ -128,7 +128,7 @@ if (submit == 1) {
   startTrainingGetTime();
   // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
   getTotalStatus(staticAllowSecans);
-  $("body").css("display", "block");
+  // $("body").css("display", "block");
 } else {
   // 훈련자 첫 진입 post
   insertUserTrainExamStat();
@@ -140,7 +140,7 @@ if (submit == 1) {
   startTrainingGetTime();
   // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
   getTotalStatus(staticAllowSecans);
-  $("body").css("display", "block");
+  // $("body").css("display", "block");
 }
 function ansBtnOff(examId) {
   $("#ans_btn_" + examId).prop("disabled", true);
@@ -214,7 +214,7 @@ function getStartExamAndGrp(grpname) {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       // staticSecansDeduct = response[0].tr_secans_deduct; // 2차 풀이 감점
       // staticHintDeduct = response[0].tr_hint_deduct; // 힌트 사용 감점
       // 문제id 대입
@@ -654,6 +654,16 @@ function insertExamResultAndTeam(examId) {
 function submitPopup() {
   $(".submit_popup").css("display", "block");
   $(".back").css("display", "block");
+  // 가져오기
+  var count = $(".total_count").text();
+  var score = $(".total_score").text();
+  var deduct = $(".total_fail_score").text();
+  var hintDeduct = $(".total_hint_deduct").text();
+  // 넣기
+  $(".submit_popup_count").text(count);
+  $(".submit_popup_score").text(score);
+  $(".submit_popup_deduct").text(deduct);
+  $(".submit_popup_hint_deduct").text(hintDeduct);
   scrollPause();
 }
 // 제출하기 팝업 off
@@ -665,13 +675,20 @@ function submitPopupOff() {
 // 훈련자 힌트 입력 event
 function getHintFunc(grpId, examId, hintDeduct) {
   // 제출여부
-  checkSubmitExam();
+  let check = checkSubmitExam();
+  // 훈련상태 가져오기
+  searchMgmtState();
+  if (check == 1) {
+    alert("해당 그룹은 제출하였습니다");
+    clientViewUpdate();
+    return;
+  }
   // view update
   clientViewUpdate();
   // 힌트 가져오기
   getHint(examId, grpId);
-  $(".hint_popup").css("display", "block");
-  $(".back").css("display", "block");
+  $(".hint_popup").toggle();
+  $(".back").toggle();
   //scroll
   scrollPause();
   var jsonData = {
@@ -682,19 +699,19 @@ function getHintFunc(grpId, examId, hintDeduct) {
     tr_exam_grpid: grpId,
   };
   $.ajax({
-    url: "http://192.168.32.44:8080/admin/using_hint",
+    url: "http://192.168.32.44:8080/user/using_hint",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       if (response == 0) {
-        // console.log("첫 힌트 사용자");
+        // // console.log("첫 힌트 사용자");
         $(".show_hint_p_" + examId).text("");
         $(".exam_deduct_status_" + examId).css("display", "block");
       } else if (response == 1) {
-        // console.log("이미 힌트 사용한 팀");
+        // // console.log("이미 힌트 사용한 팀");
         $(".show_hint_p_" + examId).text("");
       }
       // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
@@ -708,21 +725,29 @@ function getHintFunc(grpId, examId, hintDeduct) {
 // 해당 힌트 가져오기
 function getHint(examId, grpId) {
   // 제출 여부
-  checkSubmitExam();
+  let check = checkSubmitExam();
+  if (check == 1) {
+    alert("해당 그룹은 제출하였습니다");
+    clientViewUpdate();
+    return;
+  }
   var jsonData = {
     tr_exam_id: examId,
     tr_exam_grpid: grpId,
   };
   $.ajax({
-    url: "http://192.168.32.44:8080/admin/get_hint",
+    url: "http://192.168.32.44:8080/user/get_hint",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log("파일 넣기 실행중..");
-      var exists = response[0].tr_exam_hint_file;
-      if (exists == 1) {
+      // // console.log(response);
+      var html = response[0].tr_exam_hint;
+      $(".hint_popup_contents").empty();
+      $(".hint_popup_contents").append(html);
+      if (response[0].tr_exam_hint_file == 1) {
+        // // console.log("파일 넣기 실행중..");
         $(".file_download_div").empty();
         var fileName = response[0].tr_exam_hint_file_path;
         var html =
@@ -733,8 +758,6 @@ function getHint(examId, grpId) {
           fileName +
           "</a><div>";
         $(".file_download_div").append(html);
-      } else {
-        $(".file_download_div").empty();
       }
     },
   });
@@ -767,20 +790,27 @@ function hintPopUp() {
 
 // 객관식 정답확인 event
 function checkAnsBtnMulti(examId) {
+  // 훈련상태 가져오기
+  searchMgmtState();
   // 제출 여부
-  checkSubmitExam();
+  let checkSub = checkSubmitExam();
+  if (checkSub == 1) {
+    alert("해당 그룹은 제출하였습니다");
+    clientViewUpdate();
+    return;
+  }
   // 사용자가 입력한 답 대입할 변수
   let inputAnswer = "";
   // 객관식(복수X) 값 가져오기
   var userCheckMulti = $(
     'input[name="radiofunc_' + examId + '"]:checked'
   ).val();
-  // console.log(userCheckMulti);
+  // // console.log(userCheckMulti);
   inputAnswer = userCheckMulti;
   // 객관식(복수정답)
   let = multipleAnswer = "";
   if (userCheckMulti == undefined) {
-    // console.log("이 문제는 복수정답이다");
+    // // console.log("이 문제는 복수정답이다");
     var arrAns = [];
     for (var i = 1; i < 6; i++) {
       var check = $(".mult_ans_input_" + i + "_" + examId).prop("checked");
@@ -790,7 +820,7 @@ function checkAnsBtnMulti(examId) {
         arrAns.push(ansVal);
       }
     }
-    // console.log(arrAns.length);
+    // // console.log(arrAns.length);
     for (var i = 0; i < arrAns.length; i++) {
       if (i == arrAns.length - 1) {
         multipleAnswer += arrAns[i];
@@ -804,9 +834,9 @@ function checkAnsBtnMulti(examId) {
       return;
     }
     inputAnswer = multipleAnswer;
-    // console.log("복수정답 잘 나옴?:" + inputAnswer);
+    // // console.log("복수정답 잘 나옴?:" + inputAnswer);
   }
-  // console.log("최종 답안:" + inputAnswer);
+  // // console.log("최종 답안:" + inputAnswer);
   // 객체 넣기 (답안,훈련차시)
   var jsonData = {
     // 훈련자 답안
@@ -818,19 +848,20 @@ function checkAnsBtnMulti(examId) {
     // 문제 id
     tr_exam_id: examId,
   };
-  // console.log(jsonData);
+  // // console.log(jsonData);
   $.ajax({
-    url: "http://192.168.32.44:8080/admin/using_answer_multi",
+    url: "http://192.168.32.44:8080/user/using_answer_multi",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       if (response == 1) {
         alert("풀 수 있음!!");
       } else if (response == 0) {
         alert("해당 문제는 더 이상 풀 수 없습니다");
+
         clientViewUpdate();
         // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
         getTotalStatus(staticAllowSecans);
@@ -885,11 +916,18 @@ function toggleAlram() {
 
 // 주관식 정답확인 event
 function checkAnsBtnShort(examId) {
+  // 훈련상태 가져오기
+  searchMgmtState();
   // 제출 여부
-  checkSubmitExam();
+  let check = checkSubmitExam();
+  if (check == 1) {
+    alert("해당 그룹은 제출하였습니다");
+    clientViewUpdate();
+    return;
+  }
   // 사용자가 입력한 답 대입할 변수
   let inputAnswer = $("#short_form_input_ans_" + examId).val();
-  // console.log(inputAnswer);
+  // // console.log(inputAnswer);
 
   if (inputAnswer == "") {
     alert("답안을 기입하세요");
@@ -906,15 +944,15 @@ function checkAnsBtnShort(examId) {
     // 문제 id
     tr_exam_id: examId,
   };
-  // console.log(jsonData);
+  // // console.log(jsonData);
   $.ajax({
-    url: "http://192.168.32.44:8080/admin/using_answer_short_form",
+    url: "http://192.168.32.44:8080/user/using_answer_short_form",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       if (response == 1) {
         alert("풀 수 있음!!");
       } else if (response == 0) {
@@ -927,24 +965,32 @@ function checkAnsBtnShort(examId) {
         alramAns(1);
         // view update
         clientViewUpdate();
+        // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+        getTotalStatus(staticAllowSecans);
+        // count
+        countAnsExamResultTeam();
       } else if (response == 8) {
         // 오답일때
         alramAns(0);
         // view update
         clientViewUpdate();
+        // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
+        getTotalStatus(staticAllowSecans);
+        // count
+        countAnsExamResultTeam();
       } else if (response == 3) {
         alert("server에서 data를 받아 올 수 없습니다.");
       }
     },
   });
   // count
-  countAnsExamResultTeam();
+  // countAnsExamResultTeam();
   // view update
-  clientViewUpdate();
+  // clientViewUpdate();
   // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
-  getTotalStatus(staticAllowSecans);
+  // getTotalStatus(staticAllowSecans);
   // 제출여부
-  checkSubmitExam();
+  // checkSubmitExam();
 }
 function getExamTypeByExamId(examId) {
   var type;
@@ -982,15 +1028,16 @@ function clientViewUpdate() {
     // 문제 그룹 id
     tr_exam_grpid: examGrpid,
   };
-  // console.log(jsonData);
+  // // console.log(jsonData);
   $.ajax({
-    url: "http://192.168.32.44:8080/admin/get_exam_result_team",
+    async: false,
+    url: "http://192.168.32.44:8080/user/get_exam_result_team",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       for (var i = 0; i < response.length; i++) {
         var userScore = response[i].result_score; // 획득 점수
         // staticAllowSecans  2차 풀이 여부
@@ -1010,12 +1057,14 @@ function clientViewUpdate() {
           } else if (type == 2) {
             // 주관식
             $("#short_form_input_ans_" + examId).val(inputAnswer);
-            // console.log("주관식임");
-            // console.log(inputAnswer);
-            // console.log($("#short_form_input_ans_" + examId).text());
+            // // console.log("주관식임");
+            // // console.log(inputAnswer);
+            // // console.log($("#short_form_input_ans_" + examId).text());
           }
         }
         if (staticAllowSecans == 1) {
+          var inputType = $("input").attr("type");
+          // // console.log(inputType); // input 요소의 type 값이 출력됩니다.
           // 활성
           if (userScore > 0) {
             // 답을 맞춘상태
@@ -1044,6 +1093,7 @@ function clientViewUpdate() {
                 $(".exam_deduct_status_" + examId).text("감점여부: 힌트");
               } else if (hintUse == 0) {
                 // 힌트 미사용
+                hintBtnOff(response[i].tr_exam_id);
               }
             } else if (cntTryAns == 2) {
               // 2차에서 정답
@@ -1074,6 +1124,7 @@ function clientViewUpdate() {
                 );
               } else if (hintUse == 0) {
                 // 힌트 미사용
+                hintBtnOff(response[i].tr_exam_id);
               }
             }
           } else if (userScore == 0) {
@@ -1097,6 +1148,7 @@ function clientViewUpdate() {
                 $(".exam_deduct_status_" + examId).text("감점여부: 힌트");
               } else if (hintUse == 0) {
                 // 힌트 미사용
+                hintBtnOff(response[i].tr_exam_id);
               }
             } else if (cntTryAns == 2) {
               ansBtnOff(examId);
@@ -1131,6 +1183,7 @@ function clientViewUpdate() {
                 );
               } else if (hintUse == 0) {
                 // 힌트 미사용
+                hintBtnOff(response[i].tr_exam_id);
                 // 감점 여부 view
                 $(".exam_deduct_status_" + examId).css("display", "block");
                 $(".exam_deduct_status_" + examId).text("감점여부: 2차풀이");
@@ -1196,83 +1249,85 @@ function startTrainingGetTime() {
     // 문제 그룹 id
     tr_exam_grpid: examGrpid,
   };
-  // console.log(jsonData);
+  // // console.log(jsonData);
   $.ajax({
-    url: "http://192.168.32.44:8080/admin/get_start_training_get_time",
+    async: false,
+    url: "http://192.168.32.44:8080/user/get_start_training_get_time",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
+      // // console.log(response);
       if (response == "") {
         return;
       }
-      // console.log("결과값:" + response);
+      // // console.log("결과값:" + response);
       var txt = "";
       txt = response.toString();
-      // console.log("기본값:" + txt);
+      // // console.log("기본값:" + txt);
       var traingHour = txt.substring(11, 13);
       var traingMin = parseInt(txt.substring(14, 16));
       var traingSec = parseInt(txt.substring(17, 19));
 
-      console.log("h:" + traingHour + "m:" + traingMin + "s:" + traingSec);
+      // // console.log("h:" + traingHour + "m:" + traingMin + "s:" + traingSec);
       // 현재 시각
       let now = new Date();
       // 날 계산
       var year =
         now.getFullYear() + parseInt(now.getMonth() + 1) + now.getDate(); // 날
-      console.log(
-        "year:" + year + "day:" + now.getDay() + "date:" + now.getDate()
-      );
-      console.log("txt:" + txt);
+      // // console.log(
+      //   "year:" + year + "day:" + now.getDay() + "date:" + now.getDate()
+      // );
+      // // console.log("txt:" + txt);
       var target = parseInt(txt.substr(0, 4));
-      console.log("첫번째 target:" + target);
+      // // console.log("첫번째 target:" + target);
       target += parseInt(txt.substring(6, 8));
-      console.log("두번째 target:" + target);
+      // // console.log("두번째 target:" + target);
       target += parseInt(txt.substring(8, 11));
-      console.log("머임 이거:" + txt.substring(8, 11));
-      console.log("세첫번째 target:" + target);
-      console.log("target:" + target);
+      // // console.log("머임 이거:" + txt.substring(8, 11));
+      // // console.log("세첫번째 target:" + target);
+      // // console.log("target:" + target);
       target = target - year; //여기까지
-      console.log("날 지낫니?:" + target);
+      // // console.log("날 지낫니?:" + target);
       if (target != 0) {
         time = 0;
         return;
       }
       var hours = now.getHours(); // 현재 시간
-      console.log("시간 : ", hours);
+      // // console.log("시간 : ", hours);
 
       var minutes = now.getMinutes(); // 현재 분
-      console.log("분 : ", minutes);
+      // // console.log("분 : ", minutes);
 
       var seconds = now.getSeconds(); // 현재 초
-      console.log("초 : ", seconds);
+      // // console.log("초 : ", seconds);
 
       var resultHour = (traingHour - hours) * 3600;
       var resultMin = (traingMin - minutes) * 60;
       var resultSec = traingSec - seconds;
       var finalTime = resultHour + resultMin + resultSec;
-      console.log(
-        "db 시: " + traingHour + " db분: " + traingMin + "db초: " + traingSec
-      );
-      console.log("현재 분:" + minutes + " db 분:" + traingMin);
+      // // console.log(
+      // "db 시: " + traingHour + " db분: " + traingMin + "db초: " + traingSec
+      // );
+      // // console.log("현재 분:" + minutes + " db 분:" + traingMin);
 
-      console.log(
-        "계산 시:" +
-          resultHour +
-          " 계산 분:" +
-          resultMin +
-          " 계산 초:" +
-          resultSec
-      );
+      // // console.log(
+      //   "계산 시:" +
+      //     resultHour +
+      //     " 계산 분:" +
+      //     resultMin +
+      //     " 계산 초:" +
+      //     resultSec
+      // );
 
-      console.log("최종 초: " + finalTime);
+      // // console.log("최종 초: " + finalTime);
       time += finalTime;
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR); //응답 메시지
-      console.log(textStatus); //"error"로 고정인듯함
-      console.log(errorThrown);
+      // console.log(jqXHR); //응답 메시지
+      // console.log(textStatus); //"error"로 고정인듯함
+      // console.log(errorThrown);
     },
   });
 }
@@ -1396,11 +1451,13 @@ function submitExam() {
           $(".back").css("display", "block");
           $(".submit_popup").toggle();
           scrollPlay();
+          location.reload();
         } else if (response == 0) {
           alert("다른 훈련자가 이미 제출하였습니다");
           $(".back").css("display", "block");
           $(".submit_popup").toggle();
           scrollPlay();
+          location.reload();
         }
       },
     });
@@ -1409,6 +1466,7 @@ function submitExam() {
 
 // 제출여부 check
 function checkSubmitExam() {
+  let check = 0;
   var jsonData = {
     // 훈련 차시
     tr_num: grpnum,
@@ -1426,12 +1484,55 @@ function checkSubmitExam() {
     success: function (response) {
       console.log(response);
       if (response == 0) {
+        // // console.log("잘 실행되는중...");
         alert("해당 문제그룹은 더 이상 문제를 풀 수 없습니다");
+        document.getElementById("demo").innerHTML = "팀 제출 완료";
+        clearInterval(invalidata);
         $(".back").css("display", "block");
+        // 모든 버튼 비활성화
+        // $("body input").prop("disabled", true);
+        // $("body input").css("backgroundColor", "gray");
+        submitBtnOff();
+        check = 1;
       }
     },
   });
+  return check;
 }
+// function checkSubmitExam() {
+//   let check = 0;
+//   var jsonData = {
+//     // 훈련 차시
+//     tr_num: grpnum,
+//     // 문제 그룹 id
+//     tr_exam_grpid: examGrpid,
+//   };
+//   // // console.log(jsonData);
+//   $.ajax({
+//     async: false,
+//     url: "http://192.168.32.44:8080/user/check_submit",
+//     type: "POST",
+//     contentType: "application/json",
+//     dataType: "json",
+//     data: JSON.stringify(jsonData),
+//     success: function (response) {
+//       // // console.log(response);
+//       if (response == 0) {
+//         // // console.log("잘 실행되는중...");
+//         alert("해당 문제그룹은 더 이상 문제를 풀 수 없습니다");
+//         document.getElementById("demo").innerHTML = "팀 제출 완료";
+//         clearInterval(invalidata);
+//         $(".back").css("display", "block");
+//         // 모든 버튼 비활성화
+//         // $("body input").prop("disabled", true);
+//         // $("body input").css("backgroundColor", "gray");
+//         submitBtnOff();
+//         check = 1;
+//       }
+//     },
+//   });
+//   return check;
+// }
 // ma_tactics_id get
 function countMaTactics(ma_tactics_id) {
   if (ma_tactics_id == "TA0001") {
@@ -1464,7 +1565,11 @@ function countMaTactics(ma_tactics_id) {
     arrMa[13] += 1;
   }
 }
-
+// 제출하기 버튼 비활성화
+function submitBtnOff() {
+  $(".exam_submit button").prop("disabled", true);
+  $(".exam_submit button").css("backgroundColor", "gray");
+}
 function endTimeUpdateTime() {
   var jsonData = {
     // 훈련 차시
@@ -1490,5 +1595,5 @@ function endTimeUpdateTime() {
   });
 }
 setTimeout(function () {
-  $("html").css("display", "block");
+  $("body").css("display", "block");
 }, 500);
