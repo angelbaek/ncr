@@ -143,4 +143,10 @@ public class UserExplanationController {
     public ExamGrpVO getExamGrpInfoByGrpName(@PathVariable String name){
         return userExplanationService.getExamGrpInfoByGrpName(name);
     }
+
+    // 추가중
+    @PostMapping("/get_mgmt_state")
+    public int getMgmtState(@RequestBody Map<String,Object> map, HttpServletRequest request){
+        return userExplanationService.getMgmtState(map,request);
+    }
 }

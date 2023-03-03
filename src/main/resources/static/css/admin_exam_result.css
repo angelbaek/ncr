@@ -123,7 +123,6 @@ tr td {
 
 /* 본 내용 */
 .user_choice {
-  height: auto;
   margin-top: 50px;
   text-align: center;
 }
@@ -189,11 +188,7 @@ a:hover {
 .ans_false {
   color: red;
 }
-.ans_false:hover {
-  cursor: pointer;
-  text-decoration: underline;
-  font-weight: bold;
-}
+
 .static_title,
 .static_detail_title {
   color: #6c757d;
@@ -218,7 +213,7 @@ a:hover {
 .matrix_div div {
   flex: 1;
   width: 200px;
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
   color: #34395e;
   display: inline-block;
   vertical-align: top;
@@ -245,6 +240,7 @@ a:hover {
 }
 .common_tactics_nth {
   padding-top: 20px;
+  border-bottom: 1px solid gray;
 }
 .matrix_div div .common_matrix_title {
   box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 50%);
@@ -277,10 +273,10 @@ a:hover {
   font-weight: bold;
 }
 .rotate_div {
-  transition: 0.3s;
-  position: relative;
-  top: 20px;
-  /* right: 10px; */
+  transition: none;
+  position: fixed;
+  top: 160px;
+  right: 50px;
   transform: translate(-50%, -50%);
 }
 
@@ -297,13 +293,14 @@ a:hover {
   color: #34395e;
 }
 .common_left_menubar:hover {
-  /* text-decoration: underline; */
+  text-decoration: underline;
 }
 
 .show_static_body_total a {
   color: blue;
 }
 
+/* 훈련팀 매트릭스 */
 .matrix_mit_tech {
   z-index: 3;
   position: fixed;
@@ -353,45 +350,4 @@ a:hover {
 }
 .matrix_div a:hover {
   color: blue;
-}
-.false_ans_change_true_div {
-  z-index: 3;
-  position: fixed;
-  background-color: #fafbfc;
-  box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 50%);
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-}
-.false_ans_change_true_div_title {
-  margin: 10px;
-  color: red;
-  /* font-weight: bold; */
-  text-align: center;
-}
-.false_ans_change_true_div_btn button {
-  width: 100px;
-  margin: 10px;
-  display: inline-block;
-}
-.false_exam_num {
-  margin-left: 10px;
-  text-align: left;
-  color: gray;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-.false_exam_ans {
-  margin-left: 10px;
-  text-align: left;
-  color: gray;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-th score:hover {
-  cursor: pointer;
 }

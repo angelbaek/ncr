@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -168,6 +169,15 @@ public class UserExplanationService {
         examResultTeamVO.setTr_user_grp(userVO.getTr_user_grp());
         examResultTeamVO.setTeam_cd(userVO.getTeam_cd());
         examResultTeamVO.setResult_score(examResultVO.getResult_score());
+
+        // 문제그룹id로 정보 가져오기 (2차 풀이여부, 2차 풀이 감점)
+        ExamGrpVO examGrpVO = userExplanationMapper.getExamGrpInfo(examResultTeamVO.getTr_exam_grpid());
+        int allow = examGrpVO.getTr_allow_secans();
+        int deduct = examGrpVO.getTr_secans_deduct();
+
+        //set
+        examResultTeamVO.setHint_score(deduct);
+
         // 힌트 사용여부 check
         int check = userExplanationMapper.checkHintUsing(examResultTeamVO);
 
@@ -224,6 +234,7 @@ public class UserExplanationService {
         examResultVO.setTr_num(examResultTeamVO.getTr_num()); // 훈련 차시
         examResultVO.setTr_exam_grpid(examResultTeamVO.getTr_exam_grpid()); // grpid
         examResultVO.setTr_exam_id(examResultTeamVO.getTr_exam_id()); // 문제id
+        examResultTeamVO.setWrong_score(deduct); // 2차풀이 감점
 
         // 훈련자 풀이현황 정보 set
         ExamStatVO examStatVO = new ExamStatVO();
@@ -263,6 +274,7 @@ public class UserExplanationService {
                     userExplanationMapper.updateResultSumUser(examStatVO);
                     return 9;
                 }else{ // 오답
+                    userExplanationMapper.updateWrongScore(examResultTeamVO); // 2차풀이 오답점수 넣기
                     userExplanationMapper.examResultAnsNotAns(examResultVO); // 훈련자
                     userExplanationMapper.firstAnsNotAnsMulti(examResultTeamVO); // 훈련팀
                     return 8;
@@ -353,6 +365,7 @@ public class UserExplanationService {
         examResultTeamVO.setTeam_cd(userVO.getTeam_cd());
         examResultTeamVO.setAnswer_user_id(userId);
 
+
         // 문제그룹id로 정보 가져오기 (2차 풀이여부, 2차 풀이 감점)
         ExamGrpVO examGrpVO = userExplanationMapper.getExamGrpInfo(examResultTeamVO.getTr_exam_grpid());
         int allow = examGrpVO.getTr_allow_secans();
@@ -369,6 +382,7 @@ public class UserExplanationService {
 
         examResultTeamVO.setResult_score(deduct); // 2차 풀이 감점
         examResultTeamVO.setPoint(point); // 배점
+        examResultTeamVO.setWrong_score(deduct); // 2차풀이 감점
 
         // 힌트 사용여부 check
         int check = userExplanationMapper.checkHintUsing(examResultTeamVO);
@@ -418,6 +432,7 @@ public class UserExplanationService {
                     userExplanationMapper.updateResultSumUser(examStatVO);
                     return 9;
                 }else{ // 오답
+                    userExplanationMapper.updateWrongScore(examResultTeamVO); // 2차풀이 오답점수 넣기
                     userExplanationMapper.firstAnsNotAnsMulti(examResultTeamVO);
                     return 8;
                 }
@@ -507,9 +522,6 @@ public class UserExplanationService {
             examResultTeamVO.setTeam_cd(userVO.getTeam_cd());
             examResultTeamVO.setAnswer_user_id(userId);
         }
-
-
-
         return userExplanationMapper.getExamResultTeamInfo(examResultTeamVO);
     };
 
@@ -675,5 +687,26 @@ public class UserExplanationService {
     // 해당 문제 정보 가져오기
     public ExamGrpVO getExamGrpInfoByGrpName(String name){
         return userExplanationMapper.getExamGrpInfoByGrpName(name);
+    }
+
+    // 추가중
+    public int getMgmtState(Map<String,Object> map,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        // 유저 id로 정보 가져오기
+        String userId = (String) session.getAttribute("USERID");
+        UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
+        map.put("tr_user_grp", userVO.getTr_user_grp());
+        int state = userExplanationMapper.getMgmtState(map);
+        int count = userExplanationMapper.getCountPause(map);
+        if(state==2){ // 훈련이 중지 되었을때
+            if(count==1){ // 이미 훈련시간 업데이트 한 팀
+                return 2;
+            }else{
+                // 팀별 훈련상태에서 훈련정지여부 count하고 현재 정지시간 setup
+                userExplanationMapper.statePauseUpdateTime(map);
+                return 2;
+            }
+        }
+        return 1;
     }
 }

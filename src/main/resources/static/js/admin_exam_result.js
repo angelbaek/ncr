@@ -623,8 +623,8 @@ function getExamResultTeam(statId, num, grpId, grp) {
       }
       $(".user_body_total").append(htmlHead);
       $(".user_body_total").append(htmlBody);
-      // getMatrixStat(grpid, grp, num);
-      // getMiterAttackMatrix(grpid, grp, num);
+      getMatrixStat(grpid, grp, num);
+      getMiterAttackMatrix(grpid, grp, num);
     },
   });
 }
@@ -676,7 +676,7 @@ function falseToTrue(grp, num, grpId, examId) {
 
 // 선택한 훈련팀 매트릭스스탯 가져오기
 function getMatrixStat(grpid, grp, num) {
-  console.log(grpid + "/" + grp + "/" + num);
+  // console.log(grpid + "/" + grp + "/" + num);
   var jsonData = {
     tr_user_grp: grp,
     tr_num: num,
@@ -690,7 +690,7 @@ function getMatrixStat(grpid, grp, num) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
     },
   });
 }
@@ -710,7 +710,7 @@ function getMiterAttackMatrix(grpid, grp, num) {
   matrixOn();
   var htmlHead = "";
   var htmlBody = "";
-  console.log(grpid);
+  // console.log(grpid);
   var jsonData = {
     tr_user_grp: grp,
     tr_num: num,
@@ -724,18 +724,18 @@ function getMiterAttackMatrix(grpid, grp, num) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       var empty = "";
       for (var i = 0; i < response.length; i++) {
         if (response[i] == null) {
           continue;
         } else if (empty != response[i].MA_TACTICS_ID) {
           var kor = extractKorean(response[i].ma_tactics_name);
-          console.log(response[i].MA_TACTICS_ID);
+          // console.log(response[i].MA_TACTICS_ID);
           var test = '"' + response[i].MA_TACTICS_ID + '"';
           empty = response[i].MA_TACTICS_ID;
-          console.log(empty);
-          console.log("전술단계 뿌려주기 로직 실행");
+          // console.log(empty);
+          // console.log("전술단계 뿌려주기 로직 실행");
           htmlHead =
             "<div class='test_" +
             response[i].MA_TACTICS_ID +
@@ -772,13 +772,12 @@ function getMiterAttackMatrix(grpid, grp, num) {
             response[i].total +
             ")</a></div>";
           $(".test_" + response[i].MA_TACTICS_ID).append(htmlBody);
-          // console.log("그냥 매트릭스 뿌려주기실행");
+          // // console.log("그냥 매트릭스 뿌려주기실행");
         }
       }
     },
   });
 }
-
 function popUp(MA_TACTICS_ID, MA_MATRIX_ID) {
   console.log(MA_TACTICS_ID + "/" + MA_MATRIX_ID);
   var jsonData = {

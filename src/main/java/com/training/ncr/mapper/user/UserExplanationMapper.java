@@ -175,4 +175,14 @@ public interface UserExplanationMapper {
 
     // 해당 문제 정보 가져오기
     ExamGrpVO getExamGrpInfoByGrpName(String name);
+
+    // 2차풀이 오답일때 감점 넣기
+    int updateWrongScore(ExamResultTeamVO examResultTeamVO);
+
+    int getMgmtState(Map<String,Object> map);
+
+    int statePauseUpdateTime(Map<String,Object> map);
+
+    // 훈련이 정지일때 count 가져오기
+    int getCountPause(Map<String,Object> map);
 }

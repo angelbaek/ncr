@@ -357,15 +357,22 @@ function getStartExamAndGrp(grpname) {
                 "'>첫번째:" +
                 "</div><div class='result_exam_explanation_second_" +
                 examid +
-                "'>두번째:" +
+                "'>두번째: -" +
                 "</div><div class='answer_" +
                 examid +
                 "'>정답: " +
                 response[i].tr_exam_ans +
-                "</div><div class='exam_deduct_status_" +
+                "</div>" +
+                "<div class='hint_score_" +
                 examid +
-                "'>감점여부: 힌트" +
-                "</div></div>";
+                "'>힌트감점: -</div>" +
+                "<div class='fail_score_" +
+                examid +
+                "'>오답감점: -</div>" +
+                "<div class='get_score_" +
+                examid +
+                "'>획득점수: -</div>" +
+                "</div>";
               // 힌트 미사용
             } else if (response[i].tr_exam_hint_flg == 0) {
               html +=
@@ -379,15 +386,22 @@ function getStartExamAndGrp(grpname) {
                 "'>첫번째:" +
                 "</div><div class='result_exam_explanation_second_" +
                 examid +
-                "'>두번째:" +
+                "'>두번째: -" +
                 "</div><div class='answer_" +
                 examid +
                 "'>정답: " +
                 response[i].tr_exam_ans +
-                "</div><div class='exam_deduct_status_" +
+                "</div>" +
+                "<div class='hint_score_" +
                 examid +
-                "'>감점여부: 힌트" +
-                "</div></div>";
+                "'>힌트감점: -</div>" +
+                "<div class='fail_score_" +
+                examid +
+                "'>오답감점: -</div>" +
+                "<div class='get_score_" +
+                examid +
+                "'>획득점수: -</div>" +
+                "</div>";
             }
 
             // 복수정답 복수
@@ -459,15 +473,22 @@ function getStartExamAndGrp(grpname) {
                 "'>첫번째:" +
                 "</div><div class='result_exam_explanation_second_" +
                 examid +
-                "'>두번째:" +
+                "'>두번째: -" +
                 "</div><div class='answer_" +
                 examid +
                 "'>정답: " +
                 response[i].tr_exam_ans +
-                "</div><div class='exam_deduct_status_" +
+                "</div>" +
+                "<div class='hint_score_" +
                 examid +
-                "'>감점여부: 힌트" +
-                "</div></div>";
+                "'>힌트감점: -</div>" +
+                "<div class='fail_score_" +
+                examid +
+                "'>오답감점: -</div>" +
+                "<div class='get_score_" +
+                examid +
+                "'>획득점수: -</div>" +
+                "</div>";
               // 힌트 미사용
             } else if (response[i].tr_exam_hint_flg == 0) {
               html +=
@@ -481,15 +502,22 @@ function getStartExamAndGrp(grpname) {
                 "'>첫번째:" +
                 "</div><div class='result_exam_explanation_second_" +
                 examid +
-                "'>두번째:" +
+                "'>두번째: -" +
                 "</div><div class='answer_" +
                 examid +
                 "'>정답: " +
                 response[i].tr_exam_ans +
-                "</div><div class='exam_deduct_status_" +
+                "</div>" +
+                "<div class='hint_score_" +
                 examid +
-                "'>감점여부: 힌트" +
-                "</div></div>";
+                "'>힌트감점: -</div>" +
+                "<div class='fail_score_" +
+                examid +
+                "'>오답감점: -</div>" +
+                "<div class='get_score_" +
+                examid +
+                "'>획득점수: -</div>" +
+                "</div>";
             }
           }
 
@@ -524,15 +552,22 @@ function getStartExamAndGrp(grpname) {
               "'>첫번째:" +
               "</div><div class='result_exam_explanation_second_" +
               examid +
-              "'>두번째:" +
+              "'>두번째: -" +
               "</div><div class='answer_" +
               examid +
               "'>정답: " +
               response[i].tr_exam_ans +
-              "</div><div class='exam_deduct_status_" +
+              "</div>" +
+              "<div class='hint_score_" +
               examid +
-              "'>감점여부: 힌트" +
-              "</div></div>";
+              "'>힌트감점: -</div>" +
+              "<div class='fail_score_" +
+              examid +
+              "'>오답감점: -</div>" +
+              "<div class='get_score_" +
+              examid +
+              "'>획득점수: -</div>" +
+              "</div>";
             // 힌트 미사용
           } else if (response[i].tr_exam_hint_flg == 0) {
             html +=
@@ -546,15 +581,22 @@ function getStartExamAndGrp(grpname) {
               "'>첫번째:" +
               "</div><div class='result_exam_explanation_second_" +
               examid +
-              "'>두번째:" +
+              "'>두번째: -" +
               "</div><div class='answer_" +
               examid +
               "'>정답: " +
               response[i].tr_exam_ans +
-              "</div><div class='exam_deduct_status_" +
+              "</div>" +
+              "<div class='hint_score_" +
               examid +
-              "'>감점여부: 힌트" +
-              "</div></div>";
+              "'>힌트감점: -</div>" +
+              "<div class='fail_score_" +
+              examid +
+              "'>오답감점: -</div>" +
+              "<div class='get_score_" +
+              examid +
+              "'>획득점수: -</div>" +
+              "</div>";
           }
         }
         // insert
@@ -1005,8 +1047,10 @@ function getExamTypeByExamId(examId) {
   });
   return type;
 }
+
 // 풀이 중인 훈련자 팀 가져오기
 function clientViewUpdate() {
+  console.log("몇 번 실행됨");
   $("#ta1").text("(" + arrMa[0] + ")");
   $("#ta2").text("(" + arrMa[1] + ")");
   $("#ta3").text("(" + arrMa[2] + ")");
@@ -1029,14 +1073,13 @@ function clientViewUpdate() {
   };
   // // console.log(jsonData);
   $.ajax({
-    async: false,
-    url: "http://192.168.32.44:8080/admin/get_exam_result_team",
+    url: "http://192.168.32.44:8080/user/get_exam_result_team",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // // console.log(response);
+      console.log(response);
       for (var i = 0; i < response.length; i++) {
         var userScore = response[i].result_score; // 획득 점수
         // staticAllowSecans  2차 풀이 여부
@@ -1066,6 +1109,19 @@ function clientViewUpdate() {
           // // console.log(inputType); // input 요소의 type 값이 출력됩니다.
           // 활성
           if (userScore > 0) {
+            // css block
+            $(".result_exam_explanation_first_" + examId).css(
+              "display",
+              "block"
+            );
+            $(".result_exam_explanation_second_" + examId).css(
+              "display",
+              "block"
+            );
+            // $(".answer_" + examId).css("display", "block");
+            $(".hint_score_" + examId).css("display", "block");
+            $(".fail_score_" + examId).css("display", "block");
+            $(".get_score_" + examId).css("display", "block");
             // 답을 맞춘상태
             ansBtnOff(examId);
             hintBtnOff(examId);
@@ -1081,6 +1137,10 @@ function clientViewUpdate() {
               $(".result_exam_explanation_first_" + examId).text(
                 "첫번째: 정답"
               );
+              // 획득점수
+              $(".get_score_" + examId).text(
+                "획득점수: " + response[i].result_score + "점"
+              );
               // 정답 view
               $(".answer_" + examId).css("display", "block");
               if (hintUse == 1) {
@@ -1088,11 +1148,12 @@ function clientViewUpdate() {
                 // 힌트 사용 p 태그 공란
                 $(".show_hint_p_" + response[i].tr_exam_id).text("");
                 // 감점 여부 view
-                $(".exam_deduct_status_" + examId).css("display", "block");
-                $(".exam_deduct_status_" + examId).text("감점여부: 힌트");
+                $(".hint_score_" + examId).text(
+                  "힌트감점: " + response[i].hint_score + "점"
+                );
               } else if (hintUse == 0) {
                 // 힌트 미사용
-                hintBtnOff(response[i].tr_exam_id);
+                // hintBtnOff(response[i].tr_exam_id);
               }
             } else if (cntTryAns == 2) {
               // 2차에서 정답
@@ -1112,23 +1173,46 @@ function clientViewUpdate() {
               $(".result_exam_explanation_second_" + examId).text(
                 "두번째: 정답"
               );
+              // 획득점수
+              $(".get_score_" + examId).text(
+                "획득점수: " + response[i].result_score + "점"
+              );
+              //2차풀이 감점
+              $(".fail_score_" + examId).text(
+                "오답감점: " + response[i].wrong_score + "점"
+              );
               if (hintUse == 1) {
                 // 힌트 사용
                 // 힌트 사용 p 태그 공란
                 $(".show_hint_p_" + response[i].tr_exam_id).text("");
                 // 감점 여부 view
-                $(".exam_deduct_status_" + examId).css("display", "block");
-                $(".exam_deduct_status_" + examId).text(
-                  "감점여부: 힌트, 2차풀이"
+                $(".hint_score_" + examId).text(
+                  "힌트감점: " + response[i].hint_score + "점"
                 );
               } else if (hintUse == 0) {
                 // 힌트 미사용
-                hintBtnOff(response[i].tr_exam_id);
+                // hintBtnOff(response[i].tr_exam_id);
               }
             }
           } else if (userScore == 0) {
             // 답을 못맞춤
             if (cntTryAns == 1) {
+              //2차풀이 감점
+              $(".fail_score_" + examId).text(
+                "오답감점: " + response[i].wrong_score + "점"
+              );
+              $(".result_exam_explanation_first_" + examId).css(
+                "display",
+                "block"
+              );
+              $(".result_exam_explanation_second_" + examId).css(
+                "display",
+                "block"
+              );
+              // $(".answer_" + examId).css("display", "block");
+              $(".hint_score_" + examId).css("display", "block");
+              $(".fail_score_" + examId).css("display", "block");
+              $(".get_score_" + examId).css("display", "block");
               // 1차에서 오답
               // 첫번째 view
               $(".result_exam_explanation_first_" + examId).css(
@@ -1143,13 +1227,30 @@ function clientViewUpdate() {
                 // 힌트 사용 p 태그 공란
                 $(".show_hint_p_" + response[i].tr_exam_id).text("");
                 // 감점 여부 view
-                $(".exam_deduct_status_" + examId).css("display", "block");
-                $(".exam_deduct_status_" + examId).text("감점여부: 힌트");
+                $(".hint_score_" + examId).text(
+                  "힌트감점: " + response[i].hint_score + "점"
+                );
               } else if (hintUse == 0) {
                 // 힌트 미사용
-                hintBtnOff(response[i].tr_exam_id);
+                // hintBtnOff(response[i].tr_exam_id);
               }
             } else if (cntTryAns == 2) {
+              //2차풀이 감점
+              $(".fail_score_" + examId).text(
+                "오답감점: " + response[i].wrong_score + "점"
+              );
+              $(".result_exam_explanation_first_" + examId).css(
+                "display",
+                "block"
+              );
+              $(".result_exam_explanation_second_" + examId).css(
+                "display",
+                "block"
+              );
+              // $(".answer_" + examId).css("display", "block");
+              $(".hint_score_" + examId).css("display", "block");
+              $(".fail_score_" + examId).css("display", "block");
+              $(".get_score_" + examId).css("display", "block");
               ansBtnOff(examId);
               hintBtnOff(examId);
               // 정답 view
@@ -1176,22 +1277,34 @@ function clientViewUpdate() {
                 // 힌트 사용 p 태그 공란
                 $(".show_hint_p_" + response[i].tr_exam_id).text("");
                 // 감점 여부 view
-                $(".exam_deduct_status_" + examId).css("display", "block");
-                $(".exam_deduct_status_" + examId).text(
-                  "감점여부: 힌트, 2차풀이"
+                $(".hint_score_" + examId).text(
+                  "힌트감점: " + response[i].hint_score + "점"
                 );
               } else if (hintUse == 0) {
                 // 힌트 미사용
-                hintBtnOff(response[i].tr_exam_id);
-                // 감점 여부 view
-                $(".exam_deduct_status_" + examId).css("display", "block");
-                $(".exam_deduct_status_" + examId).text("감점여부: 2차풀이");
+                // hintBtnOff(response[i].tr_exam_id);
               }
             }
           }
         } else if (staticAllowSecans == 0) {
           // 비활성
           if (userScore > 0) {
+            // 획득점수
+            $(".get_score_" + examId).text(
+              "획득점수: " + response[i].result_score + "점"
+            );
+            $(".result_exam_explanation_first_" + examId).css(
+              "display",
+              "block"
+            );
+            $(".result_exam_explanation_second_" + examId).css(
+              "display",
+              "block"
+            );
+            $(".answer_" + examId).css("display", "block");
+            $(".hint_score_" + examId).css("display", "block");
+            $(".fail_score_" + examId).css("display", "block");
+            $(".get_score_" + examId).css("display", "block");
             // 답을 맞춘상태
             ansBtnOff(examId);
             hintBtnOff(examId);
@@ -1210,10 +1323,23 @@ function clientViewUpdate() {
               // 힌트 사용 p 태그 공란
               $(".show_hint_p_" + response[i].tr_exam_id).text("");
               // 감점 여부 view
-              $(".exam_deduct_status_" + examId).css("display", "block");
-              $(".exam_deduct_status_" + examId).text("감점여부: 힌트");
+              $(".hint_score_" + examId).text(
+                "힌트감점: " + response[i].hint_score + "점"
+              );
             }
           } else if (response[i].cnt_try_ans == 1) {
+            $(".result_exam_explanation_first_" + examId).css(
+              "display",
+              "block"
+            );
+            $(".result_exam_explanation_second_" + examId).css(
+              "display",
+              "block"
+            );
+            $(".answer_" + examId).css("display", "block");
+            $(".hint_score_" + examId).css("display", "block");
+            $(".fail_score_" + examId).css("display", "block");
+            $(".get_score_" + examId).css("display", "block");
             ansBtnOff(examId);
             hintBtnOff(examId);
             // 답을 못맞춤
@@ -1230,12 +1356,14 @@ function clientViewUpdate() {
               // 힌트 사용 p 태그 공란
               $(".show_hint_p_" + response[i].tr_exam_id).text("");
               // 감점 여부 view
-              $(".exam_deduct_status_" + examId).css("display", "block");
-              $(".exam_deduct_status_" + examId).text("감점여부: 힌트");
+              $(".hint_score_" + examId).text(
+                "힌트감점: " + response[i].hint_score + "점"
+              );
             }
           }
         }
       }
+      console.log("완료 시간:");
     },
   });
 }
@@ -1424,43 +1552,37 @@ function getTotalStatus(staticAllowSecans) {
 
 // 제출하기 event
 function submitExam() {
-  if (
-    confirm(
-      "정말로 제출 하시겠습니까?\n한번 제출한 문제그룹은 더 이상 해당문제를 풀 수 없습니다."
-    )
-  ) {
-    var jsonData = {
-      // 훈련 차시
-      tr_num: grpnum,
-      // 문제 그룹 id
-      tr_exam_grpid: examGrpid,
-    };
-    console.log(jsonData);
-    $.ajax({
-      async: false,
-      url: "http://192.168.32.44:8080/admin/update_submit",
-      type: "POST",
-      contentType: "application/json",
-      dataType: "json",
-      data: JSON.stringify(jsonData),
-      success: function (response) {
-        console.log(response);
-        if (response == 1) {
-          alert("문제제출이 완료되었습니다");
-          $(".back").css("display", "block");
-          $(".submit_popup").toggle();
-          scrollPlay();
-          location.reload();
-        } else if (response == 0) {
-          alert("다른 훈련자가 이미 제출하였습니다");
-          $(".back").css("display", "block");
-          $(".submit_popup").toggle();
-          scrollPlay();
-          location.reload();
-        }
-      },
-    });
-  }
+  var jsonData = {
+    // 훈련 차시
+    tr_num: grpnum,
+    // 문제 그룹 id
+    tr_exam_grpid: examGrpid,
+  };
+  console.log(jsonData);
+  $.ajax({
+    async: false,
+    url: "http://192.168.32.44:8080/admin/update_submit",
+    type: "POST",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      if (response == 1) {
+        alert("문제제출이 완료되었습니다");
+        $(".back").css("display", "block");
+        $(".submit_popup").toggle();
+        scrollPlay();
+        location.reload();
+      } else if (response == 0) {
+        alert("다른 훈련자가 이미 제출하였습니다");
+        $(".back").css("display", "block");
+        $(".submit_popup").toggle();
+        scrollPlay();
+        location.reload();
+      }
+    },
+  });
 }
 
 // 제출여부 check

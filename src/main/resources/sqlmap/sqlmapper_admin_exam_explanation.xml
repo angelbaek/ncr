@@ -7,7 +7,7 @@
         SELECT
         *
         FROM "TN_TRAIN_MGMT"
-        WHERE "TR_MGMT_STATE" = 1
+        WHERE "TR_MGMT_STATE" = 1 OR "TR_MGMT_STATE" = 2
     </select>
 
     <!--훈련 시작한 문항과 문제그룹정보 가져오기-->

@@ -1,10 +1,12 @@
 var selectVal = "";
+$(".back").css("display", "none");
+$(".common_msg_popup").css("display", "none");
 //세션
 sessionManagementForUserGroup();
 //그룹 정보
 getGroupInfoById();
 getTeamGroup();
-getTrainingState();
+// getTrainingState();
 getTrainingStateActiveOn();
 function getGroupInfoById() {
   $.ajax({
@@ -186,17 +188,24 @@ function training() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      console.log(response);
       if (response.length == 0) {
         alert("문제가 활성화 되지 않았습니다");
         return;
       }
-      if (response[0].tr_mgmt_state != 1) {
-        alert(num + "차시에 진행중인 문제그룹이 없습니다.");
+      if (response[0].tr_mgmt_state != 1 && response[0].tr_mgmt_state != 2) {
+        // 이곳에 팝업창 넣을거임
+        // alert(num + "차시에 진행중인 문제그룹이 없습니다.");
+        $(".common_msg_popup_contents").text(
+          num + "차시에 진행중인 문제그룹이 없습니다."
+        );
+        popupMsg();
         $("select[name=location_num]").focus();
         return;
-      } else if (response[0].tr_mgmt_state == 1) {
-        alert("훈련을 시작합니다");
+      } else if (
+        response[0].tr_mgmt_state == 1 ||
+        response[0].tr_mgmt_state == 2
+      ) {
         location.href = "user_exam_explanation";
       }
     },
@@ -244,6 +253,11 @@ function getTrainingStateActiveOn() {
 
 $(document).ready(function () {
   $("select[name=location_num]").change(function () {
-    getTrainingState();
+    // getTrainingState();
   });
 });
+
+function popupMsg() {
+  $(".common_msg_popup").toggle();
+  $(".back").toggle();
+}

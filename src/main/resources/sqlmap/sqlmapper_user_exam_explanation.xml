@@ -248,7 +248,8 @@
     <update id="firstHintUsingTeam">
         UPDATE "TN_TRAIN_EXAMRESULT_TEAM"
         SET
-            "HINT_USE" = 1
+            "HINT_USE" = 1,
+            "HINT_SCORE" = #{hint_score}
         WHERE
         "TR_USER_GRP" = #{tr_user_grp}
         AND "TEAM_CD" = #{team_cd}
@@ -886,5 +887,59 @@
             "TN_TRAIN_EXAMGRP"
         WHERE
             "TR_EXAM_GRPNAME" = #{name}
+    </select>
+
+    <!--2차풀이 오답일때 감점 넣기-->
+    <update id="updateWrongScore">
+        UPDATE "TN_TRAIN_EXAMRESULT_TEAM"
+        SET "WRONG_SCORE" = #{wrong_score}
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+        "TR_EXAM_ID" = #{tr_exam_id}
+    </update>
+
+    <!--해당 문제그룹 상태 가져오기-->
+    <select id="getMgmtState" resultType="int">
+        SELECT
+            "TR_MGMT_STATE"
+        FROM
+            "TN_TRAIN_MGMT"
+        WHERE
+            "TR_EXAM_GRP" = (
+            SELECT
+                "TR_EXAM_GRPNAME"
+            FROM
+                "TN_TRAIN_EXAMGRP"
+            WHERE
+              "TR_EXAM_GRPID" = #{tr_exam_grpid}) AND
+            "TR_NUM" = #{tr_num}
+    </select>
+
+    <!--훈련이 정지일때, 훈련팀 시간 update-->
+    <update id="statePauseUpdateTime">
+        UPDATE
+            "TN_TRAIN_EXAMSTAT_TEAM"
+        SET
+            "COUNT_PAUSE" = 1,
+            "PAUSE_TIME" = #{pause_time}
+        WHERE
+            "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+            "TR_NUM" = #{tr_num} AND
+            "TR_USER_GRP" = #{tr_user_grp}
+    </update>
+
+    <!--훈련이 정지일때 count 가져오기-->
+    <select id="getCountPause" resultType="int">
+        SELECT
+            "COUNT_PAUSE"
+        FROM
+            "TN_TRAIN_EXAMSTAT_TEAM"
+        WHERE
+            "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+            "TR_NUM" = #{tr_num} AND
+            "TR_USER_GRP" = #{tr_user_grp}
     </select>
 </mapper>
