@@ -414,6 +414,7 @@ function getGrpid() {
 }
 // 선택한 훈련자 풀이현황 가져오기
 function getUserExamStat(statId, grp, num, grpId) {
+  getExamStatTeam(num, grpId, grp);
   $(".static_body_total tr td a").css("backgroundColor", "white");
   $(".static_body_total tr td a").css("color", "blue");
   $(".user_name_" + statId).css("backgroundColor", "#6777ef");
@@ -498,6 +499,7 @@ function getUserExamStat(statId, grp, num, grpId) {
 
 // 선택한 훈련팀별 세부사항 가져오기
 function getExamResultTeam(statId, num, grpId, grp) {
+  getExamStatTeam(num, grpId, grp);
   $(".static_body_total tr td a").css("backgroundColor", "white");
   $(".static_body_total tr td a").css("color", "blue");
   $(".team_name_" + statId).css("backgroundColor", "#6777ef");
@@ -523,7 +525,7 @@ function getExamResultTeam(statId, num, grpId, grp) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // // console.log(response);
+      console.log(response);
       var grpid = response[0].tr_exam_grpid; // grpid
       var grp = response[0].tr_user_grp; // grp
       var num = response[0].tr_num; // num
@@ -584,6 +586,26 @@ function getExamResultTeam(statId, num, grpId, grp) {
     },
   });
 }
+
+// 훈련 세부사항 한번 더 뿌려주기
+function getExamStatTeam(num, grpId, grp) {
+  var jsonData = {
+    tr_user_grp: grp,
+    tr_num: num,
+    tr_exam_grpid: grpId,
+  };
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/static/get_exam_stat_team",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+    },
+  });
+}
+
 // 선택한 훈련팀 매트릭스스탯 가져오기
 function getMatrixStat(grpid, grp, num) {
   // console.log(grpid + "/" + grp + "/" + num);

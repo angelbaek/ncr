@@ -305,4 +305,16 @@
         where
         "TR_EXAM_ID" = #{tr_exam_id}
     </select>
+
+    <!--훈련 세부사항 한번 더 뿌려주기-->
+    <select id="getExamStatTeam" resultType="ExamStatTeamVO">
+        SELECT
+            *
+        FROM
+            "TN_TRAIN_EXAMSTAT_TEAM"
+        WHERE
+            "TR_USER_GRP" = #{tr_user_grp} AND
+            "TR_NUM" = #{tr_num} AND
+            "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
 </mapper>

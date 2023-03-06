@@ -163,4 +163,9 @@ public class UserStaticsService {
     public Map<String,Object> getSelectDetail(Map<String,Object> map){
         return userStaticsMapper.getSelectDetail(map);
     }
+
+    // 훈련 세부사항 한번 더 뿌려주기
+    public ExamStatTeamVO getExamStatTeam(Map<String,Object> map){
+        return userStaticsMapper.getExamStatTeam(map);
+    }
 }

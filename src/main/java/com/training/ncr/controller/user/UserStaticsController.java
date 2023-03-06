@@ -92,4 +92,10 @@ public class UserStaticsController {
     public Map<String,Object> getSelectDetail(@RequestBody Map<String,Object> map){
         return userStaticsService.getSelectDetail(map);
     }
+
+    // 훈련 세부사항 한번 더 뿌려주기
+    @PostMapping("/static/get_exam_stat_team")
+    public ExamStatTeamVO getExamStatTeam(Map<String,Object> map){
+        return userStaticsService.getExamStatTeam(map);
+    }
 }
