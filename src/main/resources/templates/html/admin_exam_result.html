@@ -17,7 +17,7 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
   />
-  <body>
+  <body style="display: none">
     <div class="left_nav">
       <div class="nav_title">
         <a href="/">국가기간망<br />침투대응훈련</a>
@@ -119,16 +119,34 @@
       </div>
       <!-- 정답 체크 할지 팝업 -->
       <div class="false_ans_change_true_div">
-        <div class="false_exam_num"></div>
-        <div class="false_exam_ans"></div>
-        <div class="false_ans_change_true_div_title">
-          정말로 해당 문제를 정답으로 체크하시겠습니까?
+        <!-- 타이틀 -->
+        <div class="false_ans_change_true_div_title">정답 확인</div>
+        <div class="false_ans_change_true_div_div">
+          <!-- 문항 -->
+          <div class="false_exam_num"></div>
+          <!-- 정답 -->
+          <div class="false_exam_ans"></div>
+          <!-- 배점 -->
+          <div class="false_exam_point"></div>
+          <!-- 사용자 답안 -->
+          <div class="false_exam_user_ans"></div>
+          <!-- 힌트 유무 -->
+          <div class="false_exam_hint"></div>
+        </div>
+        <!-- 정답처리 -->
+        <div class="false_ans_change_true_div_warn">
+          해당 문제를 정답으로 체크하시겠습니까?
         </div>
         <div class="false_ans_change_true_div_btn">
           <button class="ok_false_to_true" onclick="falseToTrue()">
             정답체크
           </button>
-          <button onclick="canclePopUpFalseToTrue()">취소</button>
+          <button
+            class="false_ans_change_true_div_btn_change"
+            onclick="canclePopUpFalseToTrue()"
+          >
+            취소
+          </button>
         </div>
       </div>
     </div>
@@ -141,7 +159,6 @@
     crossorigin="anonymous"
   ></script>
   <script>
-    $("body").css("display", "none");
     //정렬
     $(document).on("click", "th score", function () {
       // 정렬 처리 코드

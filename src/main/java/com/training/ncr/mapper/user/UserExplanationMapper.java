@@ -185,4 +185,7 @@ public interface UserExplanationMapper {
 
     // 훈련이 정지일때 count 가져오기
     int getCountPause(Map<String,Object> map);
+
+    // 훈련이 정지였던 팀 시간 가져오기
+    int getPauseTime(Map<String,Object> map);
 }

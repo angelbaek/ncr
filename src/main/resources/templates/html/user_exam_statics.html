@@ -17,7 +17,7 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
   />
-  <body>
+  <body style="display: none">
     <div class="left_nav">
       <div class="nav_title">
         <a href="/">국가기간망<br />침투대응훈련</a>
@@ -118,6 +118,9 @@
     $(".user_body_status").css("display", "none");
     $(".matrix_mit_tech").css("display", "none");
     $(".matrix_title").css("display", "flex");
+    setTimeout(function () {
+      $("body").css("display", "block");
+    }, 500);
   </script>
   <script src="/static/js/common.js"></script>
   <script src="/js/common.js"></script>

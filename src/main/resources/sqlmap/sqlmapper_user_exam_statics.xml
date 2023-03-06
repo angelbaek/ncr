@@ -285,4 +285,24 @@
             "TR_USER_ID" = #{id} AND
             "TR_NUM" = #{num}
     </select>
+
+    <!--선택한 문항에 대한 세부사항 보여주기-->
+    <select id="getSelectDetail" resultType="map">
+        select
+        "TR_EXAM_ANS",
+        "TR_EXAM_POINT",
+        "TR_EXAM_HINT_FLG",
+        (select
+        "INPUT_ANSWER"
+        from
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        where
+        "TR_USER_GRP" = #{tr_user_grp} and
+        "TR_NUM"= #{tr_num} and
+        "TR_EXAM_ID" = #{tr_exam_id}) as user_answer
+        from
+        "TN_TRAIN_EXAM"
+        where
+        "TR_EXAM_ID" = #{tr_exam_id}
+    </select>
 </mapper>

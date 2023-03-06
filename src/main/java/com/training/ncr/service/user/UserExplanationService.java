@@ -710,6 +710,15 @@ public class UserExplanationService {
                 userExplanationMapper.statePauseUpdateTime(map);
                 return 2;
             }
+        }else if(state==1){
+            // 훈련이 재개되었을때
+            if(count==1) { // 훈련이 중지되어 이미 훈련시간 업데이트 한 팀
+                if(userExplanationMapper.getPauseTime(map)==2){
+                    return 1;
+                }
+                return userExplanationMapper.getPauseTime(map);
+            }
+            else return 1;
         }
         return 1;
     }

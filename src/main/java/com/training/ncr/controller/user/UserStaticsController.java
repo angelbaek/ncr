@@ -86,4 +86,10 @@ public class UserStaticsController {
     public int falseToTrue(@RequestBody Map<String,Object> map){
         return userStaticsService.falseToTrue(map);
     }
+
+    // 선택한 문항에 대한 세부사항 보여주기
+    @PostMapping("/static/get_select_detail")
+    public Map<String,Object> getSelectDetail(@RequestBody Map<String,Object> map){
+        return userStaticsService.getSelectDetail(map);
+    }
 }

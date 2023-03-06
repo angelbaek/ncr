@@ -600,7 +600,7 @@ function getMatrixStat(grpid, grp, num) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      console.log(response);
     },
   });
 }
@@ -860,7 +860,3 @@ function getTeamOrg(num, grpId, grp) {
   });
   return returnVal;
 }
-
-setTimeout(function () {
-  $("body").css("display", "block");
-}, 500);

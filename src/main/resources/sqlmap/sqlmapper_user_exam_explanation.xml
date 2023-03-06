@@ -931,6 +931,17 @@
             "TR_USER_GRP" = #{tr_user_grp}
     </update>
 
+    <!--훈련이 정지였던 팀 시간 가져오기-->
+    <select id="getPauseTime" resultType="int">
+        SELECT
+        "PAUSE_TIME"
+        FROM "TN_TRAIN_EXAMSTAT_TEAM"
+        WHERE
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_USER_GRP" = #{tr_user_grp}
+    </select>
+
     <!--훈련이 정지일때 count 가져오기-->
     <select id="getCountPause" resultType="int">
         SELECT

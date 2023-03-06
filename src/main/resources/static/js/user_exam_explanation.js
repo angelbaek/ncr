@@ -20,7 +20,8 @@ var timeoutId;
 // 테스트를 위한 임시 시간
 var min = ""; //분
 var sec = ""; //초
-
+// count reset time
+var restartTime = 0;
 // 스크롤에 따른 이벤트
 $(window).scroll(function () {
   var height = $(window).scrollTop();
@@ -700,6 +701,10 @@ function submitPopupOff() {
 
 // 훈련자 힌트 입력 event
 function getHintFunc(grpId, examId, hintDeduct) {
+  var mgmtState = getMgMtState();
+  if (mgmtState == 2) {
+    return;
+  }
   // 제출여부
   let check = checkSubmitExam();
   // 훈련상태 가져오기
@@ -750,7 +755,10 @@ function getHintFunc(grpId, examId, hintDeduct) {
 
 // 해당 힌트 가져오기
 function getHint(examId, grpId) {
-  getMgMtState();
+  var mgmtState = getMgMtState();
+  if (mgmtState == 2) {
+    return;
+  }
   // 제출 여부
   let check = checkSubmitExam();
   if (check == 1) {
@@ -818,6 +826,10 @@ function hintPopUp() {
 
 // 객관식 정답확인 event
 function checkAnsBtnMulti(examId) {
+  var mgmtState = getMgMtState();
+  if (mgmtState == 2) {
+    return;
+  }
   // 훈련상태 가져오기
   searchMgmtState();
   // 제출 여부
@@ -944,6 +956,10 @@ function toggleAlram() {
 
 // 주관식 정답확인 event
 function checkAnsBtnShort(examId) {
+  var mgmtState = getMgMtState();
+  if (mgmtState == 2) {
+    return;
+  }
   // 훈련상태 가져오기
   searchMgmtState();
   // 제출 여부
@@ -1038,7 +1054,10 @@ function getExamTypeByExamId(examId) {
 
 // 풀이 중인 훈련자 팀 가져오기
 function clientViewUpdate() {
-  getMgMtState();
+  var mgmtState = getMgMtState();
+  if (mgmtState == 2) {
+    return;
+  }
   console.log("몇 번 실행됨");
   $("#ta1").text("(" + arrMa[0] + ")");
   $("#ta2").text("(" + arrMa[1] + ")");
@@ -1674,6 +1693,7 @@ function endTimeUpdateTime() {
 }
 
 function getMgMtState() {
+  var result = 0;
   // 추가중....................................
   var jsonData = {
     // 훈련 차시
@@ -1684,22 +1704,33 @@ function getMgMtState() {
   };
   // // console.log(jsonData);
   $.ajax({
+    async: false,
     url: "http://192.168.32.44:8080/user/get_mgmt_state",
     type: "POST",
     contentType: "application/json",
     dataType: "json",
     data: JSON.stringify(jsonData),
     success: function (response) {
+      console.log(response);
+      // 훈련이 정지였는데 재개한 팀
+      if (response > 2 && restartTime == 0) {
+        restartTime++;
+        time = response;
+      }
       // 훈련이 정지 중일때
       if (response == 2) {
         console.log("훈련이 정지중");
+        alert("훈련이 정지상태입니다.");
+        $(".back").css("display", "block");
         clearInterval(invalidata);
       } else if (response == 1) {
         //훈련이 진행중
         console.log("훈련 진행중");
       }
+      result = response;
     },
   });
+  return result;
 }
 
 function ansBtnOff(examId) {

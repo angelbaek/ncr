@@ -201,6 +201,10 @@ a:hover {
   text-align: center;
   margin-bottom: 50px;
 }
+.user_body_status td:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
 
 .matrix_div {
   display: flex;
@@ -350,4 +354,38 @@ a:hover {
 }
 .matrix_div a:hover {
   color: blue;
+}
+
+.false_ans_change_true_div {
+  z-index: 3;
+  display: block;
+  /* padding: 20px; */
+  position: fixed;
+  border-radius: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fafbfc;
+  color: #34395e;
+  box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 50%);
+}
+.false_ans_change_true_div_div {
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin: 20px;
+  padding: 10px 20px;
+}
+.false_ans_change_true_div_title {
+  background-color: #6777ef;
+  color: #fafbfc;
+  padding: 10px 20px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.false_ans_change_true_div_warn {
+  text-align: center;
+  color: red;
+}
+.false_ans_change_true_div_btn button {
+  margin: 20px;
 }

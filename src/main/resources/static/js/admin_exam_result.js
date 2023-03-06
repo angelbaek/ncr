@@ -1,6 +1,6 @@
 matrixOff();
 // 세션 가져오기
-sessionManagementForAdmin();
+// sessionManagementForAdmin();
 // 해당하는 매트릭스id를 저장할 배열
 let matrixArray = new Array();
 // 훈련중인 팀별, 개인별 현황 보여주기
@@ -536,6 +536,11 @@ function getExamResultTeam(statId, num, grpId, grp) {
         var correct_answer = response[i].correct_answer; // 정답 여부
         var tryAns = response[i].cnt_try_ans; // 정답 입력 횟수
         var score = response[i].result_score; // 획득점수
+        // 오답 td에 넣을 id값을 위한 변수 대입
+        var grp = response[i].tr_user_grp;
+        var num = response[i].tr_num;
+        var grpId = response[i].tr_exam_grpid;
+        var examId = response[i].tr_exam_id;
         if (answer == null) answer = "-";
         if (i % 10 == 0) {
           htmlHead += "</tr>";
@@ -547,15 +552,23 @@ function getExamResultTeam(statId, num, grpId, grp) {
           // 정답일때
           if (score > 0) {
             htmlHead += "<tr><th>" + (i + 1) + "번</th>";
-            htmlBody += "<tr><td class='ans_true'>" + answer + "</td>";
+            htmlBody +=
+              "<tr><td class='ans_true' onclick='popUpFalseToTrue(" +
+              grp +
+              "," +
+              num +
+              "," +
+              grpId +
+              "," +
+              examId +
+              "," +
+              1 +
+              ")'>" +
+              answer +
+              "</td>";
             // 오답일때
           } else if (score == 0 && tryAns > 0) {
             htmlHead += "<tr><th>" + (i + 1) + "번</th>";
-            // 오답 td에 넣을 id값을 위한 변수 대입
-            var grp = response[i].tr_user_grp;
-            var num = response[i].tr_num;
-            var grpId = response[i].tr_exam_grpid;
-            var examId = response[i].tr_exam_id;
             htmlBody +=
               "<tr><td class='ans_false' id='false_" +
               (i + 1) +
@@ -568,7 +581,7 @@ function getExamResultTeam(statId, num, grpId, grp) {
               "," +
               examId +
               "," +
-              (i + 1) +
+              0 +
               ")'>" +
               answer +
               "</td>";
@@ -582,15 +595,23 @@ function getExamResultTeam(statId, num, grpId, grp) {
             htmlBody += "</tr>";
           }
         } else {
-          // 오답 td에 넣을 id값을 위한 변수 대입
-          var grp = response[i].tr_user_grp;
-          var num = response[i].tr_num;
-          var grpId = response[i].tr_exam_grpid;
-          var examId = response[i].tr_exam_id;
           // 정답일때
           if (score > 0) {
             htmlHead += "<th>" + (i + 1) + "번</th>";
-            htmlBody += "<td class='ans_true'>" + answer + "</td>";
+            htmlBody +=
+              "<td class='ans_true' onclick='popUpFalseToTrue(" +
+              grp +
+              "," +
+              num +
+              "," +
+              grpId +
+              "," +
+              examId +
+              "," +
+              1 +
+              ")'>" +
+              answer +
+              "</td>";
             // 오답일때
           } else if (score == 0 && tryAns > 0) {
             htmlHead += "<th>" + (i + 1) + "번</th>";
@@ -606,7 +627,7 @@ function getExamResultTeam(statId, num, grpId, grp) {
               "," +
               examId +
               "," +
-              (i + 1) +
+              0 +
               ")'>" +
               answer +
               "</td>";
@@ -628,17 +649,66 @@ function getExamResultTeam(statId, num, grpId, grp) {
     },
   });
 }
-function popUpFalseToTrue(grp, num, grpId, examId, i) {
+function popUpFalseToTrue(grp, num, grpId, examId, ansTrue) {
   scrollPause();
-  $(".false_exam_num").text("문항: " + i + "번");
-  var txt = $("#false_" + i).text();
-  $(".false_exam_ans").text("기입답안: " + txt);
+  // $(".false_exam_num").text("문항: " + i + "번");
+  // var txt = $("#false_" + i).text();
+  // $(".false_exam_ans").text("기입답안: " + txt);
+  // 정답일때
   $(".false_ans_change_true_div").css("display", "block");
+  if (ansTrue == 1) {
+    $(".false_ans_change_true_div_warn").css("display", "none");
+    $(".ok_false_to_true").css("display", "none");
+    $(".false_ans_change_true_div_btn_change").text("확인");
+  } else {
+    $(".false_ans_change_true_div_warn").css("display", "block");
+    $(".ok_false_to_true").css("display", "inline-block");
+    $(".false_ans_change_true_div_btn_change").text("취소");
+    $(".ok_false_to_true").attr(
+      "onclick",
+      "falseToTrue(" + grp + "," + num + "," + grpId + "," + examId + ")"
+    );
+  }
+  // 답안
+  $(".false_exam_ans").text("정답: -");
+  // 힌트 여부
+  $(".false_exam_hint").text("힌트: -");
+  // 배점
+  $(".false_exam_point").text("배점: -");
+  // 유저 기입 답안
   $(".back").css("display", "block");
-  $(".ok_false_to_true").attr(
-    "onclick",
-    "falseToTrue(" + grp + "," + num + "," + grpId + "," + examId + ")"
-  );
+
+  var jsonData = {
+    tr_user_grp: grp,
+    tr_num: num,
+    tr_exam_grpid: grpId,
+    tr_exam_id: examId,
+  };
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/static/get_select_detail",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      // $(".false_ans_change_true_div div").css("display", "block");
+      // 답안
+      $(".false_exam_ans").text("정답: " + response.TR_EXAM_ANS);
+      // 힌트 여부
+      var hint = response.TR_EXAM_HINT_FLG;
+      if (hint == 1) {
+        hint = "Y";
+      } else {
+        hint = "N";
+      }
+      $(".false_exam_hint").text("힌트: " + hint);
+      // 배점
+      $(".false_exam_point").text("배점: " + response.TR_EXAM_POINT);
+      // 유저 기입 답안
+      $(".false_exam_user_ans").text("답안: " + response.user_answer);
+    },
+  });
 }
 
 function canclePopUpFalseToTrue() {
@@ -724,7 +794,7 @@ function getMiterAttackMatrix(grpid, grp, num) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      console.log(response);
       var empty = "";
       for (var i = 0; i < response.length; i++) {
         if (response[i] == null) {
@@ -898,10 +968,10 @@ function refreshAuto() {
     alert("유형을 선택 후 사용하세요");
     return;
   }
-  console.log("재귀함수 실행...");
+  // console.log("재귀함수 실행...");
   $(".rotate_ic").css("transform", "rotate(" + turn + "turn)");
   turn++;
-  console.log("on의 상태:" + on);
+  // console.log("on의 상태:" + on);
   if (on) {
     setTimeout(function () {
       grpId = getGrpid();
