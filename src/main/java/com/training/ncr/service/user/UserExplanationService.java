@@ -261,8 +261,8 @@ public class UserExplanationService {
                         userExplanationMapper.firstAnsEqualsAnsMulti(examResultTeamVO);
                     }
                     // 오답 점수 set
-                    examResultTeamVO.setWrong_score(deduct);
-                    userExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
+//                    examResultTeamVO.setWrong_score(deduct);
+//                    userExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
                     // 총 점 가져오기
                     int score = userExplanationMapper.getResultScoreForUser(examResultTeamVO);
                     examResultVO.setResult_score(score); // 점수 대입
@@ -323,8 +323,8 @@ public class UserExplanationService {
                         userExplanationMapper.secondAnsEqualsAnsMulti(examResultTeamVO);
                     }
                     // 오답 점수 set
-                    examResultTeamVO.setWrong_score(deduct);
-                    userExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
+//                    examResultTeamVO.setWrong_score(deduct);
+//                    userExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
                     // 총 점 가져오기
                     int score = userExplanationMapper.getResultScoreForUser(examResultTeamVO);
                     examResultVO.setResult_score(score); // 점수 대입
@@ -353,9 +353,11 @@ public class UserExplanationService {
         HttpSession session = request.getSession();
         // 유저 기입 답
         String userAns = examResultTeamVO.getInput_answer();
+
         // 공백 제거
         userAns = userAns.trim();
         userAns = userAns.replace(" ", "");
+
         // 유저 id로 정보 가져오기(grp, team_cd)
         String userId = (String) session.getAttribute("USERID");
         UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
@@ -370,6 +372,7 @@ public class UserExplanationService {
         ExamGrpVO examGrpVO = userExplanationMapper.getExamGrpInfo(examResultTeamVO.getTr_exam_grpid());
         int allow = examGrpVO.getTr_allow_secans();
         int deduct = examGrpVO.getTr_secans_deduct();
+        int hintDeduct = examGrpVO.getTr_hint_deduct();
 
         // 문제id로 정보 가져오기(정답, 배점)
         ExamVO examVO = userExplanationMapper.getExamInfo(examResultTeamVO.getTr_exam_id());
@@ -383,6 +386,7 @@ public class UserExplanationService {
         examResultTeamVO.setResult_score(deduct); // 2차 풀이 감점
         examResultTeamVO.setPoint(point); // 배점
         examResultTeamVO.setWrong_score(deduct); // 2차풀이 감점
+        examResultTeamVO.setHint(hintDeduct);
 
         // 힌트 사용여부 check
         int check = userExplanationMapper.checkHintUsing(examResultTeamVO);
@@ -479,8 +483,8 @@ public class UserExplanationService {
                         userExplanationMapper.secondAnsEqualsAnsMulti(examResultTeamVO);
                     }
                     // 오답 점수 set
-                    examResultTeamVO.setWrong_score(deduct);
-                    userExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
+//                    examResultTeamVO.setWrong_score(deduct);
+//                    userExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
                     // 총 점 가져오기
                     int score = userExplanationMapper.getResultScoreForUser(examResultTeamVO);
                     examResultVO.setResult_score(score); // 점수 대입

@@ -274,9 +274,9 @@ a:hover {
 }
 .rotate_div {
   transition: none;
-  position: fixed;
-  top: 160px;
-  right: 50px;
+  position: relative;
+  top: 20px;
+  left: 0px;
   transform: translate(-50%, -50%);
 }
 
