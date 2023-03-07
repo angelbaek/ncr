@@ -17,6 +17,7 @@ function defaultSet() {
 // select 감지
 // 차시 감지
 $("#select_num").on("change", function () {
+  $(".common_detail_cover").css("display", "none");
   $(".static_detail_title").css("display", "none");
   $(".user_body_status").css("display", "none");
   //selected value
@@ -39,6 +40,7 @@ $("#select_num").on("change", function () {
 
 // 유형 감지
 $("#select_type").on("change", function () {
+  $(".common_detail_cover").css("display", "none");
   $(".static_detail_title").css("display", "none");
   $(".user_body_status").css("display", "none");
   //selected value
@@ -81,7 +83,7 @@ function getExamResultByNumAndType(num, type, grpId) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      console.log(response);
       if (response.length == 0) {
         alert("해당 조건에 데이터가 없습니다");
         $(".static_title").css("display", "none");
@@ -203,7 +205,14 @@ function getExamResultByNumAndType(num, type, grpId) {
             response[i].stat_id +
             "'>" +
             team +
-            "</a></td><td>" +
+            "</a></td><td class='org_" +
+            num +
+            "_" +
+            grpId +
+            "_" +
+            grp +
+            "'>" +
+            // getExamStatTeam(num, grpId, grp);
             targetOrg +
             "</td><td>" +
             num +
@@ -215,7 +224,13 @@ function getExamResultByNumAndType(num, type, grpId) {
             falseAns +
             "</td><td>" +
             submit +
-            "</td><td>" +
+            "</td><td class='delay_" +
+            num +
+            "_" +
+            grpId +
+            "_" +
+            grp +
+            "'>" +
             delayTime +
             "</td><td>" +
             startTime +
@@ -344,7 +359,13 @@ function getExamResultByNumAndType(num, type, grpId) {
             statId +
             "'>" +
             id +
-            "</a></td><td>" +
+            "</a></td><td class='org_" +
+            num +
+            "_" +
+            grpId +
+            "_" +
+            grp +
+            "'>" +
             org +
             "</td><td>" +
             response[i].tr_num +
@@ -356,7 +377,13 @@ function getExamResultByNumAndType(num, type, grpId) {
             response[i].cnt_false_ans +
             "</td><td>" +
             submit +
-            "</td><td>" +
+            "</td><td class='delay_" +
+            num +
+            "_" +
+            grpId +
+            "_" +
+            grp +
+            "'>" +
             delayTime +
             "</td><td>" +
             startTime +
@@ -414,7 +441,6 @@ function getGrpid() {
 }
 // 선택한 훈련자 풀이현황 가져오기
 function getUserExamStat(statId, grp, num, grpId) {
-  getExamStatTeam(num, grpId, grp);
   $(".static_body_total tr td a").css("backgroundColor", "white");
   $(".static_body_total tr td a").css("color", "blue");
   $(".user_name_" + statId).css("backgroundColor", "#6777ef");
@@ -493,13 +519,13 @@ function getUserExamStat(statId, grp, num, grpId) {
       }
       $(".user_body_total").append(htmlHead);
       $(".user_body_total").append(htmlBody);
+      getExamStat(num, grpId, grp);
     },
   });
 }
 
 // 선택한 훈련팀별 세부사항 가져오기
 function getExamResultTeam(statId, num, grpId, grp) {
-  getExamStatTeam(num, grpId, grp);
   $(".static_body_total tr td a").css("backgroundColor", "white");
   $(".static_body_total tr td a").css("color", "blue");
   $(".team_name_" + statId).css("backgroundColor", "#6777ef");
@@ -583,17 +609,99 @@ function getExamResultTeam(statId, num, grpId, grp) {
       $(".user_body_total").append(htmlBody);
       getMatrixStat(grpid, grp, num);
       getMiterAttackMatrix(grpid, grp, num);
+      getExamStatTeam(num, grpId, grp);
     },
   });
 }
 
-// 훈련 세부사항 한번 더 뿌려주기
-function getExamStatTeam(num, grpId, grp) {
+// 훈련 세부사항 한번 더 뿌려주기 (훈련자)
+function getExamStat(num, grpId, grp) {
+  $(".common_detail_cover").css("display", "block");
+  var htmlHead = "";
+  var htmlBody = "";
   var jsonData = {
     tr_user_grp: grp,
     tr_num: num,
     tr_exam_grpid: grpId,
   };
+  console.log(jsonData);
+  $.ajax({
+    url: "http://192.168.32.44:8080/user/static/get_exam_stat",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      $(".common_detail_head").empty();
+      $(".common_detail_body").empty();
+      console.log(response);
+      var name = response.tr_user_id;
+      var num = response.tr_num;
+      var submit = response.submit_answer;
+      if (submit == 1) {
+        submit = "제출";
+      } else {
+        submit = "미제출";
+      }
+      var result = response.result_sum;
+      var cntAns = response.cnt_correct_ans;
+      var cntFalseAns = response.cnt_false_ans;
+      var org = $(".org_" + num + "_" + grpId + "_" + grp).text();
+      var delay = $(".delay_" + num + "_" + grpId + "_" + grp).text();
+      var start = response.start_time;
+      if (start == null) {
+        start = "-";
+      } else {
+        start = response.start_time.substr(0, 16);
+      }
+      var end = response.end_time;
+      if (end == null) {
+        end = "-";
+      } else {
+        end = response.end_time.substr(0, 16);
+      }
+      // console.log(org);
+      htmlHead =
+        "<tr><th>훈련자명</th><th>기관명</th><th>차시</th><th>점수 제출</th><th>총 점수</th><th>정답</th><th>오답</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
+      htmlBody =
+        "<tr><td>" +
+        name +
+        "</td><td>" +
+        org +
+        "</td><td>" +
+        num +
+        "</td><td>" +
+        submit +
+        "</td><td>" +
+        result +
+        "</td><td>" +
+        cntAns +
+        "</td><td>" +
+        cntFalseAns +
+        "</td><td>" +
+        delay +
+        "</td><td>" +
+        start +
+        "</td><td>" +
+        end +
+        "</td></tr>";
+      $(".common_detail_head").append(htmlHead);
+      $(".common_detail_body").append(htmlBody);
+    },
+  });
+}
+
+// 훈련 세부사항 한번 더 뿌려주기 (팀)
+function getExamStatTeam(num, grpId, grp) {
+  $(".common_detail_cover").css("display", "block");
+  var htmlHead = "";
+  var htmlBody = "";
+  var jsonData = {
+    tr_user_grp: grp,
+    tr_num: num,
+    tr_exam_grpid: grpId,
+  };
+  console.log(jsonData);
   $.ajax({
     url: "http://192.168.32.44:8080/user/static/get_exam_stat_team",
     type: "POST",
@@ -601,14 +709,67 @@ function getExamStatTeam(num, grpId, grp) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
+      $(".common_detail_head").empty();
+      $(".common_detail_body").empty();
       console.log(response);
+      var team = response.team_cd;
+      var num = response.tr_num;
+      var submit = response.submit_answer;
+      if (submit == 1) {
+        submit = "제출";
+      } else {
+        submit = "미제출";
+      }
+      var result = response.result_sum;
+      var cntAns = response.cnt_correct_ans;
+      var cntFalseAns = response.cnt_false_ans;
+      var org = $(".org_" + num + "_" + grpId + "_" + grp).text();
+      var delay = $(".delay_" + num + "_" + grpId + "_" + grp).text();
+      var start = response.start_time;
+      if (start == null) {
+        start = "-";
+      } else {
+        start = response.start_time.substr(0, 16);
+      }
+      var end = response.end_time;
+      if (end == null) {
+        end = "-";
+      } else {
+        end = response.end_time.substr(0, 16);
+      }
+      console.log(org);
+      htmlHead =
+        "<tr><th>팀코드</th><th>기관명</th><th>차시</th><th>점수 제출</th><th>총 점수</th><th>정답</th><th>오답</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
+      htmlBody =
+        "<tr><td>" +
+        team +
+        "</td><td>" +
+        org +
+        "</td><td>" +
+        num +
+        "</td><td>" +
+        submit +
+        "</td><td>" +
+        result +
+        "</td><td>" +
+        cntAns +
+        "</td><td>" +
+        cntFalseAns +
+        "</td><td>" +
+        delay +
+        "</td><td>" +
+        start +
+        "</td><td>" +
+        end +
+        "</td></tr>";
+      $(".common_detail_head").append(htmlHead);
+      $(".common_detail_body").append(htmlBody);
     },
   });
 }
 
 // 선택한 훈련팀 매트릭스스탯 가져오기
 function getMatrixStat(grpid, grp, num) {
-  // console.log(grpid + "/" + grp + "/" + num);
   var jsonData = {
     tr_user_grp: grp,
     tr_num: num,

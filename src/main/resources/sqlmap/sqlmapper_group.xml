@@ -18,7 +18,7 @@
 
     <select id="callTraining" resultType="MgmtVO">
         select
-        *
+            *
         from "TN_TRAIN_MGMT"
         where "TR_NUM" = #{tr_num}
     </select>

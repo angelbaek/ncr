@@ -70,6 +70,9 @@ public interface UserStaticsMapper {
     // 선택한 문항에 대한 세부사항 보여주기
     Map<String,Object> getSelectDetail(Map<String,Object> map);
 
-    // 훈련 세부사항 한번 더 뿌려주기
+    // 훈련 세부사항 한번 더 뿌려주기 (팀)
     ExamStatTeamVO getExamStatTeam(Map<String,Object> map);
+
+    // 훈련 세부사항 한번 더 뿌려주기 (훈련자)
+    ExamStatVO getExamStat(Map<String,Object> map);
 }

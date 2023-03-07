@@ -27,7 +27,7 @@ $(window).scroll(function () {
   var height = $(window).scrollTop();
   if (height > 100) {
     $(".now_exam_status").css("position", "fixed");
-    $(".now_exam_status").css("width", "75%");
+    $(".now_exam_status").css("width", "70%");
     $(".now_exam_status").css("left", "250px");
     $(".now_exam_status").css("backgroundColor", "white");
     $(".now_exam_status").css("paddingTop", "25px");
@@ -42,8 +42,8 @@ $(window).scroll(function () {
     $(".now_exam_status").css("top", "0");
     // 추가
     $(".now_exam_status").css("height", "70px");
-    $(".exam_status_score").css("margin-left", "330px");
-    $(".exam_status_score").css("padding-left", "300px");
+    $(".exam_status_score").css("margin-left", "30%");
+    // $(".exam_status_score").css("padding-left", "300px");
     // 헤더 추가
     $(".top_user_info").css("position", "fixed");
     $(".top_user_info").css("backgroundColor", "white");
@@ -67,8 +67,8 @@ $(window).scroll(function () {
     $(".now_exam_status").css("box-shadow", "none");
     //추가
     // $(".now_exam_status").css("height", "10px");
-    $(".exam_status_score").css("margin-left", "330px");
-    $(".exam_status_score").css("padding-left", "300px");
+    $(".exam_status_score").css("margin-left", "200px");
+    // $(".exam_status_score").css("padding-left", "30%");
     // 헤더 추가
     $(".top_user_info").css("position", "relative");
     $(".top_user_info").css("backgroundColor", "#6777ef");
@@ -114,7 +114,7 @@ invalidata = setInterval(function () {
  *  time end=============================================================================
  */
 // 세션 가져오기
-sessionManagementForUser();
+// sessionManagementForUser();
 $("body").css("display", "none");
 // 유저 팀코드
 getStartExamAndGrp(grpname);
@@ -140,6 +140,15 @@ if (submit == 1) {
   // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
   getTotalStatus(staticAllowSecans);
   // $("body").css("display", "block");
+}
+function ansBtnOff(examId) {
+  $("#ans_btn_" + examId).prop("disabled", true);
+  $("#ans_btn_" + examId).css("backgroundColor", "gray");
+  $(".show_hint_p_" + examId).text("");
+}
+function hintBtnOff(examId) {
+  $("#hint_btn_" + examId).prop("disabled", true);
+  $("#hint_btn_" + examId).css("backgroundColor", "gray");
 }
 
 // 해당 문제 정보 가져오기
@@ -793,6 +802,17 @@ function getHint(examId, grpId) {
           fileName +
           "</a><div>";
         $(".file_download_div").append(html);
+      } else {
+        $(".file_download_div").empty();
+        var fileName = "파일없음";
+        var html =
+          '<input type="hidden" id="filename" name="filename" value="' +
+          fileName +
+          '">' +
+          '<div class="file_div"><p>File Down: </p><a name="filename">' +
+          fileName +
+          "</a><div>";
+        $(".file_download_div").append(html);
       }
     },
   });
@@ -1027,14 +1047,6 @@ function checkAnsBtnShort(examId) {
       }
     },
   });
-  // count
-  // countAnsExamResultTeam();
-  // view update
-  // clientViewUpdate();
-  // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
-  // getTotalStatus(staticAllowSecans);
-  // 제출여부
-  // checkSubmitExam();
 }
 
 function getExamTypeByExamId(examId) {
@@ -1545,9 +1557,9 @@ function getTotalStatus(staticAllowSecans) {
             "/" +
             response.maxexplanationcount
         ); // 풀이 개수 view
-        $(".total_score").text("획득점수: " + response.resultscore); // 획득 점수 view
-        $(".total_fail_score").text("오답감점: " + response.wrongscore);
-        $(".total_hint_deduct").text("힌트감점: " + response.hintscore); // 힌트 감점 view
+        $(".total_score").text("획득점수: " + response.resultscore + "점"); // 획득 점수 view
+        $(".total_fail_score").text("오답감점: " + response.wrongscore + "점");
+        $(".total_hint_deduct").text("힌트감점: " + response.hintscore + "점"); // 힌트 감점 view
         if (response.explanationcount == response.maxexplanationcount) {
           // 다 품
           $(".contents").scrollTop($(".contents")[0].scrollHeight);

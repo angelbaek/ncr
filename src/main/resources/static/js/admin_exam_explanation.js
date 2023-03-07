@@ -28,7 +28,7 @@ $(window).scroll(function () {
   var height = $(window).scrollTop();
   if (height > 100) {
     $(".now_exam_status").css("position", "fixed");
-    $(".now_exam_status").css("width", "75%");
+    $(".now_exam_status").css("width", "65%");
     $(".now_exam_status").css("left", "250px");
     $(".now_exam_status").css("backgroundColor", "white");
     $(".now_exam_status").css("paddingTop", "25px");
@@ -43,8 +43,8 @@ $(window).scroll(function () {
     $(".now_exam_status").css("top", "0");
     // 추가
     $(".now_exam_status").css("height", "70px");
-    $(".exam_status_score").css("margin-left", "330px");
-    $(".exam_status_score").css("padding-left", "300px");
+    $(".exam_status_score").css("margin-left", "30%");
+    // $(".exam_status_score").css("padding-left", "300px");
     // 헤더 추가
     $(".top_user_info").css("position", "fixed");
     $(".top_user_info").css("backgroundColor", "white");
@@ -68,8 +68,8 @@ $(window).scroll(function () {
     $(".now_exam_status").css("box-shadow", "none");
     //추가
     // $(".now_exam_status").css("height", "10px");
-    $(".exam_status_score").css("margin-left", "330px");
-    $(".exam_status_score").css("padding-left", "300px");
+    $(".exam_status_score").css("margin-left", "200px");
+    // $(".exam_status_score").css("padding-left", "30%");
     // 헤더 추가
     $(".top_user_info").css("position", "relative");
     $(".top_user_info").css("backgroundColor", "#6777ef");
@@ -716,6 +716,10 @@ function submitPopupOff() {
 }
 // 훈련자 힌트 입력 event
 function getHintFunc(grpId, examId, hintDeduct) {
+  var mgmtState = getMgMtState();
+  if (mgmtState == 2) {
+    return;
+  }
   // 제출여부
   let check = checkSubmitExam();
   // 훈련상태 가져오기
@@ -725,8 +729,6 @@ function getHintFunc(grpId, examId, hintDeduct) {
     clientViewUpdate();
     return;
   }
-  // view update
-  clientViewUpdate();
   // 힌트 가져오기
   getHint(examId, grpId);
   $(".hint_popup").toggle();
@@ -759,13 +761,19 @@ function getHintFunc(grpId, examId, hintDeduct) {
       // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
       getTotalStatus(staticAllowSecans);
       // 제출여부
-      // checkSubmitExam();
+      checkSubmitExam();
+      // view update
+      clientViewUpdate();
     },
   });
 }
 
 // 해당 힌트 가져오기
 function getHint(examId, grpId) {
+  var mgmtState = getMgMtState();
+  if (mgmtState == 2) {
+    return;
+  }
   // 제출 여부
   let check = checkSubmitExam();
   if (check == 1) {
@@ -797,6 +805,17 @@ function getHint(examId, grpId) {
           fileName +
           '">' +
           '<div class="file_div"><p>File Down: </p><a name="filename" onclick="downloadFile()">' +
+          fileName +
+          "</a><div>";
+        $(".file_download_div").append(html);
+      } else {
+        $(".file_download_div").empty();
+        var fileName = "파일없음";
+        var html =
+          '<input type="hidden" id="filename" name="filename" value="' +
+          fileName +
+          '">' +
+          '<div class="file_div"><p>File Down: </p><a name="filename">' +
           fileName +
           "</a><div>";
         $(".file_download_div").append(html);
@@ -832,8 +851,12 @@ function hintPopUp() {
 
 // 객관식 정답확인 event
 function checkAnsBtnMulti(examId) {
+  var mgmtState = getMgMtState();
+  if (mgmtState == 2) {
+    return;
+  }
   // 훈련상태 가져오기
-  // searchMgmtState();
+  searchMgmtState();
   // 제출 여부
   let checkSub = checkSubmitExam();
   if (checkSub == 1) {
@@ -922,12 +945,12 @@ function checkAnsBtnMulti(examId) {
       }
       // count
       countAnsExamResultTeam();
-      // view update
-      clientViewUpdate();
       // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
       getTotalStatus(staticAllowSecans);
       // 제출여부
-      // checkSubmitExam();
+      checkSubmitExam();
+      // view update
+      clientViewUpdate();
     },
   });
 }
@@ -957,6 +980,10 @@ function toggleAlram() {
 
 // 주관식 정답확인 event
 function checkAnsBtnShort(examId) {
+  var mgmtState = getMgMtState();
+  if (mgmtState == 2) {
+    return;
+  }
   // 훈련상태 가져오기
   searchMgmtState();
   // 제출 여부
@@ -1024,15 +1051,8 @@ function checkAnsBtnShort(examId) {
       }
     },
   });
-  // count
-  // countAnsExamResultTeam();
-  // view update
-  // clientViewUpdate();
-  // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
-  // getTotalStatus(staticAllowSecans);
-  // 제출여부
-  // checkSubmitExam();
 }
+
 function getExamTypeByExamId(examId) {
   var type;
   $.ajax({
@@ -1363,7 +1383,7 @@ function clientViewUpdate() {
           }
         }
       }
-      console.log("완료 시간:");
+      // console.log("완료 시간:");
     },
   });
 }
@@ -1474,7 +1494,7 @@ function countAnsExamResultTeam() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log("풀이 개수 :" + response);
+      // console.log("풀이 개수 :" + response);
     },
   });
 }
@@ -1499,7 +1519,7 @@ function getTotalStatus(staticAllowSecans) {
       success: function (response) {
         console.log(response);
         $(".total_count").text(
-          "풀이 개수: " +
+          "풀이개수: " +
             response.explanationcount +
             "/" +
             response.maxexplanationcount
@@ -1510,7 +1530,7 @@ function getTotalStatus(staticAllowSecans) {
         if (response.explanationcount == response.maxexplanationcount) {
           // 다 품
           $(".contents").scrollTop($(".contents")[0].scrollHeight);
-          $(".back").toggle();
+          $(".back").css("display", "block");
         }
       },
     });
@@ -1715,6 +1735,48 @@ function endTimeUpdateTime() {
     },
   });
 }
-// setTimeout(function () {
-//   $("body").css("display", "block");
-// }, 500);
+
+function getMgMtState() {
+  var result = 0;
+  // 추가중....................................
+  var jsonData = {
+    // 훈련 차시
+    tr_num: grpnum,
+    // 문제 그룹 id
+    tr_exam_grpid: examGrpid,
+    pause_time: time,
+  };
+  // // console.log(jsonData);
+  $.ajax({
+    async: false,
+    url: "http://192.168.32.44:8080/user/get_mgmt_state",
+    type: "POST",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      // 훈련이 정지였는데 재개한 팀
+      if (response > 2 && restartTime == 0) {
+        restartTime++;
+        time = response;
+      }
+      // 훈련이 정지 중일때
+      if (response == 2) {
+        console.log("훈련이 정지중");
+        alert("훈련이 정지상태입니다.");
+        $(".back").css("display", "block");
+        clearInterval(invalidata);
+      } else if (response == 1) {
+        //훈련이 진행중
+        console.log("훈련 진행중");
+      }
+      result = response;
+    },
+  });
+  return result;
+}
+
+setTimeout(function () {
+  $("body").css("display", "block");
+}, 500);

@@ -306,7 +306,7 @@
         "TR_EXAM_ID" = #{tr_exam_id}
     </select>
 
-    <!--훈련 세부사항 한번 더 뿌려주기-->
+    <!--훈련 세부사항 한번 더 뿌려주기 (팀)-->
     <select id="getExamStatTeam" resultType="ExamStatTeamVO">
         SELECT
             *
@@ -316,5 +316,18 @@
             "TR_USER_GRP" = #{tr_user_grp} AND
             "TR_NUM" = #{tr_num} AND
             "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </select>
+
+    <!--훈련 세부사항 한번 더 뿌려주기 (훈련자)-->
+    <select id="getExamStat" resultType="ExamStatVO">
+        SELECT
+            *
+        FROM
+            "TN_TRAIN_EXAMSTAT"
+        WHERE
+            "TR_USER_GRP" = #{tr_user_grp} AND
+            "TR_NUM" = #{tr_num} AND
+            "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+            "TR_USER_ID" = #{tr_user_id}
     </select>
 </mapper>

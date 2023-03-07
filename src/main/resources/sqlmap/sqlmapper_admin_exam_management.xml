@@ -127,7 +127,7 @@
         FROM
             "TC_MITERATTCK_MATRIX"
         WHERE
-            "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+<!--            "TR_EXAM_GRPID" = #{tr_exam_grpid} AND-->
             "MA_TACTICS_ID" = #{ma_tactics_id}
     </select>
 

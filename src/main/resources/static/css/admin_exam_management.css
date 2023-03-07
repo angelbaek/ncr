@@ -514,3 +514,12 @@ tr td {
   margin-left: 60px;
   margin-bottom: 10px;
 }
+.hint_input {
+  width: 100%;
+  border: 1px solid gray;
+  height: 200px;
+  overflow: auto;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}

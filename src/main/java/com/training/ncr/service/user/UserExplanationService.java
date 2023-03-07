@@ -698,10 +698,20 @@ public class UserExplanationService {
         HttpSession session = request.getSession();
         // 유저 id로 정보 가져오기
         String userId = (String) session.getAttribute("USERID");
-        UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
-        map.put("tr_user_grp", userVO.getTr_user_grp());
+
+        if(userId==null){
+            map.put("tr_user_grp", 99);
+        }else{
+            UserVO userVO = userExplanationMapper.getMyInfoByUserId(userId);
+            map.put("tr_user_grp", userVO.getTr_user_grp());
+        }
         int state = userExplanationMapper.getMgmtState(map);
-        int count = userExplanationMapper.getCountPause(map);
+        int count=0;
+        try{
+            count = userExplanationMapper.getCountPause(map);
+        }catch (BindingException b){
+            count=0;
+        }
         if(state==2){ // 훈련이 중지 되었을때
             if(count==1){ // 이미 훈련시간 업데이트 한 팀
                 return 2;

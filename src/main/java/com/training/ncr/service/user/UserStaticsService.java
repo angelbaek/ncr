@@ -92,12 +92,6 @@ public class UserStaticsService {
             matrixStatVO.setMa_tactics_id(target2.get(i));
             stringObjectMap.add(userStaticsMapper.getTotalAnsCorrectTrue(matrixStatVO));
         }
-        //테스트 코드
-        Map<String,List<Object>> a = new HashMap<>();
-        List<Object> l1 = new ArrayList<>();
-        l1.add(1);
-        List<Object> l2 = new ArrayList<>();
-        l2.add(2);
 
         return stringObjectMap;
     }
@@ -164,8 +158,20 @@ public class UserStaticsService {
         return userStaticsMapper.getSelectDetail(map);
     }
 
-    // 훈련 세부사항 한번 더 뿌려주기
+    // 훈련 세부사항 한번 더 뿌려주기(팀)
     public ExamStatTeamVO getExamStatTeam(Map<String,Object> map){
         return userStaticsMapper.getExamStatTeam(map);
+    }
+
+    // 훈련 세부사항 한번 더 뿌려주기 (훈련자)
+    public ExamStatVO getExamStat(Map<String,Object> map,HttpServletRequest request){
+        boolean cont = map.containsKey("tr_user_id");
+        if(cont){
+          return userStaticsMapper.getExamStat(map);
+        }else{
+            HttpSession session = request.getSession();
+            map.put("tr_user_id",session.getAttribute("USERID"));
+            return userStaticsMapper.getExamStat(map);
+        }
     }
 }

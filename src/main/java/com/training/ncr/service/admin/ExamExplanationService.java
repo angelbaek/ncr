@@ -1,6 +1,7 @@
 package com.training.ncr.service.admin;
 
 import com.training.ncr.mapper.admin.ExamExplanationMapper;
+import com.training.ncr.mapper.user.UserExplanationMapper;
 import com.training.ncr.vo.NowExamVO;
 import com.training.ncr.vo.UserVO;
 import com.training.ncr.vo.admin.ExamGrpVO;
@@ -24,6 +25,9 @@ public class ExamExplanationService {
 
     @Autowired
     ExamExplanationMapper examExplanationMapper;
+
+    @Autowired
+    UserExplanationMapper userExplanationMapper;
 
     // 문제 풀이 그룹 조회
     public List<MgmtVO> searchMgmtState(){
@@ -136,13 +140,21 @@ public class ExamExplanationService {
         examResultTeamVO.setTr_user_grp(99);
         examResultTeamVO.setTeam_cd("TEAM099");
         examResultTeamVO.setResult_score(examResultVO.getResult_score());
+
+        // 문제그룹id로 정보 가져오기 (2차 풀이여부, 2차 풀이 감점)
+        ExamGrpVO examGrpVO = examExplanationMapper.getExamGrpInfo(examResultTeamVO.getTr_exam_grpid());
+        int allow = examGrpVO.getTr_allow_secans();
+        int deduct = examGrpVO.getTr_secans_deduct();
+
+        //set
+        examResultTeamVO.setHint_score(deduct);
+
         // 힌트 사용여부 check
         int check = examExplanationMapper.checkHintUsing(examResultTeamVO);
 
         if(check==1){ // 사용
 
         }else if(check==0){ // 미사용
-
             examExplanationMapper.firstHintUsingTeam(examResultTeamVO);
             return 0;
         }
@@ -190,6 +202,7 @@ public class ExamExplanationService {
         examResultVO.setTr_num(examResultTeamVO.getTr_num()); // 훈련 차시
         examResultVO.setTr_exam_grpid(examResultTeamVO.getTr_exam_grpid()); // grpid
         examResultVO.setTr_exam_id(examResultTeamVO.getTr_exam_id()); // 문제id
+        examResultTeamVO.setWrong_score(deduct); // 2차풀이 감점
 
         // 훈련자 풀이현황 정보 set
         ExamStatVO examStatVO = new ExamStatVO();
@@ -216,19 +229,17 @@ public class ExamExplanationService {
                         examExplanationMapper.firstAnsEqualsAnsMulti(examResultTeamVO);
                     }
                     // 오답 점수 set
-                    examResultTeamVO.setWrong_score(deduct);
-                    examExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
+//                    examResultTeamVO.setWrong_score(deduct);
+//                    examExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
                     // 총 점 가져오기
                     int score = examExplanationMapper.getResultScoreForUser(examResultTeamVO);
                     examResultVO.setResult_score(score); // 점수 대입
                     // 훈련팀, 훈련자 update
-
                     examExplanationMapper.updateCntCorrectAnsTeam(examResultTeamVO); // 정답수 update
                     examExplanationMapper.updateResultSumTeam(examResultTeamVO); // 총점 update
-
                     return 9;
                 }else{ // 오답
-
+                    userExplanationMapper.updateWrongScore(examResultTeamVO); // 2차풀이 오답점수 넣기
                     examExplanationMapper.firstAnsNotAnsMulti(examResultTeamVO); // 훈련팀
                     return 8;
                 }
@@ -254,7 +265,6 @@ public class ExamExplanationService {
                     return 9;
                 }else{ // 오답
                     examExplanationMapper.updateCntFalseAnsTeam(examResultTeamVO); // 오답수 update
-
                     examExplanationMapper.secondAnsNotAnsMulti(examResultTeamVO); // 훈련팀
                     return 8;
                 }
@@ -266,14 +276,16 @@ public class ExamExplanationService {
             System.out.println("입력횟수:"+tryAns+" 유저입력:"+userAns+" 답:"+ans);
             if(tryAns==0){ // 남아있음 (1번 품)
                 if(userAns.equals(ans)){ // 정답일때
+                    // 매트릭스 스탯 정답체크
+                    userExplanationMapper.updateAnsToMatrixStat(examResultTeamVO);
                     if(check==1){ // 힌트 사용
                         examExplanationMapper.secondAnsEqualsAnsMultiAndHintUser(examResultTeamVO);
                     }else{ // 힌트 미사용
                         examExplanationMapper.secondAnsEqualsAnsMulti(examResultTeamVO);
                     }
                     // 오답 점수 set
-                    examResultTeamVO.setWrong_score(deduct);
-                    examExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
+//                    examResultTeamVO.setWrong_score(deduct);
+//                    examExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
                     // 총 점 가져오기
                     int score = examExplanationMapper.getResultScoreForUser(examResultTeamVO);
                     examResultVO.setResult_score(score); // 점수 대입
@@ -312,6 +324,7 @@ public class ExamExplanationService {
         ExamGrpVO examGrpVO = examExplanationMapper.getExamGrpInfo(examResultTeamVO.getTr_exam_grpid());
         int allow = examGrpVO.getTr_allow_secans();
         int deduct = examGrpVO.getTr_secans_deduct();
+        int hintDeduct = examGrpVO.getTr_hint_deduct();
 
         // 문제id로 정보 가져오기(정답, 배점)
         ExamVO examVO = examExplanationMapper.getExamInfo(examResultTeamVO.getTr_exam_id());
@@ -324,6 +337,8 @@ public class ExamExplanationService {
 
         examResultTeamVO.setResult_score(deduct); // 2차 풀이 감점
         examResultTeamVO.setPoint(point); // 배점
+        examResultTeamVO.setWrong_score(deduct); // 2차풀이 감점
+        examResultTeamVO.setHint(hintDeduct);
 
         // 힌트 사용여부 check
         int check = examExplanationMapper.checkHintUsing(examResultTeamVO);
@@ -370,6 +385,7 @@ public class ExamExplanationService {
                     examExplanationMapper.updateResultSumTeam(examResultTeamVO); // 총점 update
                     return 9;
                 }else{ // 오답
+                    userExplanationMapper.updateWrongScore(examResultTeamVO); // 2차풀이 오답점수 넣기
                     examExplanationMapper.firstAnsNotAnsMulti(examResultTeamVO);
                     return 8;
                 }
@@ -411,8 +427,8 @@ public class ExamExplanationService {
                         examExplanationMapper.secondAnsEqualsAnsMulti(examResultTeamVO);
                     }
                     // 오답 점수 set
-                    examResultTeamVO.setWrong_score(deduct);
-                    examExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
+//                    examResultTeamVO.setWrong_score(deduct);
+//                    examExplanationMapper.wrongScoreUpdate(examResultTeamVO); // 오답점수 update
                     // 총 점 가져오기
                     int score = examExplanationMapper.getResultScoreForUser(examResultTeamVO);
                     examResultVO.setResult_score(score); // 점수 대입

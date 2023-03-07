@@ -7,7 +7,7 @@
         SELECT
         *
         FROM "TN_TRAIN_MGMT"
-        WHERE "TR_MGMT_STATE" = 1 OR "TR_MGMT_STATE" = 2
+        WHERE "TR_MGMT_STATE" = 1
     </select>
 
     <!--훈련 시작한 문항과 문제그룹정보 가져오기-->
@@ -177,7 +177,8 @@
     <update id="firstHintUsingTeam">
         UPDATE "TN_TRAIN_EXAMRESULT_TEAM"
         SET
-        "HINT_USE" = 1
+        "HINT_USE" = 1,
+        "HINT_SCORE" = #{hint_score}
         WHERE
         "TR_USER_GRP" = #{tr_user_grp}
         AND "TEAM_CD" = #{team_cd}

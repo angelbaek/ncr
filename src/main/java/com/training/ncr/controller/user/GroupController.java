@@ -4,6 +4,7 @@ import com.training.ncr.service.user.GroupService;
 import com.training.ncr.vo.admin.MgmtVO;
 import com.training.ncr.vo.TeamCodeVO;
 import com.training.ncr.vo.UserVO;
+import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,7 +61,12 @@ public class GroupController {
     // 활성화된 문제그룹이 있는지 가져오기
     @GetMapping("user/get_training_state_active_on")
     public int getTrainingStateActiveOn(){
-        return groupService.getTrainingStateActiveOn();
+        try{
+            return groupService.getTrainingStateActiveOn();
+        }catch (BindingException b){
+            System.out.println("활성화 된 문제그룹 없음");
+            return 0;
+        }
     }
 
 
