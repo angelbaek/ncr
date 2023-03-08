@@ -247,11 +247,22 @@
             "CNT_CORRECT_ANS" = "CNT_CORRECT_ANS" + 1,
             "CNT_FALSE_ANS" = "CNT_FALSE_ANS" - 1,
             "RESULT_SUM" = "RESULT_SUM" + #{point}
-
         WHERE
             "TR_USER_GRP" = #{tr_user_grp} AND
             "TR_NUM" = #{tr_num} AND
             "TR_EXAM_GRPID" = #{tr_exam_grpid}
+    </update>
+    <!--답안 수정-->
+    <update id="updateInputAnswerResultTeam">
+        UPDATE
+        "TN_TRAIN_EXAMRESULT_TEAM"
+        SET
+        "INPUT_ANSWER" = #{input_answer}
+        WHERE
+        "TR_USER_GRP" = #{tr_user_grp} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid} AND
+        "TR_EXAM_ID" = #{tr_exam_id}
     </update>
     <update id="updateExamResultTeam">
         UPDATE

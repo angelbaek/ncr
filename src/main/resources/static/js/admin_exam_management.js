@@ -2,7 +2,7 @@
  * 문항 관리 js
  */
 // 관리자 세션
-// sessionManagementForAdmin();
+sessionManagementForAdmin();
 examGroupCall();
 selectGrpChange();
 

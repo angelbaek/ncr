@@ -206,71 +206,6 @@ a:hover {
   text-decoration: underline;
 }
 
-.matrix_div {
-  display: flex;
-  width: 1500px;
-  box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.matrix_div div {
-  flex: 1;
-  width: 200px;
-  /* padding-bottom: 20px; */
-  color: #34395e;
-  display: inline-block;
-  vertical-align: top;
-  overflow-wrap: break-word;
-  border-right: 1px solid gray;
-}
-
-.matrix_div div div {
-  border-right: none;
-  /* border-bottom: 1px solid gray; */
-  width: 100%;
-  height: 100px;
-  padding-left: 10px;
-  padding-right: 10px;
-  /* display: block; */
-  overflow-wrap: break-word;
-}
-.matrix_div .common_tactics {
-  padding-top: 10px;
-  /* top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
-  border-bottom: 1px solid gray;
-}
-.common_tactics_nth {
-  padding-top: 20px;
-  border-bottom: 1px solid gray;
-}
-.matrix_div div .common_matrix_title {
-  box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 50%);
-  background-color: #6777ef;
-  font-weight: bold;
-  width: 100%;
-  height: auto;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 0px;
-  height: 40px;
-  padding-top: 10px;
-  margin-bottom: 25px;
-  color: #fafbfc;
-  text-align: center;
-  display: inline-block;
-}
-
-.matrix_title {
-  text-align: center;
-  font-weight: bold;
-  color: #6c757d;
-  margin-top: 40px;
-  margin-bottom: 20px;
-}
-
 .user_num_div p,
 .user_type_div p {
   color: rgb(108, 117, 125);
@@ -304,51 +239,6 @@ a:hover {
   color: blue;
 }
 
-/* 훈련팀 매트릭스 */
-.matrix_mit_tech {
-  z-index: 3;
-  position: fixed;
-  width: 1000px;
-  height: auto;
-  background-color: #fafbfc;
-  border-radius: 10px;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
-  box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 50%);
-  text-align: center;
-  padding: 30px;
-}
-
-.matrix_mit_tech div {
-  padding: 0px;
-  margin: 0px;
-  position: relative;
-  width: auto;
-  height: auto;
-  display: block;
-}
-.matrix_mit_tech .title {
-  margin-bottom: 20px;
-}
-.matrix_mit_tech .contents {
-  text-align: justify;
-  margin-bottom: 30px;
-}
-.matrix_mit_tech button {
-  display: block;
-  position: relative;
-  margin: auto;
-  padding: 0px;
-  /* left: 0;
-  top: 0; */
-}
-
-.matrix_mit_tech .common_css_title {
-  color: gray;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
 .matrix_div a {
   color: rgb(66, 66, 66);
 }
@@ -375,6 +265,9 @@ a:hover {
   margin: 20px;
   padding: 10px 20px;
 }
+.false_ans_change_true_div_div div {
+  margin-bottom: 5px;
+}
 .false_ans_change_true_div_title {
   background-color: #6777ef;
   color: #fafbfc;
@@ -386,6 +279,35 @@ a:hover {
   text-align: center;
   color: red;
 }
+.false_ans_change_true_div_btn {
+  text-align: center;
+}
 .false_ans_change_true_div_btn button {
   margin: 20px;
+}
+.false_exam_user_ans {
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+}
+.false_ans_change_true_div_css_ans {
+  display: inline-block;
+}
+
+.show_static_body_total {
+  border: 1px solid gray;
+  border-radius: 100px;
+  box-shadow: none;
+}
+
+.common_detail_div_border {
+  border: 1px solid gray;
+  margin: 35px;
+}
+
+.false_ans_change_true_div_btn_change {
+  display: inline-block;
+  text-align: center;
 }

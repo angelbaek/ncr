@@ -75,4 +75,7 @@ public interface UserStaticsMapper {
 
     // 훈련 세부사항 한번 더 뿌려주기 (훈련자)
     ExamStatVO getExamStat(Map<String,Object> map);
+
+    // 답안 수정
+    int updateInputAnswerResultTeam(Map<String,Object> map);
 }

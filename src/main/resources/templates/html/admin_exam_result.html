@@ -94,10 +94,23 @@
       <!-- 훈련자 세부사항 -->
       <div class="static_detail_title">훈련 세부사항</div>
       <!-- 세부사항 한번 더 뿌려주기 -->
-      <table class="common_detail_cover">
+      <div class="common_detail_div_border">
+        <div class="common_detail_div_css" id="detail_teamcode">팀코드</div>
+        <div class="common_detail_div_css" id="detail_org">기관명</div>
+        <div class="common_detail_div_css" id="detail_num">차시</div>
+        <div class="common_detail_div_css" id="detail_submit">점수제출</div>
+        <div class="common_detail_div_css" id="detail_total">총점수</div>
+        <div class="common_detail_div_css" id="detail_ans">정답</div>
+        <div class="common_detail_div_css" id="detail_fail_ans">오답</div>
+        <br />
+        <div class="common_detail_div_css" id="detail_use_time">소요시간</div>
+        <div class="common_detail_div_css" id="detail_start_time">시작시간</div>
+        <div class="common_detail_div_css" id="detail_end_time">종료시간</div>
+      </div>      
+      <!-- <table class="common_detail_cover">
         <thead class="common_detail_head"></thead>
-        <tbody class="common_detail_body"></tbody>
-        <!-- <div class="common_detail_div_css">팀코드</div>
+        <tbody class="common_detail_body"></tbody> -->
+      <!-- <div class="common_detail_div_css">팀코드</div>
         <div class="common_detail_div_css">기관명</div>
         <div class="common_detail_div_css">차시</div>
         <div class="common_detail_div_css">점수제출</div>
@@ -108,7 +121,7 @@
         <div class="common_detail_div_css">소요시간</div>
         <div class="common_detail_div_css">시작시간</div>
         <div class="common_detail_div_css">종료시간</div> -->
-      </table>
+      <!-- </table> -->
       <!-- <div
         style="
           max-width: 100%;
@@ -145,7 +158,8 @@
           <!-- 배점 -->
           <div class="false_exam_point"></div>
           <!-- 사용자 답안 -->
-          <div class="false_exam_user_ans"></div>
+          <div class="false_ans_change_true_div_css_ans">기입 답안:</div>
+          <input class="false_exam_user_ans"></input>
           <!-- 힌트 유무 -->
           <div class="false_exam_hint"></div>
         </div>
@@ -207,6 +221,7 @@
       });
     });
     //
+    $(".common_detail_div_border").css("display", "none");
     $(".common_detail_cover").css("display", "none");
     $(".back").css("display", "none");
     $(".matrix_title").css("display", "flex");
@@ -216,17 +231,6 @@
     $(".static_detail_title").css("display", "none");
     $(".user_body_status").css("display", "none");
     $(".matrix_mit_tech").css("display", "none");
-
-    // $(window).scroll(function () {
-    //   var height = $(window).scrollTop();
-    //   if (height > 0) {
-    //     $(".rotate_div").css("position", "absolute");
-    //     $(".rotate_div").css("top", "90px");
-    //   } else {
-    //     $(".rotate_div").css("position", "fixed");
-    //     $(".rotate_div").css("top", "160px");
-    //   }
-    // });
   </script>
   <script src="/static/js/common.js"></script>
   <script src="/js/common.js"></script>

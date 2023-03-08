@@ -118,7 +118,7 @@ img {
 } */
 .abs {
   padding: 20px;
-  margin-top: 800px;
+  margin-top: 700px;
   position: absolute;
   /* margin-top: 300px; */
   /* margin-left: 250px; */
@@ -136,7 +136,9 @@ img {
   font-size: 16px;
   /* font-weight: bold; */
   display: inline-block;
-  margin-right: 50px;
+  /* margin-right: 50px; */
+  margin: 25px;
+  margin-top: 0;
 }
 
 #now_place {

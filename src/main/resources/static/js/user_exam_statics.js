@@ -6,18 +6,25 @@ let matrixArray = new Array();
 var turn = 1;
 var bg = 0;
 var on = false;
+// 현재 상태
+let nowStat = 0;
+let nowNum = 0;
+let nowGrpId = 0;
+let nowGrp = 0;
 // 기본셋 실행
 defaultSet();
 // 기본셋 실행함수
 function defaultSet() {
   let num = $("#select_num").val();
+  $("#select_type").val(2).prop("checked", true);
   let type = $("#select_type").val();
   getExamResultByNumAndType(num, type);
 }
 // select 감지
 // 차시 감지
 $("#select_num").on("change", function () {
-  $(".common_detail_cover").css("display", "none");
+  $(".common_detail_div_border").css("display", "none");
+  $(".common_detail_div_css").css("display", "none");
   $(".static_detail_title").css("display", "none");
   $(".user_body_status").css("display", "none");
   //selected value
@@ -40,7 +47,8 @@ $("#select_num").on("change", function () {
 
 // 유형 감지
 $("#select_type").on("change", function () {
-  $(".common_detail_cover").css("display", "none");
+  $(".common_detail_div_border").css("display", "none");
+  $(".common_detail_div_css").css("display", "none");
   $(".static_detail_title").css("display", "none");
   $(".user_body_status").css("display", "none");
   //selected value
@@ -357,6 +365,14 @@ function getExamResultByNumAndType(num, type, grpId) {
             grpId +
             ")'><a class='user_name_" +
             statId +
+            "' id='target_name_" +
+            statId +
+            "_" +
+            num +
+            "_" +
+            grpId +
+            "_" +
+            grp +
             "'>" +
             id +
             "</a></td><td class='org_" +
@@ -441,12 +457,28 @@ function getGrpid() {
 }
 // 선택한 훈련자 풀이현황 가져오기
 function getUserExamStat(statId, grp, num, grpId) {
-  $(".static_body_total tr td a").css("backgroundColor", "white");
-  $(".static_body_total tr td a").css("color", "blue");
-  $(".user_name_" + statId).css("backgroundColor", "#6777ef");
-  $(".user_name_" + statId).css("padding", "10px 15px");
-  $(".user_name_" + statId).css("color", "#fafbfc");
-  $(".user_name_" + statId).css("border-radius", "5px");
+  // $(".static_body_total tr td a").css("backgroundColor", "white");
+  // $(".static_body_total tr td a").css("color", "blue");
+  // $(".user_name_" + statId).css("backgroundColor", "#6777ef");
+  // $(".user_name_" + statId).css("padding", "10px 15px");
+  // $(".user_name_" + statId).css("color", "#fafbfc");
+  // $(".user_name_" + statId).css("border-radius", "5px");
+  $(".common_detail_div_border").css("display", "block");
+  nowStat = statId;
+  nowNum = num;
+  nowGrpId = grpId;
+  nowGrp = grp;
+  $(".static_body_total tr").css("backgroundColor", "#fafbfc");
+  $(".static_body_total tr").css("color", "black");
+  $(".static_body_total tr a").css("color", "blue");
+  $(".user_name_" + statId)
+    .parent()
+    .parent()
+    .css("backgroundColor", "#6777ef");
+  $(".user_name_" + statId)
+    .parent()
+    .parent()
+    .css("color", "#fafbfc");
   var name = $(".user_name_" + statId).text(); // 훈련자 이름
   $(".static_detail_title").text("훈련자 세부사항");
   toggleDetail();
@@ -519,19 +551,36 @@ function getUserExamStat(statId, grp, num, grpId) {
       }
       $(".user_body_total").append(htmlHead);
       $(".user_body_total").append(htmlBody);
-      getExamStat(num, grpId, grp);
+      getExamStat(statId, num, grpId, grp);
     },
   });
 }
 
 // 선택한 훈련팀별 세부사항 가져오기
 function getExamResultTeam(statId, num, grpId, grp) {
-  $(".static_body_total tr td a").css("backgroundColor", "white");
-  $(".static_body_total tr td a").css("color", "blue");
-  $(".team_name_" + statId).css("backgroundColor", "#6777ef");
-  $(".team_name_" + statId).css("padding", "10px 15px");
+  $(".common_detail_div_border").css("display", "block");
+  nowStat = statId;
+  nowNum = num;
+  nowGrpId = grpId;
+  nowGrp = grp;
+  $(".static_body_total tr").css("backgroundColor", "#fafbfc");
+  $(".static_body_total tr").css("color", "black");
+  $(".static_body_total tr a").css("color", "blue");
+  $(".team_name_" + statId)
+    .parent()
+    .parent()
+    .css("backgroundColor", "#6777ef");
+  $(".team_name_" + statId)
+    .parent()
+    .parent()
+    .css("color", "#fafbfc");
   $(".team_name_" + statId).css("color", "#fafbfc");
-  $(".team_name_" + statId).css("border-radius", "5px");
+  // $(".static_body_total tr td a").css("backgroundColor", "white");
+  // $(".static_body_total tr td a").css("color", "blue");
+  // $(".team_name_" + statId).css("backgroundColor", "#6777ef");
+  // $(".team_name_" + statId).css("padding", "10px 15px");
+  // $(".team_name_" + statId).css("color", "#fafbfc");
+  // $(".team_name_" + statId).css("border-radius", "5px");
   var name = $(".team_name_" + statId).text(); // 선택한 팀 이름
   $(".static_detail_title").text("팀 훈련 세부사항");
   toggleDetail();
@@ -615,14 +664,18 @@ function getExamResultTeam(statId, num, grpId, grp) {
 }
 
 // 훈련 세부사항 한번 더 뿌려주기 (훈련자)
-function getExamStat(num, grpId, grp) {
-  $(".common_detail_cover").css("display", "block");
-  var htmlHead = "";
-  var htmlBody = "";
+function getExamStat(statId, num, grpId, grp) {
+  $(".common_detail_div_css").css("display", "inline-block");
+  var name = $(
+    "#target_name_" + statId + "_" + num + "_" + grpId + "_" + grp
+  ).text();
+  // var htmlHead = "";
+  // var htmlBody = "";
   var jsonData = {
     tr_user_grp: grp,
     tr_num: num,
     tr_exam_grpid: grpId,
+    tr_user_id: name,
   };
   console.log(jsonData);
   $.ajax({
@@ -647,7 +700,9 @@ function getExamStat(num, grpId, grp) {
       var cntAns = response.cnt_correct_ans;
       var cntFalseAns = response.cnt_false_ans;
       var org = $(".org_" + num + "_" + grpId + "_" + grp).text();
+      org = org.replace(/(.+)(\1)+/g, "$1");
       var delay = $(".delay_" + num + "_" + grpId + "_" + grp).text();
+      delay = delay.replace(/(.+)(\1)+/g, "$1");
       var start = response.start_time;
       if (start == null) {
         start = "-";
@@ -660,40 +715,50 @@ function getExamStat(num, grpId, grp) {
       } else {
         end = response.end_time.substr(0, 16);
       }
+      $("#detail_teamcode").text("훈련자명: " + name);
+      $("#detail_org").text("기관명: " + org);
+      $("#detail_num").text("차시: " + num);
+      $("#detail_submit").text("점수제출: " + submit);
+      $("#detail_total").text("총 점수: " + result);
+      $("#detail_ans").text("정답: " + cntAns);
+      $("#detail_fail_ans").text("오답: " + cntFalseAns);
+      $("#detail_use_time").text("소요 시간: " + delay);
+      $("#detail_start_time").text("시작 시간: " + start);
+      $("#detail_end_time").text("종료 시간: " + end);
       // console.log(org);
-      htmlHead =
-        "<tr><th>훈련자명</th><th>기관명</th><th>차시</th><th>점수 제출</th><th>총 점수</th><th>정답</th><th>오답</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
-      htmlBody =
-        "<tr><td>" +
-        name +
-        "</td><td>" +
-        org +
-        "</td><td>" +
-        num +
-        "</td><td>" +
-        submit +
-        "</td><td>" +
-        result +
-        "</td><td>" +
-        cntAns +
-        "</td><td>" +
-        cntFalseAns +
-        "</td><td>" +
-        delay +
-        "</td><td>" +
-        start +
-        "</td><td>" +
-        end +
-        "</td></tr>";
-      $(".common_detail_head").append(htmlHead);
-      $(".common_detail_body").append(htmlBody);
+      // htmlHead =
+      //   "<tr><th>훈련자명</th><th>기관명</th><th>차시</th><th>점수 제출</th><th>총 점수</th><th>정답</th><th>오답</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
+      // htmlBody =
+      //   "<tr><td>" +
+      //   name +
+      //   "</td><td>" +
+      //   org +
+      //   "</td><td>" +
+      //   num +
+      //   "</td><td>" +
+      //   submit +
+      //   "</td><td>" +
+      //   result +
+      //   "</td><td>" +
+      //   cntAns +
+      //   "</td><td>" +
+      //   cntFalseAns +
+      //   "</td><td>" +
+      //   delay +
+      //   "</td><td>" +
+      //   start +
+      //   "</td><td>" +
+      //   end +
+      //   "</td></tr>";
+      // $(".common_detail_head").append(htmlHead);
+      // $(".common_detail_body").append(htmlBody);
     },
   });
 }
 
 // 훈련 세부사항 한번 더 뿌려주기 (팀)
 function getExamStatTeam(num, grpId, grp) {
-  $(".common_detail_cover").css("display", "block");
+  $(".common_detail_div_css").css("display", "inline-block");
   var htmlHead = "";
   var htmlBody = "";
   var jsonData = {
@@ -737,33 +802,43 @@ function getExamStatTeam(num, grpId, grp) {
       } else {
         end = response.end_time.substr(0, 16);
       }
-      console.log(org);
-      htmlHead =
-        "<tr><th>팀코드</th><th>기관명</th><th>차시</th><th>점수 제출</th><th>총 점수</th><th>정답</th><th>오답</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
-      htmlBody =
-        "<tr><td>" +
-        team +
-        "</td><td>" +
-        org +
-        "</td><td>" +
-        num +
-        "</td><td>" +
-        submit +
-        "</td><td>" +
-        result +
-        "</td><td>" +
-        cntAns +
-        "</td><td>" +
-        cntFalseAns +
-        "</td><td>" +
-        delay +
-        "</td><td>" +
-        start +
-        "</td><td>" +
-        end +
-        "</td></tr>";
-      $(".common_detail_head").append(htmlHead);
-      $(".common_detail_body").append(htmlBody);
+      $("#detail_teamcode").text("팀코드: " + team);
+      $("#detail_org").text("기관명: " + org);
+      $("#detail_num").text("차시: " + num);
+      $("#detail_submit").text("점수제출: " + submit);
+      $("#detail_total").text("총 점수: " + result);
+      $("#detail_ans").text("정답: " + cntAns);
+      $("#detail_fail_ans").text("오답: " + cntFalseAns);
+      $("#detail_use_time").text("소요 시간: " + delay);
+      $("#detail_start_time").text("시작 시간: " + start);
+      $("#detail_end_time").text("종료 시간: " + end);
+      // console.log(org);
+      // htmlHead =
+      //   "<tr><th>팀코드</th><th>기관명</th><th>차시</th><th>점수 제출</th><th>총 점수</th><th>정답</th><th>오답</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
+      // htmlBody =
+      //   "<tr><td>" +
+      //   team +
+      //   "</td><td>" +
+      //   org +
+      //   "</td><td>" +
+      //   num +
+      //   "</td><td>" +
+      //   submit +
+      //   "</td><td>" +
+      //   result +
+      //   "</td><td>" +
+      //   cntAns +
+      //   "</td><td>" +
+      //   cntFalseAns +
+      //   "</td><td>" +
+      //   delay +
+      //   "</td><td>" +
+      //   start +
+      //   "</td><td>" +
+      //   end +
+      //   "</td></tr>";
+      // $(".common_detail_head").append(htmlHead);
+      // $(".common_detail_body").append(htmlBody);
     },
   });
 }
@@ -843,7 +918,7 @@ function getMiterAttackMatrix(grpid, grp, num) {
             response[i].MA_MATRIX_ID +
             ")'><a>" +
             response[i].ma_tactics_tech +
-            "(" +
+            "<br/>(" +
             response[i].real +
             "/" +
             response[i].total +
@@ -859,7 +934,7 @@ function getMiterAttackMatrix(grpid, grp, num) {
             response[i].MA_MATRIX_ID +
             ")'><a>" +
             response[i].ma_tactics_tech +
-            "(" +
+            "<br/>(" +
             response[i].real +
             "/" +
             response[i].total +

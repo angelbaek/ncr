@@ -271,3 +271,149 @@ body.no-scroll {
   display: inline-block;
   margin: 10px;
 }
+
+.common_detail_div_css {
+  display: none;
+}
+
+.common_detail_div_css {
+  margin-top: 10px;
+  margin-left: 40px;
+}
+
+.submit_popup_contents {
+  text-align: left;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  margin-left: 30px;
+  /* padding-left: 30px; */
+  color: red;
+}
+
+.submit_popup_count,
+.submit_popup_score,
+.submit_popup_deduct,
+.submit_popup_hint_deduct {
+  text-align: left;
+  padding-left: 35%;
+}
+
+/* 훈련팀 매트릭스 */
+.matrix_mit_tech {
+  z-index: 3;
+  position: fixed;
+  width: auto;
+  max-width: 600px;
+  height: auto;
+  background-color: #fafbfc;
+  border-radius: 10px;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 50%);
+  text-align: left;
+  padding: 30px;
+}
+
+.matrix_mit_tech div {
+  padding: 0px;
+  margin: 0px;
+  position: relative;
+  width: auto;
+  height: auto;
+  display: block;
+  text-align: left;
+}
+.matrix_mit_tech .title {
+  margin-bottom: 20px;
+}
+.matrix_mit_tech .contents {
+  text-align: justify;
+  margin-bottom: 30px;
+}
+.matrix_mit_tech button {
+  display: block;
+  position: relative;
+  margin: auto;
+  padding: 0px;
+  /* left: 0;
+  top: 0; */
+}
+
+.matrix_div {
+  display: flex;
+  width: 1500px;
+  box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.matrix_div div {
+  flex: 1;
+  width: 200px;
+  /* padding-bottom: 20px; */
+  color: #34395e;
+  display: inline-block;
+  vertical-align: top;
+  overflow-wrap: break-word;
+  border-right: 1px solid gray;
+}
+
+.matrix_div div div {
+  border-right: none;
+  /* border-bottom: 1px solid gray; */
+  width: 100%;
+  height: 100px;
+  padding-left: 10px;
+  padding-right: 10px;
+  /* display: block; */
+  overflow-wrap: break-word;
+}
+.matrix_div div .common_matrix_title {
+  box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 50%);
+  background-color: #6777ef;
+  font-weight: bold;
+  width: 100%;
+  height: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 0px;
+  height: 40px;
+  padding-top: 10px;
+  /* margin-bottom: 25px; */
+  color: #fafbfc;
+  text-align: center;
+  display: inline-block;
+}
+
+.matrix_title {
+  text-align: center;
+  font-weight: bold;
+  color: #6c757d;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+.matrix_mit_tech .common_css_title {
+  color: gray;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.matrix_div .common_tactics {
+  /* padding-top: 10px; */
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid gray;
+}
+.matrix_div .common_tactics_nth {
+  /* padding-top: 10px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid gray;
+}

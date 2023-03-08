@@ -747,38 +747,6 @@ input[type="checkbox"] {
   margin-right: 30px;
   margin-bottom: 20px;
 }
-.submit_popup_contents {
-  text-align: center;
-  font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  /* padding-left: 30px; */
-  color: red;
-}
-/* 풀이 개수 */
-.submit_popup_count {
-  margin-left: 33px;
-  text-align: left;
-  margin-bottom: 5px;
-}
-/* 정답점수 */
-.submit_popup_score {
-  margin-left: 33px;
-  text-align: left;
-  margin-bottom: 5px;
-}
-/* 오답점수 */
-.submit_popup_deduct {
-  margin-left: 33px;
-  text-align: left;
-  margin-bottom: 5px;
-}
-/* 힌트점수 */
-.submit_popup_hint_deduct {
-  margin-left: 33px;
-  text-align: left;
-  margin-bottom: 5px;
-}
 
 /* 정답 알림 */
 .resultTrue {

@@ -141,7 +141,6 @@ public class UserExplanationService {
         List<ExamResultTeamVO> examResultTeamVOS = userExplanationMapper.checkExamResultTeamVO(examResultTeamVO);
         if(examResultVO1.size()==0){ // 첫 db
             userExplanationMapper.insertTrainExamResult(examResultVO); // 훈련자 insert
-
         }
         if(examResultTeamVOS.size()==0){ // 첫 db
             userExplanationMapper.insertTrainExamResultTeam(examResultTeamVO); // 훈련팀별 insert

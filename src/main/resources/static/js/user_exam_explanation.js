@@ -114,7 +114,7 @@ invalidata = setInterval(function () {
  *  time end=============================================================================
  */
 // 세션 가져오기
-// sessionManagementForUser();
+sessionManagementForUser();
 $("body").css("display", "none");
 // 유저 팀코드
 getStartExamAndGrp(grpname);
@@ -687,18 +687,22 @@ function insertExamResultAndTeam(examId) {
 }
 // 제출하기 팝업
 function submitPopup() {
-  $(".submit_popup").toggle();
+  $(".submit_popup").css("display", "block");
   $(".back").css("display", "block");
   // 가져오기
   var count = $(".total_count").text();
   var score = $(".total_score").text();
   var deduct = $(".total_fail_score").text();
   var hintDeduct = $(".total_hint_deduct").text();
+  count = count.substr(5, 9);
+  score = score.substr(7, 9);
+  deduct = deduct.substr(7, 9);
+  hintDeduct = hintDeduct.substr(7, 9);
   // 넣기
-  $(".submit_popup_count").text(count);
-  $(".submit_popup_score").text(score);
-  $(".submit_popup_deduct").text(deduct);
-  $(".submit_popup_hint_deduct").text(hintDeduct);
+  $(".submit_popup_count").text("- 풀이개수: " + " " + count);
+  $(".submit_popup_score").text("- 획득점수: " + " " + score);
+  $(".submit_popup_deduct").text("- 오답감점: " + " " + deduct);
+  $(".submit_popup_hint_deduct").text("- 힌트감점: " + " " + hintDeduct);
   scrollPause();
 }
 // 제출하기 팝업 off
@@ -1524,9 +1528,9 @@ function getTotalStatus(staticAllowSecans) {
             "/" +
             response.maxexplanationcount
         ); // 풀이 개수 view
-        $(".total_score").text("획득점수: " + response.resultscore + "점"); // 획득 점수 view
-        $(".total_fail_score").text("오답감점: " + response.wrongscore + "점");
-        $(".total_hint_deduct").text("힌트감점: " + response.hintscore + "점"); // 힌트 감점 view
+        $(".total_score").text("획득점수:  " + response.resultscore + "점"); // 획득 점수 view
+        $(".total_fail_score").text("오답감점:  " + response.wrongscore + "점");
+        $(".total_hint_deduct").text("힌트감점:  " + response.hintscore + "점"); // 힌트 감점 view
         if (response.explanationcount == response.maxexplanationcount) {
           // 다 품
           $(".contents").scrollTop($(".contents")[0].scrollHeight);
@@ -1557,9 +1561,9 @@ function getTotalStatus(staticAllowSecans) {
             "/" +
             response.maxexplanationcount
         ); // 풀이 개수 view
-        $(".total_score").text("획득점수: " + response.resultscore + "점"); // 획득 점수 view
-        $(".total_fail_score").text("오답감점: " + response.wrongscore + "점");
-        $(".total_hint_deduct").text("힌트감점: " + response.hintscore + "점"); // 힌트 감점 view
+        $(".total_score").text("획득점수:  " + response.resultscore + "점"); // 획득 점수 view
+        $(".total_fail_score").text("오답감점:  " + response.wrongscore + "점");
+        $(".total_hint_deduct").text("힌트감점:  " + response.hintscore + "점"); // 힌트 감점 view
         if (response.explanationcount == response.maxexplanationcount) {
           // 다 품
           $(".contents").scrollTop($(".contents")[0].scrollHeight);

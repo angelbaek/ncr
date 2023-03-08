@@ -144,6 +144,7 @@ public class UserStaticsService {
         if(result==1){
             int result2 = userStaticsMapper.updateMatrixStat(map);
             if(result2==1){
+                userStaticsMapper.updateInputAnswerResultTeam(map);
                 return userStaticsMapper.updateExamStatTeam(map);
             }else{
                 return 0;
