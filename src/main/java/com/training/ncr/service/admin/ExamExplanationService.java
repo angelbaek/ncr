@@ -58,7 +58,7 @@ public class ExamExplanationService {
         examStatTeamVO.setTr_user_grp(99);
         examStatTeamVO.setTeam_cd("TEAM099");
         // 훈련자 풀이현황에 내가 있는지 확인하기
-        if(examExplanationMapper.selectByTeamcd(examStatTeamVO.getTeam_cd()).size()!=0){
+        if(examExplanationMapper.selectByTeamcd(examStatTeamVO).size()!=0){
             System.out.println("훈련 팀별 진행중...");
             return 0;
         }

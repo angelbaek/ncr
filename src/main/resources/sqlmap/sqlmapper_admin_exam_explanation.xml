@@ -67,7 +67,9 @@
         FROM
         "TN_TRAIN_EXAMSTAT_TEAM"
         WHERE
-        "TEAM_CD" = #{team_cd}
+        "TEAM_CD" = #{team_cd} AND
+        "TR_NUM" = #{tr_num} AND
+        "TR_EXAM_GRPID" = #{tr_exam_grpid}
     </select>
 
 
