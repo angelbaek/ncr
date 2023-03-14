@@ -161,7 +161,7 @@ function getExamGrpInfoByGrpName(grpName) {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       // 힌트 미사용일 때
       hintUse = response.tr_hint_use;
     },
@@ -181,7 +181,7 @@ function searchMgmtState() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       if (response.length == 0) {
         alert("훈련이 진행중인 문제그룹이 없습니다.");
         location.href = "/admin_training";
@@ -214,7 +214,7 @@ function getStartExamAndGrp(grpname) {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // // console.log(response);
+      // // // console.log(response);
       // staticSecansDeduct = response[0].tr_secans_deduct; // 2차 풀이 감점
       // staticHintDeduct = response[0].tr_hint_deduct; // 힌트 사용 감점
       // 문제id 대입
@@ -635,11 +635,11 @@ function insertUserTrainExamStat() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       if (response == 0) {
-        // console.log("훈련자별 풀이 현황 db 이미 존재");
+        // // console.log("훈련자별 풀이 현황 db 이미 존재");
       } else if (response == 1) {
-        // console.log("훈련자별 풀이 현황 db insert!");
+        // // console.log("훈련자별 풀이 현황 db insert!");
       }
     },
   });
@@ -659,11 +659,11 @@ function insertExamstatTeam() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       if (response == 0) {
-        // console.log("훈련팀별 풀이 현황 db 이미 존재");
+        // // console.log("훈련팀별 풀이 현황 db 이미 존재");
       } else if (response == 1) {
-        // console.log("훈련팀별 풀이 현황 db insert!");
+        // // console.log("훈련팀별 풀이 현황 db insert!");
       }
     },
   });
@@ -683,11 +683,11 @@ function insertExamResultAndTeam(examId) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       if (response == 1) {
-        // console.log("첫 상세 db insert");
+        // // console.log("첫 상세 db insert");
       } else if (response == 0) {
-        // console.log("상세 db 존재");
+        // // console.log("상세 db 존재");
       }
     },
   });
@@ -753,13 +753,13 @@ function getHintFunc(grpId, examId, hintDeduct) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // // console.log(response);
+      // // // console.log(response);
       if (response == 0) {
-        // // console.log("첫 힌트 사용자");
+        // // // console.log("첫 힌트 사용자");
         $(".show_hint_p_" + examId).text("");
         $(".exam_deduct_status_" + examId).css("display", "block");
       } else if (response == 1) {
-        // // console.log("이미 힌트 사용한 팀");
+        // // // console.log("이미 힌트 사용한 팀");
         $(".show_hint_p_" + examId).text("");
       }
       // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
@@ -796,12 +796,12 @@ function getHint(examId, grpId) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // // console.log(response);
+      // // // console.log(response);
       var html = response[0].tr_exam_hint;
       $(".hint_popup_contents").empty();
       $(".hint_popup_contents").append(html);
       if (response[0].tr_exam_hint_file == 1) {
-        // // console.log("파일 넣기 실행중..");
+        // // // console.log("파일 넣기 실행중..");
         $(".file_download_div").empty();
         var fileName = response[0].tr_exam_hint_file_path;
         var html =
@@ -874,12 +874,12 @@ function checkAnsBtnMulti(examId) {
   var userCheckMulti = $(
     'input[name="radiofunc_' + examId + '"]:checked'
   ).val();
-  // // console.log(userCheckMulti);
+  // // // console.log(userCheckMulti);
   inputAnswer = userCheckMulti;
   // 객관식(복수정답)
   let = multipleAnswer = "";
   if (userCheckMulti == undefined) {
-    // // console.log("이 문제는 복수정답이다");
+    // // // console.log("이 문제는 복수정답이다");
     var arrAns = [];
     for (var i = 1; i < 6; i++) {
       var check = $(".mult_ans_input_" + i + "_" + examId).prop("checked");
@@ -889,7 +889,7 @@ function checkAnsBtnMulti(examId) {
         arrAns.push(ansVal);
       }
     }
-    // // console.log(arrAns.length);
+    // // // console.log(arrAns.length);
     for (var i = 0; i < arrAns.length; i++) {
       if (i == arrAns.length - 1) {
         multipleAnswer += arrAns[i];
@@ -903,9 +903,9 @@ function checkAnsBtnMulti(examId) {
       return;
     }
     inputAnswer = multipleAnswer;
-    // // console.log("복수정답 잘 나옴?:" + inputAnswer);
+    // // // console.log("복수정답 잘 나옴?:" + inputAnswer);
   }
-  // // console.log("최종 답안:" + inputAnswer);
+  // // // console.log("최종 답안:" + inputAnswer);
   // 객체 넣기 (답안,훈련차시)
   var jsonData = {
     // 훈련자 답안
@@ -917,7 +917,7 @@ function checkAnsBtnMulti(examId) {
     // 문제 id
     tr_exam_id: examId,
   };
-  // // console.log(jsonData);
+  // // // console.log(jsonData);
   $.ajax({
     url: "http://192.168.32.44:8080/admin/using_answer_multi",
     type: "POST",
@@ -925,7 +925,7 @@ function checkAnsBtnMulti(examId) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // // console.log(response);
+      // // // console.log(response);
       if (response == 1) {
         alert("풀 수 있음!!");
       } else if (response == 0) {
@@ -961,7 +961,7 @@ function checkAnsBtnMulti(examId) {
 
 // 정답 오답 알림 함수
 function alramAns(ans) {
-  // console.log("알리미 실행중..." + ans);
+  // // console.log("알리미 실행중..." + ans);
   if (ans == 1) {
     //정답
     $(".resultTrue").text("정답!");
@@ -999,7 +999,7 @@ function checkAnsBtnShort(examId) {
   }
   // 사용자가 입력한 답 대입할 변수
   let inputAnswer = $("#short_form_input_ans_" + examId).val();
-  // // console.log(inputAnswer);
+  // // // console.log(inputAnswer);
 
   if (inputAnswer == "") {
     alert("답안을 기입하세요");
@@ -1016,7 +1016,7 @@ function checkAnsBtnShort(examId) {
     // 문제 id
     tr_exam_id: examId,
   };
-  // // console.log(jsonData);
+  // // // console.log(jsonData);
   $.ajax({
     url: "http://192.168.32.44:8080/admin/using_answer_short_form",
     type: "POST",
@@ -1024,7 +1024,7 @@ function checkAnsBtnShort(examId) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // // console.log(response);
+      // // // console.log(response);
       if (response == 1) {
         alert("풀 수 있음!!");
       } else if (response == 0) {
@@ -1065,7 +1065,7 @@ function getExamTypeByExamId(examId) {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       type = response;
     },
   });
@@ -1074,7 +1074,7 @@ function getExamTypeByExamId(examId) {
 
 // 풀이 중인 훈련자 팀 가져오기
 function clientViewUpdate() {
-  console.log("몇 번 실행됨");
+  // // console.log("몇 번 실행됨");
   $("#ta1").text("(" + arrMa[0] + ")");
   $("#ta2").text("(" + arrMa[1] + ")");
   $("#ta3").text("(" + arrMa[2] + ")");
@@ -1095,7 +1095,7 @@ function clientViewUpdate() {
     // 문제 그룹 id
     tr_exam_grpid: examGrpid,
   };
-  // // console.log(jsonData);
+  // // // console.log(jsonData);
   $.ajax({
     url: "http://192.168.32.44:8080/user/get_exam_result_team",
     type: "POST",
@@ -1103,7 +1103,7 @@ function clientViewUpdate() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // // console.log(response);
       for (var i = 0; i < response.length; i++) {
         var userScore = response[i].result_score; // 획득 점수
         // staticAllowSecans  2차 풀이 여부
@@ -1112,7 +1112,7 @@ function clientViewUpdate() {
         var hintUse = response[i].hint_use;
         var inputAnswer = response[i].input_answer;
         var type = getExamTypeByExamId(examId);
-        // // console.log("타입:" + type);
+        // // // console.log("타입:" + type);
         // 입력답이 있을때
         if (inputAnswer != null) {
           if (type == 1) {
@@ -1123,14 +1123,14 @@ function clientViewUpdate() {
           } else if (type == 2) {
             // 주관식
             $("#short_form_input_ans_" + examId).val(inputAnswer);
-            // // console.log("주관식임");
-            // // console.log(inputAnswer);
-            // // console.log($("#short_form_input_ans_" + examId).text());
+            // // // console.log("주관식임");
+            // // // console.log(inputAnswer);
+            // // // console.log($("#short_form_input_ans_" + examId).text());
           }
         }
         if (staticAllowSecans == 1) {
           var inputType = $("input").attr("type");
-          // // console.log(inputType); // input 요소의 type 값이 출력됩니다.
+          // // // console.log(inputType); // input 요소의 type 값이 출력됩니다.
           // 활성
           if (userScore > 0) {
             // css block
@@ -1387,7 +1387,7 @@ function clientViewUpdate() {
           }
         }
       }
-      // console.log("완료 시간:");
+      // // console.log("완료 시간:");
     },
   });
 }
@@ -1400,7 +1400,7 @@ function startTrainingGetTime() {
     // 문제 그룹 id
     tr_exam_grpid: examGrpid,
   };
-  // // console.log(jsonData);
+  // // // console.log(jsonData);
   $.ajax({
     async: false,
     url: "http://192.168.32.44:8080/user/get_start_training_get_time",
@@ -1409,61 +1409,61 @@ function startTrainingGetTime() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // // console.log(response);
+      // // // console.log(response);
       if (response == "") {
         return;
       }
-      // // console.log("결과값:" + response);
+      // // // console.log("결과값:" + response);
       var txt = "";
       txt = response.toString();
-      // // console.log("기본값:" + txt);
+      // // // console.log("기본값:" + txt);
       var traingHour = txt.substring(11, 13);
       var traingMin = parseInt(txt.substring(14, 16));
       var traingSec = parseInt(txt.substring(17, 19));
 
-      // // console.log("h:" + traingHour + "m:" + traingMin + "s:" + traingSec);
+      // // // console.log("h:" + traingHour + "m:" + traingMin + "s:" + traingSec);
       // 현재 시각
       let now = new Date();
       // 날 계산
       var year =
         now.getFullYear() + parseInt(now.getMonth() + 1) + now.getDate(); // 날
-      // // console.log(
+      // // // console.log(
       //   "year:" + year + "day:" + now.getDay() + "date:" + now.getDate()
       // );
-      // // console.log("txt:" + txt);
+      // // // console.log("txt:" + txt);
       var target = parseInt(txt.substr(0, 4));
-      // // console.log("첫번째 target:" + target);
+      // // // console.log("첫번째 target:" + target);
       target += parseInt(txt.substring(6, 8));
-      // // console.log("두번째 target:" + target);
+      // // // console.log("두번째 target:" + target);
       target += parseInt(txt.substring(8, 11));
-      // // console.log("머임 이거:" + txt.substring(8, 11));
-      // // console.log("세첫번째 target:" + target);
-      // // console.log("target:" + target);
+      // // // console.log("머임 이거:" + txt.substring(8, 11));
+      // // // console.log("세첫번째 target:" + target);
+      // // // console.log("target:" + target);
       target = target - year; //여기까지
-      // // console.log("날 지낫니?:" + target);
+      // // // console.log("날 지낫니?:" + target);
       if (target != 0) {
         time = 0;
         return;
       }
       var hours = now.getHours(); // 현재 시간
-      // // console.log("시간 : ", hours);
+      // // // console.log("시간 : ", hours);
 
       var minutes = now.getMinutes(); // 현재 분
-      // // console.log("분 : ", minutes);
+      // // // console.log("분 : ", minutes);
 
       var seconds = now.getSeconds(); // 현재 초
-      // // console.log("초 : ", seconds);
+      // // // console.log("초 : ", seconds);
 
       var resultHour = (traingHour - hours) * 3600;
       var resultMin = (traingMin - minutes) * 60;
       var resultSec = traingSec - seconds;
       var finalTime = resultHour + resultMin + resultSec;
-      // // console.log(
+      // // // console.log(
       // "db 시: " + traingHour + " db분: " + traingMin + "db초: " + traingSec
       // );
-      // // console.log("현재 분:" + minutes + " db 분:" + traingMin);
+      // // // console.log("현재 분:" + minutes + " db 분:" + traingMin);
 
-      // // console.log(
+      // // // console.log(
       //   "계산 시:" +
       //     resultHour +
       //     " 계산 분:" +
@@ -1472,13 +1472,13 @@ function startTrainingGetTime() {
       //     resultSec
       // );
 
-      // // console.log("최종 초: " + finalTime);
+      // // // console.log("최종 초: " + finalTime);
       time += finalTime;
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      // console.log(jqXHR); //응답 메시지
-      // console.log(textStatus); //"error"로 고정인듯함
-      // console.log(errorThrown);
+      // // console.log(jqXHR); //응답 메시지
+      // // console.log(textStatus); //"error"로 고정인듯함
+      // // console.log(errorThrown);
     },
   });
 }
@@ -1498,7 +1498,7 @@ function countAnsExamResultTeam() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log("풀이 개수 :" + response);
+      // // console.log("풀이 개수 :" + response);
     },
   });
 }
@@ -1521,7 +1521,7 @@ function getTotalStatus(staticAllowSecans) {
       contentType: "application/json",
       data: JSON.stringify(jsonData),
       success: function (response) {
-        console.log(response);
+        // // console.log(response);
         $(".total_count").text(
           "풀이개수: " +
             response.explanationcount +
@@ -1554,7 +1554,7 @@ function getTotalStatus(staticAllowSecans) {
       contentType: "application/json",
       data: JSON.stringify(jsonData),
       success: function (response) {
-        console.log(response);
+        // console.log(response);
         $(".total_count").text(
           "풀이 개수: " +
             response.explanationcount +
@@ -1582,7 +1582,7 @@ function submitExam() {
     // 문제 그룹 id
     tr_exam_grpid: examGrpid,
   };
-  console.log(jsonData);
+  // console.log(jsonData);
   $.ajax({
     async: false,
     url: "http://192.168.32.44:8080/admin/update_submit",
@@ -1591,7 +1591,7 @@ function submitExam() {
     dataType: "json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       if (response == 1) {
         alert("문제제출이 완료되었습니다");
         $(".back").css("display", "block");
@@ -1618,7 +1618,7 @@ function checkSubmitExam() {
     // 문제 그룹 id
     tr_exam_grpid: examGrpid,
   };
-  console.log(jsonData);
+  // // console.log(jsonData);
   $.ajax({
     async: false,
     url: "http://192.168.32.44:8080/admin/check_submit",
@@ -1627,9 +1627,9 @@ function checkSubmitExam() {
     dataType: "json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // // console.log(response);
       if (response == 0) {
-        // // console.log("잘 실행되는중...");
+        // // // console.log("잘 실행되는중...");
         alert("해당 문제그룹은 더 이상 문제를 풀 수 없습니다");
         document.getElementById("demo").innerHTML = "팀 제출 완료";
         clearInterval(invalidata);
@@ -1652,7 +1652,7 @@ function checkSubmitExam() {
 //     // 문제 그룹 id
 //     tr_exam_grpid: examGrpid,
 //   };
-//   // // console.log(jsonData);
+//   // // // console.log(jsonData);
 //   $.ajax({
 //     async: false,
 //     url: "http://192.168.32.44:8080/user/check_submit",
@@ -1661,9 +1661,9 @@ function checkSubmitExam() {
 //     dataType: "json",
 //     data: JSON.stringify(jsonData),
 //     success: function (response) {
-//       // // console.log(response);
+//       // // // console.log(response);
 //       if (response == 0) {
-//         // // console.log("잘 실행되는중...");
+//         // // // console.log("잘 실행되는중...");
 //         alert("해당 문제그룹은 더 이상 문제를 풀 수 없습니다");
 //         document.getElementById("demo").innerHTML = "팀 제출 완료";
 //         clearInterval(invalidata);
@@ -1722,7 +1722,7 @@ function endTimeUpdateTime() {
     // 문제 그룹 id
     tr_exam_grpid: examGrpid,
   };
-  // console.log(jsonData);
+  // // console.log(jsonData);
   $.ajax({
     url: "http://192.168.32.44:8080/admin/end_time_update_time",
     type: "POST",
@@ -1730,11 +1730,11 @@ function endTimeUpdateTime() {
     dataType: "json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       if (response == 1) {
-        // console.log("제한시간이 되어 시간 업데이트...");
+        // // console.log("제한시간이 되어 시간 업데이트...");
       } else if (response == 0) {
-        // console.log("해당유저는 이미 종료함...");
+        // // console.log("해당유저는 이미 종료함...");
       }
     },
   });
@@ -1750,7 +1750,7 @@ function getMgMtState() {
     tr_exam_grpid: examGrpid,
     pause_time: time,
   };
-  // // console.log(jsonData);
+  // // // console.log(jsonData);
   $.ajax({
     async: false,
     url: "http://192.168.32.44:8080/user/get_mgmt_state",
@@ -1759,7 +1759,7 @@ function getMgMtState() {
     dataType: "json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       // 훈련이 정지였는데 재개한 팀
       if (response > 2 && restartTime == 0) {
         restartTime++;
@@ -1767,13 +1767,13 @@ function getMgMtState() {
       }
       // 훈련이 정지 중일때
       if (response == 2) {
-        console.log("훈련이 정지중");
+        // console.log("훈련이 정지중");
         alert("훈련이 정지상태입니다.");
         $(".back").css("display", "block");
         clearInterval(invalidata);
       } else if (response == 1) {
         //훈련이 진행중
-        console.log("훈련 진행중");
+        // console.log("훈련 진행중");
       }
       result = response;
     },

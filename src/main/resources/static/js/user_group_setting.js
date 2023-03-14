@@ -15,7 +15,7 @@ function getGroupInfoById() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       var grp = response[0].tr_user_grp;
       selectVal = response[0].team_cd;
       var org = response[0].tr_user_org;
@@ -28,20 +28,20 @@ function getGroupInfoById() {
       }
     },
   });
-  // console.log(selectVal);
+  // // console.log(selectVal);
 }
 
 // 세션 관리 (일반 훈련자용)
 function sessionManagementForUserGroup() {
   var userInfo = {};
-  // console.log("일반 사용자 세션 체크...");
+  // // console.log("일반 사용자 세션 체크...");
   $.ajax({
     async: false,
     url: "http://192.168.32.44:8080/sessionCheck",
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       if (response == true) {
         alert("로그인 후 사용가능합니다.");
         location.replace("/");
@@ -49,7 +49,7 @@ function sessionManagementForUserGroup() {
       userInfo = response;
       $(".userName").text(response[0].tr_user_name);
       if (response[0].team_cd == null) {
-        // console.log("어 널이다");
+        // // console.log("어 널이다");
         $("#team_code").text("위의 팀(조)를 선택하여 팀 코드를 배정받으세요");
 
         trainingStartBtnOff();
@@ -79,15 +79,15 @@ function trainingStartBtnOff() {
 
 // 팀(조) 정보 가져오기
 function getTeamGroup() {
-  // console.log("팀 정보 실행중...");
+  // // console.log("팀 정보 실행중...");
   $.ajax({
     async: false,
     url: "http://192.168.32.44:8080/userGRP",
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
-      // console.log(response.length);
+      // // console.log(response);
+      // // console.log(response.length);
       var html;
       for (var i = 0; i < response.length; i++) {
         html +=
@@ -102,7 +102,7 @@ function getTeamGroup() {
       $("#team").append(html);
       for (var i = 0; i < response.length; i++) {
         if (selectVal == response[i].team_cd) {
-          // console.log("맞았다");
+          // // console.log("맞았다");
           $("#team option:eq(" + i + ")").prop("selected", true);
           $("#team_code").text(selectVal);
           trainingStartBtnOn();
@@ -127,8 +127,8 @@ function userGroupSave() {
   if (!result) {
     return;
   }
-  // console.log(tr_user_grp);
-  // console.log(team_cd);
+  // // console.log(tr_user_grp);
+  // // console.log(team_cd);
   if (tr_user_grp == undefined) {
     alert("팀을 선택하세요.");
     return;
@@ -138,7 +138,7 @@ function userGroupSave() {
     team_cd: team_cd,
     tr_user_state: 1,
   };
-  // console.log(jsonData);
+  // // console.log(jsonData);
   $.ajax({
     url: "http://192.168.32.44:8080/user/update",
     type: "PATCH",
@@ -146,7 +146,7 @@ function userGroupSave() {
     dataType: "json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
 
       if (response == 1) {
         alert("훈련준비 상태가 변경되었습니다");
@@ -164,8 +164,8 @@ function userGroupSave() {
 }
 
 $("select[name=location]").change(function () {
-  // console.log($(this).val()); //value값 가져오기
-  // console.log($("select[name=location] option:selected").text()); //text값 가져오기
+  // // console.log($(this).val()); //value값 가져오기
+  // // console.log($("select[name=location] option:selected").text()); //text값 가져오기
   team_cd = $(this).val();
   var test = $("select[name=location] option:selected").text();
   var regex = /[^0-9]/g; // 숫자가 아닌 문자열을 선택하는 정규식
@@ -181,14 +181,14 @@ function findUserForStarted() {}
 function training() {
   var num = $("select[name=location_num]").val();
   var text = $("#team_code").text();
-  // console.log("훈련 함수 실행중...");
-  // console.log(tr_user_grp);
+  // // console.log("훈련 함수 실행중...");
+  // // console.log(tr_user_grp);
   $.ajax({
     url: "http://192.168.32.44:8080/user/training/" + num,
     type: "GET",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       if (response.length == 0) {
         $(".common_msg_popup_contents").text(
           num + "차시에 진행중인 문제그룹이 없습니다."
@@ -224,7 +224,7 @@ function getTrainingState() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       if (response == 1) {
         if (selectVal != null) {
           trainingStartBtnOn();
@@ -243,7 +243,7 @@ function getTrainingStateActiveOn() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       if (response == 1) {
         $(".saveButton").prop("disabled", true);
         $(".saveButton").css("backgroundColor", "gray");

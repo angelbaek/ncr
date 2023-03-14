@@ -9,7 +9,7 @@ selectGrpChange();
 $(".exam_answer").css("display", "none");
 // 문제 초기화 함수
 function resetExam() {
-  console.log("초기화 실행댐");
+  // console.log("초기화 실행댐");
   // 문제 내용 해제
   $(".exam_answer_title_const").val("");
   // 객관식 문제 해제
@@ -38,7 +38,7 @@ function examGroupCall() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       for (var i = 0; i < response.length; i++) {
         html +=
           "<option value=" +
@@ -56,14 +56,14 @@ function examGroupCall() {
 function selectGrpChange() {
   $(".exam_answer").css("display", "none");
   var grpId = $(".select_view_body option:selected").val();
-  console.log(grpId);
+  // // console.log(grpId);
   var html = "";
   $.ajax({
     url: "http://192.168.32.44:8080/admin/exam_mng_grp/" + grpId,
     type: "GET",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // // console.log(response);
       // 추가 edit
       for (var i = 0; i < response[0].tr_exam_count; i++) {
         html +=
@@ -100,7 +100,7 @@ function exam(exam_num) {
   // 팝업에 선택한 문항번호 넣기
   $(".popup_hint").val(target_num);
   var exam_grpid = $("select[name=grp_name] option:selected").val();
-  console.log(exam_grpid);
+  // console.log(exam_grpid);
   $("#exam_id_" + exam_num).css("backgroundColor", "#6777ef");
   $("#exam_id_" + exam_num).css("color", "white");
   $("#exam_id_" + exam_num).css("box-shadow", "0 1px 4px 1px rgb(0 0 0 / 50%)");
@@ -115,7 +115,7 @@ function exam(exam_num) {
     dataType: "json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       // 문제 초기화
       resetExam();
       // 문제 유형
@@ -231,7 +231,7 @@ function popup_mit_popupStatus() {
   $(".popup_mit").toggle();
   // 문제 id 가져오기
   var examId = onlyGetExamId();
-  console.log("잘 가져왔냐?" + examId);
+  // console.log("잘 가져왔냐?" + examId);
   scrollPause();
   var html;
   $.ajax({
@@ -239,7 +239,7 @@ function popup_mit_popupStatus() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       for (var i = 0; i < response.length; i++) {
         html +=
           "<option value=" +
@@ -259,8 +259,8 @@ function getMiterMatrixByGrpid() {
   // 문제 그룹 id
   var grpId = $(".select_view_body option:selected").val();
   var ta = $(".tactics_select option:selected").val();
-  console.log("grpid:" + grpId);
-  console.log("ta:" + ta);
+  // console.log("grpid:" + grpId);
+  // console.log("ta:" + ta);
   var html;
   var jsonData = {
     tr_exam_grpid: grpId,
@@ -273,7 +273,7 @@ function getMiterMatrixByGrpid() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       if (response.length == 0) {
         html = "<option>해당없음</option>";
         $(".matrix_select").empty();
@@ -323,9 +323,9 @@ function test() {
     contentType: false,
     processData: false,
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       returnVal = response;
-      console.log("File uploaded successfully!");
+      // console.log("File uploaded successfully!");
     },
     error: function (response) {
       console.error(response);
@@ -346,10 +346,10 @@ function updateHint() {
   // 힌트 업로드 파일 이름
   var uploadFile;
   if (fileInput.files.length > 0) {
-    console.log("file selected.");
+    // console.log("file selected.");
     uploadFile = test();
   } else {
-    console.log("No file selected.");
+    // console.log("No file selected.");
   }
   // 문제 아이디 찾기
   var jsonData = {
@@ -357,7 +357,7 @@ function updateHint() {
     tr_exam_num: num,
     tr_exam_hint_file_path: uploadFile,
   };
-  console.log(jsonData);
+  // console.log(jsonData);
   $.ajax({
     url: "http://192.168.32.44:8080/admin/exam_id_get",
     type: "POST",
@@ -365,7 +365,7 @@ function updateHint() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       examId = response[0].tr_exam_id;
       updateHintGo(examId, uploadFile);
     },
@@ -374,7 +374,7 @@ function updateHint() {
 
 // 실질적인 hintDB update
 function updateHintGo(examId, upload) {
-  console.log("잘 나오니:" + upload);
+  // console.log("잘 나오니:" + upload);
   // 문제 그룹id
   var grpId = $(".select_view_body option:selected").val();
   // 힌트 내용
@@ -393,7 +393,7 @@ function updateHintGo(examId, upload) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       if (response == 1) {
         alert("힌트가 저장되었습니다");
         $(".popup_hint").toggle();
@@ -406,7 +406,7 @@ function updateHintGo(examId, upload) {
 
 // 문제 ID만 가져오기
 function onlyGetExamId() {
-  console.log("문제id 가져오기 실행중...");
+  // console.log("문제id 가져오기 실행중...");
   // 문제 그룹id
   var grpId = $(".select_view_body option:selected").val();
   // 선택 문항 번호
@@ -427,7 +427,7 @@ function onlyGetExamId() {
     data: JSON.stringify(jsonData),
     success: function (response) {
       examId = response;
-      console.log("문제id: " + response);
+      // console.log("문제id: " + response);
     },
   });
   return examId;
@@ -440,7 +440,7 @@ function getTactics() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      console.log(response);
+      // console.log(response);
     },
   });
 }
@@ -464,7 +464,7 @@ function tacticsSave() {
     ma_tactics_id: tacId,
     ma_matrix_id: matId,
   };
-  console.log(jsonData);
+  // console.log(jsonData);
   $.ajax({
     url: "http://192.168.32.44:8080/admin/update_tactic",
     type: "PATCH",
@@ -472,7 +472,7 @@ function tacticsSave() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       if (response == 1) {
         alert("전술단계가 저장되었습니다");
         $(".back").toggle();
@@ -511,7 +511,7 @@ function examFinalSave() {
   var ans = $(".tr_exam_ans").val();
   // 난이도
   var level = $("input[name=trio]:checked").val();
-  console.log(level);
+  // console.log(level);
   // 복수 정답 허용
   var boolean = $(".tr_exam_mult_ans").prop("checked");
   // 복수 정답 허용에 따른 값 대입
@@ -584,7 +584,7 @@ function examFinalSave() {
     tr_exam_level: level,
     tr_exam_mult_ans: mult_ans,
   };
-  console.log(jsonData);
+  // console.log(jsonData);
   $.ajax({
     url: "http://192.168.32.44:8080/admin/exam_final_save",
     type: "PATCH",
@@ -592,7 +592,7 @@ function examFinalSave() {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       if (response == 1) {
         alert("문제가 저장되었습니다");
       } else if (response == 0) {
@@ -612,7 +612,7 @@ function getExamLength() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       leng = response;
     },
   });

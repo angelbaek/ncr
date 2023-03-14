@@ -129,7 +129,7 @@ function edit2BtnOn() {
 
 // 훈련관리 정보 가져오기
 function getTraining() {
-  // console.log("세션 읽어오기 실행중...");
+  // // console.log("세션 읽어오기 실행중...");
   var html = "";
   $.ajax({
     async: false,
@@ -137,7 +137,7 @@ function getTraining() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       for (var i = 0; i < response.length; i++) {
         html +=
           '<option value="' +
@@ -190,7 +190,7 @@ function trainingStart() {
       dataType: "json",
       data: JSON.stringify(jsonData),
       success: function (response) {
-        // console.log(response);
+        // // console.log(response);
         if (response == 0) {
           alert("설정된 훈련이 없습니다");
           return;
@@ -216,7 +216,7 @@ function trainingStart() {
       dataType: "json",
       data: JSON.stringify(jsonData),
       success: function (response) {
-        // console.log(response);
+        // // console.log(response);
         if (response == 0) {
           alert("설정된 훈련이 없습니다");
           return;
@@ -261,7 +261,7 @@ function grpActive(trainingNumbers) {
       dataType: "json",
       data: JSON.stringify(jsonData),
       success: function (response) {
-        // console.log(response);
+        // // console.log(response);
         if (response > 0) {
           alert("1차 문제 그룹: " + one);
           $("#selectOne").attr("disabled", true);
@@ -288,7 +288,7 @@ function grpActive(trainingNumbers) {
       tr_num: 2,
       tr_exam_grp: two,
     };
-    // console.log(jsonData);
+    // // console.log(jsonData);
     $.ajax({
       url: "http://192.168.32.44:8080/admin/gprAct",
       type: "POST",
@@ -296,7 +296,7 @@ function grpActive(trainingNumbers) {
       dataType: "json",
       data: JSON.stringify(jsonData),
       success: function (response) {
-        // console.log(response);
+        // // console.log(response);
         if (response > 0) {
           alert("2차 문제 그룹: " + two);
           $("#selectTwo").attr("disabled", true);
@@ -319,7 +319,7 @@ function trainingPause() {
     contentType: "application/json",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       alert("훈련을 정지합니다");
       // 훈련 정지 버튼 비활성화
       trainingPauseBtnOff();
@@ -341,7 +341,7 @@ function groupView() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       var html = "";
       $(".group_view_body").empty();
       for (var i = 0; i < response.length; i++) {
@@ -384,7 +384,7 @@ function teamcodeView() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       var html = "";
       $(".teamcode_view_body").empty();
       for (var i = 0; i < response.length; i++) {
@@ -408,8 +408,8 @@ function teamcodeView() {
             "</td></tr>";
         }
       }
-      // console.log("추가");
-      // console.log(html);
+      // // console.log("추가");
+      // // console.log(html);
       $(".teamcode_view_body").append(html);
     },
   });
@@ -425,7 +425,7 @@ function teamcode_view_btn() {
 // 수정 버튼
 var editNum; // 몇 번 버튼인지 확인할 변수
 function edit(editNum) {
-  // console.log("클릭댐");
+  // // console.log("클릭댐");
   // select에 설정된 값
   var one = $("select[name=location1] option:selected").text();
   var two = $("select[name=location2] option:selected").text();
@@ -436,7 +436,7 @@ function edit(editNum) {
       tr_num: 1,
       tr_exam_grp: one,
     };
-    // console.log(jsonData);
+    // // console.log(jsonData);
     $.ajax({
       url: "http://192.168.32.44:8080/admin/gpract_edit",
       type: "DELETE",
@@ -444,7 +444,7 @@ function edit(editNum) {
       dataType: "json",
       data: JSON.stringify(jsonData),
       success: function (response) {
-        // console.log(response);
+        // // console.log(response);
         if (response > 0) {
           ok1BtnOn();
           $("#selectOne").attr("disabled", false);
@@ -456,7 +456,7 @@ function edit(editNum) {
       tr_num: 2,
       tr_exam_grp: two,
     };
-    // console.log(jsonData);
+    // // console.log(jsonData);
     $.ajax({
       url: "http://192.168.32.44:8080/admin/gpract_edit",
       type: "DELETE",
@@ -464,7 +464,7 @@ function edit(editNum) {
       dataType: "json",
       data: JSON.stringify(jsonData),
       success: function (response) {
-        // console.log(response);
+        // // console.log(response);
         if (response > 0) {
           ok2BtnOn();
           $("#selectTwo").attr("disabled", false);
@@ -484,7 +484,7 @@ function getTrainMgmt() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log("그룹 가져오기:" + response);
+      // // console.log("그룹 가져오기:" + response);
       for (var i = 0; i < response.length; i++) {
         // 1차시 설정된 그룹 뿌려주기
         if (response[i].tr_num == 1) {

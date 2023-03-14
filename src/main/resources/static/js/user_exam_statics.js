@@ -37,9 +37,9 @@ $("#select_num").on("change", function () {
   // 유형
   var type = $("#select_type").val();
 
-  // console.log("차시:" + num + " /유형:" + type);
+  // // console.log("차시:" + num + " /유형:" + type);
   if (num == 0 || type == 0) {
-    // console.log("아직 미선택...");
+    // // console.log("아직 미선택...");
     return;
   }
   getExamResultByNumAndType(num, type);
@@ -61,9 +61,9 @@ $("#select_type").on("change", function () {
   // 차시
   var num = $("#select_num").val();
 
-  // console.log("차시:" + num + " /유형:" + type);
+  // // console.log("차시:" + num + " /유형:" + type);
   if (num == 0 || type == 0) {
-    // console.log("아직 미선택...");
+    // // console.log("아직 미선택...");
     return;
   }
   getExamResultByNumAndType(num, type);
@@ -74,10 +74,10 @@ function getExamResultByNumAndType(num, type, grpId) {
   if (on == false) {
     grpId = 0;
   }
-  // console.log(grpId);
+  // // console.log(grpId);
   matrixOff();
   toggleStatic();
-  // console.log(grpId);
+  // // console.log(grpId);
   var jsonData = {
     num: num,
     type: type,
@@ -91,7 +91,7 @@ function getExamResultByNumAndType(num, type, grpId) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       if (response.length == 0) {
         alert("해당 조건에 데이터가 없습니다");
         $(".static_title").css("display", "none");
@@ -109,7 +109,7 @@ function getExamResultByNumAndType(num, type, grpId) {
         htmlHead =
           "<tr><th>팀코드</th><th>기관명</th><th>차시</th><th>총 점수</th><th>정답/오답</th><th>답안제출</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
 
-        // console.log("팀별 조회...");
+        // // console.log("팀별 조회...");
         for (var i = 0; i < response.length; i++) {
           var team = response[i].team_cd; // 팀코드
           var org; // 기관명
@@ -250,7 +250,7 @@ function getExamResultByNumAndType(num, type, grpId) {
         $(".static_body_total").append(html);
       } else if (id != undefined) {
         // 개인 조회
-        // console.log("개인별 조회...");
+        // // console.log("개인별 조회...");
         $(".static_title").text("훈련자별 통계");
         htmlHead =
           "<tr><th>훈련자명</th><th>기관명</th><th>차시</th><th>총 점수</th><th>정답/오답</th><th>답안제출</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
@@ -414,9 +414,9 @@ function getExamResultByNumAndType(num, type, grpId) {
       $(".static_body_total").append(html);
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      // console.log(jqXHR); //응답 메시지
-      // console.log(textStatus); //"error"로 고정인듯함
-      // console.log(errorThrown);
+      // // console.log(jqXHR); //응답 메시지
+      // // console.log(textStatus); //"error"로 고정인듯함
+      // // console.log(errorThrown);
       alert("조회된 데이터가 없습니다");
       $(".static_title").css("display", "none");
       $(".show_static_body_total").css("display", "none");
@@ -498,7 +498,7 @@ function getUserExamStat(statId, grp, num, grpId) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       for (var i = 0; i < response.length; i++) {
         var answer = response[i].input_answer; // 유저가 입력한 답
         var correct_answer = response[i].correct_answer; // 정답 여부
@@ -592,7 +592,7 @@ function getExamResultTeam(statId, num, grpId, grp) {
     tr_exam_grpid: grpId,
     tr_user_grp: grp,
   };
-  // console.log("넘겨주기:" + num + " / " + grpId + " / " + grp);
+  // // console.log("넘겨주기:" + num + " / " + grpId + " / " + grp);
   $.ajax({
     url: "http://192.168.32.44:8080/user/static/get_exam_result_team",
     type: "POST",
@@ -600,7 +600,7 @@ function getExamResultTeam(statId, num, grpId, grp) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
       var grpid = response[0].tr_exam_grpid; // grpid
       var grp = response[0].tr_user_grp; // grp
       var num = response[0].tr_num; // num
@@ -677,7 +677,7 @@ function getExamStat(statId, num, grpId, grp) {
     tr_exam_grpid: grpId,
     tr_user_id: name,
   };
-  console.log(jsonData);
+  // console.log(jsonData);
   $.ajax({
     url: "http://192.168.32.44:8080/user/static/get_exam_stat",
     type: "POST",
@@ -687,7 +687,7 @@ function getExamStat(statId, num, grpId, grp) {
     success: function (response) {
       $(".common_detail_head").empty();
       $(".common_detail_body").empty();
-      console.log(response);
+      // console.log(response);
       var name = response.tr_user_id;
       var num = response.tr_num;
       var submit = response.submit_answer;
@@ -725,7 +725,7 @@ function getExamStat(statId, num, grpId, grp) {
       $("#detail_use_time").text("소요 시간: " + delay);
       $("#detail_start_time").text("시작 시간: " + start);
       $("#detail_end_time").text("종료 시간: " + end);
-      // console.log(org);
+      // // console.log(org);
       // htmlHead =
       //   "<tr><th>훈련자명</th><th>기관명</th><th>차시</th><th>점수 제출</th><th>총 점수</th><th>정답</th><th>오답</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
       // htmlBody =
@@ -766,7 +766,7 @@ function getExamStatTeam(num, grpId, grp) {
     tr_num: num,
     tr_exam_grpid: grpId,
   };
-  console.log(jsonData);
+  // console.log(jsonData);
   $.ajax({
     url: "http://192.168.32.44:8080/user/static/get_exam_stat_team",
     type: "POST",
@@ -776,7 +776,7 @@ function getExamStatTeam(num, grpId, grp) {
     success: function (response) {
       $(".common_detail_head").empty();
       $(".common_detail_body").empty();
-      console.log(response);
+      // console.log(response);
       var team = response.team_cd;
       var num = response.tr_num;
       var submit = response.submit_answer;
@@ -812,7 +812,7 @@ function getExamStatTeam(num, grpId, grp) {
       $("#detail_use_time").text("소요 시간: " + delay);
       $("#detail_start_time").text("시작 시간: " + start);
       $("#detail_end_time").text("종료 시간: " + end);
-      // console.log(org);
+      // // console.log(org);
       // htmlHead =
       //   "<tr><th>팀코드</th><th>기관명</th><th>차시</th><th>점수 제출</th><th>총 점수</th><th>정답</th><th>오답</th><th>소요시간</th><th>시작시간</th><th>종료시간</th></tr>";
       // htmlBody =
@@ -858,7 +858,7 @@ function getMatrixStat(grpid, grp, num) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log(response);
+      // console.log(response);
     },
   });
 }
@@ -878,7 +878,7 @@ function getMiterAttackMatrix(grpid, grp, num) {
   matrixOn();
   var htmlHead = "";
   var htmlBody = "";
-  // console.log(grpid);
+  // // console.log(grpid);
   var jsonData = {
     tr_user_grp: grp,
     tr_num: num,
@@ -892,18 +892,18 @@ function getMiterAttackMatrix(grpid, grp, num) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
       var empty = "";
       for (var i = 0; i < response.length; i++) {
         if (response[i] == null) {
           continue;
         } else if (empty != response[i].MA_TACTICS_ID) {
           var kor = extractKorean(response[i].ma_tactics_name);
-          // console.log(response[i].MA_TACTICS_ID);
+          // // console.log(response[i].MA_TACTICS_ID);
           var test = '"' + response[i].MA_TACTICS_ID + '"';
           empty = response[i].MA_TACTICS_ID;
-          // console.log(empty);
-          // console.log("전술단계 뿌려주기 로직 실행");
+          // // console.log(empty);
+          // // console.log("전술단계 뿌려주기 로직 실행");
           htmlHead =
             "<div class='test_" +
             response[i].MA_TACTICS_ID +
@@ -940,14 +940,14 @@ function getMiterAttackMatrix(grpid, grp, num) {
             response[i].total +
             ")</a></div>";
           $(".test_" + response[i].MA_TACTICS_ID).append(htmlBody);
-          // // console.log("그냥 매트릭스 뿌려주기실행");
+          // // // console.log("그냥 매트릭스 뿌려주기실행");
         }
       }
     },
   });
 }
 function popUp(MA_TACTICS_ID, MA_MATRIX_ID) {
-  // console.log(MA_TACTICS_ID + "/" + MA_MATRIX_ID);
+  // // console.log(MA_TACTICS_ID + "/" + MA_MATRIX_ID);
   var jsonData = {
     ma_matrix_id: MA_MATRIX_ID,
     ma_tactics_id: MA_TACTICS_ID,
@@ -961,7 +961,7 @@ function popUp(MA_TACTICS_ID, MA_MATRIX_ID) {
     data: JSON.stringify(jsonData),
     success: function (response) {
       popUpMatrix();
-      // console.log(response);
+      // // console.log(response);
       $(".matrix_mit_tech .title").empty();
       $(".matrix_mit_tech .title").text(response[0].MA_TACTICS_TECH);
       $(".matrix_mit_tech .contents").empty();
@@ -1005,7 +1005,7 @@ function selectUserOrgByUserId(id) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      // console.log(response);
+      // // console.log(response);
 
       org = response.tr_user_org;
     },
@@ -1037,7 +1037,7 @@ function toggleDetail() {
 //   } else if (on == true) {
 //     on = false;
 //   }
-//   // console.log(on);
+//   // // console.log(on);
 //   // 배경 css
 //   bg++;
 //   if (bg % 2 != 0) {
@@ -1055,7 +1055,7 @@ function toggleDetail() {
 //   }
 //   // 활성화 여부
 //   if (on == true) {
-//     // console.log("활성화댐");
+//     // // console.log("활성화댐");
 //     // refreshAuto();
 //   }
 // }
@@ -1067,14 +1067,14 @@ function toggleDetail() {
 //     alert("유형을 선택 후 사용하세요");
 //     return;
 //   }
-//   // console.log("재귀함수 실행...");
+//   // // console.log("재귀함수 실행...");
 //   $(".rotate_ic").css("transform", "rotate(" + turn + "turn)");
 //   turn++;
-//   // console.log("on의 상태:" + on);
+//   // // console.log("on의 상태:" + on);
 //   if (on) {
 //     setTimeout(function () {
 //       grpId = getGrpid();
-//       // console.log("타입:" + type + " grpId:" + grpId);
+//       // // console.log("타입:" + type + " grpId:" + grpId);
 //       getExamResultByNumAndType(0, type, grpId);
 //       refreshAuto();
 //     }, 1500);
@@ -1101,8 +1101,8 @@ function getTeamOrg(num, grpId, grp) {
     contentType: "application/json",
     data: JSON.stringify(jsonData),
     success: function (response) {
-      console.log("콘솔:" + response);
-      // console.log(response[0]);
+      // console.log("콘솔:" + response);
+      // // console.log(response[0]);
       if (response.length > 1) {
         if (response[0] != response[1]) {
           returnVal = "-";

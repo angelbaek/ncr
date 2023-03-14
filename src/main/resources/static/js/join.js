@@ -46,7 +46,7 @@ function join() {
     tr_user_name: tr_user_name,
     tr_user_org: tr_user_org,
   };
-  // console.log(jsonData);
+  // // console.log(jsonData);
   $.ajax({
     url: "http://192.168.32.44:8080/user/join",
     type: "POST",

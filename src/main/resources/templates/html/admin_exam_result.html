@@ -5,18 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>기간망 침투대응훈련</title>
+    <script src="/js/jquery-3.6.4.min.js"></script>
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="/css/fontawesome-free-5.15.4-web/css/all.css"
+    />
+    <!-- test css -->
+    <!-- <link rel="stylesheet" href="/static/css/common.css" /> -->
+    <!-- <link rel="stylesheet" href="/static/css/admin_exam_result.css" /> -->
+    <!-- common css -->
+    <link rel="stylesheet" href="/css/common.css" />
+    <link rel="stylesheet" href="/css/admin_exam_result.css" />
   </head>
-  <!-- test css -->
-  <link rel="stylesheet" href="/static/css/common.css" />
-  <link rel="stylesheet" href="/static/css/admin_exam_result.css" />
-  <!-- common css -->
-  <link rel="stylesheet" href="/css/common.css" />
-  <link rel="stylesheet" href="/css/admin_exam_result.css" />
-  <!-- font awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
-  />
   <body style="display: none">
     <div class="left_nav">
       <div class="nav_title">
@@ -106,30 +107,7 @@
         <div class="common_detail_div_css" id="detail_use_time">소요시간</div>
         <div class="common_detail_div_css" id="detail_start_time">시작시간</div>
         <div class="common_detail_div_css" id="detail_end_time">종료시간</div>
-      </div>      
-      <!-- <table class="common_detail_cover">
-        <thead class="common_detail_head"></thead>
-        <tbody class="common_detail_body"></tbody> -->
-      <!-- <div class="common_detail_div_css">팀코드</div>
-        <div class="common_detail_div_css">기관명</div>
-        <div class="common_detail_div_css">차시</div>
-        <div class="common_detail_div_css">점수제출</div>
-        <div class="common_detail_div_css">총점수</div>
-        <div class="common_detail_div_css">정답</div>
-        <div class="common_detail_div_css">오답</div>
-        <br />
-        <div class="common_detail_div_css">소요시간</div>
-        <div class="common_detail_div_css">시작시간</div>
-        <div class="common_detail_div_css">종료시간</div> -->
-      <!-- </table> -->
-      <!-- <div
-        style="
-          max-width: 100%;
-          overflow-x: auto;
-          padding-left: 80px;
-          padding-right: 80px;
-        "
-      > -->
+      </div>
       <div>
         <table class="user_body_status">
           <tbody class="user_body_total"></tbody>
@@ -183,11 +161,11 @@
     <!-- 백그라운드 -->
     <div class="back"></div>
   </body>
-  <script
+  <!-- <script
     src="https://code.jquery.com/jquery-3.6.3.js"
     integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"
-  ></script>
+  ></script> -->
   <script>
     //정렬
     $(document).on("click", "th score", function () {
@@ -232,8 +210,8 @@
     $(".user_body_status").css("display", "none");
     $(".matrix_mit_tech").css("display", "none");
   </script>
-  <script src="/static/js/common.js"></script>
+  <!-- <script src="/static/js/common.js"></script> -->
   <script src="/js/common.js"></script>
-  <script src="/static/js/admin_exam_result.js"></script>
+  <!-- <script src="/static/js/admin_exam_result.js"></script> -->
   <script src="/js/admin_exam_result.js"></script>
 </html>

@@ -84,7 +84,10 @@ function sessionManagement() {
     type: "GET",
     dataType: "json",
     success: function (response) {
-      // console.log(response);
+      // 로그인 안한 사용자
+      if (response == true) {
+        return;
+      }
       if (response[0].role == 0) {
         // 관리자임
         location.href = "/admin_training";
