@@ -34,6 +34,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	// https://mvnrepository.com/artifact/com.vmware/vijava
+	implementation group: 'com.vmware', name: 'vijava', version: '5.1'
 }
 
 tasks.named('test') {
