@@ -36,8 +36,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	// https://mvnrepository.com/artifact/com.vmware/vijava
 	implementation group: 'com.vmware', name: 'vijava', version: '5.1'
+	//
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+	options.compilerArgs << "-Xlint:deprecation"
 }

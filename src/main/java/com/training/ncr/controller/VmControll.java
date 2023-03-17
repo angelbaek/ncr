@@ -1,16 +1,67 @@
+//package com.training.ncr.controller;
+//
+//import com.vmware.vim25.*;
+//import com.vmware.vim25.mo.*;
+//import org.springframework.stereotype.Service;
+//
+//import java.net.URL;
+//
+//@Service
+//public class VmControll {
+//    public String getVmConsoleUrl(String vmName) {
+//        String serverName = "192.168.32.101";
+//        String username = "administrator@vsphere.local";
+//        String password = "qweR123#001";
+//        String consoleUrl = null;
+//
+//        try {
+//            ServiceInstance si = new ServiceInstance(
+//                    new URL("https://" + serverName + "/sdk"),
+//                    username,
+//                    password,
+//                    true
+//            );
+//
+//            Folder rootFolder = si.getRootFolder();
+//            ManagedEntity[] mes = new InventoryNavigator(rootFolder).searchManagedEntities("VirtualMachine");
+//
+//            for (ManagedEntity me : mes) {
+//                VirtualMachine vm = (VirtualMachine) me;
+//                if (vm.getName().equals(vmName)) {
+//                    VirtualMachineTicket ticket = vm.acquireTicket("mks");
+//                    String host = ticket.getHost();
+//                    String port = Integer.toString(ticket.getPort());
+//                    String ticketValue = ticket.getTicket();
+//
+//                    consoleUrl = "https://" + host + ":" + port + "/ticket?ticket=" + ticketValue;
+//                    break;
+//                }
+//            }
+//
+//            si.getServerConnection().logout();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return consoleUrl;
+//    }
+//}
 package com.training.ncr.controller;
 
 import com.vmware.vim25.*;
 import com.vmware.vim25.mo.*;
+import org.springframework.stereotype.Service;
 
 import java.net.URL;
 
+@Service
 public class VmControll {
-
-    public void powerOnTestVm() {
+    public String getVmConsoleUrl(String vmName) {
         String serverName = "192.168.32.101";
         String username = "administrator@vsphere.local";
         String password = "qweR123#001";
+        String hostName = "cscenter.itzone.local";
+        String consoleUrl = null;
 
         try {
             ServiceInstance si = new ServiceInstance(
@@ -25,23 +76,20 @@ public class VmControll {
 
             for (ManagedEntity me : mes) {
                 VirtualMachine vm = (VirtualMachine) me;
-                String vmName = vm.getName();
-                System.out.println("Virtual Machine Name: " + vmName);
+                if (vm.getName().equals(vmName)) {
+                    VirtualMachineTicket ticket = vm.acquireTicket("webmks");
+                    String host = si.getServerConnection().getUrl().getHost();
+                    String ticketValue = ticket.getTicket();
+                    String serverGuid = si.getAboutInfo().getInstanceUuid();
+                    String vmId = vm.getMOR().get_value();
 
-                if (vmName.equals("test")) {
-                    VirtualMachinePowerState powerState = vm.getRuntime().getPowerState();
-                    if (powerState == VirtualMachinePowerState.poweredOff) {
-                        System.out.println("Powering on the virtual machine: " + vmName);
-                        Task task = vm.powerOnVM_Task(null);
-                        String result = task.waitForTask();
-                        if (result == Task.SUCCESS) {
-                            System.out.println("Virtual machine " + vmName + " powered on successfully.");
-                        } else {
-                            System.out.println("Failed to power on the virtual machine " + vmName);
-                        }
-                    } else {
-                        System.out.println("The virtual machine " + vmName + " is already running.");
-                    }
+                    consoleUrl = "https://" + host + "/ui/webconsole.html?vmId=" + vmId +
+                            "&vmName=" + vmName +
+                            "&serverGuid=" + serverGuid +
+                            "&host=" + hostName +
+                            "&sessionTicket=" + ticketValue +
+                            "&locale=ko-KR";
+                    break;
                 }
             }
 
@@ -49,5 +97,8 @@ public class VmControll {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return consoleUrl;
     }
 }
+

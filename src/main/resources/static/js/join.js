@@ -48,7 +48,7 @@ function join() {
   };
   // // console.log(jsonData);
   $.ajax({
-    url: "http://192.168.32.25:8080/user/join",
+    url: "http://192.168.32.44:8080/user/join",
     type: "POST",
     contentType: "application/json",
     dataType: "json",

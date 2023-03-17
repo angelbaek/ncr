@@ -80,11 +80,4 @@ public class LoginController {
         System.out.println("아이디:"+id);
         return loginService.getUserTeamcodeView(id);
     }
-
-    //
-    @PostMapping("/powerOnTestVm")
-    public void callPowerOnTestVm() {
-        VmControll vmControll = new VmControll();
-        vmControll.powerOnTestVm();
-    }
 }
