@@ -6,7 +6,7 @@ function user_login() {
     pw: pw,
   };
   $.ajax({
-    url: "http://192.168.32.44:8080/login",
+    url: "http://192.168.32.25:8080/login",
     type: "POST",
     contentType: "application/json",
     dataType: "json",
@@ -25,6 +25,25 @@ function user_login() {
         $(".user_login_pw").empty();
         $(".user_login_id").focus();
       }
+    },
+  });
+}
+
+function vmconnec(){
+  var id = $(".user_login_id").val();
+  var pw = $(".user_login_pw").val();
+  var jsonData = {
+    id: id,
+    pw: pw,
+  };
+  $.ajax({
+    url: "http://192.168.32.25:8080/powerOnTestVm",
+    type: "POST",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);      
     },
   });
 }

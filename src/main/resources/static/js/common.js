@@ -17,7 +17,7 @@ function dropdownMenu() {
 // 로그아웃 함수
 function logOut() {
   $.ajax({
-    url: "http://192.168.32.44:8080/logout",
+    url: "http://192.168.32.25:8080/logout",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -37,7 +37,7 @@ function logOut() {
 // 사용자 정보 표출
 function showLogOutBtn() {
   $.ajax({
-    url: "http://192.168.32.44:8080/get_user_teamcode_view",
+    url: "http://192.168.32.25:8080/get_user_teamcode_view",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -80,7 +80,7 @@ function scrollPlay() {
 function sessionManagement() {
   // console.log("세션 체크...");
   $.ajax({
-    url: "http://192.168.32.44:8080/sessionCheck",
+    url: "http://192.168.32.25:8080/sessionCheck",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -105,7 +105,7 @@ function sessionManagementForUser() {
   // console.log("일반 사용자 세션 체크...");
   $.ajax({
     async: false,
-    url: "http://192.168.32.44:8080/sessionCheck",
+    url: "http://192.168.32.25:8080/sessionCheck",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -125,7 +125,7 @@ function sessionManagementForUser() {
 function sessionManagementForAdmin() {
   // // console.log("관리자 사용자 세션 체크...");
   $.ajax({
-    url: "http://192.168.32.44:8080/sessionCheck",
+    url: "http://192.168.32.25:8080/sessionCheck",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -152,7 +152,7 @@ function sessionManagementForAdmin() {
 
 // function adminExamResult() {
 //   $.ajax({
-//     url: "http://192.168.32.44:8080/admin_exam_result",
+//     url: "http://192.168.32.25:8080/admin_exam_result",
 //     type: "GET",
 //     dataType: "json",
 //     success: function (response) {},

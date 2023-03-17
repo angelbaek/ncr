@@ -1,14 +1,16 @@
 package com.training.ncr.controller;
+
 import com.vmware.vim25.*;
 import com.vmware.vim25.mo.*;
 
 import java.net.URL;
 
 public class VmControll {
-    public static void main(String[] args) {
-        String serverName = "your-vcenter-server";
-        String username = "your-username";
-        String password = "your-password";
+
+    public void powerOnTestVm() {
+        String serverName = "192.168.32.101";
+        String username = "administrator@vsphere.local";
+        String password = "qweR123#001";
 
         try {
             ServiceInstance si = new ServiceInstance(
