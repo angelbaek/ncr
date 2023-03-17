@@ -93,7 +93,7 @@ public class VmControll {
                 }
             }
 
-            si.getServerConnection().logout();
+//            si.getServerConnection().logout();
         } catch (Exception e) {
             e.printStackTrace();
         }
