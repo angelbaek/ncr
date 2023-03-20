@@ -23,7 +23,7 @@ public class VmwareController {
 //    }
     @GetMapping("/getVmConsoleUrl")
     public String getVmConsoleUrl() {
-        String vmName = "CentOS7_ServerTemp2";
+        String vmName = "BT001_PortalExp";
         String consoleUrl = vmControll.getVmConsoleUrl(vmName);
         if (consoleUrl != null) {
             System.out.println("VM Console URL: " + consoleUrl);
