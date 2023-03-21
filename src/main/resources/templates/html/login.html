@@ -7,6 +7,9 @@
     <title>기간망 침투대응훈련</title>
     <!-- <script src="/static/js/jquery-3.6.4.min.js"></script> -->
     <script src="/js/jquery-3.6.4.min.js"></script>
+    <script src="/js/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+    <!-- <script src="/static/js/jquery-ui-1.13.2/jquery-ui.min.js"></script> -->
+    <script src="/js/WebMKS_SDK_2.2.0/wmks.min.js"></script>
   </head>
   <!-- common css -->
   <link rel="stylesheet" href="/css/common.css" />
@@ -29,17 +32,22 @@
             <input class="user_login_pw" type="password" value="" />
           </div>
           <button class="btn_login" onclick="user_login()">로그인</button>
-
+          <!-- <div id="console-container" style="width: 100%; height: 600px">
+            Test
+          </div> -->
+          <button onclick="vmwareConnect()">VMVMVMVMVMVM</button>
           <a href="join">계정 생성하기</a>
+          <div id="console-container"></div>
         </div>
       </div>
     </div>
   </body>
-  <!-- <script
+  <script
     src="https://code.jquery.com/jquery-3.6.3.js"
     integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"
-  ></script> -->
+  ></script>
+  <!-- <script src="/static/js/common.js"></script> -->
   <!-- <script src="/static/js/common.js"></script> -->
   <script src="/js/common.js"></script>
   <!-- <script src="/static/js/login.js"></script> -->
@@ -73,4 +81,5 @@
     });
     sessionManagement();
   </script>
+  <!-- test -->
 </html>

@@ -152,10 +152,8 @@ function vmwareConnect() {
     url: "http://192.168.32.44:8080/getVmConsoleUrl",
     type: "GET",
     contentType: "application/json",
-    dataType: "text",
     success: function (response) {
       console.log(response);
-      window.open(response, "_blank");
     },
   });
 }

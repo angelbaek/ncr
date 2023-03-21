@@ -1,0 +1,11 @@
+cd C:\Users\ItzoneLab\ncr\build\libs
+java -Djavax.net.ssl.keyStore=C:\Users\ItzoneLab\ncr\src\main\resources\key\keystore.p12 -Djavax.net.ssl.keyStoreType=PKCS12 -Djavax.net.ssl.keyStorePassword= -jar ncr-0.0.1-SNAPSHOT.jar
+cscenter.itzone.local
+administrator@vsphere.local
+qweR123#001
+
+ssl인증서 
+url
+
+https://192.168.32.101/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_ServerTemp2&serverGuid=93b211b1-3357-4499-b612-2337c34201d3&host=cscenter.itzone.local&sessionTicket=cst-VCT-52911070-a261-de8f-d4fd-3d26a27a5fca--tp-BD-D7-F8-E5-21-F9-3D-59-BC-A4-27-98-7D-41-C4-E3-B6-67-1A-65&thumbprint=BD:D7:F8:E5:21:F9:3D:59:BC:A4:27:98:7D:41:C4:E3:B6:67:1A:65&locale=ko-KR
+https://cscenter.itzone.local/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_ServerTemp2&serverGuid=93b211b1-3357-4499-b612-2337c34201d3&host=cscenter.itzone.local&sessionTicket=9253405731b1ade6&locale=ko-KR

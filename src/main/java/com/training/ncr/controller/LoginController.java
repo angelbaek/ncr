@@ -4,7 +4,6 @@ import com.training.ncr.service.LoginService;
 import com.training.ncr.vo.LoginVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.training.ncr.controller.VmControll;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;

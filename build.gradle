@@ -1,12 +1,12 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '2.7.7'
+	id 'org.springframework.boot' version '2.4.5'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
 group = 'com.training'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '1.8'
 
 configurations {
 	compileOnly {
@@ -35,10 +35,18 @@ dependencies {
 	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	// https://mvnrepository.com/artifact/com.vmware/vijava
-	implementation group: 'com.vmware', name: 'vijava', version: '5.1'
-	//
+//	implementation group: 'com.vmware', name: 'vijava', version: '5.1'
+	// https://mvnrepository.com/artifact/com.cloudbees.thirdparty/vijava
+	implementation group: 'com.cloudbees.thirdparty', name: 'vijava', version: '5.5-beta'
+	// https://mvnrepository.com/artifact/com.toastcoders/yavijava
+	implementation group: 'com.toastcoders', name: 'yavijava', version: '6.0.05'
+	implementation 'org.dom4j:dom4j:2.1.3'
+//	implementation 'com.vmware:vSphereMKS:6.5.2'
+	// vi java
 	implementation 'javax.xml.bind:jaxb-api:2.3.1'
 	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+	// vm
+	implementation files('libs/vsanmgmt-sdk-6.7.0.jar')
 }
 
 tasks.named('test') {
