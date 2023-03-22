@@ -1,0 +1,9 @@
+https://192.168.32.101/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_ServerTemp2&host=cscenter.itzone.local&sessionTicket=bf9fbf37309b1bdf--tp-BD-D7-F8-E5-21-F9-3D-59-BC-A4-27-98-7D-41-C4-E3-B6-67-1A-65&thumbprint=BD:D7:F8:E5:21:F9:3D:59:BC:A4:27:98:7D:41:C4:E3:B6:67:1A:65&locale=en_US
+https://192.168.32.101/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_ServerTemp2&serverGuid=93b211b1-3357-4499-b612-2337c34201d3&host=cscenter.itzone.local&sessionTicket=cst-VCT-52d74f00-2427-a0b5-ff0d-ee2f0242a5df--tp-BD-D7-F8-E5-21-F9-3D-59-BC-A4-27-98-7D-41-C4-E3-B6-67-1A-65&thumbprint=BD:D7:F8:E5:21:F9:3D:59:BC:A4:27:98:7D:41:C4:E3:B6:67:1A:65&locale=ko-KR
+
+1. ticket 발급 받으면, 웹 브라우저상에서 세션인증 필요없이 해당 URL로 접근 가능하게
+2. 로직상에서 SSL관련 접근인증, 이런거 없었음
+3. 양진석 교수님에게 pyVmomi 관련 소스코드 볼 수 있는지 ( 봐도 브라우저 상에서 세션관리 안되있을수 있음 )
+**** 결과. 세션이 어떻게 구현이 되야하는지 ***** 
+
+웹 접속할때 사전인증링크 생성에 대해(펄, 파워쉘)
