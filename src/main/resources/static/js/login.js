@@ -6,7 +6,7 @@ function user_login() {
     pw: pw,
   };
   $.ajax({
-    url: "http://192.168.32.44:8080/login",
+    url: "http://10.30.11.57:8080/login",
     type: "POST",
     contentType: "application/json",
     dataType: "json",

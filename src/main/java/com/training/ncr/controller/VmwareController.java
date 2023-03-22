@@ -24,10 +24,10 @@ public class VmwareController {
     @GetMapping("/getVmConsoleUrl")
     public void test(HttpServletResponse response) throws IOException, URISyntaxException {
         String vmName = "CentOS7_ServerTemp2"; // 웹콘솔을 띄울 가상 머신의 이름
-        String vCenterUrl = "https://192.168.32.101/sdk"; // vCenter 서버의 URL
-        String username = "administrator@vsphere.local"; // vCenter 서버에 로그인하는 사용자 이름
-        String password = "qweR123#001"; // vCenter 서버에 로그인하는 사용자 비밀번호
-        String hostName = "cscenter.itzone.local";
+        String vCenterUrl = "https://172.10.100.11/sdk"; // vCenter 서버의 URL
+        String username = "jinseok.yang"; // vCenter 서버에 로그인하는 사용자 이름
+        String password = "VMware1!"; // vCenter 서버에 로그인하는 사용자 비밀번호
+        String hostName = "h0000.cstec.kr";
         String ssltext = "BD:D7:F8:E5:21:F9:3D:59:BC:A4:27:98:7D:41:C4:E3:B6:67:1A:65";
 
         // vCenter 서버에 연결

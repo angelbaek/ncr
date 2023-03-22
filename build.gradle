@@ -46,7 +46,7 @@ dependencies {
 	implementation 'javax.xml.bind:jaxb-api:2.3.1'
 	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
 	// vm
-	implementation files('libs/vsanmgmt-sdk-6.7.0.jar')
+	implementation files('libs/vsanmgmt-sdk.jar')
 }
 
 tasks.named('test') {
