@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.handler.HandlerResolver;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -20,7 +22,7 @@ import java.security.NoSuchAlgorithmException;
 public class VmwareController {
 
     @GetMapping("/getVmConsoleUrl")
-    public void test() throws IOException, URISyntaxException {
+    public void test(HttpServletResponse response) throws IOException, URISyntaxException {
         String vmName = "CentOS7_ServerTemp2"; // 웹콘솔을 띄울 가상 머신의 이름
         String vCenterUrl = "https://192.168.32.101/sdk"; // vCenter 서버의 URL
         String username = "administrator@vsphere.local"; // vCenter 서버에 로그인하는 사용자 이름
@@ -50,6 +52,18 @@ public class VmwareController {
                 "&sessionTicket=" + ticket.getTicket() + "--tp-" + ssltext +
                 "&thumbprint=" +ssltext+
                 "&locale=en_US";
+
+        // HTTP 응답 헤더 설정하기
+        response.setHeader("Cache-Control", "no-cache, no-store, max-age=0, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "0");
+        response.setHeader("Strict-Transport-Security", "max-age=30758400; includeSubDomains");
+        response.setHeader("X-XSS-Protection", "1; mode=block");
+        response.setHeader("X-Content-Type-Options", "nosniff");
+        response.setHeader("X-Frame-Options", "deny");
+        response.setContentType("text/html;charset=utf-8");
+        response.setContentLength(webConsoleUrl.getBytes("UTF-8").length);
+
         System.out.println(webConsoleUrl);
     }
 }

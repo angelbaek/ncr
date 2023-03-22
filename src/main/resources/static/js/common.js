@@ -148,14 +148,14 @@ function sessionManagementForAdmin() {
 
 // vm웨어 연동
 function vmwareConnect() {
-  $.ajax({
-    url: "http://192.168.32.44:8080/getVmConsoleUrl",
-    type: "GET",
-    contentType: "application/json",
-    success: function (response) {
-      console.log(response);
-    },
-  });
+  // $.ajax({
+  //   url: "http://192.168.32.44:8080/getVmConsoleUrl",
+  //   type: "GET",
+  //   contentType: "application/json",
+  //   success: function (response) {
+  //     console.log(response);
+  //   },
+  // });
 }
 
 /**
