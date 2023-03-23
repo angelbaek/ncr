@@ -4,8 +4,16 @@ cscenter.itzone.local
 administrator@vsphere.local
 qweR123#001
 
+
+Administrator
+
+
 ssl인증서 
 url
 
 https://192.168.32.101/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_ServerTemp2&serverGuid=93b211b1-3357-4499-b612-2337c34201d3&host=cscenter.itzone.local&sessionTicket=cst-VCT-52911070-a261-de8f-d4fd-3d26a27a5fca--tp-BD-D7-F8-E5-21-F9-3D-59-BC-A4-27-98-7D-41-C4-E3-B6-67-1A-65&thumbprint=BD:D7:F8:E5:21:F9:3D:59:BC:A4:27:98:7D:41:C4:E3:B6:67:1A:65&locale=ko-KR
 https://cscenter.itzone.local/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_ServerTemp2&serverGuid=93b211b1-3357-4499-b612-2337c34201d3&host=cscenter.itzone.local&sessionTicket=9253405731b1ade6&locale=ko-KR
+
+https://192.168.32.101/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_ServerTemp2&serverGuid=93b211b1-3357-4499-b612-2337c34201d3&host=cscenter.itzone.local&sessionTicket=cst-VCT-525ecc90-9138-6d43-f2ab-6f04c98aed65--tp-BD-D7-F8-E5-21-F9-3D-59-BC-A4-27-98-7D-41-C4-E3-B6-67-1A-65&thumbprint=b%27BD:D7:F8:E5:21:F9:3D:59:BC:A4:27:98:7D:41:C4:E3:B6:67:1A:65%27
+https://192.168.32.101/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_ServerTemp2&serverGuid=93b211b1-3357-4499-b612-2337c34201d3&host=cscenter.itzone.local&sessionTicket=cst-VCT-525dbe7b-934c-8cd7-e244-9f4ce2133e84--tp-BD-D7-F8-E5-21-F9-3D-59-BC-A4-27-98-7D-41-C4-E3-B6-67-1A-65&thumbprint=BD:D7:F8:E5:21:F9:3D:59:BC:A4:27:98:7D:41:C4:E3:B6:67:1A:65&locale=ko-KR
+https://192.168.32.101/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_ServerTemp2&serverGuid=93b211b1-3357-4499-b612-2337c34201d3&host=cscenter.itzone.local&sessionTicket=cst-VCT-528ffc84-8114-35a0-4770-52e4f382f206--tp-BD-D7-F8-E5-21-F9-3D-59-BC-A4-27-98-7D-41-C4-E3-B6-67-1A-65&thumbprint=b%27BD:D7:F8:E5:21:F9:3D:59:BC:A4:27:98:7D:41:C4:E3:B6:67:1A:65%27
