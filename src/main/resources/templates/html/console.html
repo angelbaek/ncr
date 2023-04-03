@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>VMware Web Console Viewer</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src="https://192.168.32.101/ui/resources/libs/jquery.js"></script>
+    <script src="https://192.168.32.101/ui/resources/libs/jquery-ui.min.js"></script>
+    <script src="https://192.168.32.101/ui/resources/js/console/wmks.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://192.168.32.101/ui/resources/css/console/style.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://192.168.32.101/ui/resources/css/console/wmks-all.css"
+    />
+  </head>
+  <body>
+    <div
+      id="wmksContainer"
+      style="position: absolute; width: 100%; height: 100%"
+    ></div>
+    <script>
+      let vmId = "";
+      function getVm() {
+        $.ajax({
+          async: false,
+          url: "http://192.168.32.44:8080/get_vm_id",
+          type: "GET",
+          dataType: "text",
+          success: function (response) {
+            console.log(response);
+            vmId = response;
+          },
+        });
+        return vmId;
+      }
+      var host = "192.168.32.101";
+      var username = "administrator@vsphere.local";
+      var password = "qweR123#001";
+      var target = getVm();
+      $.ajax({
+        url: "http://192.168.32.44:5000/vmware_console_url",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+          host: host,
+          username: username,
+          password: password,
+          target: target,
+        }),
+        success: function (result) {
+          console.log("result : ", result);
+          var wmks = WMKS.createWMKS("wmksContainer", {
+            sessionTimeout: 60000,
+          }).register(
+            WMKS.CONST.Events.CONNECTION_STATE_CHANGE,
+            function (event, data) {
+              if (data.state == WMKS.CONST.ConnectionState.CONNECTED) {
+                console.log("connection state change : connected");
+              }
+            }
+          );
+          wmks.connect(result.url);
+        },
+        error: function (xhr, status, error) {
+          alert("Error: " + error);
+        },
+      });
+    </script>
+  </body>
+</html>

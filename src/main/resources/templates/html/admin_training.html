@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>기간망 침투대응훈련</title>
     <script src="/js/jquery-3.6.4.min.js"></script>
+
+    <!-- <script src="/static/js/jquery-3.6.4.min.js"></script> -->
     <!-- font awesome -->
     <link
       rel="stylesheet"
@@ -17,6 +19,8 @@
     <!-- common css -->
     <link rel="stylesheet" href="/css/common.css" />
     <link rel="stylesheet" href="/css/admin_training.css" />
+    <!-- <link rel="stylesheet" href="/static/css/common.css" />
+    <link rel="stylesheet" href="/static/css/admin_training.css" /> -->
   </head>
   <body>
     <div class="left_nav">
@@ -120,6 +124,16 @@
     </div>
     <!-- 백그라운드 -->
     <div class="back"></div>
+    <!-- 훈련 시작 팝업창 -->
+    <div class="training_popup">
+      <div class="training_popup_title">알림</div>
+      <div class="training_popup_content">본문</div>
+      <div class="training_popup_button_div">
+        <button class="training_popup_ok" onclick="trainingPopupSwitch()">
+          확인
+        </button>
+      </div>
+    </div>
   </body>
   <script
     src="https://code.jquery.com/jquery-3.6.3.js"
@@ -153,6 +167,8 @@
   <script src="/js/common.js"></script>
   <!-- <script src="/static/js/admin_training.js"></script> -->
   <script src="/js/admin_training.js"></script>
+  <!-- <script src="/static/js/common.js"></script>
+  <script src="/static/js/admin_training.js"></script> -->
   <script>
     sessionManagementForAdmin();
   </script>

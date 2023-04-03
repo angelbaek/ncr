@@ -255,3 +255,40 @@ tr:last-child td {
 .exam_manage_css:hover {
   text-decoration: underline;
 }
+
+/* 훈련 시작 팝업창 */
+.training_popup {
+  display: none;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #34395e;
+  background-color: #fafbfc;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px 1px rgb(0 0 0 / 50%);
+  width: 500px;
+  height: auto;
+  position: fixed;
+  z-index: 3;
+}
+
+.training_popup_title {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #6777ef;
+  color: #fafbfc;
+  text-align: center;
+  padding: 5px;
+}
+
+.training_popup_content {
+  margin: 20px;
+  margin-bottom: 50px;
+  font-size: bold;
+  text-align: center;
+}
+.training_popup_button_div {
+  width: auto;
+  display: block;
+  margin-right: 25%;
+}

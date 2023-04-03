@@ -24,8 +24,8 @@ dependencies {
 	implementation 'org.springframework.session:spring-session-core'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-//	my sql
-//	runtimeOnly 'com.mysql:mysql-connector-j'
+	//	my sql
+	//	runtimeOnly 'com.mysql:mysql-connector-j'
 	// https://mvnrepository.com/artifact/org.postgresql/postgresql
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.5.1'
 	runtimeOnly 'org.postgresql:postgresql'
@@ -33,9 +33,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+	// 템플릿 엔진
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	// https://mvnrepository.com/artifact/com.vmware/vijava
-//	implementation group: 'com.vmware', name: 'vijava', version: '5.1'
+	//	implementation group: 'com.vmware', name: 'vijava', version: '5.1'
 	// https://mvnrepository.com/artifact/com.cloudbees.thirdparty/vijava
 	implementation group: 'com.cloudbees.thirdparty', name: 'vijava', version: '5.5-beta'
 	// https://mvnrepository.com/artifact/com.toastcoders/yavijava
@@ -47,6 +48,8 @@ dependencies {
 	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
 	// vm
 	implementation files('libs/vsanmgmt-sdk-6.7.0.jar')
+	//
+	implementation 'org.json:json:20210307'
 }
 
 tasks.named('test') {

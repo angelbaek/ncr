@@ -2,6 +2,7 @@ package com.training.ncr.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * 이 컨트롤러 기능은 view를 리턴하기 위해 존재함 다른 기능 없음!!!!!!!!
@@ -58,5 +59,10 @@ public class ViewController {
     @GetMapping(value = {"admin_exam_result"})
     public String admin_exam_result(){
         return "html/admin_exam_result";
+    }
+
+    @GetMapping(value = {"vmware_console"})
+    public String vmwareConsoleUrl() {
+        return "html/console";
     }
 }

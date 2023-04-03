@@ -3,7 +3,7 @@ java -Djavax.net.ssl.keyStore=C:\Users\ItzoneLab\ncr\src\main\resources\key\keys
 cscenter.itzone.local
 administrator@vsphere.local
 qweR123#001
-
+CentOS7_ServerTemp2
 
 Administrator
 
@@ -17,3 +17,35 @@ https://cscenter.itzone.local/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_Ser
 https://192.168.32.101/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_ServerTemp2&serverGuid=93b211b1-3357-4499-b612-2337c34201d3&host=cscenter.itzone.local&sessionTicket=cst-VCT-525ecc90-9138-6d43-f2ab-6f04c98aed65--tp-BD-D7-F8-E5-21-F9-3D-59-BC-A4-27-98-7D-41-C4-E3-B6-67-1A-65&thumbprint=b%27BD:D7:F8:E5:21:F9:3D:59:BC:A4:27:98:7D:41:C4:E3:B6:67:1A:65%27
 https://192.168.32.101/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_ServerTemp2&serverGuid=93b211b1-3357-4499-b612-2337c34201d3&host=cscenter.itzone.local&sessionTicket=cst-VCT-525dbe7b-934c-8cd7-e244-9f4ce2133e84--tp-BD-D7-F8-E5-21-F9-3D-59-BC-A4-27-98-7D-41-C4-E3-B6-67-1A-65&thumbprint=BD:D7:F8:E5:21:F9:3D:59:BC:A4:27:98:7D:41:C4:E3:B6:67:1A:65&locale=ko-KR
 https://192.168.32.101/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_ServerTemp2&serverGuid=93b211b1-3357-4499-b612-2337c34201d3&host=cscenter.itzone.local&sessionTicket=cst-VCT-528ffc84-8114-35a0-4770-52e4f382f206--tp-BD-D7-F8-E5-21-F9-3D-59-BC-A4-27-98-7D-41-C4-E3-B6-67-1A-65&thumbprint=b%27BD:D7:F8:E5:21:F9:3D:59:BC:A4:27:98:7D:41:C4:E3:B6:67:1A:65%27
+
+-----BEGIN CERTIFICATE REQUEST-----
+MIIDNDCCAhwCAQAwezEeMBwGA1UEAwwVY3NjZW50ZXIuaXR6b25lLmxvY2FsMQsw
+CQYDVQQGEwJVUzEZMBcGA1UECAwQ64yA7KCEIOq0keyXreyLnDESMBAGA1UEBwwJ
+7Jyg7ISx6rWsMQ8wDQYDVQQKDAZpdHpvbmUxDDAKBgNVBAsMA2xhYjCCASIwDQYJ
+KoZIhvcNAQEBBQADggEPADCCAQoCggEBAKJm7lYdwcMnXtcfY3Ob8EaWC5KdhL0A
+RrXLhR9eVh4zSsBolk2U5eC+7wxvLEqo17H3PRqqbgUuK7tCfiSRgsV35cisbYZL
+9EKSs0FcFFK03hHYWtf3/WzDdywGrgFf3lPEj/tZhrHrpD02Jy5EXnmUOT6JHiyI
+IF96w+DIqseUc0qla/dX4igkJ+gpMiuPeTN/42zkWx4NsEtb0urSxntEcyKMZwjN
+Y3uTMotLliwhf7+776dFQhe5t++JXiYfBYgFFEI4yLWDo9zlZO9twNJ4gL5ROyb5
+tBHWfqoKU7svjkRYcTrsrdwA2B6cpyDSdLCDVJ26UEtzXz0bvDsns/MCAwEAAaB0
+MHIGCSqGSIb3DQEJDjFlMGMwCwYDVR0PBAQDAgXgMDUGA1UdEQQuMCyBE3NoYmFl
+a0BpdHpvbmUuY28ua3KCFWNzY2VudGVyLml0em9uZS5sb2NhbDAdBgNVHQ4EFgQU
+IMijij3d5KRkjdJ2d/9RI9K4lt8wDQYJKoZIhvcNAQELBQADggEBABrsf+43BlNx
+eX2kXqaWlHlFKlm6nVbZWzuxlINo7XbhWE8ZdYTiC0fwWyeXGRClM6oNWR3ByYgE
+z+MLrOPnqKyjT8ST9ajz9kJerPtg00aBtNyibq/TtCdJvK89a6Z4/M6gDkMaZxC2
+2EQDiAeV3s0VSjck+qb8Ug5EILTbcksBKiYCwV7VGBIF2NuuMHzVcegART1zE+R/
+Y3aqiso00sQQXroflaaTbE/DiVCKWyvjup9nfb7JKwfKIwm3dEbhcNn6R7s3sxNh
+DZb+o1lGbk24N7UUk/wRdTafhThsa3s7Pww6336joDYNzW5gQnyv9F2hf9f7HByj
+kFvEWh6cx+s=
+-----END CERTIFICATE REQUEST-----
+
+wss://192.168.32.101/ui/webconsole/authd?host=192.168.32.99&port=902&cfgFile=/vmfs/volumes/5ced640a-883a069e-763a-a4bf015c1379/CentOS7_ServerTemp2/CentOS7_ServerTemp2.vmx&thumbprint=13:74:29:F1:08:0D:F6:CD:91:DB:C3:69:F6:B6:A0:DD:21:E2:65:9F&ticket=525c17c8-a6f6-d113-e430-9ad7eeb1e089&vmId=vm-1701&encoding=UTF-8
+wss://192.168.32.101/ui/webconsole/authd?host=192.168.32.99&port=443&cfgFile=[datastore1] CentOS7_ServerTemp2/CentOS7_ServerTemp2.vmx&thumbprint=13:74/console?ticket=CentOS7_ServerTemp2.vmx&thumbprint=13:74:29:F1:08:0D:F6:CD:91:DB:C3:69:F6:B6:A0:DD:21:E2:65:9F&ticket=6255f946b8810c82&vmId=vm-1701&encoding=UTF-8
+
+
+./vmware_get_console_url.py -vc cscenter.itzone.local -u administrator@vsphere.local -t CentOS7_ServerTemp2
+vmware_get_console_url.py -vc cscenter.itzone.local -u administrator@vsphere.local -t CentOS7_ServerTemp2
+Password:
+
+https://192.168.32.101/ui/webconsole.html?vmId=vm-1701&vmName=CentOS7_ServerTemp2&serverGuid=93b211b1-3357-4499-b612-2337c34201d3&host=cscenter.itzone.local&sessionTicket=cst-VCT-52eed978-9587-85bc-e88c-763d6bff53b3--tp-BD-D7-F8-E5-21-F9-3D-59-BC-A4-27-98-7D-41-C4-E3-B6-67-1A-65&thumbprint=BD:D7:F8:E5:21:F9:3D:59:BC:A4:27:98:7D:41:C4:E3:B6:67:1A:65&locale=ko-KR
+vmware_get_console_url.py -vc 192.168.32.101 -u administrator@vsphere.local -t CentOS7_ServerTemp2

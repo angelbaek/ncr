@@ -170,11 +170,13 @@ function trainingStart() {
     typeof groupOneBoolean == "undefined" ||
     typeof groupTwoBoolean == "undefined"
   ) {
-    alert("훈련 설정이 안된 그룹이 있습니다");
+    $(".training_popup_content").text("훈련 설정이 안된 그룹이 있습니다");
+    trainingPopupSwitch();
     return;
   }
   if (one == false && two == false) {
-    alert("훈련 시작할 차시를 설정하세요");
+    $(".training_popup_content").text("훈련 시작할 차시를 설정하세요");
+    trainingPopupSwitch();
     return;
   }
   // 1차시 훈련 시작
@@ -192,15 +194,19 @@ function trainingStart() {
       success: function (response) {
         // // console.log(response);
         if (response == 0) {
-          alert("설정된 훈련이 없습니다");
+          $(".training_popup_content").text("설정된 훈련이 없습니다");
+          trainingPopupSwitch();
           return;
         }
-        alert("1차시 훈련(" + groupOne + ")을 시작합니다");
+        $(".training_popup_content").text(
+          "1차시 훈련(" + groupOne + ")을 시작합니다"
+        );
+        trainingPopupSwitch();
         // 훈련 시작 버튼 비활성화
         trainingStartBtnOff();
         // 훈련 정지 버튼 활성화
         trainingPauseBtnOn();
-        location.reload();
+        // location.reload();
       },
     });
   } else if (two == true) {
@@ -218,15 +224,18 @@ function trainingStart() {
       success: function (response) {
         // // console.log(response);
         if (response == 0) {
-          alert("설정된 훈련이 없습니다");
+          $(".training_popup_content").text("설정된 훈련이 없습니다");
+          trainingPopupSwitch();
           return;
         }
-        alert("2차시 훈련(" + groupTwo + ")을 시작합니다");
+        $(".training_popup_content").text(
+          "2차시 훈련(" + groupTwo + ")을 시작합니다"
+        );
+        trainingPopupSwitch();
         // 훈련 시작 버튼 비활성화
         trainingStartBtnOff();
         // 훈련 정지 버튼 활성화
         trainingPauseBtnOn();
-        location.reload();
       },
     });
   }
@@ -244,10 +253,14 @@ function grpActive(trainingNumbers) {
     var one = $("select[name=location1] option:selected").text();
     var two = $("select[name=location2] option:selected").text();
     if (one == "직접 선택") {
-      alert("1차시 문제 그룹을 선택하세요");
+      $(".training_popup_content").text("1차시 문제 그룹을 선택하세요");
+      trainingPopupSwitch();
       return;
     } else if (one == two) {
-      alert("동일한 문제 그룹으로 설정 할 수 없습니다");
+      $(".training_popup_content").text(
+        "동일한 문제 그룹으로 설정 할 수 없습니다"
+      );
+      trainingPopupSwitch();
       return;
     }
     var jsonData = {
@@ -263,7 +276,8 @@ function grpActive(trainingNumbers) {
       success: function (response) {
         // // console.log(response);
         if (response > 0) {
-          alert("1차 문제 그룹: " + one);
+          $(".training_popup_content").text("1차 문제 그룹: " + one);
+          trainingPopupSwitch();
           $("#selectOne").attr("disabled", true);
           // 1차 설정 확인 버튼 비활성화
           ok1BtnOff();
@@ -278,10 +292,14 @@ function grpActive(trainingNumbers) {
     var one = $("select[name=location1] option:selected").text();
     var two = $("select[name=location2] option:selected").text();
     if (two == "직접 선택") {
-      alert("2차시 문제 그룹을 선택하세요");
+      $(".training_popup_content").text("2차시 문제 그룹을 선택하세요");
+      trainingPopupSwitch();
       return;
     } else if (one == two) {
-      alert("동일한 문제 그룹으로 설정 할 수 없습니다");
+      $(".training_popup_content").text(
+        "동일한 문제 그룹으로 설정 할 수 없습니다"
+      );
+      trainingPopupSwitch();
       return;
     }
     var jsonData = {
@@ -298,16 +316,17 @@ function grpActive(trainingNumbers) {
       success: function (response) {
         // // console.log(response);
         if (response > 0) {
-          alert("2차 문제 그룹: " + two);
+          $(".training_popup_content").text("2차 문제 그룹: " + two);
+          trainingPopupSwitch();
           $("#selectTwo").attr("disabled", true);
           // 2차 설정 확인 버튼 비활성화
           ok2BtnOff();
-          location.reload();
         }
       },
     });
   } else {
-    alert("체크박스를 활성화 해주세요");
+    $(".training_popup_content").text("체크박스를 활성화 해주세요");
+    trainingPopupSwitch();
   }
 }
 
@@ -320,14 +339,14 @@ function trainingPause() {
     dataType: "json",
     success: function (response) {
       // // console.log(response);
-      alert("훈련을 정지합니다");
+      $(".training_popup_content").text("훈련을 정지합니다");
+      trainingPopupSwitch();
       // 훈련 정지 버튼 비활성화
       trainingPauseBtnOff();
       // 훈련 시작 버튼 활성화
       trainingStartBtnOn();
       edit1BtnOn();
       edit2BtnOn();
-      location.reload();
     },
   });
 }
@@ -525,4 +544,16 @@ function getTrainMgmt() {
       }
     },
   });
+}
+
+// 훈련 시작 팝업창
+
+function trainingPopupSwitch() {
+  let showing = $(".training_popup").css("display");
+  if (showing == "block") {
+    $(".training_popup").css("display", "none");
+  } else if (showing == "none") {
+    $(".training_popup").css("display", "block");
+  }
+  $(".back").toggle();
 }

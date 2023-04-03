@@ -7,9 +7,14 @@ import com.training.ncr.vo.user.*;
 import org.apache.catalina.User;
 import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -730,5 +735,30 @@ public class UserExplanationService {
             else return 1;
         }
         return 1;
+    }
+    // VMwareController
+    public String getVMWareConsoleUrl() {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("host", "192.168.32.101");
+        body.put("username", "administrator@vsphere.local");
+        body.put("password", "qweR123#001");
+        body.put("target", "Windows 10_VictimTemp5");
+
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+
+        ResponseEntity<Map> response = restTemplate.postForEntity("http://192.168.32.44:5000/vmware_console_url", request, Map.class);
+        Map<String, Object> result = response.getBody();
+        String url = (String) result.get("url");
+
+
+
+        return url;
+        // Connect to WMKS using the retrieved URL
+        // ...
     }
 }

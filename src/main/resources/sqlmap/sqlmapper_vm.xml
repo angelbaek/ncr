@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.training.ncr.mapper.VmMapper">
+    <select id="getVmId" resultType="String">
+        select "VM_ID"
+        from "TC_TEAMCODE"
+        where "TEAM_CD" =
+            (select
+                "TEAM_CD"
+            from
+                "TN_USER"
+            where
+                "TR_USER_ID" = #{userId})
+    </select>
+</mapper>

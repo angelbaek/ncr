@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VM Information</title>
+  </head>
+  <body>
+    <h1>VM Information</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>IP</th>
+          <th>OS</th>
+          <th>Console URL</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for vm_info in vm_info_list %}
+        <tr>
+          <td>{{ vm_info['name'] }}</td>
+          <td>{{ vm_info['ip'] }}</td>
+          <td>{{ vm_info['os'] }}</td>
+          <td>
+            <a href="{{ vm_info['console_url'] }}"
+              >{{ vm_info['console_url'] }}</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
