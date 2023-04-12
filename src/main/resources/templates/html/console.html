@@ -27,7 +27,7 @@
       function getVm() {
         $.ajax({
           async: false,
-          url: "http://192.168.32.44:8080/get_vm_id",
+          url: "https://192.168.32.44:8444/get_vm_id",
           type: "GET",
           dataType: "text",
           success: function (response) {
@@ -42,7 +42,7 @@
       var password = "qweR123#001";
       var target = getVm();
       $.ajax({
-        url: "http://192.168.32.44:5000/vmware_console_url",
+        url: "https://192.168.32.44:5000/vmware_console_url",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({

@@ -133,7 +133,7 @@ function getTraining() {
   var html = "";
   $.ajax({
     async: false,
-    url: "http://192.168.32.44:8080/admin/mgmt",
+    url: "https://192.168.32.44:8444/admin/mgmt",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -186,7 +186,7 @@ function trainingStart() {
       tr_exam_grp: groupOne,
     };
     $.ajax({
-      url: "http://192.168.32.44:8080/admin/trainingStart",
+      url: "https://192.168.32.44:8444/admin/trainingStart",
       type: "PATCH",
       contentType: "application/json",
       dataType: "json",
@@ -216,7 +216,7 @@ function trainingStart() {
       tr_exam_grp: groupTwo,
     };
     $.ajax({
-      url: "http://192.168.32.44:8080/admin/trainingStart",
+      url: "https://192.168.32.44:8444/admin/trainingStart",
       type: "PATCH",
       contentType: "application/json",
       dataType: "json",
@@ -268,7 +268,7 @@ function grpActive(trainingNumbers) {
       tr_exam_grp: one,
     };
     $.ajax({
-      url: "http://192.168.32.44:8080/admin/gprAct",
+      url: "https://192.168.32.44:8444/admin/gprAct",
       type: "POST",
       contentType: "application/json",
       dataType: "json",
@@ -308,7 +308,7 @@ function grpActive(trainingNumbers) {
     };
     // // console.log(jsonData);
     $.ajax({
-      url: "http://192.168.32.44:8080/admin/gprAct",
+      url: "https://192.168.32.44:8444/admin/gprAct",
       type: "POST",
       contentType: "application/json",
       dataType: "json",
@@ -333,7 +333,7 @@ function grpActive(trainingNumbers) {
 // 훈련 정지
 function trainingPause() {
   $.ajax({
-    url: "http://192.168.32.44:8080/admin/trainingPause",
+    url: "https://192.168.32.44:8444/admin/trainingPause",
     type: "PATCH",
     contentType: "application/json",
     dataType: "json",
@@ -356,7 +356,7 @@ function groupView() {
   $(".group_view").css("display", "block");
   $(".group_view_title").css("display", "block");
   $.ajax({
-    url: "http://192.168.32.44:8080/admin/groupView",
+    url: "https://192.168.32.44:8444/admin/groupView",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -399,7 +399,7 @@ function teamcodeView() {
   $(".back").toggle();
   scrollPause();
   $.ajax({
-    url: "http://192.168.32.44:8080/admin/teamcodeView",
+    url: "https://192.168.32.44:8444/admin/teamcodeView",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -457,7 +457,7 @@ function edit(editNum) {
     };
     // // console.log(jsonData);
     $.ajax({
-      url: "http://192.168.32.44:8080/admin/gpract_edit",
+      url: "https://192.168.32.44:8444/admin/gpract_edit",
       type: "DELETE",
       contentType: "application/json",
       dataType: "json",
@@ -477,7 +477,7 @@ function edit(editNum) {
     };
     // // console.log(jsonData);
     $.ajax({
-      url: "http://192.168.32.44:8080/admin/gpract_edit",
+      url: "https://192.168.32.44:8444/admin/gpract_edit",
       type: "DELETE",
       contentType: "application/json",
       dataType: "json",
@@ -499,7 +499,7 @@ function getTrainMgmt() {
   trainingStartBtnOff();
   $.ajax({
     async: false,
-    url: "http://192.168.32.44:8080/admin/get_train_mgmt",
+    url: "https://192.168.32.44:8444/admin/get_train_mgmt",
     type: "GET",
     dataType: "json",
     success: function (response) {

@@ -11,7 +11,7 @@ getTrainingStateActiveOn();
 function getGroupInfoById() {
   $.ajax({
     async: false,
-    url: "http://192.168.32.44:8080/user/get_group_info_by_id",
+    url: "https://192.168.32.44:8444/user/get_group_info_by_id",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -37,7 +37,7 @@ function sessionManagementForUserGroup() {
   // // console.log("일반 사용자 세션 체크...");
   $.ajax({
     async: false,
-    url: "http://192.168.32.44:8080/sessionCheck",
+    url: "https://192.168.32.44:8444/sessionCheck",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -82,7 +82,7 @@ function getTeamGroup() {
   // // console.log("팀 정보 실행중...");
   $.ajax({
     async: false,
-    url: "http://192.168.32.44:8080/userGRP",
+    url: "https://192.168.32.44:8444/userGRP",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -140,7 +140,7 @@ function userGroupSave() {
   };
   // // console.log(jsonData);
   $.ajax({
-    url: "http://192.168.32.44:8080/user/update",
+    url: "https://192.168.32.44:8444/user/update",
     type: "PATCH",
     contentType: "application/json",
     dataType: "json",
@@ -184,7 +184,7 @@ function training() {
   // // console.log("훈련 함수 실행중...");
   // // console.log(tr_user_grp);
   $.ajax({
-    url: "http://192.168.32.44:8080/user/training/" + num,
+    url: "https://192.168.32.44:8444/user/training/" + num,
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -220,7 +220,7 @@ function training() {
 function getTrainingState() {
   var num = $("select[name=location_num]").val();
   $.ajax({
-    url: "http://192.168.32.44:8080/user/get_training_state/" + num,
+    url: "https://192.168.32.44:8444/user/get_training_state/" + num,
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -239,7 +239,7 @@ function getTrainingState() {
 // 활성화된 문제그룹이 있는지 가져오기
 function getTrainingStateActiveOn() {
   $.ajax({
-    url: "http://192.168.32.44:8080/user/get_training_state_active_on",
+    url: "https://192.168.32.44:8444/user/get_training_state_active_on",
     type: "GET",
     dataType: "json",
     success: function (response) {
