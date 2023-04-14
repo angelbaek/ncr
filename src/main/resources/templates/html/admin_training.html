@@ -19,8 +19,8 @@
     <!-- common css -->
     <link rel="stylesheet" href="/css/common.css" />
     <link rel="stylesheet" href="/css/admin_training.css" />
-    <!-- <link rel="stylesheet" href="/static/css/common.css" />
-    <link rel="stylesheet" href="/static/css/admin_training.css" /> -->
+    <!-- <link rel="stylesheet" href="/static/css/common.css" /> -->
+    <!-- <link rel="stylesheet" href="/static/css/admin_training.css" /> -->
   </head>
   <body>
     <div class="left_nav">
@@ -40,12 +40,10 @@
           <i class="fas fa-caret-down" id="dropbox_ic"></i>
           <ul class="dropdown">
             <li>
-              <a class="exam_manage_css" href="admin_exam_group">문제 그룹</a>
+              <a id="dropdown_css_a" href="admin_exam_group">문제 그룹</a>
             </li>
             <li>
-              <a class="exam_manage_css" href="admin_exam_management"
-                >문항 관리</a
-              >
+              <a id="dropdown_css_b" href="admin_exam_management">문항 관리</a>
             </li>
           </ul>
         </div>
@@ -97,7 +95,7 @@
         </div>
       </div>
       <!-- 그룹 조회 -->
-      <div class="group_view">
+      <div class="group_view" style="display: none">
         <div class="group_view_title">그룹 조회</div>
         <table class="group_view_head">
           <tr>
@@ -111,7 +109,7 @@
       </div>
     </div>
     <!-- 팀코드 조회 -->
-    <div class="teamcode_view">
+    <div class="teamcode_view" style="display: none">
       <table class="teamcode_view_head">
         <tr>
           <th>훈련자 지정 그룹</th>
@@ -123,9 +121,9 @@
       <button onclick="teamcode_view_btn()">확인</button>
     </div>
     <!-- 백그라운드 -->
-    <div class="back"></div>
+    <div class="back" style="display: none"></div>
     <!-- 훈련 시작 팝업창 -->
-    <div class="training_popup">
+    <div class="training_popup" style="display: none">
       <div class="training_popup_title">알림</div>
       <div class="training_popup_content">본문</div>
       <div class="training_popup_button_div">
@@ -141,11 +139,14 @@
     crossorigin="anonymous"
   ></script>
   <script>
-    $(".back").css("display", "none");
-    $(".group_view").css("display", "none");
-    $(".group_view_title").css("display", "none");
-    $(".teamcode_view").css("display", "none");
-    $(".dropdown").css("display", "none");
+    $(document).ready(function () {
+      sessionManagementForAdmin();
+      $(".back").css("display", "none");
+      $(".group_view").css("display", "none");
+      $(".group_view_title").css("display", "none");
+      $(".teamcode_view").css("display", "none");
+      $(".dropdown").css("display", "none");
+    });
     function dropdownMenu() {
       var show = $(".dropdown").css("display");
       console.log(show);
@@ -169,7 +170,4 @@
   <script src="/js/admin_training.js"></script>
   <!-- <script src="/static/js/common.js"></script>
   <script src="/static/js/admin_training.js"></script> -->
-  <script>
-    sessionManagementForAdmin();
-  </script>
 </html>

@@ -175,7 +175,7 @@ function trainingStart() {
     return;
   }
   if (one == false && two == false) {
-    $(".training_popup_content").text("훈련 시작할 차시를 설정하세요");
+    $(".training_popup_content").text("훈련 시작할 차시를 선택하세요");
     trainingPopupSwitch();
     return;
   }
@@ -206,7 +206,10 @@ function trainingStart() {
         trainingStartBtnOff();
         // 훈련 정지 버튼 활성화
         trainingPauseBtnOn();
-        // location.reload();
+        // 수정1 버튼 비활성화
+        edit1BtnOff();
+        // 선택 체크박스 비활성화
+        $(".check_two").prop("disabled", true);
       },
     });
   } else if (two == true) {
@@ -236,6 +239,10 @@ function trainingStart() {
         trainingStartBtnOff();
         // 훈련 정지 버튼 활성화
         trainingPauseBtnOn();
+        // 수정2 버튼 비활성화
+        edit2BtnOff();
+        // 선택 체크박스 비활성화
+        $(".check_one").prop("disabled", true);
       },
     });
   }
@@ -248,7 +255,6 @@ function grpActive(trainingNumbers) {
   // 체크박스 활성화 여부였는데 지금은 안씀
   // var one = $(".check_one").is(":checked");
   // var two = $(".check_two").is(":checked");
-
   if (trainingNumbers == 1) {
     var one = $("select[name=location1] option:selected").text();
     var two = $("select[name=location2] option:selected").text();
@@ -285,6 +291,8 @@ function grpActive(trainingNumbers) {
           $(".btn_edit1").attr("disabled", false);
           $(".btn_edit1").css("backgroundColor", "#6777ef");
           // location.reload();
+          // 훈련 시작 버튼 활성화
+          trainingStartBtnOn();
         }
       },
     });
@@ -321,6 +329,8 @@ function grpActive(trainingNumbers) {
           $("#selectTwo").attr("disabled", true);
           // 2차 설정 확인 버튼 비활성화
           ok2BtnOff();
+          // 훈련 시작 버튼 활성화
+          trainingStartBtnOn();
         }
       },
     });
@@ -338,6 +348,8 @@ function trainingPause() {
     contentType: "application/json",
     dataType: "json",
     success: function (response) {
+      $(".check_one").prop("disabled", false);
+      $(".check_two").prop("disabled", false);
       // // console.log(response);
       $(".training_popup_content").text("훈련을 정지합니다");
       trainingPopupSwitch();
@@ -463,10 +475,12 @@ function edit(editNum) {
       dataType: "json",
       data: JSON.stringify(jsonData),
       success: function (response) {
-        // // console.log(response);
+        // console.log(response);
         if (response > 0) {
           ok1BtnOn();
           $("#selectOne").attr("disabled", false);
+          // location.reload();
+          getTrainMgmt();
         }
       },
     });
@@ -487,6 +501,8 @@ function edit(editNum) {
         if (response > 0) {
           ok2BtnOn();
           $("#selectTwo").attr("disabled", false);
+          // location.reload();
+          getTrainMgmt();
         }
       },
     });
@@ -495,8 +511,8 @@ function edit(editNum) {
 
 // 훈련 차시 설정에 따른 view 동작 함수
 function getTrainMgmt() {
-  trainingPauseBtnOff();
-  trainingStartBtnOff();
+  // 훈련이 시작되었는지 알 수 있게 하는 변수
+  let startOn = false;
   $.ajax({
     async: false,
     url: "https://192.168.32.44:8444/admin/get_train_mgmt",
@@ -510,50 +526,60 @@ function getTrainMgmt() {
           $("#selectOne").val(response[i].tr_exam_grp);
           $("#selectOne").attr("disabled", true);
           ok1BtnOff();
-          trainingStartBtnOn();
+          // trainingStartBtnOn();
           // 2차시 설정된 그룹 뿌려주기
         } else if (response[i].tr_num == 2) {
           $("#selectTwo").val(response[i].tr_exam_grp);
           $("#selectTwo").attr("disabled", true);
           ok2BtnOff();
-          trainingStartBtnOn();
+          // trainingStartBtnOn();
         }
         // 훈련이 시작되었을 경우
         if (response[i].tr_mgmt_state == 1) {
+          startOn = true;
           // 훈련 시작 버튼 비활성화
-          trainingStartBtnOff();
-          trainingPauseBtnOn();
+          // trainingStartBtnOff();
+          // trainingPauseBtnOn();
           // 시작된 훈련이 1차일 경우
           if (response[i].tr_num == 1) {
             $(".check_one").prop("checked", true);
             $(".check_two").prop("disabled", true);
             edit1BtnOff();
-            edit2BtnOff();
             // 시작된 훈련이 2차일 경우
           } else if (response[i].tr_num == 2) {
             $(".check_two").prop("checked", true);
             $(".check_one").prop("disabled", true);
-            edit1BtnOff();
             edit2BtnOff();
           }
-          //훈련이 정지되었을 경우
-        } else if (response[i].tr_mgmt_state == 2) {
-          trainingPauseBtnOff();
-          trainingStartBtnOn();
+          //   //훈련이 정지되었을 경우
         }
+        //  else if (response[i].tr_mgmt_state == 2) {
+        //   trainingPauseBtnOff();
+        //   trainingStartBtnOn();
+        // }
+      }
+      if (startOn) {
+        trainingStartBtnOff();
+        trainingPauseBtnOn();
+      } else {
+        trainingPauseBtnOff();
+        trainingStartBtnOn();
       }
     },
   });
 }
 
 // 훈련 시작 팝업창
-
 function trainingPopupSwitch() {
   let showing = $(".training_popup").css("display");
   if (showing == "block") {
     $(".training_popup").css("display", "none");
+    // 스크롤 실행
+    scrollPlay();
   } else if (showing == "none") {
     $(".training_popup").css("display", "block");
+    // 스크롤 막기
+    scrollPause();
   }
   $(".back").toggle();
 }

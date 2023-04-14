@@ -228,12 +228,12 @@ a:hover {
   color: blue;
 }
 
-.common_left_menubar {
+/* .common_left_menubar {
   color: #34395e;
 }
 .common_left_menubar:hover {
   text-decoration: underline;
-}
+} */
 
 .show_static_body_total a {
   color: blue;
@@ -310,4 +310,43 @@ a:hover {
 .false_ans_change_true_div_btn_change {
   display: inline-block;
   text-align: center;
+}
+/* 메시지 팝업창 */
+.common_msg_popup {
+  z-index: 3;
+  background-color: #fafbfc;
+  box-shadow: 0px 4px 8px rgb(0 0 0 / 30%);
+  border-radius: 10px;
+  position: fixed;
+  width: 500px;
+  height: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.common_msg_popup .common_msg_popup_title {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 100%;
+  background-color: #6777ef;
+  color: #fafbfc;
+  height: 10%;
+  text-align: center;
+  padding: 10px 0px;
+}
+.common_msg_popup_contents {
+  height: 80%;
+  padding: 20px;
+}
+.common_msg_popup div button {
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+  width: 200px;
+  height: 10%;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-bottom: 10px;
 }

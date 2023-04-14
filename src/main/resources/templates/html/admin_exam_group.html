@@ -33,11 +33,18 @@
         >
           문제 관리
           <i class="fas fa-caret-down" id="dropbox_ic"></i>
-          <ul class="dropdown">
+          <ul class="dropdown" style="display: block">
             <li>
-              <a class="exam_group_css" href="admin_exam_group">문제 그룹</a>
+              <a
+                id="dropdown_css_a"
+                href="admin_exam_group"
+                style="text-decoration: underline; color: blue"
+                >문제 그룹</a
+              >
             </li>
-            <li><a href="admin_exam_management">문항 관리</a></li>
+            <li>
+              <a id="dropdown_css_b" href="admin_exam_management">문항 관리</a>
+            </li>
           </ul>
         </div>
         <div class="common_left_menubar" id="only_css">
@@ -49,7 +56,7 @@
       </div>
     </div>
     <div class="top_user_info">
-      <div class="contents_title">문제 관리</div>
+      <div class="contents_title">문제 그룹</div>
       <div class="top_user_info_div" onclick="showLogOutBtn()">
         <img src="/public/images/avatar-4.png" alt="user" />
         <div class="userName">User Name</div>
@@ -79,7 +86,7 @@
         </div>
       </div>
       <!-- 문제 그룹 추가 -->
-      <div class="exam_add">
+      <div class="exam_add" style="display: none">
         <div class="add_common">
           <div class="add_common_text">문제 그룹명</div>
           <input
@@ -144,13 +151,11 @@
     crossorigin="anonymous"
   ></script> -->
   <script>
-    $(".exam_add").css("display", "none");
     function maxLengthCheck(object) {
       if (object.value.length > object.maxLength) {
         object.value = object.value.slice(0, object.maxLength);
       }
     }
-    $(".dropdown").css("display", "block");
     $("#dropbox_ic").css("transform", "rotate(180deg)");
   </script>
   <!-- <script src="/static/js/common.js"></script> -->

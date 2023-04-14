@@ -7,34 +7,40 @@ function join() {
   var tr_user_org = $(".user_id_agency").val();
   // 조건식
   if (tr_user_id == "") {
-    alert("아이디를 입력하세요.");
+    $(".common_msg_popup_contents").text("아이디를 입력하세요");
+    popupMsg();
     $(".user_id").focus();
     return;
   }
   if (tr_user_passwd == "") {
-    alert("비밀번호를 입력하세요.");
+    $(".common_msg_popup_contents").text("비밀번호를 입력하세요");
+    popupMsg();
     $(".user_pw").focus();
     return;
   }
   if (pw2 == "") {
-    alert("비밀번호 재확인을 입력하세요.");
+    $(".common_msg_popup_contents").text("재확인을 입력하세요");
+    popupMsg();
     $(".user_pw2").focus();
     return;
   }
   if (tr_user_name == "") {
-    alert("이름을 입력하세요.");
+    $(".common_msg_popup_contents").text("이름을 입력하세요");
+    popupMsg();
     $(".user_name").focus();
     return;
   }
   if (tr_user_org == "") {
-    alert("기관명을 입력하세요.");
+    $(".common_msg_popup_contents").text("기관명을 입력하세요");
+    popupMsg();
     $(".user_id_agency").focus();
     return;
   }
 
   // 비밀번호가 서로 다름
   if (tr_user_passwd != pw2) {
-    alert("비밀번호를 확인하세요.");
+    $(".common_msg_popup_contents").text("비밀번호를 확인하세요");
+    popupMsg();
     $(".user_pw2").val("");
     $(".user_pw2").focus();
     return;
@@ -55,11 +61,13 @@ function join() {
     data: JSON.stringify(jsonData),
     success: function (response) {
       if (response == 0) {
-        alert("중복된 아이디입니다.");
+        $(".common_msg_popup_contents").text("중복된 아이디입니다");
+        popupMsg();
         $(".user_id").val("");
         $(".user_id").focus();
       } else {
-        alert("회원 등록 되었습니다.");
+        $(".common_msg_popup_contents").text("회원 등록 되었습니다");
+        popupMsg();
         // location.href = "/login";
         location.replace("/login");
       }

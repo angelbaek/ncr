@@ -36,12 +36,10 @@
           <i class="fas fa-caret-down" id="dropbox_ic"></i>
           <ul class="dropdown">
             <li>
-              <a class="exam_manage_css" href="admin_exam_group">문제 그룹</a>
+              <a id="dropdown_css_a" href="admin_exam_group">문제 그룹</a>
             </li>
             <li>
-              <a class="exam_manage_css" href="admin_exam_management"
-                >문항 관리</a
-              >
+              <a id="dropdown_css_b" href="admin_exam_management">문항 관리</a>
             </li>
           </ul>
         </div>
@@ -137,7 +135,7 @@
           <div class="false_exam_point"></div>
           <!-- 사용자 답안 -->
           <div class="false_ans_change_true_div_css_ans">기입 답안:</div>
-          <input class="false_exam_user_ans"></input>
+          <input class="false_exam_user_ans" />
           <!-- 힌트 유무 -->
           <div class="false_exam_hint"></div>
         </div>
@@ -160,12 +158,31 @@
     </div>
     <!-- 백그라운드 -->
     <div class="back"></div>
+    <!-- 메시지 팝업창 -->
+    <div class="common_msg_popup">
+      <div class="common_msg_popup_title">알림</div>
+      <div class="common_msg_popup_contents">해당 그룹은 안댐</div>
+      <div><button onclick="popupMsg()">확인</button></div>
+    </div>
   </body>
   <!-- <script
     src="https://code.jquery.com/jquery-3.6.3.js"
     integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"
   ></script> -->
+  <script>
+    $(".common_msg_popup").css("display", "none");
+    $(".common_detail_div_border").css("display", "none");
+    $(".common_detail_cover").css("display", "none");
+    $(".back").css("display", "none");
+    $(".matrix_title").css("display", "flex");
+    $(".false_ans_change_true_div").css("display", "none");
+    $(".static_title").css("display", "none");
+    $(".show_static_body_total").css("display", "none");
+    $(".static_detail_title").css("display", "none");
+    $(".user_body_status").css("display", "none");
+    $(".matrix_mit_tech").css("display", "none");
+  </script>
   <script>
     //정렬
     $(document).on("click", "th score", function () {
@@ -198,17 +215,6 @@
         }
       });
     });
-    //
-    $(".common_detail_div_border").css("display", "none");
-    $(".common_detail_cover").css("display", "none");
-    $(".back").css("display", "none");
-    $(".matrix_title").css("display", "flex");
-    $(".false_ans_change_true_div").css("display", "none");
-    $(".static_title").css("display", "none");
-    $(".show_static_body_total").css("display", "none");
-    $(".static_detail_title").css("display", "none");
-    $(".user_body_status").css("display", "none");
-    $(".matrix_mit_tech").css("display", "none");
   </script>
   <!-- <script src="/static/js/common.js"></script> -->
   <script src="/js/common.js"></script>

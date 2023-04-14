@@ -282,7 +282,7 @@ input {
 }
 
 #left_menubar {
-  color: #394eea;
+  color: blue;
   /* text-decoration: underline; */
 }
 
@@ -291,9 +291,9 @@ input {
   text-decoration: underline;
 }
 
-.dropdown:hover a {
+/* .dropdown:hover a {
   text-decoration: underline;
-}
+} */
 
 #only_css:hover {
   text-decoration: underline;

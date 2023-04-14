@@ -151,3 +151,18 @@ function vmwareConnect() {
   // window.open("vmware_console_url", "_blank");
   window.open("https://192.168.32.44:8444/vmware_console", "_blank");
 }
+
+// 팝업 메시지
+function popupMsg() {
+  let showing = $(".common_msg_popup").css("display");
+  if (showing == "block") {
+    $(".common_msg_popup").css("display", "none");
+    // 스크롤 실행
+    scrollPlay();
+  } else if (showing == "none") {
+    $(".common_msg_popup").css("display", "block");
+    // 스크롤 막기
+    scrollPause();
+  }
+  $(".back").toggle();
+}

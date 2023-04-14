@@ -50,6 +50,7 @@
         SELECT
         *
         FROM "TN_USER"
+        order by "TEAM_CD" asc
     </select>
 
     <!--팀코드 view-->
@@ -57,6 +58,7 @@
         SELECT
         *
         FROM "TC_TEAMCODE"
+        order by "TR_USER_GRP" ASC
     </select>
 
     <select id="getTranMgmt" resultType="MgmtVO">

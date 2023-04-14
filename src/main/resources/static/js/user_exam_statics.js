@@ -146,33 +146,46 @@ function getExamResultByNumAndType(num, type, grpId) {
 
             var seconds = now.getSeconds(); // 현재 초
 
-            var target = startTime.substr(0, 4);
+            var target =
+              parseInt(startTime.substr(0, 4)) +
+              parseInt(startTime.substr(5, 2)) +
+              parseInt(startTime.substr(8, 2));
+
+            // 현재 연월일을 합친값으로 비교분석 구문
             target = target - year;
+
             // 소요시간 계산 로직
             // 시작시간
             var start = startTime.substr(11, 5);
             var startH = startTime.substr(11, 2);
             var startM = startTime.substr(14, 2);
+
             // 초로 변환
             var startF = startH * 3600 + startM * 60;
             var endF = hours * 3600 + minutes * 60;
 
             var result = endF - startF;
-
-            var h = parseInt(result / 3600); // 시
-            var m = parseInt((result - h * 3600) / 60); // 분
+            var h,
+              m = 0;
+            h = parseInt(result / 3600); // 시
+            m = parseInt((result - h * 3600) / 60); // 분
             if (h == 0) {
               delayTime = m + "분";
             } else if (target != 0) {
-              var h = parseInt(examTime / 3600); // 시
-              var m = parseInt((examTime - h * 3600) / 60); // 분
+              var h,
+                m = 0;
+              h = parseInt(examTime / 3600); // 시
+              m = parseInt((examTime - h * 3600) / 60); // 분
               delayTime = h + "시간 " + m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
             }
+
+            // 종료 시간이 있을때
           } else {
             // 소요시간 계산 로직
             var endTime = targetEndTime.substr(0, 16); // 종료시간 변환
+
             // 시작시간
             var start = startTime.substr(11, 5);
             var startH = startTime.substr(11, 2);
@@ -187,14 +200,18 @@ function getExamResultByNumAndType(num, type, grpId) {
             var endF = endH * 3600 + endM * 60;
 
             var result = endF - startF;
+            var h,
+              m = 0;
+            h = parseInt(result / 3600); // 시
+            m = parseInt((result - h * 3600) / 60); // 분
 
-            var h = parseInt(result / 3600); // 시
-            var m = parseInt((result - h * 3600) / 60); // 분
             if (h == 0) {
               delayTime = m + "분";
             } else if (target != 0) {
-              var h = parseInt(examTime / 3600); // 시
-              var m = parseInt((examTime - h * 3600) / 60); // 분
+              var h,
+                m = 0;
+              h = parseInt(examTime / 3600); // 시
+              m = parseInt((examTime - h * 3600) / 60); // 분
               delayTime = h + "시간 " + m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
@@ -277,51 +294,53 @@ function getExamResultByNumAndType(num, type, grpId) {
 
             var seconds = now.getSeconds(); // 현재 초
 
-            var target = startTime.substr(0, 4);
+            var target =
+              parseInt(startTime.substr(0, 4)) +
+              parseInt(startTime.substr(5, 2)) +
+              parseInt(startTime.substr(8, 2));
+
+            // 현재 연월일을 합친값으로 비교분석 구문
             target = target - year;
+
             // 소요시간 계산 로직
             // 시작시간
             var start = startTime.substr(11, 5);
             var startH = startTime.substr(11, 2);
             var startM = startTime.substr(14, 2);
+
             // 초로 변환
             var startF = startH * 3600 + startM * 60;
             var endF = hours * 3600 + minutes * 60;
 
             var result = endF - startF;
-
-            var h = parseInt(result / 3600); // 시
-            var m = parseInt((result - h * 3600) / 60); // 분
+            var h,
+              m = 0;
+            h = parseInt(result / 3600); // 시
+            m = parseInt((result - h * 3600) / 60); // 분
             if (h == 0) {
               delayTime = m + "분";
             } else if (target != 0) {
-              var h = parseInt(examTime / 3600); // 시
-              var m = parseInt((examTime - h * 3600) / 60); // 분
+              var h,
+                m = 0;
+              h = parseInt(examTime / 3600); // 시
+              m = parseInt((examTime - h * 3600) / 60); // 분
               delayTime = h + "시간 " + m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
             }
+
+            // 종료 시간이 있을때
           } else {
             // 소요시간 계산 로직
             var endTime = targetEndTime.substr(0, 16); // 종료시간 변환
+
             // 시작시간
-            // 날 계산
-            var startY =
-              parseInt(startTime.substr(0, 4)) +
-              parseInt(startTime.substr(5, 2)) +
-              parseInt(startTime.substr(8, 2));
             var start = startTime.substr(11, 5);
             var startH = startTime.substr(11, 2);
             var startM = startTime.substr(14, 2);
             // 초로 변환
             var startF = startH * 3600 + startM * 60;
             // 종료시간
-            var endY =
-              parseInt(endTime.substr(0, 4)) +
-              parseInt(endTime.substr(5, 2)) +
-              parseInt(endTime.substr(8, 2));
-            var resultY = startY - endY;
-
             var end = endTime.substr(11, 5);
             var endH = endTime.substr(11, 2);
             var endM = endTime.substr(14, 2);
@@ -329,15 +348,19 @@ function getExamResultByNumAndType(num, type, grpId) {
             var endF = endH * 3600 + endM * 60;
 
             var result = endF - startF;
+            var h,
+              m = 0;
+            h = parseInt(result / 3600); // 시
+            m = parseInt((result - h * 3600) / 60); // 분
 
-            var h = parseInt(result / 3600); // 시
-            var m = parseInt((result - h * 3600) / 60); // 분
-            if (resultY != 0) {
-              var h = parseInt(examTime / 3600); // 시
-              var m = parseInt((examTime - h * 3600) / 60); // 분
-              delayTime = h + "시간 " + m + "분";
-            } else if (h == 0) {
+            if (h == 0) {
               delayTime = m + "분";
+            } else if (target != 0) {
+              var h,
+                m = 0;
+              h = parseInt(examTime / 3600); // 시
+              m = parseInt((examTime - h * 3600) / 60); // 분
+              delayTime = h + "시간 " + m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
             }

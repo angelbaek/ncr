@@ -64,7 +64,7 @@
       </div>
     </div>
     <div class="abs">
-      <button class="saveButton" onclick="userGroupSave()">설정 저장</button>
+      <button class="saveButton" onclick="setupOff()">설정 저장</button>
       <button class="tn_start_btn" onclick="training()">훈련 시작</button>
     </div>
     <!-- 백그라운드 -->
@@ -75,12 +75,29 @@
       <div class="common_msg_popup_contents">해당 그룹은 안댐</div>
       <div><button onclick="popupMsg()">확인</button></div>
     </div>
+    <!-- 설정 저장 팝업창 -->
+    <div class="setup_save">
+      <div class="setup_save_border">알림</div>
+      <div class="setup_save_contents">
+        훈련이 시작되면 팀(조)를 변경할 수 없습니다.<br /><br />
+        변경하시겠습니까?
+      </div>
+      <div class="setup_save_button_div">
+        <button onclick="userGroupSave()">확인</button>
+        <button onclick="setupOff()">취소</button>
+      </div>
+    </div>
   </body>
   <!-- <script
     src="https://code.jquery.com/jquery-3.6.3.js"
     integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"
   ></script> -->
+  <script>
+    $(".back").css("display", "none");
+    $(".setup_save").css("display", "none");
+    $(".common_msg_popup").css("display", "none");
+  </script>
   <!-- <script src="/static/js/common.js"></script> -->
   <script src="/js/common.js"></script>
   <!-- <script src="/static/js/user_group_setting.js"></script> -->

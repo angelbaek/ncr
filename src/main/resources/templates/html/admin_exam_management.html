@@ -14,14 +14,11 @@
       href="/css/fontawesome-free-5.15.4-web/css/all.css"
     />
     <!-- test css -->
-    <!-- <link rel="stylesheet" href="/static/css/common.css" /> -->
-    <!-- <link rel="stylesheet" href="/static/css/admin_exam_management.css" /> -->
+    <!-- <link rel="stylesheet" href="/static/css/common.css" />
+    <link rel="stylesheet" href="/static/css/admin_exam_management.css" /> -->
     <!-- common css -->
     <link rel="stylesheet" href="/css/common.css" />
     <link rel="stylesheet" href="/css/admin_exam_management.css" />
-
-    <link rel="stylesheet" href="/static/css/common.css" />
-    <link rel="stylesheet" href="/static/css/admin_exam_management.css" />
   </head>
   <body>
     <div class="left_nav">
@@ -39,10 +36,15 @@
         >
           문제 관리
           <i class="fas fa-caret-down" id="dropbox_ic"></i>
-          <ul class="dropdown">
-            <li><a href="admin_exam_group">문제 그룹</a></li>
+          <ul class="dropdown" style="display: block">
             <li>
-              <a class="exam_manage_css" href="admin_exam_management"
+              <a id="dropdown_css_a" href="admin_exam_group">문제 그룹</a>
+            </li>
+            <li>
+              <a
+                id="dropdown_css_b"
+                href="admin_exam_management"
+                style="text-decoration: underline; color: blue"
                 >문항 관리</a
               >
             </li>
@@ -88,7 +90,7 @@
           </tbody>
         </table>
       </div>
-      <div class="exam_answer">
+      <div class="exam_answer" style="display: none">
         <div class="exam_answer_div">
           <div class="exam_answer_div_div">
             <div class="exam_answer_title">문제</div>
@@ -228,7 +230,7 @@
       </div>
     </div>
     <!-- 힌트 div -->
-    <div class="popup_hint">
+    <div class="popup_hint" style="display: none">
       <div class="popup_hint_txt">힌트 내용</div>
       <textarea class="hint_input"></textarea>
       <div class="popup_hint_txt">힌트 파일</div>
@@ -243,7 +245,7 @@
       </div>
     </div>
     <!-- 문제 업로드 div -->
-    <div class="popup_exam">
+    <div class="popup_exam" style="display: none">
       <div class="popup_exam_txt">문제 파일</div>
       <input type="file" name="file" id="exam_file" accept=".csv" />
       <div>
@@ -252,7 +254,7 @@
       </div>
     </div>
     <!-- MITER ATTACK div -->
-    <div class="popup_mit">
+    <div class="popup_mit" style="display: none">
       <div class="popup_mit_txt">MITER ATTACK 정보</div>
       <div>
         <select class="tactics_select" name="" id="">
@@ -268,7 +270,13 @@
       </div>
     </div>
     <!-- 백그라운드 -->
-    <div class="back"></div>
+    <div class="back" style="display: none"></div>
+    <!-- 메시지 팝업창 -->
+    <div class="common_msg_popup" style="display: none">
+      <div class="common_msg_popup_title">알림</div>
+      <div class="common_msg_popup_contents">해당 그룹은 안댐</div>
+      <div><button onclick="popupMsg()">확인</button></div>
+    </div>
   </body>
   <!-- <script
     src="https://code.jquery.com/jquery-3.6.3.js"
@@ -281,14 +289,6 @@
   <!-- <script src="/static/js/admin_exam_management.js"></script> -->
   <script src="/js/admin_exam_management.js"></script>
   <script>
-    // 팝업창 안보이게
-    $(".popup_hint").css("display", "none");
-    $(".popup_exam").css("display", "none");
-    $(".popup_mit").css("display", "none");
-    $(".back").css("display", "none");
-    // $(".exam_add").css("display", "none");
-    // 좌측 nav menu
-    $(".dropdown").css("display", "block");
     //객관식 활성화 함수
     function choiceOn() {
       $(".tr_exam_choice_1").prop("disabled", false);
@@ -455,7 +455,7 @@
               };
               // console.log(jsonData);
               $.ajax({
-                url: "http://192.168.32.44:8080/admin/exam_update_csv",
+                url: "https://192.168.32.44:8444/admin/exam_update_csv",
                 type: "PATCH",
                 dataType: "json",
                 contentType: "application/json",
@@ -515,7 +515,7 @@
               };
               // console.log(jsonData);
               $.ajax({
-                url: "http://192.168.32.44:8080/admin/exam_update_csv",
+                url: "https://192.168.32.44:8444/admin/exam_update_csv",
                 type: "PATCH",
                 dataType: "json",
                 contentType: "application/json",

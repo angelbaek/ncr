@@ -1,6 +1,4 @@
 var selectVal = "";
-$(".back").css("display", "none");
-$(".common_msg_popup").css("display", "none");
 //세션
 sessionManagementForUserGroup();
 //그룹 정보
@@ -121,16 +119,20 @@ let team_cd;
 
 // 팀 코드 세팅
 function userGroupSave() {
-  var result = confirm(
-    "훈련이 시작되면 팀그룹을 변경할 수 없습니다.\r\n변경 하시겠습니까?"
-  );
-  if (!result) {
-    return;
-  }
+  // var result = confirm(
+  //   "훈련이 시작되면 팀그룹을 변경할 수 없습니다.\r\n변경 하시겠습니까?"
+  // );
+  // if (!result) {
+  //   return;
+  // }
   // // console.log(tr_user_grp);
   // // console.log(team_cd);
   if (tr_user_grp == undefined) {
-    alert("팀을 선택하세요.");
+    setupOff();
+    popupMsg();
+    // alert("팀을 선택하세요.");
+    $(".common_msg_popup_contents").text("팀(조)을 선택하세요");
+    $(".team_selectedbox").focus();
     return;
   }
   var jsonData = {
@@ -149,23 +151,37 @@ function userGroupSave() {
       // // console.log(response);
 
       if (response == 1) {
-        alert("훈련준비 상태가 변경되었습니다");
+        setupOff();
+        popupMsg();
+        $(".common_msg_popup_contents").text("훈련준비 상태가 변경되었습니다");
+        // alert("훈련준비 상태가 변경되었습니다");
         $("#team_code").text(team_cd);
-        location.reload();
+        // location.reload();
       } else if (response == 0) {
-        alert("해당팀은 인원이 마감되었습니다");
+        setupOff();
+        popupMsg();
+        $(".common_msg_popup_contents").text(
+          "해당 팀(조)은 인원이 마감되었습니다"
+        );
+        // alert("해당팀은 인원이 마감되었습니다");
       } else if (response == 2) {
-        alert("훈련도중 그룹을 변경할 수 없습니다");
+        setupOff();
+        popupMsg();
+        $(".common_msg_popup_contents").text(
+          "훈련도중 그룹을 변경할 수 없습니다"
+        );
+        // alert("훈련도중 그룹을 변경할 수 없습니다");
         getGroupInfoById();
-        location.reload();
+        setTimeout(function () {
+          location.reload();
+        }, 2000);
+        // location.reload();
       }
     },
   });
 }
 
 $("select[name=location]").change(function () {
-  // // console.log($(this).val()); //value값 가져오기
-  // // console.log($("select[name=location] option:selected").text()); //text값 가져오기
   team_cd = $(this).val();
   var test = $("select[name=location] option:selected").text();
   var regex = /[^0-9]/g; // 숫자가 아닌 문자열을 선택하는 정규식
@@ -181,8 +197,6 @@ function findUserForStarted() {}
 function training() {
   var num = $("select[name=location_num]").val();
   var text = $("#team_code").text();
-  // // console.log("훈련 함수 실행중...");
-  // // console.log(tr_user_grp);
   $.ajax({
     url: "https://192.168.32.44:8444/user/training/" + num,
     type: "GET",
@@ -245,10 +259,10 @@ function getTrainingStateActiveOn() {
     success: function (response) {
       // // console.log(response);
       if (response == 1) {
-        $(".saveButton").prop("disabled", true);
-        $(".saveButton").css("backgroundColor", "gray");
+        // $(".saveButton").prop("disabled", true);
+        // $(".saveButton").css("backgroundColor", "gray");
       } else {
-        $(".saveButton").prop("disabled", false);
+        // $(".saveButton").prop("disabled", false);
         $(".saveButton").css("backgroundColor", "#6777ef");
       }
     },
@@ -263,5 +277,10 @@ $(document).ready(function () {
 
 function popupMsg() {
   $(".common_msg_popup").toggle();
+  $(".back").toggle();
+}
+
+function setupOff() {
+  $(".setup_save").toggle();
   $(".back").toggle();
 }

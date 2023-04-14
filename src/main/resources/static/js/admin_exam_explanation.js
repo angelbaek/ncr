@@ -103,10 +103,12 @@ invalidata = setInterval(function () {
   if (time < 0) {
     clearInterval(invalidata); //setInterval() 실행을 끝냄
     document.getElementById("demo").innerHTML = "제한 시간이 끝났습니다.";
-    alert("제한 시간이 종료되었습니다.");
+    $(".common_msg_popup_contents").text("제한 시간이 종료되었습니다");
+    popupMsg();
     // 업데이트
     endTimeUpdateTime();
     $(".back").css("display", "block");
+    $(".back_safe").css("display", "block");
     $(".common_exam_contents button").prop("disabled", true);
     $(".common_exam_contents button").css("backgroundColor", "gray");
   }
@@ -183,8 +185,19 @@ function searchMgmtState() {
     success: function (response) {
       // // console.log(response);
       if (response.length == 0) {
-        alert("훈련이 진행중인 문제그룹이 없습니다.");
-        location.href = "/admin_training";
+        $(".now_exam_status").css("display", "none");
+        $(".exam_status_vm").css("display", "none");
+        $(".miter_box").css("display", "none");
+        $(".exam_submit").css("display", "none");
+        $(".back").css("height", "899px");
+        $(".back_safe").css("height", "899px");
+        $(".common_msg_popup_contents").text(
+          "훈련이 진행중인 문제그룹이 없습니다"
+        );
+        popupMsg();
+        setTimeout(() => {
+          location.href = "/admin_training";
+        }, 3000);
         return;
       }
       if (response[0].tr_mgmt_state == 1) {
@@ -696,6 +709,7 @@ function insertExamResultAndTeam(examId) {
 function submitPopup() {
   $(".submit_popup").css("display", "block");
   $(".back").css("display", "block");
+  $(".back_safe").css("display", "block");
   // 가져오기
   var count = $(".total_count").text();
   var score = $(".total_score").text();
@@ -729,7 +743,8 @@ function getHintFunc(grpId, examId, hintDeduct) {
   // 훈련상태 가져오기
   searchMgmtState();
   if (check == 1) {
-    alert("해당 그룹은 제출하였습니다");
+    $(".common_msg_popup_contents").text("해당 그룹은 제출하였습니다");
+    popupMsg();
     clientViewUpdate();
     return;
   }
@@ -781,7 +796,8 @@ function getHint(examId, grpId) {
   // 제출 여부
   let check = checkSubmitExam();
   if (check == 1) {
-    alert("해당 그룹은 제출하였습니다");
+    $(".common_msg_popup_contents").text("해당 그룹은 제출하였습니다");
+    popupMsg();
     clientViewUpdate();
     return;
   }
@@ -819,7 +835,7 @@ function getHint(examId, grpId) {
           '<input type="hidden" id="filename" name="filename" value="' +
           fileName +
           '">' +
-          '<div class="file_div"><p>File Down: </p><a name="filename">' +
+          '<div class="file_div"><p>File Down: </p><a name="filename" style="color: gray; pointer-events: none; cursor: default;">' +
           fileName +
           "</a><div>";
         $(".file_download_div").append(html);
@@ -864,7 +880,8 @@ function checkAnsBtnMulti(examId) {
   // 제출 여부
   let checkSub = checkSubmitExam();
   if (checkSub == 1) {
-    alert("해당 그룹은 제출하였습니다");
+    $(".common_msg_popup_contents").text("해당 그룹은 제출하였습니다");
+    popupMsg();
     clientViewUpdate();
     return;
   }
@@ -899,7 +916,8 @@ function checkAnsBtnMulti(examId) {
     }
     // 답안 미선택
     if (multipleAnswer == "") {
-      alert("답을 선택하세요");
+      $(".common_msg_popup_contents").text("답을 선택하세요");
+      popupMsg();
       return;
     }
     inputAnswer = multipleAnswer;
@@ -927,9 +945,13 @@ function checkAnsBtnMulti(examId) {
     success: function (response) {
       // // // console.log(response);
       if (response == 1) {
-        alert("풀 수 있음!!");
+        $(".common_msg_popup_contents").text("풀 수 있음!!");
+        popupMsg();
       } else if (response == 0) {
-        alert("해당 문제는 더 이상 풀 수 없습니다");
+        $(".common_msg_popup_contents").text(
+          "해당 문제는 더 이상 풀 수 없습니다"
+        );
+        popupMsg();
         clientViewUpdate();
         // 풀이 개수, 정답점수, 오답점수, 힌트점수 가져오기
         getTotalStatus(staticAllowSecans);
@@ -945,7 +967,10 @@ function checkAnsBtnMulti(examId) {
         // 오답일때
         alramAns(0);
       } else if (response == 3) {
-        alert("server에서 data를 받아 올 수 없습니다.");
+        $(".common_msg_popup_contents").text(
+          "server에서 data를 받아 올 수 없습니다"
+        );
+        popupMsg();
       }
       // count
       countAnsExamResultTeam();
@@ -993,7 +1018,8 @@ function checkAnsBtnShort(examId) {
   // 제출 여부
   let check = checkSubmitExam();
   if (check == 1) {
-    alert("해당 그룹은 제출하였습니다");
+    $(".common_msg_popup_contents").text("해당 그룹은 제출하였습니다");
+    popupMsg();
     clientViewUpdate();
     return;
   }
@@ -1002,7 +1028,8 @@ function checkAnsBtnShort(examId) {
   // // // console.log(inputAnswer);
 
   if (inputAnswer == "") {
-    alert("답안을 기입하세요");
+    $(".common_msg_popup_contents").text("답안을 기입하세요");
+    popupMsg();
     $("#short_form_input_ans_" + examId).focus();
     return;
   }
@@ -1026,9 +1053,13 @@ function checkAnsBtnShort(examId) {
     success: function (response) {
       // // // console.log(response);
       if (response == 1) {
-        alert("풀 수 있음!!");
+        $(".common_msg_popup_contents").text("풀 수 있음!!");
+        popupMsg();
       } else if (response == 0) {
-        alert("해당 문제는 더 이상 풀 수 없습니다");
+        $(".common_msg_popup_contents").text(
+          "해당 문제는 더 이상 풀 수 없습니다"
+        );
+        popupMsg();
         // view update
         clientViewUpdate();
         return;
@@ -1051,7 +1082,10 @@ function checkAnsBtnShort(examId) {
         // count
         countAnsExamResultTeam();
       } else if (response == 3) {
-        alert("server에서 data를 받아 올 수 없습니다.");
+        $(".common_msg_popup_contents").text(
+          "server에서 data를 받아 올 수 없습니다"
+        );
+        popupMsg();
       }
     },
   });
@@ -1535,6 +1569,7 @@ function getTotalStatus(staticAllowSecans) {
           // 다 품
           $(".contents").scrollTop($(".contents")[0].scrollHeight);
           $(".back").css("display", "block");
+          $(".back_safe").css("display", "block");
         }
       },
     });
@@ -1568,6 +1603,7 @@ function getTotalStatus(staticAllowSecans) {
           // 다 품
           $(".contents").scrollTop($(".contents")[0].scrollHeight);
           $(".back").css("display", "block");
+          $(".back_safe").css("display", "block");
         }
       },
     });
@@ -1593,14 +1629,20 @@ function submitExam() {
     success: function (response) {
       // console.log(response);
       if (response == 1) {
-        alert("문제제출이 완료되었습니다");
+        $(".common_msg_popup_contents").text("문제제출이 완료되었습니다");
+        popupMsg();
         $(".back").css("display", "block");
+        $(".back_safe").css("display", "block");
         $(".submit_popup").toggle();
         scrollPlay();
         location.reload();
       } else if (response == 0) {
-        alert("다른 훈련자가 이미 제출하였습니다");
+        $(".common_msg_popup_contents").text(
+          "다른 훈련자가 이미 제출하였습니다"
+        );
+        popupMsg();
         $(".back").css("display", "block");
+        $(".back_safe").css("display", "block");
         $(".submit_popup").toggle();
         scrollPlay();
         location.reload();
@@ -1630,10 +1672,15 @@ function checkSubmitExam() {
       // // console.log(response);
       if (response == 0) {
         // // // console.log("잘 실행되는중...");
-        alert("해당 문제그룹은 더 이상 문제를 풀 수 없습니다");
+
+        $(".common_msg_popup_contents").text(
+          "해당 문제그룹은 더 이상 문제를 풀 수 없습니다"
+        );
+        popupMsg();
         document.getElementById("demo").innerHTML = "팀 제출 완료";
         clearInterval(invalidata);
         $(".back").css("display", "block");
+        $(".back_safe").css("display", "block");
         // 모든 버튼 비활성화
         // $("body input").prop("disabled", true);
         // $("body input").css("backgroundColor", "gray");
@@ -1667,7 +1714,7 @@ function checkSubmitExam() {
 //         alert("해당 문제그룹은 더 이상 문제를 풀 수 없습니다");
 //         document.getElementById("demo").innerHTML = "팀 제출 완료";
 //         clearInterval(invalidata);
-//         $(".back").css("display", "block");
+//         $(".back").css("display", "block"); $(".back_safe").css("display", "block");
 //         // 모든 버튼 비활성화
 //         // $("body input").prop("disabled", true);
 //         // $("body input").css("backgroundColor", "gray");
@@ -1768,8 +1815,11 @@ function getMgMtState() {
       // 훈련이 정지 중일때
       if (response == 2) {
         // console.log("훈련이 정지중");
-        alert("훈련이 정지상태입니다.");
+
+        $(".common_msg_popup_contents").text("훈련이 정지상태입니다");
+        popupMsg();
         $(".back").css("display", "block");
+        $(".back_safe").css("display", "block");
         clearInterval(invalidata);
       } else if (response == 1) {
         //훈련이 진행중

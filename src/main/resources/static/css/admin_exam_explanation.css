@@ -289,9 +289,11 @@ tr td {
   color: #394eea;
   /* text-decoration: underline; */
 }
-.common_left_menubar:hover {
+
+/* .common_left_menubar:hover {
   text-decoration: underline;
-}
+} */
+
 /* 문제 풀이 css 헤더*/
 .now_exam_status {
   transition: 0s all;
@@ -474,9 +476,9 @@ tr td {
 .now_exam_status #demo {
 }
 
-.dropdown li:hover {
+/* .dropdown li:hover {
   text-decoration: underline;
-}
+} */
 
 #left_menubar {
   color: #34395e;
@@ -556,7 +558,8 @@ input[type="checkbox"] {
 }
 
 /* 백 */
-.back {
+.back,
+.back_safe {
   position: absolute;
   z-index: 1;
   left: 250px;
@@ -753,7 +756,7 @@ input[type="checkbox"] {
   padding: 10px 15px;
   position: fixed;
   left: 50%;
-  top: 95%;
+  top: 12%;
   transform: translate(-50%, -50%);
   background-color: #6777ef;
   box-shadow: 0 2px 6px #acb5f6;
@@ -764,4 +767,44 @@ input[type="checkbox"] {
 #downloadForm {
   width: 200px;
   height: 50px;
+}
+
+/* 메시지 팝업창 */
+.common_msg_popup {
+  z-index: 3;
+  background-color: #fafbfc;
+  box-shadow: 0px 4px 8px rgb(0 0 0 / 30%);
+  border-radius: 10px;
+  position: fixed;
+  width: 500px;
+  height: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.common_msg_popup .common_msg_popup_title {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 100%;
+  background-color: #6777ef;
+  color: #fafbfc;
+  height: 10%;
+  text-align: center;
+  padding: 10px 0px;
+}
+.common_msg_popup_contents {
+  height: 80%;
+  padding: 20px;
+}
+.common_msg_popup div button {
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+  width: 200px;
+  height: 10%;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-bottom: 10px;
 }

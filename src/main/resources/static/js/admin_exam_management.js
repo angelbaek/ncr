@@ -186,7 +186,9 @@ function exam(exam_num) {
 function popup_hint_popupStatus() {
   var txt = $(".select_view_body option:selected").text();
   if (txt == "직접선택") {
-    alert("문제 그룹을 선택하세요");
+    $(".common_msg_popup_contents").text("문제 그룹을 선택하세요");
+    popupMsg();
+    // alert("문제 그룹을 선택하세요");
     $(".select_view_body").focus();
     return;
   }
@@ -204,7 +206,9 @@ function popup_hint_popupStatusOff() {
 function popup_exam_popupStatus() {
   var txt = $(".select_view_body option:selected").text();
   if (txt == "직접선택") {
-    alert("문제 그룹을 선택하세요");
+    $(".common_msg_popup_contents").text("문제 그룹을 선택하세요");
+    popupMsg();
+    // alert("문제 그룹을 선택하세요");
     $(".select_view_body").focus();
     return;
   }
@@ -222,7 +226,9 @@ function popup_exam_popupStatusOff() {
 function popup_mit_popupStatus() {
   var txt = $(".select_view_body option:selected").text();
   if (txt == "직접선택") {
-    alert("문제 그룹을 선택하세요");
+    $(".common_msg_popup_contents").text("문제 그룹을 선택하세요");
+    popupMsg();
+    // alert("문제 그룹을 선택하세요");
     $(".select_view_body").focus();
     return;
   }
@@ -395,10 +401,12 @@ function updateHintGo(examId, upload) {
     success: function (response) {
       // console.log(response);
       if (response == 1) {
-        alert("힌트가 저장되었습니다");
+        $(".common_msg_popup_contents").text("힌트가 저장되었습니다");
+        popupMsg();
+        // alert("힌트가 저장되었습니다");
         $(".popup_hint").toggle();
         $(".back").toggle();
-        scrollPlay();
+        // scrollPlay();
       }
     },
   });
@@ -474,15 +482,19 @@ function tacticsSave() {
     success: function (response) {
       // console.log(response);
       if (response == 1) {
-        alert("전술단계가 저장되었습니다");
+        $(".common_msg_popup_contents").text("전술단계가 저장되었습니다");
+        popupMsg();
+        // alert("전술단계가 저장되었습니다");
         $(".back").toggle();
         $(".popup_mit").toggle();
-        scrollPlay();
+        // scrollPlay();
       } else if (response == 0) {
-        alert("문항을 선택해주세요");
+        $(".common_msg_popup_contents").text("문항을 선택해주세요");
+        popupMsg();
+        // alert("문항을 선택해주세요");
         $(".back").toggle();
         $(".popup_mit").toggle();
-        scrollPlay();
+        // scrollPlay();
         $("html, body").animate({ scrollTop: 0 }, 400);
       }
     },
@@ -523,49 +535,67 @@ function examFinalSave() {
   }
   // 조건식
   if (examCont == "") {
-    alert("문제를 기입해주세요");
+    $(".common_msg_popup_contents").text("문제를 기입해주세요");
+    popupMsg();
+    // alert("문제를 기입해주세요");
     $(".exam_answer_title_const").focus();
     return;
   }
   if (check == undefined) {
-    alert("문제유형을 선택하세요");
+    $(".common_msg_popup_contents").text("문제유형을 선택하세요");
+    popupMsg();
+    // alert("문제유형을 선택하세요");
     $(".common_check").focus();
     return;
   }
   if (check == 1) {
     if (cho1 == "") {
-      alert("객관식 1번을 기입해주세요");
+      $(".common_msg_popup_contents").text("객관식 1번을 기입해주세요");
+      popupMsg();
+      // alert("객관식 1번을 기입해주세요");
       $(".tr_exam_choice_1").focus();
       return;
     }
     if (cho2 == "") {
-      alert("객관식 2번을 기입해주세요");
+      $(".common_msg_popup_contents").text("객관식 2번을 기입해주세요");
+      popupMsg();
+      // alert("객관식 2번을 기입해주세요");
       $(".tr_exam_choice_2").focus();
       return;
     }
     if (cho3 == "") {
-      alert("객관식 3번을 기입해주세요");
+      $(".common_msg_popup_contents").text("객관식 3번을 기입해주세요");
+      popupMsg();
+      // alert("객관식 3번을 기입해주세요");
       $(".tr_exam_choice_3").focus();
       return;
     }
     if (cho4 == "") {
-      alert("객관식 4번을 기입해주세요");
+      $(".common_msg_popup_contents").text("객관식 4번을 기입해주세요");
+      popupMsg();
+      // alert("객관식 4번을 기입해주세요");
       $(".tr_exam_choice_4").focus();
       return;
     }
     if (cho5 == "") {
-      alert("객관식 5번을 기입해주세요");
+      $(".common_msg_popup_contents").text("객관식 5번을 기입해주세요");
+      popupMsg();
+      // alert("객관식 5번을 기입해주세요");
       $(".tr_exam_choice_5").focus();
       return;
     }
   }
   if (ans == "") {
-    alert("정답을 기입해주세요");
+    $(".common_msg_popup_contents").text("정답을 기입해주세요");
+    popupMsg();
+    // alert("정답을 기입해주세요");
     $(".tr_exam_ans").focus();
     return;
   }
   if (level == undefined) {
-    alert("난이도를 선택하세요");
+    $(".common_msg_popup_contents").text("난이도를 선택하세요");
+    popupMsg();
+    // alert("난이도를 선택하세요");
     $("input[name=trio]").focus();
     return;
   }
@@ -594,9 +624,13 @@ function examFinalSave() {
     success: function (response) {
       // console.log(response);
       if (response == 1) {
-        alert("문제가 저장되었습니다");
+        $(".common_msg_popup_contents").text("문제가 저장되었습니다");
+        popupMsg();
+        // alert("문제가 저장되었습니다");
       } else if (response == 0) {
-        alert("문항을 선택하세요");
+        $(".common_msg_popup_contents").text("문항을 선택하세요");
+        popupMsg();
+        // alert("문항을 선택하세요");
         $(".exam_table").focus();
       }
     },

@@ -28,7 +28,8 @@ public class TrainingService {
 
     // 훈련설정 차시별 수정
     public int deleteMgrEdit(MgmtVO mgmtVO){
-        return trainingMapper.deleteMgrEdit(mgmtVO);
+        int target = trainingMapper.deleteMgrEdit(mgmtVO);
+        return target;
     }
 
     //훈련 시작

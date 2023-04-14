@@ -86,7 +86,7 @@ function getExamResultByNumAndType(num, type, grpId) {
   };
   $.ajax({
     async: false,
-    url: "httpsss://192.168.32.44:8444/user/get_exam_result_by_num_and_type",
+    url: "https://192.168.32.44:8444/user/get_exam_result_by_num_and_type",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -94,7 +94,9 @@ function getExamResultByNumAndType(num, type, grpId) {
     success: function (response) {
       // // console.log(response);
       if (response.length == 0) {
-        alert("해당 조건에 데이터가 없습니다");
+        $(".common_msg_popup_contents").text("해당 조건에 데이터가 없습니다");
+        popupMsg();
+        // alert("해당 조건에 데이터가 없습니다");
         $(".static_title").css("display", "none");
         $(".show_static_body_total").css("display", "none");
         return;
@@ -141,39 +143,55 @@ function getExamResultByNumAndType(num, type, grpId) {
             let now = new Date();
 
             var year = now.getFullYear() + now.getDay() + now.getDate(); // 날
+            var a = now.getFullYear();
+            var b = now.getDay();
+            var c = now.getDate();
             var hours = now.getHours(); // 현재 시간
 
             var minutes = now.getMinutes(); // 현재 분
 
             var seconds = now.getSeconds(); // 현재 초
 
-            var target = startTime.substr(0, 4);
+            var target =
+              parseInt(startTime.substr(0, 4)) +
+              parseInt(startTime.substr(5, 2)) +
+              parseInt(startTime.substr(8, 2));
+
+            // 현재 연월일을 합친값으로 비교분석 구문
             target = target - year;
+
             // 소요시간 계산 로직
             // 시작시간
             var start = startTime.substr(11, 5);
             var startH = startTime.substr(11, 2);
             var startM = startTime.substr(14, 2);
+
             // 초로 변환
             var startF = startH * 3600 + startM * 60;
             var endF = hours * 3600 + minutes * 60;
 
             var result = endF - startF;
-
-            var h = parseInt(result / 3600); // 시
-            var m = parseInt((result - h * 3600) / 60); // 분
+            var h,
+              m = 0;
+            h = parseInt(result / 3600); // 시
+            m = parseInt((result - h * 3600) / 60); // 분
             if (h == 0) {
               delayTime = m + "분";
             } else if (target != 0) {
-              var h = parseInt(examTime / 3600); // 시
-              var m = parseInt((examTime - h * 3600) / 60); // 분
+              var h,
+                m = 0;
+              h = parseInt(examTime / 3600); // 시
+              m = parseInt((examTime - h * 3600) / 60); // 분
               delayTime = h + "시간 " + m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
             }
+
+            // 종료 시간이 있을때
           } else {
             // 소요시간 계산 로직
             var endTime = targetEndTime.substr(0, 16); // 종료시간 변환
+
             // 시작시간
             var start = startTime.substr(11, 5);
             var startH = startTime.substr(11, 2);
@@ -188,14 +206,18 @@ function getExamResultByNumAndType(num, type, grpId) {
             var endF = endH * 3600 + endM * 60;
 
             var result = endF - startF;
+            var h,
+              m = 0;
+            h = parseInt(result / 3600); // 시
+            m = parseInt((result - h * 3600) / 60); // 분
 
-            var h = parseInt(result / 3600); // 시
-            var m = parseInt((result - h * 3600) / 60); // 분
             if (h == 0) {
               delayTime = m + "분";
             } else if (target != 0) {
-              var h = parseInt(examTime / 3600); // 시
-              var m = parseInt((examTime - h * 3600) / 60); // 분
+              var h,
+                m = 0;
+              h = parseInt(examTime / 3600); // 시
+              m = parseInt((examTime - h * 3600) / 60); // 분
               delayTime = h + "시간 " + m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
@@ -277,51 +299,53 @@ function getExamResultByNumAndType(num, type, grpId) {
 
             var seconds = now.getSeconds(); // 현재 초
 
-            var target = startTime.substr(0, 4);
+            var target =
+              parseInt(startTime.substr(0, 4)) +
+              parseInt(startTime.substr(5, 2)) +
+              parseInt(startTime.substr(8, 2));
+
+            // 현재 연월일을 합친값으로 비교분석 구문
             target = target - year;
+
             // 소요시간 계산 로직
             // 시작시간
             var start = startTime.substr(11, 5);
             var startH = startTime.substr(11, 2);
             var startM = startTime.substr(14, 2);
+
             // 초로 변환
             var startF = startH * 3600 + startM * 60;
             var endF = hours * 3600 + minutes * 60;
 
             var result = endF - startF;
-
-            var h = parseInt(result / 3600); // 시
-            var m = parseInt((result - h * 3600) / 60); // 분
+            var h,
+              m = 0;
+            h = parseInt(result / 3600); // 시
+            m = parseInt((result - h * 3600) / 60); // 분
             if (h == 0) {
               delayTime = m + "분";
             } else if (target != 0) {
-              var h = parseInt(examTime / 3600); // 시
-              var m = parseInt((examTime - h * 3600) / 60); // 분
+              var h,
+                m = 0;
+              h = parseInt(examTime / 3600); // 시
+              m = parseInt((examTime - h * 3600) / 60); // 분
               delayTime = h + "시간 " + m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
             }
+
+            // 종료 시간이 있을때
           } else {
             // 소요시간 계산 로직
             var endTime = targetEndTime.substr(0, 16); // 종료시간 변환
+
             // 시작시간
-            // 날 계산
-            var startY =
-              parseInt(startTime.substr(0, 4)) +
-              parseInt(startTime.substr(5, 2)) +
-              parseInt(startTime.substr(8, 2));
             var start = startTime.substr(11, 5);
             var startH = startTime.substr(11, 2);
             var startM = startTime.substr(14, 2);
             // 초로 변환
             var startF = startH * 3600 + startM * 60;
             // 종료시간
-            var endY =
-              parseInt(endTime.substr(0, 4)) +
-              parseInt(endTime.substr(5, 2)) +
-              parseInt(endTime.substr(8, 2));
-            var resultY = startY - endY;
-
             var end = endTime.substr(11, 5);
             var endH = endTime.substr(11, 2);
             var endM = endTime.substr(14, 2);
@@ -329,15 +353,19 @@ function getExamResultByNumAndType(num, type, grpId) {
             var endF = endH * 3600 + endM * 60;
 
             var result = endF - startF;
+            var h,
+              m = 0;
+            h = parseInt(result / 3600); // 시
+            m = parseInt((result - h * 3600) / 60); // 분
 
-            var h = parseInt(result / 3600); // 시
-            var m = parseInt((result - h * 3600) / 60); // 분
-            if (resultY != 0) {
-              var h = parseInt(examTime / 3600); // 시
-              var m = parseInt((examTime - h * 3600) / 60); // 분
-              delayTime = h + "시간 " + m + "분";
-            } else if (h == 0) {
+            if (h == 0) {
               delayTime = m + "분";
+            } else if (target != 0) {
+              var h,
+                m = 0;
+              h = parseInt(examTime / 3600); // 시
+              m = parseInt((examTime - h * 3600) / 60); // 분
+              delayTime = h + "시간 " + m + "분";
             } else {
               delayTime = h + "시간 " + m + "분";
             }
@@ -417,7 +445,9 @@ function getExamResultByNumAndType(num, type, grpId) {
       // console.log(jqXHR); //응답 메시지
       // console.log(textStatus); //"error"로 고정인듯함
       // console.log(errorThrown);
-      alert("조회된 데이터가 없습니다");
+      $(".common_msg_popup_contents").text("조회된 데이터가 없습니다");
+      popupMsg();
+      // alert("조회된 데이터가 없습니다");
       $(".static_title").css("display", "none");
       $(".show_static_body_total").css("display", "none");
     },
@@ -428,7 +458,7 @@ function getTotalTime(grpid) {
   var time = 0;
   $.ajax({
     async: false,
-    url: "httpsss://192.168.32.44:8444/user/static/get_time/" + grpid,
+    url: "https://192.168.32.44:8444/user/static/get_time/" + grpid,
     type: "GET",
     dataType: "json",
     contentType: "application/json",
@@ -444,13 +474,15 @@ function getGrpid() {
   var grpid = 0;
   $.ajax({
     async: false,
-    url: "httpsss://192.168.32.44:8444/user/static/get_grpid",
+    url: "https://192.168.32.44:8444/user/static/get_grpid",
     type: "GET",
     dataType: "json",
     contentType: "application/json",
     success: function (response) {
       if (response == 0) {
-        alert("훈련중인 데이터가 없습니다");
+        $(".common_msg_popup_contents").text("훈련중인 데이터가 없습니다");
+        popupMsg();
+        // alert("훈련중인 데이터가 없습니다");
         location.reload();
         return;
       }
@@ -497,7 +529,7 @@ function getUserExamStat(statId, grp, num, grpId) {
     tr_exam_grpid: grpId,
   };
   $.ajax({
-    url: "httpsss://192.168.32.44:8444/user/get_user_exam_stat",
+    url: "https://192.168.32.44:8444/user/get_user_exam_stat",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -598,7 +630,7 @@ function getExamResultTeam(statId, num, grpId, grp) {
     tr_user_grp: grp,
   };
   $.ajax({
-    url: "httpsss://192.168.32.44:8444/user/static/get_exam_result_team",
+    url: "https://192.168.32.44:8444/user/static/get_exam_result_team",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -743,7 +775,7 @@ function getExamStat(statId, num, grpId, grp) {
   };
   // console.log(jsonData);
   $.ajax({
-    url: "httpsss://192.168.32.44:8444/user/static/get_exam_stat",
+    url: "https://192.168.32.44:8444/user/static/get_exam_stat",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -832,7 +864,7 @@ function getExamStatTeam(num, grpId, grp) {
   };
   // console.log(jsonData);
   $.ajax({
-    url: "httpsss://192.168.32.44:8444/user/static/get_exam_stat_team",
+    url: "https://192.168.32.44:8444/user/static/get_exam_stat_team",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -943,7 +975,7 @@ function popUpFalseToTrue(grp, num, grpId, examId, ansTrue) {
     tr_exam_id: examId,
   };
   $.ajax({
-    url: "httpsss://192.168.32.44:8444/user/static/get_select_detail",
+    url: "https://192.168.32.44:8444/user/static/get_select_detail",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -987,7 +1019,7 @@ function falseToTrue(grp, num, grpId, examId) {
   };
   $.ajax({
     async: false,
-    url: "httpsss://192.168.32.44:8444/user/static/false_change_true",
+    url: "https://192.168.32.44:8444/user/static/false_change_true",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -995,7 +1027,9 @@ function falseToTrue(grp, num, grpId, examId) {
     success: function (response) {
       // console.log(response);
       if (response == 1) {
-        alert("업데이트 성공!");
+        $(".common_msg_popup_contents").text("업데이트 완료");
+        popupMsg();
+        // alert("업데이트 성공!");
         var num = $("#select_num").prop("checked", true).val();
         var type = $("#select_type").prop("checked", true).val();
         $(".false_ans_change_true_div").toggle();
@@ -1004,7 +1038,9 @@ function falseToTrue(grp, num, grpId, examId) {
         getExamResultByNumAndType(num, type);
         getExamResultTeam(nowStat, nowNum, nowGrpId, nowGrp);
       } else {
-        alert("업데이트 실패...");
+        $(".common_msg_popup_contents").text("업데이트 실패");
+        popupMsg();
+        // alert("업데이트 실패...");
       }
     },
   });
@@ -1020,7 +1056,7 @@ function getMatrixStat(grpid, grp, num) {
   };
   $.ajax({
     async: false,
-    url: "httpsss://192.168.32.44:8444/user/static/get_matrix_stat",
+    url: "https://192.168.32.44:8444/user/static/get_matrix_stat",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1054,7 +1090,7 @@ function getMiterAttackMatrix(grpid, grp, num) {
   };
   $.ajax({
     async: false,
-    url: "httpsss://192.168.32.44:8444/user/static/get_matrix",
+    url: "https://192.168.32.44:8444/user/static/get_matrix",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1122,7 +1158,7 @@ function popUp(MA_TACTICS_ID, MA_MATRIX_ID) {
   };
   $.ajax({
     async: false,
-    url: "httpsss://192.168.32.44:8444/user/get_tech_and_mit",
+    url: "https://192.168.32.44:8444/user/get_tech_and_mit",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1167,7 +1203,7 @@ function selectUserOrgByUserId(id) {
   };
   $.ajax({
     async: false,
-    url: "httpsss://192.168.32.44:8444/user/select_user_org_by_user_id",
+    url: "https://192.168.32.44:8444/user/select_user_org_by_user_id",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1195,7 +1231,9 @@ function toggleDetail() {
 function refresh() {
   var type = $("select[name=type_check] option:selected").val();
   if (type == 0) {
-    alert("유형을 선택 후 사용하세요");
+    $(".common_msg_popup_contents").text("유형을 선택 후 사용하세요");
+    popupMsg();
+    // alert("유형을 선택 후 사용하세요");
     return;
   }
   // 버튼 로직
@@ -1231,7 +1269,9 @@ function refresh() {
 function refreshAuto() {
   var type = $("select[name=type_check] option:selected").val();
   if (type == 0) {
-    alert("유형을 선택 후 사용하세요");
+    $(".common_msg_popup_contents").text("유형을 선택 후 사용하세요");
+    popupMsg();
+    // alert("유형을 선택 후 사용하세요");
     return;
   }
   // // console.log("재귀함수 실행...");
@@ -1262,7 +1302,7 @@ function getTeamOrg(num, grpId, grp) {
   };
   $.ajax({
     async: false,
-    url: "httpsss://192.168.32.44:8444/user/static/get_org",
+    url: "https://192.168.32.44:8444/user/static/get_org",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1287,3 +1327,8 @@ function getTeamOrg(num, grpId, grp) {
 setTimeout(function () {
   $("body").css("display", "block");
 }, 500);
+
+function popupMsg() {
+  $(".common_msg_popup").toggle();
+  $(".back").toggle();
+}

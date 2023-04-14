@@ -6,6 +6,31 @@
   text-decoration-line: none;
   transition: 0.3s;
 }
+
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+  border: none;
+  outline: none;
+}
+
+@font-face {
+  font-family: "Noto Sans KR";
+  src: url("/fonts/Noto_Sans_KR/NotoSansKR-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+/* @font-face {
+  font-family: "Noto Sans KR";
+  src: url("/static/fonts/Noto_Sans_KR/NotoSansKR-Regular.otf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+body {
+  font-family: "Noto Sans KR", sans-serif;
+}
+
 a {
   color: #34395e;
   text-decoration: none;
@@ -134,14 +159,16 @@ tr {
 .dropdown a {
   float: left;
   margin-left: 5px;
+  padding-right: 10px;
   margin-bottom: 10px;
-  font-weight: bold;
+  font-weight: 700;
   /* text-decoration: line-through; */
 }
 
 .common_left_menubar {
-  width: auto;
-  height: 20px;
+  padding: 10px;
+  width: 100%;
+  height: 50px;
   font-size: 16px;
   color: #34395e;
   text-align: left;
@@ -156,7 +183,8 @@ tr {
   font-size: 14px;
 }
 .common_left_menubar li {
-  margin-top: 10px;
+  margin-right: 120px;
+  margin-top: 20px;
   font-size: 18px;
   font-weight: 300;
 }
@@ -224,7 +252,8 @@ select:focus {
   font-weight: bold;
 }
 
-.back {
+.back,
+.back_safe {
   position: fixed;
   height: 100%;
   width: 100%;
@@ -416,4 +445,13 @@ body.no-scroll {
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid gray;
+}
+
+#dropdown_css_a:hover,
+#dropdown_css_b:hover {
+  color: blue;
+  text-decoration: underline;
+}
+
+#dropdown_css_a {
 }

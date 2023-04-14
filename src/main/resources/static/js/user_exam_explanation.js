@@ -813,7 +813,7 @@ function getHint(examId, grpId) {
           '<input type="hidden" id="filename" name="filename" value="' +
           fileName +
           '">' +
-          '<div class="file_div"><p>File Down: </p><a name="filename">' +
+          '<div class="file_div"><p>File Down: </p><a name="filename" style="color: gray; pointer-events: none; cursor: default;">' +
           fileName +
           "</a><div>";
         $(".file_download_div").append(html);

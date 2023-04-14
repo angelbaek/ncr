@@ -35,11 +35,11 @@
           문제 관리
           <i class="fas fa-caret-down" id="dropbox_ic"></i>
           <ul class="dropdown">
-            <li><a href="admin_exam_group">문제 그룹</a></li>
             <li>
-              <a class="exam_manage_css" href="admin_exam_management"
-                >문항 관리</a
-              >
+              <a id="dropdown_css_a" href="admin_exam_group">문제 그룹</a>
+            </li>
+            <li>
+              <a id="dropdown_css_b" href="admin_exam_management">문항 관리</a>
             </li>
           </ul>
         </div>
@@ -62,6 +62,7 @@
         </div>
       </div>
     </div>
+
     <!-- 문제 풀이 -->
     <div class="contents">
       <button class="exam_status_vm">VM접속</button>
@@ -140,9 +141,11 @@
         <button onclick="submitPopup()">제출하기</button>
       </div>
       <!-- 백그라운드 -->
-      <div class="back"></div>
+      <div class="back" style="display: none"></div>
+      <!-- 백그라운드 보안-->
+      <div class="back_safe" style="display: none"></div>
       <!-- 힌트 -->
-      <div class="hint_popup">
+      <div class="hint_popup" style="display: none">
         <div class="hint_popup_div">
           <div class="hint_popup_title">힌트</div>
           <div class="hint_popup_contents">힌트 내용</div>
@@ -154,7 +157,7 @@
         </div>
       </div>
       <!-- 제출하기 팝업 -->
-      <div class="submit_popup">
+      <div class="submit_popup" style="display: none">
         <div class="submit_popup_title">제출하기</div>
         <div class="submit_popup_count">풀이개수</div>
         <div class="submit_popup_score">획득점수</div>
@@ -169,8 +172,14 @@
           ><button onclick="submitPopupOff()">취소</button>
         </div>
       </div>
+      <!-- 메시지 팝업창 -->
+      <div class="common_msg_popup" style="display: none">
+        <div class="common_msg_popup_title">알림</div>
+        <div class="common_msg_popup_contents">해당 그룹은 안댐</div>
+        <div><button onclick="popupMsg()">확인</button></div>
+      </div>
       <!-- 정답 알림 -->
-      <div class="resultTrue">알림</div>
+      <div class="resultTrue" style="display: none">알림</div>
     </div>
   </body>
   <!-- <script
@@ -178,20 +187,10 @@
     integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"
   ></script> -->
-  <script>
-    /**
-     *  css =================================================================================
-     */
-    // $("body").css("display", "none");
-    $(".submit_popup").css("display", "none");
-    $(".hint_popup").css("display", "none");
-    $(".resultTrue").css("display", "none");
-    $(".back").css("display", "none");
-  </script>
   <!-- <script src="https://cdn.jsdelivr.net/npm/jszip@3.5.0/dist/jszip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script> -->
   <!-- <script src="/static/js/common.js"></script> -->
   <script src="/js/common.js"></script>
-  <!-- <script src="/static/js/admin_exam_explanation.js"></script> -->
+  <!-- <script src="/static/js/admin_exam_explanation.js"></> -->
   <script src="/js/admin_exam_explanation.js"></script>
 </html>
