@@ -161,4 +161,42 @@
         WHERE
             "TR_EXAM_GRPID" = #{exam_grpid}
     </select>
+
+    <!--힌트 가져오기-->
+    <select id="getHintContents" resultType="Map">
+        SELECT
+        "TR_EXAM_HINT",
+        "TR_EXAM_HINT_FILE_PATH"
+        FROM
+        "TN_TRAIN_EXAMHINT"
+        WHERE
+        "TR_EXAM_GRPID" =
+        (
+        SELECT
+        "TR_EXAM_GRPID"
+        FROM
+        "TN_TRAIN_EXAMGRP"
+        WHERE
+        "TR_EXAM_GRPNAME" = #{trExamGrpName}
+        ) AND
+        "TR_EXAM_ID" =
+        (
+        SELECT
+        "TR_EXAM_ID"
+        FROM
+        "TN_TRAIN_EXAM"
+        WHERE
+        "TR_EXAM_GRPID" =
+        (
+        SELECT
+        "TR_EXAM_GRPID"
+        FROM
+        "TN_TRAIN_EXAMGRP"
+        WHERE
+        "TR_EXAM_GRPNAME" = #{trExamGrpName}
+        AND
+        "TR_EXAM_NUM" = #{trExamNum}
+        )
+        )
+    </select>
 </mapper>

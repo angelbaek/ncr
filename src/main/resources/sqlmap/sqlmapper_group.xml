@@ -65,4 +65,33 @@
         WHERE
         "TR_MGMT_STATE" = 1
     </select>
+
+    <!--현재 훈련자의 훈련진행중인 차시를 이용하여 문제그룹 ID 구해서 grp 구하기-->
+    <select id="userDuplicationExamAnotherTeam" resultType="int">
+        SELECT
+            "TR_USER_GRP"
+        FROM
+            "TN_TRAIN_EXAMRESULT_TEAM"
+        WHERE
+            "TR_EXAM_GRPID" =
+            (
+            SELECT
+                "TR_EXAM_GRPID"
+            FROM
+                "TN_TRAIN_EXAMRESULT"
+            WHERE
+                "TR_USER_ID" = #{id} and
+                "TR_NUM" =
+                (
+                select
+                    "TR_NUM"
+                from
+                    "TN_TRAIN_MGMT"
+                where
+                    "TR_MGMT_STATE" = 1
+                )
+            LIMIT 1
+            )
+        LIMIT 1
+    </select>
 </mapper>

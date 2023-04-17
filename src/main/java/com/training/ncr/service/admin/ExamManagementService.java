@@ -6,8 +6,10 @@ import com.training.ncr.vo.admin.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ExamManagementService {
@@ -92,5 +94,10 @@ public class ExamManagementService {
     // csv파일을 읽기 위한 문항수 가져오기
     public int getExamLength(int exam_grpid){
         return examManagementMapper.getExamLength(exam_grpid);
+    }
+
+    // 해당 힌트 가져오기
+    public Map<String,Object> getHintContents(Map<String,Object> map){
+        return examManagementMapper.getHintContents(map);
     }
 }

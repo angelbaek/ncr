@@ -4,6 +4,7 @@ import com.training.ncr.vo.admin.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ExamManagementMapper {
@@ -52,4 +53,7 @@ public interface ExamManagementMapper {
 
     // csv파일을 읽기 위한 문항수 가져오기
     int getExamLength(int exam_grpid);
+
+    // 해당 힌트 가져오기
+    Map<String, Object> getHintContents(Map<String,Object> map);
 }

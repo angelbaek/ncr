@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface GroupMapper {
@@ -35,4 +36,7 @@ public interface GroupMapper {
 
     // 활성화된 문제그룹이 있는지 가져오기
     int getTrainingStateActiveOn();
+
+    // 현재 훈련자의 훈련진행중인 차시를 이용하여 문제그룹 ID 구해서 grp 구하기
+    int userDuplicationExamAnotherTeam(String id);
 }

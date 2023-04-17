@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -119,5 +120,11 @@ public class ExamManagementController {
     @GetMapping("/get_exam_length/{exam_grpid}")
     public int getExamLength(@PathVariable int exam_grpid){
         return examManagementService.getExamLength(exam_grpid);
+    }
+
+    // 해당 힌트 가져오기
+    @PostMapping("/get_hint_contents")
+    public Map<String,Object> getHintContents(@RequestBody Map<String,Object> map){
+        return examManagementService.getHintContents(map);
     }
 }

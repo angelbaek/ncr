@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 훈련자 (그룹 설정) 컨트롤러
@@ -69,5 +70,9 @@ public class GroupController {
         }
     }
 
-
+    // 현재 훈련자의 훈련진행중인 차시를 이용하여 문제그룹 ID 구해서 grp 구하기
+    @GetMapping("user/user_dup_exam_ano_team")
+    public int userDuplicationExamAnotherTeam(HttpServletRequest request){
+        return groupService.userDuplicationExamAnotherTeam(request);
+    };
 }

@@ -215,7 +215,9 @@
                 <p>복수 정답 허용</p>
               </div>
               <div class="common_level_div">
-                <button onclick="popup_hint_popupStatus()">힌트 설정</button>
+                <button class="hint_space" onclick="popup_hint_popupStatus()">
+                  힌트 설정
+                </button>
                 <button onclick="popup_mit_popupStatus()">
                   MITER ATTACK 정보 입력
                 </button>
@@ -236,7 +238,7 @@
       <div class="popup_hint_txt">힌트 파일</div>
       <!-- <input name="uploadFiles" type="file" id="hint_file" /> -->
       <form id="fileUploadForm" enctype="multipart/form-data">
-        <input type="file" id="fileInput" name="fileInput" />
+        <input type="file" id="fileInput" name="fileInput" value="test" />
         <!-- <button type="submit">Upload</button> -->
       </form>
       <div>

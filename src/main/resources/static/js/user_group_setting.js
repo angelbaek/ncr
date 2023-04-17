@@ -197,6 +197,11 @@ function findUserForStarted() {}
 function training() {
   var num = $("select[name=location_num]").val();
   var text = $("#team_code").text();
+  var dupliCheck = userDuplicationExamAnotherTeam();
+  if (dupliCheck == 1) {
+    alert("이미 해당 차시에서 훈련을 진행했던 훈련자입니다. 팀을 확인하세요");
+    return;
+  }
   $.ajax({
     url: "https://192.168.32.44:8444/user/training/" + num,
     type: "GET",
@@ -283,4 +288,22 @@ function popupMsg() {
 function setupOff() {
   $(".setup_save").toggle();
   $(".back").toggle();
+}
+
+// 같은 훈련자가 같은 차시에 다른 팀으로 진입시
+function userDuplicationExamAnotherTeam() {
+  var result = 0;
+  $.ajax({
+    async: false,
+    url: "https://192.168.32.44:8444/user/user_dup_exam_ano_team",
+    type: "GET",
+    dataType: "text",
+    success: function (response) {
+      console.log(response);
+      if (response == 1) {
+        result = 1;
+      }
+    },
+  });
+  return result;
 }

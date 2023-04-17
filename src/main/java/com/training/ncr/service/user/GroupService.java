@@ -5,6 +5,7 @@ import com.training.ncr.vo.admin.MgmtVO;
 import com.training.ncr.vo.TeamCodeVO;
 import com.training.ncr.vo.UserVO;
 import org.apache.catalina.User;
+import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GroupService {
@@ -65,4 +67,25 @@ public class GroupService {
     public int getTrainingStateActiveOn(){
         return groupMapper.getTrainingStateActiveOn();
     }
+
+    // 현재 훈련자의 훈련진행중인 차시를 이용하여 문제그룹 ID 구해서 grp 구하기
+    public int userDuplicationExamAnotherTeam(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String id = (String) session.getAttribute("USERID");
+
+        try{
+            // 기존에 훈련했던 grp
+            int targetGrp = groupMapper.userDuplicationExamAnotherTeam(id);
+            // 현재 세팅된 grp
+            List<UserVO> userVO = (List<UserVO>) groupMapper.getUserInfo(id);
+            int userGrp = userVO.get(0).getTr_user_grp();
+            // 다를 경우
+            if(targetGrp != userGrp){
+                return 1;
+            }
+            return 0;
+        }catch (BindingException bindingException){
+            return 0;
+        }
+    };
 }

@@ -88,6 +88,7 @@ function selectGrpChange() {
 var exam_num;
 var target_num = 0;
 function exam(exam_num) {
+  $(".hint_space").attr("onclick", "popup_hint_popupStatus(" + exam_num + ")");
   $(".exam_answer").css("display", "block");
   $("#exam_id_" + target_num).css("backgroundColor", "white");
   $("#exam_id_" + target_num).css("color", "blue");
@@ -183,7 +184,7 @@ function exam(exam_num) {
   });
 }
 
-function popup_hint_popupStatus() {
+function popup_hint_popupStatus(num) {
   var txt = $(".select_view_body option:selected").text();
   if (txt == "직접선택") {
     $(".common_msg_popup_contents").text("문제 그룹을 선택하세요");
@@ -192,9 +193,34 @@ function popup_hint_popupStatus() {
     $(".select_view_body").focus();
     return;
   }
-  $(".back").toggle();
-  $(".popup_hint").toggle();
-  scrollPause();
+  // 힌트 api
+  let trExamGrpName = $("select[name=grp_name] option:selected").text();
+  let trExamNum = num;
+  let jsonData = {
+    trExamGrpName: trExamGrpName,
+    trExamNum: trExamNum,
+  };
+  $.ajax({
+    url: "https://192.168.32.44:8444/admin/get_hint_contents",
+    type: "POST",
+    dataType: "json",
+    contentType: "application/json",
+    data: JSON.stringify(jsonData),
+    success: function (response) {
+      console.log(response);
+      let hint = response.TR_EXAM_HINT;
+      let file = response.TR_EXAM_HINT_FILE_PATH;
+      if (hint == undefined) {
+        $(".hint_input").text("");
+      } else {
+        $(".hint_input").text(hint);
+      }
+
+      $(".back").toggle();
+      $(".popup_hint").toggle();
+      scrollPause();
+    },
+  });
 }
 
 function popup_hint_popupStatusOff() {
