@@ -34,7 +34,7 @@ function examGroupCall() {
   var html = "";
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/admin/exam_mng_grp",
+    url: "https://192.168.32.22:8443/admin/exam_mng_grp",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -59,7 +59,7 @@ function selectGrpChange() {
   // // console.log(grpId);
   var html = "";
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/exam_mng_grp/" + grpId,
+    url: "https://192.168.32.22:8443/admin/exam_mng_grp/" + grpId,
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -110,7 +110,7 @@ function exam(exam_num) {
     tr_exam_num: exam_num,
   };
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/exam_call",
+    url: "https://192.168.32.22:8443/admin/exam_call",
     type: "POST",
     contentType: "application/json",
     dataType: "json",
@@ -201,7 +201,7 @@ function popup_hint_popupStatus(num) {
     trExamNum: trExamNum,
   };
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/get_hint_contents",
+    url: "https://192.168.32.22:8443/admin/get_hint_contents",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -267,7 +267,7 @@ function popup_mit_popupStatus() {
   scrollPause();
   var html;
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/get_tactics",
+    url: "https://192.168.32.22:8443/admin/get_tactics",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -299,7 +299,7 @@ function getMiterMatrixByGrpid() {
     ma_tactics_id: ta,
   };
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/get_matrix",
+    url: "https://192.168.32.22:8443/admin/get_matrix",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -348,7 +348,7 @@ function test() {
   var returnVal = "";
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/admin/uploadFile",
+    url: "https://192.168.32.22:8443/admin/uploadFile",
     type: "POST",
     data: formData,
     cache: false,
@@ -391,7 +391,7 @@ function updateHint() {
   };
   // console.log(jsonData);
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/exam_id_get",
+    url: "https://192.168.32.22:8443/admin/exam_id_get",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -419,7 +419,7 @@ function updateHintGo(examId, upload) {
     tr_exam_hint_file_path: upload,
   };
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/hintUpdate",
+    url: "https://192.168.32.22:8443/admin/hintUpdate",
     type: "PATCH",
     dataType: "json",
     contentType: "application/json",
@@ -454,7 +454,7 @@ function onlyGetExamId() {
   };
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/admin/only_get_examid",
+    url: "https://192.168.32.22:8443/admin/only_get_examid",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -470,7 +470,7 @@ function onlyGetExamId() {
 // 전술단계 가져오기
 function getTactics() {
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/get_tactics",
+    url: "https://192.168.32.22:8443/admin/get_tactics",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -500,7 +500,7 @@ function tacticsSave() {
   };
   // console.log(jsonData);
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/update_tactic",
+    url: "https://192.168.32.22:8443/admin/update_tactic",
     type: "PATCH",
     dataType: "json",
     contentType: "application/json",
@@ -642,7 +642,7 @@ function examFinalSave() {
   };
   // console.log(jsonData);
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/exam_final_save",
+    url: "https://192.168.32.22:8443/admin/exam_final_save",
     type: "PATCH",
     dataType: "json",
     contentType: "application/json",
@@ -668,7 +668,7 @@ function getExamLength() {
   var exam_grpid = $("select[name=grp_name] option:selected").val();
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/admin/get_exam_length/" + exam_grpid,
+    url: "https://192.168.32.22:8443/admin/get_exam_length/" + exam_grpid,
     type: "GET",
     dataType: "json",
     success: function (response) {

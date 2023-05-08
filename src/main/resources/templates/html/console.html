@@ -21,7 +21,7 @@
       function getVm() {
         $.ajax({
           async: false,
-          url: "https://192.168.32.44:8444/get_vm_id",
+          url: "https://192.168.32.22:8443/get_vm_id",
           type: "GET",
           dataType: "text",
           success: function (response) {
@@ -36,7 +36,7 @@
       var password = "qweR123#001";
       var target = getVm();
       $.ajax({
-        url: "https://192.168.32.44:5000/vmware_console_url",
+        url: "https://192.168.32.22:5000/vmware_console_url",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({
@@ -47,17 +47,16 @@
         }),
         success: function (result) {
           console.log("result : ", result);
-          var wmks = WMKS.createWMKS("wmksContainer", {
-            sessionTimeout: 60000,
-          }).register(
+          var url = result.url;
+          var wmks = WMKS.createWMKS("wmksContainer", {}).register(
             WMKS.CONST.Events.CONNECTION_STATE_CHANGE,
             function (event, data) {
               if (data.state == WMKS.CONST.ConnectionState.CONNECTED) {
-                console.log("connection state change : connected");
+                console.log("연결 상태 변경 : 연결됨");
               }
             }
           );
-          wmks.connect(result.url);
+          wmks.connect(url);
         },
         error: function (xhr, status, error) {
           alert("Error: " + error);

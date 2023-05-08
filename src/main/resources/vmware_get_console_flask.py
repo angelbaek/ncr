@@ -9,6 +9,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
+
 @app.route('/vmware_console_url', methods=['POST'])
 def get_vmware_console_url():
     # POST 요청에서 인자 추출
@@ -18,10 +19,9 @@ def get_vmware_console_url():
     password = args['password']
     target = args['target']
 
-    context = None
-    print(host, username, password)
-    if hasattr(ssl, '_create_unverified_context'):
-        context = ssl._create_unverified_context()
+    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    context.load_cert_chain('C:/Users/ItzoneLab/ncr/src/main/resources/ssl/server.crt', 'C:/Users/ItzoneLab/ncr/src/main/resources/ssl/server.key')
+    context.check_hostname = False
 
     try:
         si = SmartConnect(host=host,
@@ -36,13 +36,13 @@ def get_vmware_console_url():
     vms = content.viewManager.CreateContainerView(content.rootFolder,
                                                   [vim.VirtualMachine],
                                                   True)
-
+    
     vm_obj = ''
     if vms:
         for vm in vms.view:
             if vm.name == target:
                 vm_obj = vm
-                break
+                break                
 
     if vm_obj:
         ticket_info = vm_obj.AcquireTicket("webmks")
@@ -53,9 +53,9 @@ def get_vmware_console_url():
         if host:
             return jsonify({'url': 'wss://%s:%s/ticket/%s' % (host, port, ticket)})
         else:
-            return jsonify({'url': 'wss://%s:%s/ticket/%s' % (args.host, port, ticket)})
+            return jsonify({'error': 'WebSocket URL 생성 실패'})
     else:
         return jsonify({'error': 'VM not found'})
 
 if __name__ == '__main__':
-    app.run(ssl_context=('rui.crt', 'rui.key'), host='0.0.0.0', port=5000)
+    app.run(ssl_context=('C:/Users/ItzoneLab/ncr/src/main/resources/ssl/server.crt', 'C:/Users/ItzoneLab/ncr/src/main/resources/ssl/server.key'), host='0.0.0.0', port=5000)

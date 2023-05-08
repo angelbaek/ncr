@@ -159,7 +159,7 @@ function getExamGrpInfoByGrpName(grpName) {
   let hintUse = 0;
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/get_exam_grp_info/" + grpName,
+    url: "https://192.168.32.22:8443/user/get_exam_grp_info/" + grpName,
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -179,7 +179,7 @@ function searchMgmtState() {
   var num;
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/admin/exam_explanation",
+    url: "https://192.168.32.22:8443/admin/exam_explanation",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -223,7 +223,7 @@ function getStartExamAndGrp(grpname) {
   var html = "";
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/admin/exam_explanation_sel/" + grpname,
+    url: "https://192.168.32.22:8443/admin/exam_explanation_sel/" + grpname,
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -642,7 +642,7 @@ function insertUserTrainExamStat() {
     tr_exam_grpid: examGrpid,
   };
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/insert_train_exam_stat",
+    url: "https://192.168.32.22:8443/admin/insert_train_exam_stat",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -666,7 +666,7 @@ function insertExamstatTeam() {
     tr_exam_grpid: examGrpid,
   };
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/insert_train_exam_team_stat",
+    url: "https://192.168.32.22:8443/admin/insert_train_exam_team_stat",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -690,7 +690,7 @@ function insertExamResultAndTeam(examId) {
     tr_exam_grpid: examGrpid,
   };
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/insert_train_examresult_and_team",
+    url: "https://192.168.32.22:8443/admin/insert_train_examresult_and_team",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -762,7 +762,7 @@ function getHintFunc(grpId, examId, hintDeduct) {
     tr_exam_grpid: grpId,
   };
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/using_hint",
+    url: "https://192.168.32.22:8443/admin/using_hint",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -806,7 +806,7 @@ function getHint(examId, grpId) {
     tr_exam_grpid: grpId,
   };
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/get_hint",
+    url: "https://192.168.32.22:8443/admin/get_hint",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -847,7 +847,7 @@ function getHint(examId, grpId) {
 function downloadFile() {
   var filename = $("#filename").val();
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/download?filename=" + filename,
+    url: "https://192.168.32.22:8443/admin/download?filename=" + filename,
     method: "GET",
     xhrFields: {
       responseType: "blob",
@@ -937,7 +937,7 @@ function checkAnsBtnMulti(examId) {
   };
   // // // console.log(jsonData);
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/using_answer_multi",
+    url: "https://192.168.32.22:8443/admin/using_answer_multi",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1045,7 +1045,7 @@ function checkAnsBtnShort(examId) {
   };
   // // // console.log(jsonData);
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/using_answer_short_form",
+    url: "https://192.168.32.22:8443/admin/using_answer_short_form",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1095,7 +1095,7 @@ function getExamTypeByExamId(examId) {
   var type;
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/get_exam_type_by_exam_id/" + examId,
+    url: "https://192.168.32.22:8443/user/get_exam_type_by_exam_id/" + examId,
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -1131,7 +1131,7 @@ function clientViewUpdate() {
   };
   // // // console.log(jsonData);
   $.ajax({
-    url: "https://192.168.32.44:8444/user/get_exam_result_team",
+    url: "https://192.168.32.22:8443/user/get_exam_result_team",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1437,7 +1437,7 @@ function startTrainingGetTime() {
   // // // console.log(jsonData);
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/get_start_training_get_time",
+    url: "https://192.168.32.22:8443/user/get_start_training_get_time",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1526,7 +1526,7 @@ function countAnsExamResultTeam() {
     tr_exam_grpid: examGrpid,
   };
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/count_ans_exam_result_team",
+    url: "https://192.168.32.22:8443/admin/count_ans_exam_result_team",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1549,7 +1549,7 @@ function getTotalStatus(staticAllowSecans) {
       secansAllow: 1,
     };
     $.ajax({
-      url: "https://192.168.32.44:8444/admin/get_total_status",
+      url: "https://192.168.32.22:8443/admin/get_total_status",
       type: "POST",
       dataType: "json",
       contentType: "application/json",
@@ -1583,7 +1583,7 @@ function getTotalStatus(staticAllowSecans) {
       secansAllow: 0,
     };
     $.ajax({
-      url: "https://192.168.32.44:8444/admin/get_total_status",
+      url: "https://192.168.32.22:8443/admin/get_total_status",
       type: "POST",
       dataType: "json",
       contentType: "application/json",
@@ -1621,7 +1621,7 @@ function submitExam() {
   // console.log(jsonData);
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/admin/update_submit",
+    url: "https://192.168.32.22:8443/admin/update_submit",
     type: "POST",
     contentType: "application/json",
     dataType: "json",
@@ -1663,7 +1663,7 @@ function checkSubmitExam() {
   // // console.log(jsonData);
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/admin/check_submit",
+    url: "https://192.168.32.22:8443/admin/check_submit",
     type: "POST",
     contentType: "application/json",
     dataType: "json",
@@ -1702,7 +1702,7 @@ function checkSubmitExam() {
 //   // // // console.log(jsonData);
 //   $.ajax({
 //     async: false,
-//     url: "https://192.168.32.44:8444/user/check_submit",
+//     url: "https://192.168.32.22:8443/user/check_submit",
 //     type: "POST",
 //     contentType: "application/json",
 //     dataType: "json",
@@ -1771,7 +1771,7 @@ function endTimeUpdateTime() {
   };
   // // console.log(jsonData);
   $.ajax({
-    url: "https://192.168.32.44:8444/admin/end_time_update_time",
+    url: "https://192.168.32.22:8443/admin/end_time_update_time",
     type: "POST",
     contentType: "application/json",
     dataType: "json",
@@ -1800,7 +1800,7 @@ function getMgMtState() {
   // // // console.log(jsonData);
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/get_mgmt_state",
+    url: "https://192.168.32.22:8443/user/get_mgmt_state",
     type: "POST",
     contentType: "application/json",
     dataType: "json",

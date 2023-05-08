@@ -54,7 +54,7 @@ function join() {
   };
   // // console.log(jsonData);
   $.ajax({
-    url: "https://192.168.32.44:8444/user/join",
+    url: "https://192.168.32.22:8443/user/join",
     type: "POST",
     contentType: "application/json",
     dataType: "json",

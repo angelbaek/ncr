@@ -17,7 +17,7 @@ function dropdownMenu() {
 // 로그아웃 함수
 function logOut() {
   $.ajax({
-    url: "https://192.168.32.44:8444/logout",
+    url: "https://192.168.32.22:8443/logout",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -37,7 +37,7 @@ function logOut() {
 // 사용자 정보 표출
 function showLogOutBtn() {
   $.ajax({
-    url: "https://192.168.32.44:8444/get_user_teamcode_view",
+    url: "https://192.168.32.22:8443/get_user_teamcode_view",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -80,7 +80,7 @@ function scrollPlay() {
 function sessionManagement() {
   // console.log("세션 체크...");
   $.ajax({
-    url: "https://192.168.32.44:8444/sessionCheck",
+    url: "https://192.168.32.22:8443/sessionCheck",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -105,7 +105,7 @@ function sessionManagementForUser() {
   // console.log("일반 사용자 세션 체크...");
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/sessionCheck",
+    url: "https://192.168.32.22:8443/sessionCheck",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -125,7 +125,7 @@ function sessionManagementForUser() {
 function sessionManagementForAdmin() {
   // // console.log("관리자 사용자 세션 체크...");
   $.ajax({
-    url: "https://192.168.32.44:8444/sessionCheck",
+    url: "https://192.168.32.22:8443/sessionCheck",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -149,7 +149,7 @@ function sessionManagementForAdmin() {
 // vm웨어 연동
 function vmwareConnect() {
   // window.open("vmware_console_url", "_blank");
-  window.open("https://192.168.32.44:8444/vmware_console", "_blank");
+  window.open("https://192.168.32.22:8443/vmware_console", "_blank");
 }
 
 // 팝업 메시지

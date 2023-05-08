@@ -9,7 +9,7 @@ getTrainingStateActiveOn();
 function getGroupInfoById() {
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/get_group_info_by_id",
+    url: "https://192.168.32.22:8443/user/get_group_info_by_id",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -35,7 +35,7 @@ function sessionManagementForUserGroup() {
   // // console.log("일반 사용자 세션 체크...");
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/sessionCheck",
+    url: "https://192.168.32.22:8443/sessionCheck",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -80,7 +80,7 @@ function getTeamGroup() {
   // // console.log("팀 정보 실행중...");
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/userGRP",
+    url: "https://192.168.32.22:8443/userGRP",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -142,7 +142,7 @@ function userGroupSave() {
   };
   // // console.log(jsonData);
   $.ajax({
-    url: "https://192.168.32.44:8444/user/update",
+    url: "https://192.168.32.22:8443/user/update",
     type: "PATCH",
     contentType: "application/json",
     dataType: "json",
@@ -203,7 +203,7 @@ function training() {
     return;
   }
   $.ajax({
-    url: "https://192.168.32.44:8444/user/training/" + num,
+    url: "https://192.168.32.22:8443/user/training/" + num,
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -239,7 +239,7 @@ function training() {
 function getTrainingState() {
   var num = $("select[name=location_num]").val();
   $.ajax({
-    url: "https://192.168.32.44:8444/user/get_training_state/" + num,
+    url: "https://192.168.32.22:8443/user/get_training_state/" + num,
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -258,7 +258,7 @@ function getTrainingState() {
 // 활성화된 문제그룹이 있는지 가져오기
 function getTrainingStateActiveOn() {
   $.ajax({
-    url: "https://192.168.32.44:8444/user/get_training_state_active_on",
+    url: "https://192.168.32.22:8443/user/get_training_state_active_on",
     type: "GET",
     dataType: "json",
     success: function (response) {
@@ -295,7 +295,7 @@ function userDuplicationExamAnotherTeam() {
   var result = 0;
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/user_dup_exam_ano_team",
+    url: "https://192.168.32.22:8443/user/user_dup_exam_ano_team",
     type: "GET",
     dataType: "text",
     success: function (response) {

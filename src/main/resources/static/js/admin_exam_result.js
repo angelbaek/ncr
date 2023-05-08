@@ -86,7 +86,7 @@ function getExamResultByNumAndType(num, type, grpId) {
   };
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/get_exam_result_by_num_and_type",
+    url: "https://192.168.32.22:8443/user/get_exam_result_by_num_and_type",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -142,9 +142,9 @@ function getExamResultByNumAndType(num, type, grpId) {
             // 현재 시각
             let now = new Date();
 
-            var year = now.getFullYear() + now.getDay() + now.getDate(); // 날
+            var year = now.getFullYear() + now.getMonth() + 1 + now.getDate(); // 날
             var a = now.getFullYear();
-            var b = now.getDay();
+            var b = now.getMonth() + 1;
             var c = now.getDate();
             var hours = now.getHours(); // 현재 시간
 
@@ -292,7 +292,7 @@ function getExamResultByNumAndType(num, type, grpId) {
             // 현재 시각
             let now = new Date();
 
-            var year = now.getFullYear() + now.getDay() + now.getDate(); // 날
+            var year = now.getFullYear() + now.getMonth() + 1 + now.getDate(); // 날
             var hours = now.getHours(); // 현재 시간
 
             var minutes = now.getMinutes(); // 현재 분
@@ -458,7 +458,7 @@ function getTotalTime(grpid) {
   var time = 0;
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/static/get_time/" + grpid,
+    url: "https://192.168.32.22:8443/user/static/get_time/" + grpid,
     type: "GET",
     dataType: "json",
     contentType: "application/json",
@@ -474,7 +474,7 @@ function getGrpid() {
   var grpid = 0;
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/static/get_grpid",
+    url: "https://192.168.32.22:8443/user/static/get_grpid",
     type: "GET",
     dataType: "json",
     contentType: "application/json",
@@ -529,7 +529,7 @@ function getUserExamStat(statId, grp, num, grpId) {
     tr_exam_grpid: grpId,
   };
   $.ajax({
-    url: "https://192.168.32.44:8444/user/get_user_exam_stat",
+    url: "https://192.168.32.22:8443/user/get_user_exam_stat",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -630,7 +630,7 @@ function getExamResultTeam(statId, num, grpId, grp) {
     tr_user_grp: grp,
   };
   $.ajax({
-    url: "https://192.168.32.44:8444/user/static/get_exam_result_team",
+    url: "https://192.168.32.22:8443/user/static/get_exam_result_team",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -775,7 +775,7 @@ function getExamStat(statId, num, grpId, grp) {
   };
   // console.log(jsonData);
   $.ajax({
-    url: "https://192.168.32.44:8444/user/static/get_exam_stat",
+    url: "https://192.168.32.22:8443/user/static/get_exam_stat",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -864,7 +864,7 @@ function getExamStatTeam(num, grpId, grp) {
   };
   // console.log(jsonData);
   $.ajax({
-    url: "https://192.168.32.44:8444/user/static/get_exam_stat_team",
+    url: "https://192.168.32.22:8443/user/static/get_exam_stat_team",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -975,7 +975,7 @@ function popUpFalseToTrue(grp, num, grpId, examId, ansTrue) {
     tr_exam_id: examId,
   };
   $.ajax({
-    url: "https://192.168.32.44:8444/user/static/get_select_detail",
+    url: "https://192.168.32.22:8443/user/static/get_select_detail",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1019,7 +1019,7 @@ function falseToTrue(grp, num, grpId, examId) {
   };
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/static/false_change_true",
+    url: "https://192.168.32.22:8443/user/static/false_change_true",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1056,7 +1056,7 @@ function getMatrixStat(grpid, grp, num) {
   };
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/static/get_matrix_stat",
+    url: "https://192.168.32.22:8443/user/static/get_matrix_stat",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1090,7 +1090,7 @@ function getMiterAttackMatrix(grpid, grp, num) {
   };
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/static/get_matrix",
+    url: "https://192.168.32.22:8443/user/static/get_matrix",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1158,7 +1158,7 @@ function popUp(MA_TACTICS_ID, MA_MATRIX_ID) {
   };
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/get_tech_and_mit",
+    url: "https://192.168.32.22:8443/user/get_tech_and_mit",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1203,7 +1203,7 @@ function selectUserOrgByUserId(id) {
   };
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/select_user_org_by_user_id",
+    url: "https://192.168.32.22:8443/user/select_user_org_by_user_id",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
@@ -1302,7 +1302,7 @@ function getTeamOrg(num, grpId, grp) {
   };
   $.ajax({
     async: false,
-    url: "https://192.168.32.44:8444/user/static/get_org",
+    url: "https://192.168.32.22:8443/user/static/get_org",
     type: "POST",
     dataType: "json",
     contentType: "application/json",
